@@ -5,11 +5,12 @@ const path = require('path'),
     port = process.env.PORT || 3001;
 const bodyParser = require('body-parser');
 const fs = require('fs');
-
 const routes = require('./server/router/index');
 
+// This will help to load other included files in index.html
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: false })); // for parsing application/x-www-form-urlencoded
 app.use(express.static(path.resolve(__dirname, 'dist')));
-
 app.use('/api', routes);
 
 app.get('/', (req, res) => {

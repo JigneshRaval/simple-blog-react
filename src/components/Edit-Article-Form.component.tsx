@@ -6,7 +6,7 @@ import React from 'react';
 // Turndown : Html to Markdown convertor
 let TurndownService = require("../assets/js/turndown.browser.umd.js");
 
-export class CreateArticleFormComponent extends React.Component<{}, {}> {
+export class EditArticleFormComponent extends React.Component<any, any> {
     turndownService: any;
     editorOutput: any;
     convertedHTML: any;
@@ -15,11 +15,12 @@ export class CreateArticleFormComponent extends React.Component<{}, {}> {
     constructor(props: any) {
         super(props);
 
-        console.log('CreateArticleFormComponent : ', props);
+        console.log('EditArticleFormComponent : ', props);
 
         this.state = {
-            txtPostTitle: '',
-            txtCategory: 'JavaScript',
+            id: props.editData._id,
+            txtPostTitle: props.editData.title,
+            txtCategory: props.editData.category,
             txtTags: 'JavaScript, ES6',
             txtPostDate: new Date(),
             txtWebsiteUrl: '',
@@ -31,6 +32,8 @@ export class CreateArticleFormComponent extends React.Component<{}, {}> {
             txtareaMarkdownCode: ''
         }
 
+        console.log('Form Props ==', props);
+
         this.turndownService = new TurndownService({
             codeBlockStyle: 'fenced',
             fence: '```',
@@ -41,6 +44,24 @@ export class CreateArticleFormComponent extends React.Component<{}, {}> {
         });
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log('nextProps : ', nextProps);
+        this.setState({
+            id: nextProps.editData._id,
+            txtPostTitle: nextProps.editData.title,
+            txtCategory: nextProps.editData.category,
+            txtTags: nextProps.editData.tags,
+            txtPostDate: nextProps.editData.date,
+            txtWebsiteUrl: nextProps.editData.sourceUrl,
+            txtSavePostToPath: nextProps.editData.path,
+            txtPostType: nextProps.editData.type,
+            txtCoverImage: nextProps.editData.coverImage,
+            txtExcerpt: nextProps.editData.excerpt,
+            txtareaHtmlCode: nextProps.editData.frontmatter,
+            txtareaMarkdownCode: nextProps.editData.frontmatter
+        })
+    }
+
     handleInputChange = (event: any) => {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -49,6 +70,7 @@ export class CreateArticleFormComponent extends React.Component<{}, {}> {
         this.setState({
             [name]: value
         });
+
     }
 
     // Handle Html to Markdown form submit
@@ -96,7 +118,7 @@ export class CreateArticleFormComponent extends React.Component<{}, {}> {
             'markdownCode': this.convertedHTML
         }
 
-        this.props.onCreateArticle(formDataObj);
+        this.props.onEditSaveArticle(this.state.id, formDataObj);
 
     }
 
@@ -110,10 +132,6 @@ export class CreateArticleFormComponent extends React.Component<{}, {}> {
         }
     }
 
-    /**
-     *
-     * @param frontmatterObj
-     */
     generateFrontMatter(frontmatterObj: any) {
 
         let frontMatter = `---
