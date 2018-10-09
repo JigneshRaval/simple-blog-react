@@ -5,8 +5,10 @@ import React from 'react';
 
 // Turndown : Html to Markdown convertor
 let TurndownService = require("../assets/js/turndown.browser.umd.js");
+let ShowdownService = require("../assets/js/showdown.js");
+const converter = new ShowdownService.Converter();
 
-export class CreateArticleFormComponent extends React.Component<{}, {}> {
+export class CreateArticleFormComponent extends React.Component<any, any> {
     turndownService: any;
     editorOutput: any;
     convertedHTML: any;
@@ -39,6 +41,26 @@ export class CreateArticleFormComponent extends React.Component<{}, {}> {
                 return '\n\n' + content + '\n\n'
             }
         });
+    }
+
+    componentWillReceiveProps(nextProps: any) {
+        if (nextProps.editData) {
+            console.log('nextProps Create form : ', nextProps);
+            this.setState({
+                id: nextProps.editData._id,
+                txtPostTitle: nextProps.editData.title,
+                txtCategory: nextProps.editData.category,
+                txtTags: nextProps.editData.tags,
+                txtPostDate: nextProps.editData.date,
+                txtWebsiteUrl: nextProps.editData.sourceUrl,
+                txtSavePostToPath: nextProps.editData.path,
+                txtPostType: nextProps.editData.type,
+                txtCoverImage: nextProps.editData.coverImage,
+                txtExcerpt: nextProps.editData.excerpt,
+                txtareaHtmlCode: nextProps.editData.markdownCode ? converter.makeHtml(nextProps.editData.markdownCode) : '',
+                txtareaMarkdownCode: nextProps.editData.markdownCode ? nextProps.editData.markdownCode : ''
+            });
+        }
     }
 
     handleInputChange = (event: any) => {
@@ -96,7 +118,16 @@ export class CreateArticleFormComponent extends React.Component<{}, {}> {
             'markdownCode': this.convertedHTML
         }
 
-        this.props.onCreateArticle(formDataObj);
+        if (this.props.isEditMode) {
+            console.log('Edit Mode');
+            this.props.onEditSaveArticle(this.state.id, formDataObj);
+            form.reset();
+        } else {
+            console.log('Create Mode');
+            this.props.onCreateArticle(formDataObj);
+            form.reset();
+        }
+
 
     }
 
@@ -120,7 +151,7 @@ export class CreateArticleFormComponent extends React.Component<{}, {}> {
 path: "${frontmatterObj.path}"
 date: "${frontmatterObj.date}"
 title: "${frontmatterObj.title}"
-tags: [${frontmatterObj.tags.map((tag: any) => `"${tag.trim()}"`)}]
+tags: [${frontmatterObj.tags.map((tag: any)=>`"${tag.trim()}"`)}]
 category: "${frontmatterObj.category}"
 categoryColor: "#F3C610"
 excerpt: "${frontmatterObj.excerpt}"
@@ -131,6 +162,13 @@ type: "${frontmatterObj.type}"
     `
 
         return frontMatter;
+    }
+
+    handleReset = (event: any) => {
+        event.preventDefault();
+
+        const form = document.querySelector('#formHtmltoMd');
+        form.reset();
     }
 
     render() {
@@ -216,7 +254,7 @@ type: "${frontmatterObj.type}"
 
                 <p className="text-right">
                     <button id="convertToMarkdown" className="btn btn-primary">Convert</button>
-                    <button id="btnResetConvertForm" className="btn btn-secondary">Reset Form</button>
+                    <button id="btnResetConvertForm" className="btn btn-secondary" onClick={this.handleReset}>Reset Form</button>
                 </p>
             </form>
         )

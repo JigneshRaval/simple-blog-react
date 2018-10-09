@@ -3,6 +3,11 @@ export class ArticleService {
 
     constructor() { }
 
+    getArticles() {
+        this.articles = this.getAllArticles().then(data => data);
+        return this.articles;
+    }
+
     /**
      * getAllArticles: Get all the articles from database
      */

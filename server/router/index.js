@@ -57,19 +57,30 @@ routes.post('/articles/add', (request, response) => {
 
 // EDIT : Edit Article by Id (/api/articles/edit/:articleId)
 routes.post('/articles/edit/:articleId', (request, response) => {
-    let { title, sourceUrl, path, category, tags, excerpt, date, coverImage, type } = request.body;
-
-    console.log(request.params.articleId, title, sourceUrl, path, category, tags, excerpt, date, coverImage, type);
+    // let { title, sourceUrl, path, category, tags, excerpt, date, coverImage, type } = request.body;
+    let newData = {
+        title: request.body.title,
+        sourceUrl: request.body.sourceUrl,
+        path: request.body.path,
+        category: request.body.category,
+        tags: request.body.tags,
+        excerpt: request.body.excerpt,
+        date: new Date(),
+        coverImage: request.body.coverImage,
+        type: request.body.type,
+        markdownCode: request.body.markdownCode
+    }
+    console.log(request.params.articleId, request.body);
     // Set an existing field's value
-    db.update({ _id: request.params.articleId }, { $set: { title: title, sourceUrl: sourceUrl, path: path, category: category, tags: tags, excerpt: excerpt, date: new Date(), coverImage: coverImage, type: type } }, { multi: false }, function (err, numReplaced) {
+    db.articles.update({ _id: request.params.articleId }, { $set: newData }, { multi: false }, function (err, numReplaced) {
         if (err) {
             return err;
         } else {
-            db.find({ _id: request.params.articleId }).sort({ today: -1 }).exec(function (err, docs) {
+            db.articles.find({ _id: request.params.articleId }).sort({ today: -1 }).exec(function (err, docs) {
                 if (err) {
                     return err;
                 }
-                response.status(200).send({ message: 'Article ID#${request.params.articleId} updated successfully.', newDoc });
+                response.status(200).send({ message: 'Article ID#${request.params.articleId} updated successfully.', docs });
             });
         }
     });
