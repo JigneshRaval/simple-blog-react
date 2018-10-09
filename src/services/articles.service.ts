@@ -3,9 +3,14 @@ export class ArticleService {
 
     constructor() { }
 
-    getArticles() {
-        this.articles = this.getAllArticles().then(data => data);
+    getArticlesData() {
+        // this.articles = this.getAllArticles().then(data => data);
         return this.articles;
+    }
+
+
+    setArticlesData(articles: any) {
+        this.articles = articles;
     }
 
     /**

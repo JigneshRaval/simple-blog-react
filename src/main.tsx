@@ -30,50 +30,65 @@ export class App extends React.Component<any, any> {
             isEditMode: false,
             articleCount: 0,
             editData: {},
-            currentArticle: ''
+            currentArticle: '',
+            articleService: this.articleService
         };
     }
 
     componentDidMount() {
-        console.log('Get Articles : ==', this.articleService.getArticles());
         // Render all Articles on component mount
         this.articleService.getAllArticles()
             .then((data) => {
-                console.log(data);
                 this.setState({ articles: data.docs, articleCount: data.docs.length });
-                console.log(this.state);
+
+                // Update variable value in articles.service.ts
+                this.updateArticleDataService(this.state.articles);
             })
             .catch((err) => {
                 console.log('Error in fetching all reacords', err);
             });
     }
 
+
     // Delete single article by articleId
+    // =========================================
     handleDeleteArticle = (articleId: string): void => {
         this.articleService.deleteArticle(articleId).then((data: any) => {
             this.setState({ articles: data.docs });
-            console.log(this.state, data);
+
+            // Update variable value in articles.service.ts
+            this.updateArticleDataService(this.state.articles);
         });
     }
 
+
+    // Create new article
+    // =========================================
     handleCreateArticle = (formDataObj: any) => {
         let articles = [...this.state.articles];
 
         this.articleService.createArticle(formDataObj).then((data: any) => {
             articles.push(data.newDoc)
             this.setState({ articles: articles });
-            console.log(this.state, data);
+
+            // Update variable value in articles.service.ts
+            this.updateArticleDataService(this.state.articles);
         });
     }
 
+
+    // Get Article data on click of Edit button
+    // =========================================
     handleEditArticle = (articleId: string) => {
         this.setState({ isEditMode: true });
         this.articleService.getArticleById(articleId).then(data => {
             this.setState({ editData: data.docs[0] });
-            console.log(this.state);
         });
     }
 
+
+    // Update data on the server
+    // =========================================
     handleEditSaveArticle = (articleId: string, formDataObj: any) => {
         let articles = [...this.state.articles];
 
@@ -82,13 +97,19 @@ export class App extends React.Component<any, any> {
                 if (article._id === data.docs[0]._id) {
                     articles[index] = { ...data.docs[0] };
                     articles[index] = data.docs[0];
-                    console.log('handleEditSaveArticle : ==', this.state, data);
                 }
             });
+
             this.setState({ articles, editData: {}, isEditMode: false });
+
+            // Update variable value in articles.service.ts
+            this.updateArticleDataService(this.state.articles);
         });
     }
 
+
+    // Display Article Content
+    // =========================================
     handleDisplaySingleArticleContent = (articleId: string) => {
         this.state.articles.map((article: any, index: number) => {
             if (article._id === articleId) {
@@ -97,6 +118,9 @@ export class App extends React.Component<any, any> {
         });
     }
 
+
+    // Filter articles by Tag or Category
+    // =========================================
     handleFilterArticles = (filterBy: string, filterValue: any) => {
         let filteredList: any = []
 
@@ -107,6 +131,13 @@ export class App extends React.Component<any, any> {
         });
 
         // this.setState({ articles: filteredList });
+    }
+
+
+    // Update variable value in articles.service.ts
+    // =========================================
+    updateArticleDataService = (data: any) => {
+        this.articleService.setArticlesData(data);
     }
 
     render() {
@@ -139,6 +170,7 @@ export class App extends React.Component<any, any> {
                                 onEditSaveArticle={this.handleEditSaveArticle} />
 
                             <Article currentArticle={this.state.currentArticle} />
+
                         </section>
                     </div>
                 </main>

@@ -26,7 +26,7 @@ const Tags = (props: any) => {
                     Object.keys(getUniqueTags()).map(tag => {
                         return (
                             <li className="tag-list__item" key={tag}>
-                                <a href="javascript: void(0);" onClick={() => props.onFilterArticles('Tags', tag)}>
+                                <a href="javascript: void(0);" onClick={() => props.onFilterArticles('Tag', tag)}>
                                     {tag} <span className="post-counts">{getUniqueTags()[tag]}</span>
                                 </a>
                             </li>

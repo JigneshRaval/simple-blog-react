@@ -6,6 +6,11 @@ import * as React from "react";
 // 'HelloProps' describes the shape of props.
 // State is never set so we use the '{}' type.
 export const ArticlesList = (props: any) => {
+
+    const getArticles = () => {
+        console.log('Get Articles 123 : ==', props.articleService.getArticlesData());
+    }
+
     return (
         <div className="post-list__wrapper">
             <ul className="post-list" id="postList">
@@ -32,6 +37,8 @@ export const ArticlesList = (props: any) => {
                                     }
                                     <button className="btn btn-primary btn-sm" onClick={() => props.onDeleteArticle(article._id)}>Remove</button>
                                     <button className="btn btn-primary btn-sm" onClick={() => props.onEditArticle(article._id)}>Edit</button>
+                                    <button className="btn btn-primary btn-sm" onClick={getArticles}>Edit</button>
+
                                 </div>
 
                             </li>
