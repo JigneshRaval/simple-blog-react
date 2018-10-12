@@ -17,6 +17,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
 
+
         console.log('CreateArticleFormComponent : ', props);
 
         this.state = {
@@ -33,6 +34,8 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
             txtareaMarkdownCode: ''
         }
 
+        const [month, day, year] = new Date().toString().split('/');
+        console.log(month, day, year);
         this.turndownService = new TurndownService({
             codeBlockStyle: 'fenced',
             fence: '```',
@@ -51,7 +54,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
                 txtPostTitle: nextProps.editData.title,
                 txtCategory: nextProps.editData.category,
                 txtTags: nextProps.editData.tags,
-                txtPostDate: nextProps.editData.date,
+                txtPostDate: this.formatDate(nextProps.editData.date),
                 txtWebsiteUrl: nextProps.editData.sourceUrl,
                 txtSavePostToPath: nextProps.editData.path,
                 txtPostType: nextProps.editData.type,
@@ -61,6 +64,17 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
                 txtareaMarkdownCode: nextProps.editData.markdownCode ? nextProps.editData.markdownCode : ''
             });
         }
+    }
+
+    formatDate(date: any, format: string) {
+        let dateObj = new Date(date);
+
+        let year = dateObj.getFullYear();
+        let month = dateObj.getMonth() + 1;
+        let day = dateObj.getDate();
+
+        // return {year, month, day}
+        return `${month}/${day}/${year}`;
     }
 
     handleInputChange = (event: any) => {
@@ -151,7 +165,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
 path: "${frontmatterObj.path}"
 date: "${frontmatterObj.date}"
 title: "${frontmatterObj.title}"
-tags: [${frontmatterObj.tags.map((tag: any)=>`"${tag.trim()}"`)}]
+tags: [${frontmatterObj.tags.map((tag: any) => `"${tag.trim()}"`)}]
 category: "${frontmatterObj.category}"
 categoryColor: "#F3C610"
 excerpt: "${frontmatterObj.excerpt}"

@@ -31,7 +31,9 @@ export class App extends React.Component<any, any> {
             articleCount: 0,
             editData: {},
             currentArticle: '',
-            articleService: this.articleService
+            articleService: this.articleService,
+            serachText: '',
+            filteredArticles: []
         };
     }
 
@@ -39,7 +41,7 @@ export class App extends React.Component<any, any> {
         // Render all Articles on component mount
         this.articleService.getAllArticles()
             .then((data) => {
-                this.setState({ articles: data.docs, articleCount: data.docs.length });
+                this.setState({ articles: data.docs, articleCount: data.docs.length, filteredArticles: data.docs });
 
                 // Update variable value in articles.service.ts
                 this.updateArticleDataService(this.state.articles);
@@ -81,9 +83,14 @@ export class App extends React.Component<any, any> {
     // =========================================
     handleEditArticle = (articleId: string) => {
         this.setState({ isEditMode: true });
-        this.articleService.getArticleById(articleId).then(data => {
-            this.setState({ editData: data.docs[0] });
+        this.state.articles.map((article: any) => {
+            if (article._id === articleId) {
+                this.setState({ editData: article });
+            }
         });
+        /* this.articleService.getArticleById(articleId).then(data => {
+            this.setState({ editData: data.docs[0] });
+        }); */
     }
 
 
@@ -121,18 +128,52 @@ export class App extends React.Component<any, any> {
 
     // Filter articles by Tag or Category
     // =========================================
-    handleFilterArticles = (filterBy: string, filterValue: any) => {
+    handleFilterArticles = (filterBy: string, event: any, ) => {
+        let filteredList: any = [];
+
+
+        if (filterBy === 'tag') {
+            this.state.articles.reduce((newArticles: any, article: any) => {
+                // let test1 = [];
+                if (article.tags) {
+                    article.tags.map(tag => {
+                        if (tag && tag.toLowerCase().indexOf(event.target.value) === -1) {
+                            newArticles.push(article);
+                            // return article;
+                        }
+                    });
+                } else {
+                    // newArticles.push(article);
+                }
+
+                console.log('test1 =', newArticles);
+                return newArticles;
+            }, []);
+        } else {
+            this.state.articles.map((article: any) => {
+                if (article[filterBy].indexOf(event.target.value) > -1) {
+                    filteredList.push(article);
+                }
+            });
+        }
+
+        console.log('filteredList :', filteredList)
+
+        this.setState({ filteredArticles: filteredList });
+    }
+
+    filterList = (event: any) => {
+        console.log(event);
         let filteredList: any = []
 
         this.state.articles.map((article: any) => {
-            if (article.tags.includes(filterValue)) {
+            if (article.tags.includes(this.state.serachText)) {
                 filteredList.push(article);
             }
         });
 
-        // this.setState({ articles: filteredList });
+        this.setState({ filteredArticles: filteredList });
     }
-
 
     // Update variable value in articles.service.ts
     // =========================================
@@ -157,7 +198,7 @@ export class App extends React.Component<any, any> {
                         <section className="content-wrapper">
 
                             <Header />
-
+                            <input type="text" placeholder="Search" onChange={(e) => this.handleFilterArticles('tag', e)} />
                             <ArticlesList {...this.state}
                                 onDeleteArticle={this.handleDeleteArticle}
                                 onEditArticle={this.handleEditArticle}

@@ -1,3 +1,7 @@
+// articles.service.ts
+
+// Service for CRUD operations
+// Create, Read, Update and Delete articles
 export class ArticleService {
     articles: any;
 

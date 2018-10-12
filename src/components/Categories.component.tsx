@@ -4,10 +4,10 @@
 
 import React from 'react';
 
-const Categories = (props: any) => {
+const Categories = ({ articles }: any) => {
 
     const getUniqueCategories = () => {
-        let uniqueCategories = props.articles.reduce((uniqcats: any, article: any) => {
+        let uniqueCategories = articles.reduce((uniqcats: any, article: any) => {
             if (uniqcats.indexOf(article.category) === -1) {
                 uniqcats.push(article.category);
             }
