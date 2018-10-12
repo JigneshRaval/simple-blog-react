@@ -13,37 +13,39 @@ export const ArticlesList = (props: any) => {
 
     return (
         <div className="post-list__wrapper">
-            <ul className="post-list" id="postList">
+            <div className="columns">
                 {
                     props.filteredArticles.map((article: any) => {
                         return (
-                            <li key={article._id} className="post-list__item" data-category={article.category}>
-
-                                <div className="post-list__cover-image" >
-                                    <span className="post-list__category">{article.category}</span>
-
+                            <div className="column col-4 col-xs-12" key={article._id}>
+                                <div className="card" data-category={article.category}>
+                                    <div className="card-image">
+                                        <img src="img/osx-el-capitan.jpg" className="img-responsive" />
+                                    </div>
+                                    <div className="card-header">
+                                        <h2 className="card-title"><a href="javascript: void(0);" onClick={() => props.onDisplaySingleArticleContent(article._id)}>{article.title}</a></h2>
+                                        <div className="card-subtitle text-gray">{article.category}</div>
+                                    </div>
+                                    <div className="card-body">
+                                        <p className="post-list__excerpt">{article.excerpt}</p>
+                                    </div>
+                                    <div className="card-footer">
+                                        <div>
+                                            {
+                                                article.tags.map((tag: any) => {
+                                                    return <span key={tag} className="post-list__tags">{tag}</span>
+                                                })
+                                            }
+                                        </div>
+                                        <button className="btn btn-primary" onClick={() => props.onDeleteArticle(article._id)}>Remove</button>
+                                        <button className="btn btn-primary" onClick={() => props.onEditArticle(article._id, true)}>Edit</button>
+                                    </div>
                                 </div>
-
-                                <div className="post-list__content">
-                                    <h2 className="post-list__title"><a href="javascript: void(0);" onClick={() => props.onDisplaySingleArticleContent(article._id)}>{article.title}</a></h2>
-                                    <p className="post-list__excerpt">{article.excerpt}</p>
-                                </div>
-
-                                <div className="post-list__footer">
-                                    {
-                                        article.tags.map((tag: any) => {
-                                            return <span key={tag} className="post-list__tags">{tag}</span>
-                                        })
-                                    }
-                                    <button className="btn btn-primary btn-sm" onClick={() => props.onDeleteArticle(article._id)}>Remove</button>
-                                    <button className="btn btn-primary btn-sm" onClick={() => props.onEditArticle(article._id)}>Edit</button>
-                                </div>
-
-                            </li>
+                            </div>
                         )
                     })
                 }
-            </ul>
+            </div>
         </div>
     );
 

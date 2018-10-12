@@ -11,8 +11,9 @@ import { ArticleService } from "./services/articles.service";
 
 // COMPONENTS
 import Header from "./components/Header.component";
-import Tags from "./components/Tags.component";
-import Categories from "./components/Categories.component";
+// import Tags from "./components/Tags.component";
+// import Categories from "./components/Categories.component";
+import Sidebar from './components/Sidebar.component';
 import { ArticlesList } from "./components/Articles-List.component";
 import { Article } from "./components/Article.component";
 import { CreateArticleFormComponent } from './components/Create-Article-Form.component';
@@ -32,6 +33,7 @@ export class App extends React.Component<any, any> {
             articleCount: 0,
             editData: {},
             currentArticle: '',
+            showForm: false,
             articleService: this.articleService
         };
     }
@@ -80,8 +82,8 @@ export class App extends React.Component<any, any> {
 
     // Get Article data on click of Edit button
     // =========================================
-    handleEditArticle = (articleId: string) => {
-        this.setState({ isEditMode: true });
+    handleEditArticle = (articleId: string, isFormVisible: boolean) => {
+        this.setState({ isEditMode: true, showForm: isFormVisible });
         this.state.articles.map((article: any) => {
             if (article._id === articleId) {
                 this.setState({ editData: article });
@@ -172,6 +174,10 @@ export class App extends React.Component<any, any> {
         this.articleService.setArticlesData(data);
     }
 
+    handleToggleFormDisplay = (isFormVisible: boolean) => {
+        this.setState({ showForm: isFormVisible });
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -180,26 +186,29 @@ export class App extends React.Component<any, any> {
 
                         <aside className="sidebar-panel">
 
-                            <Categories {...this.state} onFilterArticles={this.handleFilterArticles} />
-
-                            <Tags {...this.state} onFilterArticles={this.handleFilterArticles} />
+                            <Sidebar onFilterArticles={this.handleFilterArticles} onShowAddEditForm={this.handleToggleFormDisplay} {...this.state} />
 
                         </aside>
 
                         <section className="content-wrapper">
 
-                            <Header />
-                            <input type="text" placeholder="Search" onChange={(event) => this.handleFilterArticles(event, 'tag')} />
-                            <ArticlesList {...this.state}
-                                onDeleteArticle={this.handleDeleteArticle}
-                                onEditArticle={this.handleEditArticle}
-                                onDisplaySingleArticleContent={this.handleDisplaySingleArticleContent}
-                            />
+                            <Header onFilterArticles={this.handleFilterArticles} />
 
-                            <CreateArticleFormComponent
-                                {...this.state}
-                                onCreateArticle={this.handleCreateArticle}
-                                onEditSaveArticle={this.handleEditSaveArticle} />
+
+                            {/* If "showform"=true then display Create form else show list items */}
+                            {
+                                this.state.showForm ?
+                                    <CreateArticleFormComponent
+                                        {...this.state}
+                                        onCreateArticle={this.handleCreateArticle}
+                                        onEditSaveArticle={this.handleEditSaveArticle} /> :
+                                    <ArticlesList {...this.state}
+                                        onDeleteArticle={this.handleDeleteArticle}
+                                        onEditArticle={this.handleEditArticle}
+                                        onDisplaySingleArticleContent={this.handleDisplaySingleArticleContent}
+                                    />
+                            }
+
 
                             <Article currentArticle={this.state.currentArticle} />
 

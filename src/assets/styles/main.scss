@@ -1,5 +1,15 @@
+// main.scss
+
+@import './variables';
+@import './_mixins';
+
 // Bootstrap 4.1
-@import './bootstrap.min.css';
+// @import './bootstrap.min.css';
+
+// Spectre.css : https://picturepan2.github.io/spectre/index.html
+@import './spectre.min.css';
+@import './spectre-exp.min.css';
+@import './spectre-icons.min.css';
 
 // Highlight.js for Syntax highlighting
 @import './highlight-themes/atom-one-light.css';
@@ -8,12 +18,7 @@
 @import './fonts';
 
 @import './_healpers';
-
-@import './_mixins';
-@import './variables';
-
 @import './_categories-color';
-
 @import './_header';
 @import './_sidebar';
 @import './_post-list';

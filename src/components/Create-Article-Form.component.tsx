@@ -16,26 +16,25 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
 
     constructor(props: any) {
         super(props);
-
-
-        console.log('CreateArticleFormComponent : ', props);
-
+        console.log('Form props: ', props);
         this.state = {
-            txtPostTitle: '',
-            txtCategory: 'JavaScript',
-            txtTags: 'JavaScript, ES6',
-            txtPostDate: new Date(),
-            txtWebsiteUrl: '',
-            txtSavePostToPath: '',
-            txtPostType: 'Post',
-            txtCoverImage: '',
-            txtExcerpt: '',
-            txtareaHtmlCode: '',
-            txtareaMarkdownCode: ''
+            id: props.editData._id,
+            txtPostTitle: props.editData.title,
+            txtCategory: props.editData.category,
+            txtTags: props.editData.tags.join(),
+            txtPostDate: props.editData.date,
+            txtWebsiteUrl: props.editData.sourceUrl,
+            txtSavePostToPath: props.editData.path,
+            txtPostType: props.editData.type,
+            txtCoverImage: props.editData.coverImage,
+            txtExcerpt: props.editData.excerpt,
+            txtareaHtmlCode: props.editData.markdownCode ? converter.makeHtml(props.editData.markdownCode) : '',
+            txtareaMarkdownCode: props.editData.markdownCode ? props.editData.markdownCode : ''
         }
 
         const [month, day, year] = new Date().toString().split('/');
         console.log(month, day, year);
+
         this.turndownService = new TurndownService({
             codeBlockStyle: 'fenced',
             fence: '```',
@@ -46,7 +45,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         });
     }
 
-    componentWillReceiveProps(nextProps: any) {
+    /* componentWillReceiveProps(nextProps: any) {
         if (nextProps.editData) {
             console.log('nextProps Create form : ', nextProps);
             this.setState({
@@ -64,7 +63,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
                 txtareaMarkdownCode: nextProps.editData.markdownCode ? nextProps.editData.markdownCode : ''
             });
         }
-    }
+    } */
 
     formatDate(date: any, format: string) {
         let dateObj = new Date(date);
@@ -181,94 +180,94 @@ type: "${frontmatterObj.type}"
     handleReset = (event: any) => {
         event.preventDefault();
 
-        const form = document.querySelector('#formHtmltoMd');
+        const form = document.querySelector('#formCreateEditArticle');
         form.reset();
     }
 
     render() {
         return (
-            <form name="formHtmltoMd" id="formHtmltoMd" method="POST" onSubmit={this.handleSubmit} encType="multipart/form-data">
-                <div className="row">
-                    <div className="col-12 col-md-6 col-sm-6">
+            <form name="formCreateEditArticle" id="formCreateEditArticle" method="POST" onSubmit={this.handleSubmit} encType="multipart/form-data">
+                <div className="columns">
+                    <div className="column col-6 col-xs-12 col-md-6 col-sm-6">
                         <div className="form-group">
-                            <label htmlFor="txtPostTitle">Title</label>
-                            <input type="text" className="form-control" name="txtPostTitle" id="txtPostTitle" placeholder="Post Title" onChange={this.handleInputChange} value={this.state.txtPostTitle} />
+                            <label className="form-label" htmlFor="txtPostTitle">Title</label>
+                            <input type="text" className="form-input" name="txtPostTitle" id="txtPostTitle" placeholder="Post Title" onChange={this.handleInputChange} value={this.state.txtPostTitle} />
                         </div>
                     </div>
-                    <div className="col-12 col-md-2 col-sm-6">
+                    <div className="column col-2 col-md-3 col-sm-6">
                         <div className="form-group">
-                            <label htmlFor="txtCategory">Category</label>
-                            <input type="text" className="form-control" name="txtCategory" id="txtCategory" placeholder="Category" onChange={this.handleInputChange} value={this.state.txtCategory} />
+                            <label className="form-label" htmlFor="txtCategory">Category</label>
+                            <input type="text" className="form-input" name="txtCategory" id="txtCategory" placeholder="Category" onChange={this.handleInputChange} value={this.state.txtCategory} />
                         </div>
                     </div>
-                    <div className="col-12 col-md-2 col-sm-6">
+                    <div className="column col-2 col-md-3 col-sm-6">
                         <div className="form-group">
-                            <label htmlFor="txtTags">Tags</label>
-                            <input type="text" className="form-control" name="txtTags" id="txtTags" placeholder="Tags" onChange={this.handleInputChange} value={this.state.txtTags} />
+                            <label className="form-label" htmlFor="txtTags">Tags</label>
+                            <input type="text" className="form-input" name="txtTags" id="txtTags" placeholder="Tags" onChange={this.handleInputChange} value={this.state.txtTags} />
                         </div>
                     </div>
-                    <div className="col-12 col-md-2 col-sm-6">
+                    <div className="column col-2 col-md-12 col-sm-6">
                         <div className="form-group">
-                            <label htmlFor="txtPostDate">Date</label>
-                            <input type="date" className="form-control" name="txtPostDate" id="txtPostDate" placeholder="Tags" onChange={this.handleInputChange} value={this.state.txtPostDate} />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="row">
-                    <div className="col-12 col-md-6 col-sm-6">
-                        <div className="form-group">
-                            <label htmlFor="txtWebsiteUrl">Website URL</label>
-                            <input type="text" className="form-control" name="txtWebsiteUrl" id="txtWebsiteUrl" placeholder="Website URL" onChange={this.handleInputChange} value={this.state.txtWebsiteUrl} />
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-4 col-sm-6">
-                        <div className="form-group">
-                            <label htmlFor="txtSavePostToPath">Path to Save</label>
-                            <input type="text" className="form-control" name="txtSavePostToPath" id="txtSavePostToPath" onChange={this.handleInputChange} value={this.state.txtSavePostToPath} />
-                        </div>
-                    </div>
-                    <div className="col-12 col-md-2 col-sm-6">
-                        <div className="form-group">
-                            <label htmlFor="txtPostType">Post Type</label>
-                            <input type="text" className="form-control" name="txtPostType" id="txtPostType" onChange={this.handleInputChange} value={this.state.txtPostType} />
+                            <label className="form-label" htmlFor="txtPostDate">Date</label>
+                            <input type="date" className="form-input" name="txtPostDate" id="txtPostDate" placeholder="Tags" onChange={this.handleInputChange} value={this.state.txtPostDate} />
                         </div>
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col-12 col-md-6 col-sm-6">
+                <div className="columns">
+                    <div className="column col-6 col-md-6 col-sm-6">
                         <div className="form-group">
-                            <label htmlFor="txtCoverImage">Cover Image</label>
-                            <input type="text" className="form-control" name="txtCoverImage" id="txtCoverImage" placeholder="Image path..." onChange={this.handleInputChange} value={this.state.txtCoverImage} />
+                            <label className="form-label" htmlFor="txtWebsiteUrl">Website URL</label>
+                            <input type="text" className="form-input" name="txtWebsiteUrl" id="txtWebsiteUrl" placeholder="Website URL" onChange={this.handleInputChange} value={this.state.txtWebsiteUrl} />
                         </div>
                     </div>
-                    <div className="col-12 col-md-6 col-sm-6">
+                    <div className="column col-4 col-md-4 col-sm-6">
                         <div className="form-group">
-                            <label htmlFor="txtExcerpt">Excerpt</label>
-                            <input type="text" className="form-control" name="txtExcerpt" id="txtExcerpt" placeholder="Excerpt" onChange={this.handleInputChange} value={this.state.txtExcerpt} />
+                            <label className="form-label" htmlFor="txtSavePostToPath">Path to Save</label>
+                            <input type="text" className="form-input" name="txtSavePostToPath" id="txtSavePostToPath" onChange={this.handleInputChange} value={this.state.txtSavePostToPath} />
+                        </div>
+                    </div>
+                    <div className="column col-2 col-md-2 col-sm-6">
+                        <div className="form-group">
+                            <label className="form-label" htmlFor="txtPostType">Post Type</label>
+                            <input type="text" className="form-input" name="txtPostType" id="txtPostType" onChange={this.handleInputChange} value={this.state.txtPostType} />
                         </div>
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col-12 col-md-6 col-sm-6">
+                <div className="columns">
+                    <div className="column col-6 col-md-6 col-sm-6">
                         <div className="form-group">
-                            <label htmlFor="txtareaHtmlCode">HTML code</label>
-                            <textarea className="form-control" rows="10" name="txtareaHtmlCode" id="txtareaHtmlCode" onChange={this.handleInputChange} value={this.state.txtareaHtmlCode}></textarea>
+                            <label className="form-label" htmlFor="txtCoverImage">Cover Image</label>
+                            <input type="text" className="form-input" name="txtCoverImage" id="txtCoverImage" placeholder="Image path..." onChange={this.handleInputChange} value={this.state.txtCoverImage} />
                         </div>
                     </div>
-                    <div className="col-12 col-md-6 col-sm-6">
+                    <div className="column col-6 col-md-6 col-sm-6">
                         <div className="form-group">
-                            <label htmlFor="txtareaMarkdownCode">Markdown code</label>
-                            <textarea className="form-control" rows="10" name="txtareaMarkdownCode" id="txtareaMarkdownCode" onChange={this.handleInputChange} value={this.state.txtareaMarkdownCode}></textarea>
+                            <label className="form-label" htmlFor="txtExcerpt">Excerpt</label>
+                            <input type="text" className="form-input" name="txtExcerpt" id="txtExcerpt" placeholder="Excerpt" onChange={this.handleInputChange} value={this.state.txtExcerpt} />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="columns">
+                    <div className="column col-6 col-md-6 col-sm-6">
+                        <div className="form-group">
+                            <label className="form-label" htmlFor="txtareaHtmlCode">HTML code</label>
+                            <textarea className="form-input" rows="10" name="txtareaHtmlCode" id="txtareaHtmlCode" onChange={this.handleInputChange} value={this.state.txtareaHtmlCode}></textarea>
+                        </div>
+                    </div>
+                    <div className="column col-6 col-md-6 col-sm-6">
+                        <div className="form-group">
+                            <label className="form-label" htmlFor="txtareaMarkdownCode">Markdown code</label>
+                            <textarea className="form-input" rows="10" name="txtareaMarkdownCode" id="txtareaMarkdownCode" onChange={this.handleInputChange} value={this.state.txtareaMarkdownCode}></textarea>
                         </div>
                     </div>
                 </div>
 
                 <p className="text-right">
                     <button id="convertToMarkdown" className="btn btn-primary">Convert</button>
-                    <button id="btnResetConvertForm" className="btn btn-secondary" onClick={this.handleReset}>Reset Form</button>
+                    <button id="btnResetConvertForm" className="btn" onClick={this.handleReset}>Reset Form</button>
                 </p>
             </form>
         )

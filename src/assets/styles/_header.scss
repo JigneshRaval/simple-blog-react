@@ -68,13 +68,13 @@
     transform-origin: bottom left;
     transform: scaleX(1);
 }
-
-.sidebar-panel {
-	width: 15%;
-	background-color: #FFF;
-	display: none;
-	border-right: 1px solid #DDD;
+#toggleSidebar {
+	color: #000;
+	font-weight: 700;
+	text-decoration: none;
+	margin: 0 1em 0 0;
 }
-.isIndexNavOpened .sidebar-panel {
-	display: block;
+#toggleSidebar:hover,
+#toggleSidebar:focus {
+	text-decoration: none;
 }
