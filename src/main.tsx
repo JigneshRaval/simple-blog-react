@@ -27,13 +27,12 @@ export class App extends React.Component<any, any> {
 
         this.state = {
             articles: [],
+            filteredArticles: [],
             isEditMode: false,
             articleCount: 0,
             editData: {},
             currentArticle: '',
-            articleService: this.articleService,
-            serachText: '',
-            filteredArticles: []
+            articleService: this.articleService
         };
     }
 
@@ -126,53 +125,45 @@ export class App extends React.Component<any, any> {
     }
 
 
-    // Filter articles by Tag or Category
+    // Filter all the articles by Tag, Category or the search value provided by the user
     // =========================================
-    handleFilterArticles = (filterBy: string, event: any, ) => {
+    handleFilterArticles = (event: any, filterBy: string) => {
         let filteredList: any = [];
+        let searchTerm = event.target.value || event.target.getAttribute('data-tag-name')
 
+        if (searchTerm) {
 
-        if (filterBy === 'tag') {
-            this.state.articles.reduce((newArticles: any, article: any) => {
-                // let test1 = [];
-                if (article.tags) {
-                    article.tags.map(tag => {
-                        if (tag && tag.toLowerCase().indexOf(event.target.value) === -1) {
-                            newArticles.push(article);
-                            // return article;
+            switch (filterBy) {
+                case 'tag':
+                    // Method 1: filter articles by tags matching with search term
+                    let articleByTags = this.state.articles.filter(({ tags }: any) => {
+                        return tags.some((tag: any) => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+                    });
+
+                    filteredList = [...articleByTags];
+                    break;
+                case 'category':
+                    // Method 1: filter articles by tags matching with search term
+                    let articlesByCategory = this.state.articles.filter(({ category }: any) => {
+                        return category.toLowerCase().includes(searchTerm.toLowerCase())
+                    });
+
+                    filteredList = [...articlesByCategory];
+                    break;
+                default:
+                    this.state.articles.map((article: any) => {
+                        if (article[filterBy].indexOf(searchTerm) > -1) {
+                            filteredList.push(article);
                         }
                     });
-                } else {
-                    // newArticles.push(article);
-                }
-
-                console.log('test1 =', newArticles);
-                return newArticles;
-            }, []);
-        } else {
-            this.state.articles.map((article: any) => {
-                if (article[filterBy].indexOf(event.target.value) > -1) {
-                    filteredList.push(article);
-                }
-            });
-        }
-
-        console.log('filteredList :', filteredList)
-
-        this.setState({ filteredArticles: filteredList });
-    }
-
-    filterList = (event: any) => {
-        console.log(event);
-        let filteredList: any = []
-
-        this.state.articles.map((article: any) => {
-            if (article.tags.includes(this.state.serachText)) {
-                filteredList.push(article);
             }
-        });
 
-        this.setState({ filteredArticles: filteredList });
+            // If "searchTerm" provided then, Set filtered articles in the state
+            this.setState({ filteredArticles: filteredList });
+        } else {
+            // If "searchTerm" NOT provided then, Set default articles list into the filtered articles in the state
+            this.setState({ filteredArticles: this.state.articles });
+        }
     }
 
     // Update variable value in articles.service.ts
@@ -189,7 +180,7 @@ export class App extends React.Component<any, any> {
 
                         <aside className="sidebar-panel">
 
-                            <Categories {...this.state} />
+                            <Categories {...this.state} onFilterArticles={this.handleFilterArticles} />
 
                             <Tags {...this.state} onFilterArticles={this.handleFilterArticles} />
 
@@ -198,7 +189,7 @@ export class App extends React.Component<any, any> {
                         <section className="content-wrapper">
 
                             <Header />
-                            <input type="text" placeholder="Search" onChange={(e) => this.handleFilterArticles('tag', e)} />
+                            <input type="text" placeholder="Search" onChange={(event) => this.handleFilterArticles(event, 'tag')} />
                             <ArticlesList {...this.state}
                                 onDeleteArticle={this.handleDeleteArticle}
                                 onEditArticle={this.handleEditArticle}

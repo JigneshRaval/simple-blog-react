@@ -4,7 +4,7 @@
 
 import React from 'react';
 
-const Categories = ({ articles }: any) => {
+const Categories = ({ articles, onFilterArticles }: any) => {
 
     const getUniqueCategories = () => {
         let uniqueCategories = articles.reduce((uniqcats: any, article: any) => {
@@ -26,7 +26,7 @@ const Categories = ({ articles }: any) => {
                     getUniqueCategories().map((category: any, index: number) => {
                         return (
                             <li className="category-list__item" key={index}>
-                                <a href="/pages/{{@key}}/index.html">
+                                <a href="javascript: void(0);" data-tag-name={category} onClick={(event) => onFilterArticles(event, 'category')}>
                                     <i className="tag-list__icon icon-technology"><img src="/assets/images/icons/{{this}}.svg" /></i> {category}
                                 </a>
                             </li>
