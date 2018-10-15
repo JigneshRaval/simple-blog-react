@@ -15,7 +15,7 @@ const Sidebar = (props: any) => {
             <header>
                 <h5>WEB-GEMS</h5>
             </header>
-            <button onClick={() => props.onShowAddEditForm(true)}>Add Article</button>
+            <button className="uk-button uk-button-secondary" onClick={() => props.onShowAddEditForm(true)}>Add Article</button>
             <Categories {...props}  />
             <Tags {...props} />
 

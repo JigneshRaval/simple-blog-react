@@ -2,8 +2,17 @@
 =============================================*/
 
 .post-list__wrapper {
-	padding: 4em;
+	flex-basis: 20%;
+	flex-shrink: 0;
+	/* padding: 4em; */
 	/* background-color: #f4f4f4; */
+	.columns {
+		flex-direction: column;
+	}
+
+	.card-title {
+		font-size: 1rem;
+	}
 }
 .post-list {
 	list-style-type: none;

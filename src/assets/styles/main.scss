@@ -9,9 +9,13 @@
 @import './summernote-lite.css';
 
 // Spectre.css : https://picturepan2.github.io/spectre/index.html
-@import './spectre.min.css';
+/* @import './spectre.min.css';
 @import './spectre-exp.min.css';
 @import './spectre-icons.min.css';
+@import './spectre-override'; */
+
+@import './uikit.css';
+@import './uikit-rtl.css';
 
 // Highlight.js for Syntax highlighting
 @import './highlight-themes/atom-one-light.css';

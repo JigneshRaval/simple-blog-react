@@ -6,13 +6,13 @@ const Header = (props: any) => {
             <section className="navbar-section">
                 <h5 className="header-title">
                     <a id="toggleSidebar" href="javascript:void(0);">&#9776;</a>
-                    <a href="/">WEBGEMS <span>Developer Resources</span></a>
+                    <a href="/">WEBGEMS <span hidden>Developer Resources</span></a>
                 </h5>
             </section>
             <section className="navbar-section">
                 <div className="input-group input-inline">
-                    <input className="form-input" type="text" placeholder="Search articles by Tag, Category etc..." onChange={(event) => props.onFilterArticles(event, 'tag')} />
-                    <button className="btn btn-primary input-group-btn">Search</button>
+                    <input className="uk-input" type="text" placeholder="Search articles by Tag, Category etc..." onChange={(event) => props.onFilterArticles(event, 'tag')} />
+                    <button className="uk-button uk-button-primary">Search</button>
                 </div>
             </section>
             <section className="navbar-section">

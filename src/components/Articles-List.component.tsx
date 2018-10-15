@@ -13,22 +13,22 @@ export const ArticlesList = (props: any) => {
 
     return (
         <div className="post-list__wrapper">
-            <div className="columns">
+            <div className="uk-flex uk-flex-column">
                 {
                     props.filteredArticles.map((article: any) => {
                         return (
-                            <div className="column col-4 col-xs-12" key={article._id}>
+                            <div className="uk-card uk-card-default" key={article._id}>
                                 <div className="card" data-category={article.category}>
-                                    <div className="card-image">
+                                    {/* <div className="card-image">
                                         <img src="img/osx-el-capitan.jpg" className="img-responsive" />
-                                    </div>
+                                    </div> */}
                                     <div className="card-header">
-                                        <h2 className="card-title"><a href="javascript: void(0);" onClick={() => props.onDisplaySingleArticleContent(article._id)}>{article.title}</a></h2>
+                                        <h2 className="uk-card-title"><a href="javascript: void(0);" onClick={() => props.onDisplaySingleArticleContent(article._id)}>{article.title}</a></h2>
                                         <div className="card-subtitle text-gray">{article.category}</div>
                                     </div>
-                                    <div className="card-body">
+                                    {/* <div className="card-body">
                                         <p className="post-list__excerpt">{article.excerpt}</p>
-                                    </div>
+                                    </div> */}
                                     <div className="card-footer">
                                         <div>
                                             {

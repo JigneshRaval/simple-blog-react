@@ -6,3 +6,11 @@ let jQuery = require('./assets/js/jquery.js');
 
 let SummerNote = require('./assets/js/summernote-lite.js');
 (<any>window).$.SummerNote = SummerNote;
+
+let SummerNote = require('./assets/js/summernote-lite.js');
+
+import UIkit from './assets/js/uikit';
+import Icons from './assets/js/uikit-icons';
+(<any>window).UIkit = UIkit;
+UIkit.use(Icons);
+UIkit.notification('Hello world.');

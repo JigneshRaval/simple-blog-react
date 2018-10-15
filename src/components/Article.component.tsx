@@ -11,11 +11,21 @@ const converter = new ShowdownService.Converter();
 
 export const Article = (props: any) => {
 
+    const { currentArticle: article } = props;
+
     function createMarkup() {
-        return { __html: converter.makeHtml(props.currentArticle.htmlCode) };
+        return { __html: converter.makeHtml(article.htmlCode) };
     }
 
     return (
-        <article dangerouslySetInnerHTML={createMarkup()}></article>
+        <article className="article-view">
+            <header className="article__header">
+                <h1>{article.title}</h1>
+            </header>
+            <div className="article__content" dangerouslySetInnerHTML={createMarkup()}></div>
+            <footer>
+
+            </footer>
+        </article>
     )
 }

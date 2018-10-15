@@ -201,6 +201,7 @@ export class App extends React.Component<any, any> {
 
                             <Header onFilterArticles={this.handleFilterArticles} />
 
+<section className="content-section">
                             {/* If "showform"=true then display Create form else show list items */}
                             {
                                 this.state.showForm ?
@@ -218,7 +219,7 @@ export class App extends React.Component<any, any> {
 
 
                             <Article currentArticle={this.state.currentArticle} />
-
+                            </section>
                         </section>
                     </div>
                 </main>

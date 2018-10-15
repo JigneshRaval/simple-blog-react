@@ -58,7 +58,6 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
     componentDidMount() {
         $('#txtareaHtmlCode').summernote({
             placeholder: 'Write your article content here...',
-            tabsize: 4,
             height: 300
         });
     }
@@ -142,8 +141,25 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         this.props.onToggleAddEditForm(false);
     }
 
+    // Clean HTML tags by removing Class, ID and Style attributes
     sanitizeHtml(html: any) {
-        return html.replace(/\s*(\w+)=\"[^\"]+\"/gim, '').replace(/<script>[\w\W\s\S]+<\/script>/gim);
+        let wrapperDiv = document.createElement('div');
+        wrapperDiv.id = "wrapper-container";
+        wrapperDiv.innerHTML = html;
+
+        wrapperDiv.querySelectorAll('*').forEach(node => {
+            console.log('node :', node);
+            if (node.nodeName !== 'PRE') {
+                node.removeAttribute('id');
+                node.removeAttribute('class');
+                node.removeAttribute('style');
+            }
+        })
+
+        console.log(wrapperDiv.outerHTML);
+
+        return wrapperDiv.outerHTML;
+        // return html.replace(/\s*(\w+)=\"[^\"]+\"/gim, '').replace(/<script>[\w\W\s\S]+<\/script>/gim);
     }
 
     // convert HTML code to Markdown formate
@@ -185,93 +201,94 @@ type: '${frontmatterObj.type}'
 
         const form = document.querySelector('#formCreateEditArticle');
         form.reset();
+        this.props.onToggleAddEditForm(false);
     }
 
     render() {
         return (
             <form name="formCreateEditArticle" id="formCreateEditArticle" method="POST" onSubmit={this.handleSubmit} encType="multipart/form-data">
-                <div className="columns">
-                    <div className="column col-6 col-xs-12 col-md-6 col-sm-6">
-                        <div className="form-group">
+                <div className="uk-grid">
+                    <div className="uk-width-3-3@m">
+                        <div className="uk-margin">
                             <label className="form-label" htmlFor="txtPostTitle">Title</label>
-                            <input type="text" className="form-input" name="txtPostTitle" id="txtPostTitle" placeholder="Post Title" onChange={this.handleInputChange} value={this.state.txtPostTitle} />
+                            <input type="text" className="uk-input" name="txtPostTitle" id="txtPostTitle" placeholder="Post Title" onChange={this.handleInputChange} value={this.state.txtPostTitle} />
                         </div>
                     </div>
-                    <div className="column col-2 col-md-3 col-sm-6">
-                        <div className="form-group">
+                    <div className="uk-width-1-3@m">
+                        <div className="uk-margin">
                             <label className="form-label" htmlFor="txtCategory">Category</label>
-                            <input type="text" className="form-input" name="txtCategory" id="txtCategory" placeholder="Category" onChange={this.handleInputChange} value={this.state.txtCategory} />
+                            <input type="text" className="uk-input" name="txtCategory" id="txtCategory" placeholder="Category" onChange={this.handleInputChange} value={this.state.txtCategory} />
                         </div>
                     </div>
-                    <div className="column col-2 col-md-3 col-sm-6">
-                        <div className="form-group">
+                    <div className="uk-width-1-3@m">
+                        <div className="uk-margin">
                             <label className="form-label" htmlFor="txtTags">Tags</label>
-                            <input type="text" className="form-input" name="txtTags" id="txtTags" placeholder="Tags" onChange={this.handleInputChange} value={this.state.txtTags} />
+                            <input type="text" className="uk-input" name="txtTags" id="txtTags" placeholder="Tags" onChange={this.handleInputChange} value={this.state.txtTags} />
                         </div>
                     </div>
-                    <div className="column col-2 col-md-12 col-sm-6">
-                        <div className="form-group">
+                    <div className="uk-width-1-3@m">
+                        <div className="uk-margin">
                             <label className="form-label" htmlFor="txtPostDate">Date</label>
-                            <input type="date" className="form-input" name="txtPostDate" id="txtPostDate" placeholder="Tags" onChange={this.handleInputChange} value={this.state.txtPostDate} />
+                            <input type="date" className="uk-input" name="txtPostDate" id="txtPostDate" placeholder="Tags" onChange={this.handleInputChange} value={this.state.txtPostDate} />
                         </div>
                     </div>
                 </div>
 
-                <div className="columns">
-                    <div className="column col-6 col-md-6 col-sm-6">
-                        <div className="form-group">
+                <div className="uk-grid">
+                    <div className="uk-width-1-2@m">
+                        <div className="uk-margin">
                             <label className="form-label" htmlFor="txtWebsiteUrl">Website URL</label>
-                            <input type="text" className="form-input" name="txtWebsiteUrl" id="txtWebsiteUrl" placeholder="Website URL" onChange={this.handleInputChange} value={this.state.txtWebsiteUrl} />
+                            <input type="text" className="uk-input" name="txtWebsiteUrl" id="txtWebsiteUrl" placeholder="Website URL" onChange={this.handleInputChange} value={this.state.txtWebsiteUrl} />
                         </div>
                     </div>
-                    <div className="column col-4 col-md-4 col-sm-6">
-                        <div className="form-group">
+                    <div className="uk-width-1-3@m">
+                        <div className="uk-margin">
                             <label className="form-label" htmlFor="txtSavePostToPath">Path to Save</label>
-                            <input type="text" className="form-input" name="txtSavePostToPath" id="txtSavePostToPath" onChange={this.handleInputChange} value={this.state.txtSavePostToPath} />
+                            <input type="text" className="uk-input" name="txtSavePostToPath" id="txtSavePostToPath" onChange={this.handleInputChange} value={this.state.txtSavePostToPath} />
                         </div>
                     </div>
-                    <div className="column col-2 col-md-2 col-sm-6">
-                        <div className="form-group">
+                    <div className="uk-width-1-6@m">
+                        <div className="uk-margin">
                             <label className="form-label" htmlFor="txtPostType">Post Type</label>
-                            <input type="text" className="form-input" name="txtPostType" id="txtPostType" onChange={this.handleInputChange} value={this.state.txtPostType} />
+                            <input type="text" className="uk-input" name="txtPostType" id="txtPostType" onChange={this.handleInputChange} value={this.state.txtPostType} />
                         </div>
                     </div>
                 </div>
 
-                <div className="columns">
-                    <div className="column col-6 col-md-6 col-sm-6">
-                        <div className="form-group">
+                <div className="uk-grid">
+                    <div className="uk-width-1-2@m">
+                        <div className="uk-margin">
                             <label className="form-label" htmlFor="txtCoverImage">Cover Image</label>
-                            <input type="text" className="form-input" name="txtCoverImage" id="txtCoverImage" placeholder="Image path..." onChange={this.handleInputChange} value={this.state.txtCoverImage} />
+                            <input type="text" className="uk-input" name="txtCoverImage" id="txtCoverImage" placeholder="Image path..." onChange={this.handleInputChange} value={this.state.txtCoverImage} />
                         </div>
                     </div>
-                    <div className="column col-6 col-md-6 col-sm-6">
-                        <div className="form-group">
+                    <div className="uk-width-1-2@m">
+                        <div className="uk-margin">
                             <label className="form-label" htmlFor="txtExcerpt">Excerpt</label>
-                            <input type="text" className="form-input" name="txtExcerpt" id="txtExcerpt" placeholder="Excerpt" onChange={this.handleInputChange} value={this.state.txtExcerpt} />
+                            <input type="text" className="uk-input" name="txtExcerpt" id="txtExcerpt" placeholder="Excerpt" onChange={this.handleInputChange} value={this.state.txtExcerpt} />
                         </div>
                     </div>
                 </div>
 
-                <div className="columns">
-                    <div className="column col-6 col-md-6 col-sm-6">
-                        <div className="form-group">
+                <div className="uk-grid">
+                    <div className="uk-width-1-2@m">
+                        <div className="uk-margin">
                             <label className="form-label" htmlFor="txtareaHtmlCode">HTML code</label>
-                            <textarea className="form-input" rows="10" name="txtareaHtmlCode" id="txtareaHtmlCode" onChange={this.handleInputChange} value={this.state.txtareaHtmlCode}></textarea>
+                            <textarea className="uk-textarea" rows="10" name="txtareaHtmlCode" id="txtareaHtmlCode" onChange={this.handleInputChange} value={this.state.txtareaHtmlCode}></textarea>
                         </div>
                     </div>
-                    <div className="column col-6 col-md-6 col-sm-6">
-                        <div className="form-group">
+                    <div className="uk-width-1-2@m">
+                        <div className="uk-margin">
                             <label className="form-label" htmlFor="txtareaMarkdownCode">Markdown code</label>
-                            <textarea className="form-input" rows="10" name="txtareaMarkdownCode" id="txtareaMarkdownCode" onChange={this.handleInputChange} value={this.state.txtareaMarkdownCode}></textarea>
+                            <textarea className="uk-textarea" rows="10" name="txtareaMarkdownCode" id="txtareaMarkdownCode" onChange={this.handleInputChange} value={this.state.txtareaMarkdownCode}></textarea>
                         </div>
                     </div>
                 </div>
 
                 <p className="text-right">
-                    <button id="convertToMarkdown" className="btn btn-primary">Convert</button>
-                    <button id="btnResetConvertForm" className="btn" onClick={this.handleReset}>Reset Form</button>
-                    <button id="btnCloseConvertForm" className="btn" onClick={() => this.props.onToggleAddEditForm(false)}>Reset Form</button>
+                    <button id="convertToMarkdown" className="uk-button uk-button-primary">Convert</button>
+
+                    <button id="btnResetConvertForm" className="uk-button uk-button-default" onClick={this.handleReset}>Reset Form</button>
                 </p>
             </form>
         )
