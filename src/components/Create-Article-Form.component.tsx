@@ -4,8 +4,12 @@ import React from 'react';
 // import { ArticleService } from "../services/articles.service";
 
 // Turndown : Html to Markdown convertor
-let TurndownService = require("../assets/js/turndown.browser.umd.js");
-let ShowdownService = require("../assets/js/showdown.js");
+let TurndownService = require('../assets/js/turndown.browser.umd.js');
+let ShowdownService = require('../assets/js/showdown.js');
+// let SummerNote = require('../assets/js/summernote-lite.js');
+
+console.log('SummerNote : ', $.summernote);
+
 const converter = new ShowdownService.Converter();
 
 export class CreateArticleFormComponent extends React.Component<any, any> {
@@ -16,19 +20,23 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
 
     constructor(props: any) {
         super(props);
+
         console.log('Form props: ', props);
+
+        // $('#txtareaHtmlCode').summernote('code', converter.makeHtml(props.editData.markdownCode));
+
         this.state = {
-            id: props.editData._id,
-            txtPostTitle: props.editData.title,
-            txtCategory: props.editData.category,
-            txtTags: props.editData.tags.join(),
-            txtPostDate: props.editData.date,
-            txtWebsiteUrl: props.editData.sourceUrl,
-            txtSavePostToPath: props.editData.path,
-            txtPostType: props.editData.type,
-            txtCoverImage: props.editData.coverImage,
-            txtExcerpt: props.editData.excerpt,
-            txtareaHtmlCode: props.editData.markdownCode ? converter.makeHtml(props.editData.markdownCode) : '',
+            id: props.editData._id || '',
+            txtPostTitle: props.editData.title || '',
+            txtCategory: props.editData.category || 'JavaScript',
+            txtTags: (props.editData.tags) ? props.editData.tags.join() : 'JavaScript, ES6',
+            txtPostDate: props.editData.date || new Date(),
+            txtWebsiteUrl: props.editData.sourceUrl || '',
+            txtSavePostToPath: props.editData.path || '',
+            txtPostType: props.editData.type || 'Post',
+            txtCoverImage: props.editData.coverImage || '',
+            txtExcerpt: props.editData.excerpt || '',
+            txtareaHtmlCode: props.editData.htmlCode ? props.editData.htmlCode : '',
             txtareaMarkdownCode: props.editData.markdownCode ? props.editData.markdownCode : ''
         }
 
@@ -36,34 +44,24 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         console.log(month, day, year);
 
         this.turndownService = new TurndownService({
-            codeBlockStyle: 'fenced',
+            /* codeBlockStyle: 'fenced',
             fence: '```',
             filter: 'br',
             replacement: function (content: any) {
-                return '\n\n' + content + '\n\n'
-            }
+                return '\r\n\r\n' + content + '\r\n\r\n'
+            } */
         });
+
+        this.turndownService.keep(['br', 'pre', 'code']);
     }
 
-    /* componentWillReceiveProps(nextProps: any) {
-        if (nextProps.editData) {
-            console.log('nextProps Create form : ', nextProps);
-            this.setState({
-                id: nextProps.editData._id,
-                txtPostTitle: nextProps.editData.title,
-                txtCategory: nextProps.editData.category,
-                txtTags: nextProps.editData.tags,
-                txtPostDate: this.formatDate(nextProps.editData.date),
-                txtWebsiteUrl: nextProps.editData.sourceUrl,
-                txtSavePostToPath: nextProps.editData.path,
-                txtPostType: nextProps.editData.type,
-                txtCoverImage: nextProps.editData.coverImage,
-                txtExcerpt: nextProps.editData.excerpt,
-                txtareaHtmlCode: nextProps.editData.markdownCode ? converter.makeHtml(nextProps.editData.markdownCode) : '',
-                txtareaMarkdownCode: nextProps.editData.markdownCode ? nextProps.editData.markdownCode : ''
-            });
-        }
-    } */
+    componentDidMount() {
+        $('#txtareaHtmlCode').summernote({
+            placeholder: 'Write your article content here...',
+            tabsize: 4,
+            height: 300
+        });
+    }
 
     formatDate(date: any, format: string) {
         let dateObj = new Date(date);
@@ -97,8 +95,8 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         const form = event.target;
         const formData = new FormData(form);
 
-        this.convertedHTML = this.convert(formData.get('txtareaHtmlCode'));
-        this.editorOutput.value = this.convertedHTML;
+        /* this.convertedHTML = this.convert(formData.get('txtareaHtmlCode'));
+        this.editorOutput.value = this.convertedHTML; */
 
         // Tags
         let tags: any = formData.get('txtTags');
@@ -126,9 +124,9 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         const formDataObj = {
             ...frontmatterObj,
             'frontmatter': frontmatter,
-            // 'htmlCode': formData.get('txtareaHtmlCode'),
+            'htmlCode': this.sanitizeHtml(formData.get('txtareaHtmlCode')),
             'filePath': `pages/${frontmatterObj.category + '/'}${formData.get('txtSavePostToPath') + '.md'}`,
-            'markdownCode': this.convertedHTML
+            //'markdownCode': this.convertedHTML
         }
 
         if (this.props.isEditMode) {
@@ -141,13 +139,18 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
             form.reset();
         }
 
+        this.props.onToggleAddEditForm(false);
+    }
 
+    sanitizeHtml(html: any) {
+        return html.replace(/\s*(\w+)=\"[^\"]+\"/gim, '').replace(/<script>[\w\W\s\S]+<\/script>/gim);
     }
 
     // convert HTML code to Markdown formate
     convert(htmlContent: any) {
         if (htmlContent) {
             var markdown = this.turndownService.turndown(htmlContent);
+            console.log('markdown : ', markdown);
             return markdown;
         } else {
             return null;
@@ -161,16 +164,16 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
     generateFrontMatter(frontmatterObj: any) {
 
         let frontMatter = `---
-path: "${frontmatterObj.path}"
-date: "${frontmatterObj.date}"
-title: "${frontmatterObj.title}"
-tags: [${frontmatterObj.tags.map((tag: any) => `"${tag.trim()}"`)}]
-category: "${frontmatterObj.category}"
-categoryColor: "#F3C610"
-excerpt: "${frontmatterObj.excerpt}"
-coverImage: "${frontmatterObj.coverImage}"
-sourceUrl: "${frontmatterObj.sourceUrl}"
-type: "${frontmatterObj.type}"
+path: '${frontmatterObj.path}'
+date: '${frontmatterObj.date}'
+title: '${frontmatterObj.title}'
+tags: [${frontmatterObj.tags.map((tag: any) => `'${tag.trim()}'`)}]
+category: '${frontmatterObj.category}'
+categoryColor: '#F3C610'
+excerpt: '${frontmatterObj.excerpt}'
+coverImage: '${frontmatterObj.coverImage}'
+sourceUrl: '${frontmatterObj.sourceUrl}'
+type: '${frontmatterObj.type}'
 ---
     `
 
@@ -268,6 +271,7 @@ type: "${frontmatterObj.type}"
                 <p className="text-right">
                     <button id="convertToMarkdown" className="btn btn-primary">Convert</button>
                     <button id="btnResetConvertForm" className="btn" onClick={this.handleReset}>Reset Form</button>
+                    <button id="btnCloseConvertForm" className="btn" onClick={() => this.props.onToggleAddEditForm(false)}>Reset Form</button>
                 </p>
             </form>
         )

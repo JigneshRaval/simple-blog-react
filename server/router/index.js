@@ -68,9 +68,9 @@ routes.post('/articles/edit/:articleId', (request, response) => {
         date: new Date(),
         coverImage: request.body.coverImage,
         type: request.body.type,
+        htmlCode: request.body.htmlCode,
         markdownCode: request.body.markdownCode
     }
-    console.log(request.params.articleId, request.body);
     // Set an existing field's value
     db.articles.update({ _id: request.params.articleId }, { $set: newData }, { multi: false }, function (err, numReplaced) {
         if (err) {

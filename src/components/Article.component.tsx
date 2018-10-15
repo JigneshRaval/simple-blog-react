@@ -12,7 +12,7 @@ const converter = new ShowdownService.Converter();
 export const Article = (props: any) => {
 
     function createMarkup() {
-        return { __html: converter.makeHtml(props.currentArticle.markdownCode) };
+        return { __html: converter.makeHtml(props.currentArticle.htmlCode) };
     }
 
     return (

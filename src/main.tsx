@@ -6,6 +6,8 @@ import * as ReactDOM from "react-dom";
 
 import './assets/styles/main.scss';
 
+import './vendor.ts';
+
 // SERVICES
 import { ArticleService } from "./services/articles.service";
 
@@ -17,7 +19,12 @@ import Sidebar from './components/Sidebar.component';
 import { ArticlesList } from "./components/Articles-List.component";
 import { Article } from "./components/Article.component";
 import { CreateArticleFormComponent } from './components/Create-Article-Form.component';
-import { EditArticleFormComponent } from './components/Edit-Article-Form.component';
+/*
+import HOC from './components/HOC-examples/HOC.component';
+import UserName from './components/HOC-examples/username.component';
+
+const HOCDemo = HOC(UserName);
+*/
 
 export class App extends React.Component<any, any> {
     articleService: ArticleService;
@@ -194,14 +201,14 @@ export class App extends React.Component<any, any> {
 
                             <Header onFilterArticles={this.handleFilterArticles} />
 
-
                             {/* If "showform"=true then display Create form else show list items */}
                             {
                                 this.state.showForm ?
                                     <CreateArticleFormComponent
                                         {...this.state}
                                         onCreateArticle={this.handleCreateArticle}
-                                        onEditSaveArticle={this.handleEditSaveArticle} /> :
+                                        onEditSaveArticle={this.handleEditSaveArticle}
+                                        onToggleAddEditForm={this.handleToggleFormDisplay} /> :
                                     <ArticlesList {...this.state}
                                         onDeleteArticle={this.handleDeleteArticle}
                                         onEditArticle={this.handleEditArticle}
