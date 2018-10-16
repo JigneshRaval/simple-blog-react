@@ -1,7 +1,7 @@
 
 
 .sidebar-panel {
-	width: 15%;
+	width: 13%;
 	background-color: #5f27cd;
 	display: none;
 	/* border-right: 1px solid #DDD; */
@@ -45,6 +45,8 @@
 	display: block;
 	padding: 4px 2em;
 	color: var(--sidebar-link-color);
+	font-size: 14px;
+	font-weight: bold;
 }
 .tag-list__item a:hover,
 .tag-list__item a:focus {
@@ -81,6 +83,8 @@
 	padding: 4px 2em;
 	margin: 0 4px;
 	color: var(--sidebar-link-color);
+	font-size: 14px;
+	font-weight: bold;
 }
 
 .category-list a:hover,

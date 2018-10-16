@@ -49,7 +49,7 @@ export class App extends React.Component<any, any> {
         // Render all Articles on component mount
         this.articleService.getAllArticles()
             .then((data) => {
-                this.setState({ articles: data.docs, articleCount: data.docs.length, filteredArticles: data.docs });
+                this.setState({ articles: data.docs, articleCount: data.docs.length, filteredArticles: data.docs, currentArticle: data.docs[0] });
 
                 // Update variable value in articles.service.ts
                 this.updateArticleDataService(this.state.articles);
@@ -188,7 +188,7 @@ export class App extends React.Component<any, any> {
     render() {
         return (
             <React.Fragment>
-                <main className="wrapper">
+                <main className="wrapper uk-offcanvas-content">
                     <div className="container-fluid">
 
                         <aside className="sidebar-panel">
@@ -201,27 +201,41 @@ export class App extends React.Component<any, any> {
 
                             <Header onFilterArticles={this.handleFilterArticles} />
 
-<section className="content-section">
-                            {/* If "showform"=true then display Create form else show list items */}
-                            {
-                                this.state.showForm ?
-                                    <CreateArticleFormComponent
-                                        {...this.state}
-                                        onCreateArticle={this.handleCreateArticle}
-                                        onEditSaveArticle={this.handleEditSaveArticle}
-                                        onToggleAddEditForm={this.handleToggleFormDisplay} /> :
-                                    <ArticlesList {...this.state}
-                                        onDeleteArticle={this.handleDeleteArticle}
-                                        onEditArticle={this.handleEditArticle}
-                                        onDisplaySingleArticleContent={this.handleDisplaySingleArticleContent}
-                                    />
-                            }
+                            <section className="content-section">
+                                {/* If "showform"=true then display Create form else show list items */}
+                                <CreateArticleFormComponent
+                                    {...this.state}
+                                    onCreateArticle={this.handleCreateArticle}
+                                    onEditSaveArticle={this.handleEditSaveArticle}
+                                    onToggleAddEditForm={this.handleToggleFormDisplay} />
 
+                                <ArticlesList {...this.state}
+                                    onDeleteArticle={this.handleDeleteArticle}
+                                    onEditArticle={this.handleEditArticle}
+                                    onDisplaySingleArticleContent={this.handleDisplaySingleArticleContent}
+                                />
 
-                            <Article currentArticle={this.state.currentArticle} />
+                                {
+                                    this.state.currentArticle ? (
+                                        <Article currentArticle={this.state.currentArticle} />
+                                    ) : ''
+                                }
+
                             </section>
                         </section>
                     </div>
+                    <div id="offcanvas-usage" uk-offcanvas="">
+                        <div className="uk-offcanvas-bar">
+
+                            <button className="uk-offcanvas-close" type="button" uk-close=""></button>
+
+                            <h3>Title</h3>
+
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+                        </div>
+                    </div>
+
                 </main>
             </React.Fragment>
         )

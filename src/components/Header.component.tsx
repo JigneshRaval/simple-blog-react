@@ -5,7 +5,7 @@ const Header = (props: any) => {
         <header className="navbar header-main">
             <section className="navbar-section">
                 <h5 className="header-title">
-                    <a id="toggleSidebar" href="javascript:void(0);">&#9776;</a>
+                    <a id="toggleSidebar" href="#offcanvas-usage" uk-toggle="">&#9776;</a>
                     <a href="/">WEBGEMS <span hidden>Developer Resources</span></a>
                 </h5>
             </section>
