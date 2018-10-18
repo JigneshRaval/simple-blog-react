@@ -1,0 +1,8 @@
+// UIKit : Override default style
+
+.uk-navbar-container:not(.uk-navbar-transparent) {
+    background-color: #FFF;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}

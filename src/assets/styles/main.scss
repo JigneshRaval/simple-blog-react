@@ -15,7 +15,8 @@
 @import './spectre-override'; */
 
 @import './uikit.css';
-@import './uikit-rtl.css';
+// @import './uikit-rtl.css';
+@import './uikit-override';
 
 // Highlight.js for Syntax highlighting
 @import './highlight-themes/atom-one-light.css';

@@ -21,7 +21,7 @@ export const ArticlesList = (props: any) => {
                                 <div className="card" data-category={article.category}>
                                     <div className="card-controls uk-inline">
                                         <button className="uk-button uk-button-link" type="button"><i uk-icon="more-vertical"></i></button>
-                                        <div uk-dropdown="mode: click">
+                                        <div uk-dropdown="mode: click; pos: bottom-right" className="uk-dropdown-bottom-right">
                                             <ul className="uk-nav uk-dropdown-nav">
                                                 <li className="uk-active"><a href="javascript:void(0);" onClick={() => props.onEditArticle(article._id, true)}>Edit Article</a></li>
                                                 <li><a href="javascript:void(0);" onClick={() => props.onDeleteArticle(article._id)}>Delete Article</a></li>
@@ -35,8 +35,8 @@ export const ArticlesList = (props: any) => {
                                     </div> */}
 
                                     <div className="card-header">
+                                        <div className="article-category">{article.category}</div>
                                         <h2 className="uk-card-title"><a href="javascript: void(0);" onClick={() => props.onDisplaySingleArticleContent(article._id)}>{article.title}</a></h2>
-                                        <div className="card-subtitle text-gray">{article.category}</div>
                                     </div>
 
                                     {/* <div className="card-body">
@@ -47,7 +47,7 @@ export const ArticlesList = (props: any) => {
                                         <div>
                                             {
                                                 article.tags.map((tag: any) => {
-                                                    return <span key={tag} className="post-list__tags">{tag}</span>
+                                                    return <a key={tag} href="#" className="post-list__tags">#{tag}</a>
                                                 })
                                             }
                                         </div>

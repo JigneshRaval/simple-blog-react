@@ -60,11 +60,14 @@ export class App extends React.Component<any, any> {
     }
 
 
-    // Delete single article by articleId
+    // Create new article
     // =========================================
-    handleDeleteArticle = (articleId: string): void => {
-        this.articleService.deleteArticle(articleId).then((data: any) => {
-            this.setState({ articles: data.docs });
+    handleCreateArticle = (formDataObj: any) => {
+        this.articleService.createArticle(formDataObj).then((data: any) => {
+
+            let articles = [data.newDoc, ...this.state.articles];
+
+            this.setState({ articles, filteredArticles: articles });
 
             // Update variable value in articles.service.ts
             this.updateArticleDataService(this.state.articles);
@@ -72,17 +75,13 @@ export class App extends React.Component<any, any> {
     }
 
 
-    // Create new article
+    // Display Single Article Content
     // =========================================
-    handleCreateArticle = (formDataObj: any) => {
-        let articles = [...this.state.articles];
-
-        this.articleService.createArticle(formDataObj).then((data: any) => {
-            articles.push(data.newDoc)
-            this.setState({ articles: articles });
-
-            // Update variable value in articles.service.ts
-            this.updateArticleDataService(this.state.articles);
+    handleDisplaySingleArticleContent = (articleId: string) => {
+        this.state.articles.map((article: any, index: number) => {
+            if (article._id === articleId) {
+                this.setState({ currentArticle: article });
+            }
         });
     }
 
@@ -90,6 +89,7 @@ export class App extends React.Component<any, any> {
     // Get Article data on click of Edit button
     // =========================================
     handleEditArticle = (articleId: string, isFormVisible: boolean) => {
+        UIkit.modal('#modal-example').show();
         this.setState({ isEditMode: true, showForm: isFormVisible });
         this.state.articles.map((article: any) => {
             if (article._id === articleId) {
@@ -115,7 +115,7 @@ export class App extends React.Component<any, any> {
                 }
             });
 
-            this.setState({ articles, editData: {}, isEditMode: false });
+            this.setState({ articles: articles, filteredArticles: articles, editData: {}, isEditMode: false });
 
             // Update variable value in articles.service.ts
             this.updateArticleDataService(this.state.articles);
@@ -123,13 +123,14 @@ export class App extends React.Component<any, any> {
     }
 
 
-    // Display Article Content
+    // Delete single article by articleId
     // =========================================
-    handleDisplaySingleArticleContent = (articleId: string) => {
-        this.state.articles.map((article: any, index: number) => {
-            if (article._id === articleId) {
-                this.setState({ currentArticle: article });
-            }
+    handleDeleteArticle = (articleId: string): void => {
+        this.articleService.deleteArticle(articleId).then((data: any) => {
+            this.setState({ articles: data.docs, filteredArticles: data.docs });
+
+            // Update variable value in articles.service.ts
+            this.updateArticleDataService(this.state.articles);
         });
     }
 
@@ -175,6 +176,7 @@ export class App extends React.Component<any, any> {
         }
     }
 
+
     // Update variable value in articles.service.ts
     // =========================================
     updateArticleDataService = (data: any) => {
@@ -191,11 +193,11 @@ export class App extends React.Component<any, any> {
                 <main className="wrapper uk-offcanvas-content">
                     <div className="container-fluid">
 
-                        <aside className="sidebar-panel">
+                        {/* <aside className="sidebar-panel">
 
                             <Sidebar onFilterArticles={this.handleFilterArticles} onShowAddEditForm={this.handleToggleFormDisplay} {...this.state} />
 
-                        </aside>
+                        </aside> */}
 
                         <section className="content-wrapper">
 
@@ -224,14 +226,14 @@ export class App extends React.Component<any, any> {
                             </section>
                         </section>
                     </div>
-                    <div id="offcanvas-usage" uk-offcanvas="">
+                    <div id="offcanvas-usage" uk-offcanvas="flip:true">
                         <div className="uk-offcanvas-bar">
 
                             <button className="uk-offcanvas-close" type="button" uk-close=""></button>
 
-                            <h3>Title</h3>
+                            <h3>Categories</h3>
 
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            <Sidebar onFilterArticles={this.handleFilterArticles} onShowAddEditForm={this.handleToggleFormDisplay} {...this.state} />
 
                         </div>
                     </div>

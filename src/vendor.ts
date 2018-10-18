@@ -13,4 +13,4 @@ import UIkit from './assets/js/uikit';
 import Icons from './assets/js/uikit-icons';
 (<any>window).UIkit = UIkit;
 UIkit.use(Icons);
-UIkit.notification('Hello world.');
+// UIkit.notification('Hello world.');

@@ -29,19 +29,20 @@ h1, h2, h3, h4, h5, h6 {
 .content-section {
 	display: flex;
 	flex-direction: row;
-    flex-basis: auto;
+	flex-basis: auto;
+	height: 100vh;
 }
 
 
 
 /* = Content Wrapper
 =============================================*/
-.isIndexNavOpened .content-wrapper {
+/* .isIndexNavOpened .content-wrapper {
 	flex-basis: 85%;
 }
 .content-wrapper {
 	flex-basis: 100%;
-}
+} */
 
 
 

@@ -58,6 +58,25 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         });
     }
 
+    // As in UIKit model is opening in new div so props are not setting properly
+    // Update form values when props changes
+    componentWillReceiveProps(nextProps: any) {
+        this.setState({
+            id: nextProps.editData._id || '',
+            txtPostTitle: nextProps.editData.title || '',
+            txtCategory: nextProps.editData.category || 'JavaScript',
+            txtTags: (nextProps.editData.tags) ? nextProps.editData.tags.join() : 'JavaScript, ES6',
+            txtPostDate: nextProps.editData.date || new Date(),
+            txtWebsiteUrl: nextProps.editData.sourceUrl || '',
+            txtSavePostToPath: nextProps.editData.path || '',
+            txtPostType: nextProps.editData.type || 'Post',
+            txtCoverImage: nextProps.editData.coverImage || '',
+            txtExcerpt: nextProps.editData.excerpt || '',
+            txtareaHtmlCode: nextProps.editData.htmlCode ? nextProps.editData.htmlCode : '',
+            txtareaMarkdownCode: nextProps.editData.markdownCode ? nextProps.editData.markdownCode : ''
+        })
+    }
+
     formatDate(date: any, format: string) {
         let dateObj = new Date(date);
 
@@ -125,16 +144,15 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         }
 
         if (this.props.isEditMode) {
-            console.log('Edit Mode');
             this.props.onEditSaveArticle(this.state.id, formDataObj);
             form.reset();
         } else {
-            console.log('Create Mode');
             this.props.onCreateArticle(formDataObj);
             form.reset();
         }
 
-        this.props.onToggleAddEditForm(false);
+        // this.props.onToggleAddEditForm(false);
+        UIkit.modal('#modal-example').hide();
     }
 
     // Clean HTML tags by removing Class, ID and Style attributes
@@ -144,7 +162,6 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         wrapperDiv.innerHTML = html;
 
         wrapperDiv.querySelectorAll('*').forEach(node => {
-            console.log('node :', node);
             if (node.nodeName !== 'PRE') {
                 node.removeAttribute('id');
                 node.removeAttribute('class');
@@ -152,10 +169,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
             }
         })
 
-        console.log(wrapperDiv.outerHTML);
-
         return wrapperDiv.outerHTML;
-        // return html.replace(/\s*(\w+)=\"[^\"]+\"/gim, '').replace(/<script>[\w\W\s\S]+<\/script>/gim);
     }
 
     // convert HTML code to Markdown formate
@@ -197,12 +211,12 @@ type: '${frontmatterObj.type}'
 
         const form = document.querySelector('#formCreateEditArticle');
         form.reset();
-        this.props.onToggleAddEditForm(false);
+        // this.props.onToggleAddEditForm(false);
     }
 
     render() {
         return (
-            <div id="modal-example"  className="uk-modal-full" uk-modal="true">
+            <div id="modal-example" className="uk-modal-full" uk-modal="true">
                 <div className="uk-modal-dialog uk-modal-body">
                     <h2 className="uk-modal-title">Create Article</h2>
                     <button className="uk-modal-close-full uk-close-large uk-align-right" type="button" uk-close=""></button>
