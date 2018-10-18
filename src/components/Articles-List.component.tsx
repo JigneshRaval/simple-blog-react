@@ -47,7 +47,7 @@ export const ArticlesList = (props: any) => {
                                         <div>
                                             {
                                                 article.tags.map((tag: any) => {
-                                                    return <a key={tag} href="#" className="post-list__tags">#{tag}</a>
+                                                    return <a key={tag} href="#" className="post-list__tags" data-tag-name={tag} onClick={(event) => props.onFilterArticles(event, 'tag')}>#{tag}</a>
                                                 })
                                             }
                                         </div>

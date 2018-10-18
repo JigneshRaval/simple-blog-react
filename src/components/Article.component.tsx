@@ -11,6 +11,8 @@ const converter = new ShowdownService.Converter();
 
 export const Article = (props: any) => {
 
+    console.log('Article single : ', props);
+
     const { currentArticle: article } = props;
 
     function createMarkup() {
@@ -30,12 +32,11 @@ export const Article = (props: any) => {
             <div className="article__content" dangerouslySetInnerHTML={createMarkup()}></div>
             <footer>
                 <div className="uk-grid-small uk-child-width-auto" uk-grid="true">
-                    <div>
-                        <a className="uk-button uk-button-text" href="#">Read more</a>
-                    </div>
-                    <div>
-                        <a className="uk-button uk-button-text" href="#">5 Comments</a>
-                    </div>
+                    {
+                        article.tags.map((tag: any) => {
+                            return <a key={tag} href="#" className="post-list__tags uk-button uk-button-text" data-tag-name={tag} onClick={(event) => props.onFilterArticles(event, 'tag')}>#{tag}</a>
+                        })
+                    }
                 </div>
             </footer>
         </article>

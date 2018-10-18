@@ -10,7 +10,7 @@ const converter = new ShowdownService.Converter();
 
 export class CreateArticleFormComponent extends React.Component<any, any> {
     turndownService: any;
-    editorOutput: any;
+    // editorOutput: any;
     convertedHTML: any;
     postPath: string;
 
@@ -33,7 +33,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
             txtCoverImage: props.editData.coverImage || '',
             txtExcerpt: props.editData.excerpt || '',
             txtareaHtmlCode: props.editData.htmlCode ? props.editData.htmlCode : '',
-            txtareaMarkdownCode: props.editData.markdownCode ? props.editData.markdownCode : ''
+            // txtareaMarkdownCode: props.editData.markdownCode ? props.editData.markdownCode : ''
         }
 
         const [month, day, year] = new Date().toString().split('/');
@@ -73,7 +73,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
             txtCoverImage: nextProps.editData.coverImage || '',
             txtExcerpt: nextProps.editData.excerpt || '',
             txtareaHtmlCode: nextProps.editData.htmlCode ? nextProps.editData.htmlCode : '',
-            txtareaMarkdownCode: nextProps.editData.markdownCode ? nextProps.editData.markdownCode : ''
+            //txtareaMarkdownCode: nextProps.editData.markdownCode ? nextProps.editData.markdownCode : ''
         })
     }
 
@@ -102,7 +102,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
     handleSubmit = (event: any) => {
         event.preventDefault();
 
-        this.editorOutput = document.querySelector('#txtareaMarkdownCode');
+        // this.editorOutput = document.querySelector('#txtareaMarkdownCode');
 
         // Syntax : var formData = new FormData(form)
         // Ref : https://medium.com/@everdimension/how-to-handle-forms-with-just-react-ac066c48bd4f
@@ -292,12 +292,12 @@ type: '${frontmatterObj.type}'
                                     <textarea className="uk-textarea" rows="10" name="txtareaHtmlCode" id="txtareaHtmlCode" onChange={this.handleInputChange} value={this.state.txtareaHtmlCode}></textarea>
                                 </div>
                             </div>
-                            <div className="uk-width-1-2@m">
+                            {/* <div className="uk-width-1-2@m">
                                 <div className="uk-margin">
                                     <label className="form-label" htmlFor="txtareaMarkdownCode">Markdown code</label>
                                     <textarea className="uk-textarea" rows="10" name="txtareaMarkdownCode" id="txtareaMarkdownCode" onChange={this.handleInputChange} value={this.state.txtareaMarkdownCode}></textarea>
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
 
                         <p className="uk-text-right">

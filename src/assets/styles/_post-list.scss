@@ -5,6 +5,7 @@
 	flex-basis: 20%;
 	flex-shrink: 0;
 	overflow: auto;
+	background-color: #222f3e;
 
 	&::-webkit-scrollbar {
 		height: 6px;
@@ -47,7 +48,7 @@
 
 	.uk-card-default {
 		box-shadow: none;
-		border-bottom: 1px solid #EEE;
+		background-color: transparent;
 	}
 
 	.uk-card-title {
@@ -56,7 +57,7 @@
 
 		a {
 			display: block;
-			color: #000;
+			color: #FFF;
 		}
 	}
 

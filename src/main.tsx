@@ -139,7 +139,10 @@ export class App extends React.Component<any, any> {
     // =========================================
     handleFilterArticles = (event: any, filterBy: string) => {
         let filteredList: any = [];
+        let searchBarElem = document.querySelector('#searchBar');
         let searchTerm = event.target.value || event.target.getAttribute('data-tag-name')
+
+        console.log('searchBarElem :', searchBarElem);
 
         if (searchTerm) {
 
@@ -215,11 +218,12 @@ export class App extends React.Component<any, any> {
                                     onDeleteArticle={this.handleDeleteArticle}
                                     onEditArticle={this.handleEditArticle}
                                     onDisplaySingleArticleContent={this.handleDisplaySingleArticleContent}
+                                    onFilterArticles={this.handleFilterArticles}
                                 />
 
                                 {
                                     this.state.currentArticle ? (
-                                        <Article currentArticle={this.state.currentArticle} />
+                                        <Article currentArticle={this.state.currentArticle} onFilterArticles={this.handleFilterArticles} />
                                     ) : ''
                                 }
 
