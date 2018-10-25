@@ -4,6 +4,8 @@
 .article-view {
 	padding: 4em 8em;
 	flex-grow: 1;
+	overflow-y: auto;
+	height: calc(100vh - 80px);
 
 	.content-wrapper {
 		max-width: 800px;

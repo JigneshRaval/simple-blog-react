@@ -163,6 +163,9 @@ export class App extends React.Component<any, any> {
 
                     filteredList = [...articlesByCategory];
                     break;
+                case 'all':
+                    filteredList = [...this.state.articles];
+                    break;
                 default:
                     this.state.articles.map((article: any) => {
                         if (article[filterBy].indexOf(searchTerm) > -1) {

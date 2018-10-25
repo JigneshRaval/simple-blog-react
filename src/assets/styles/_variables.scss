@@ -1,4 +1,5 @@
 :root {
+    --base-font: 'Open Sans';
     --base-font-family: 'Roboto', 'Helvetica Neue', Helvetica, sans-serif;
     --base-font-size: 1rem; // 16px;
     --base-line-height: 1.5;
@@ -9,11 +10,4 @@
     --base-vertical-space-3x: calc(var(--base-vertical-space, 8px) * 3);
     --base-vertical-space-4x: calc(var(--base-vertical-space, 8px) * 4);
     --base-vertical-space-5x: calc(var(--base-vertical-space, 8px) * 5);
-    --base-font: 'Open Sans';
-    --sidebar-link-color: #acabab;
-    --sidebar-link-active: #FFF;
-    --sidebar-background:#222f3e;
-    --light-gray-border: 1px solid #DDD;
-    --header-background:#5f27cd;
-
 }

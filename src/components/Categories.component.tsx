@@ -33,6 +33,11 @@ const Categories = ({ articles, onFilterArticles }: any) => {
                         )
                     })
                 }
+                <li className="category-list__item">
+                <a href="javascript: void(0);" data-tag-name='all' onClick={(event) => onFilterArticles(event, 'all')}>
+                                    <i className="tag-list__icon icon-technology"><img src="/assets/images/icons/{{this}}.svg" /></i> All
+                                </a>
+                </li>
             </ul>
         </nav>
     )
