@@ -233,15 +233,12 @@ export class App extends React.Component<any, any> {
                             </section>
                         </section>
                     </div>
+
                     <div id="offcanvas-usage" uk-offcanvas="flip:true">
                         <div className="uk-offcanvas-bar">
-
                             <button className="uk-offcanvas-close" type="button" uk-close=""></button>
 
-                            <h3>Categories</h3>
-
                             <Sidebar onFilterArticles={this.handleFilterArticles} onShowAddEditForm={this.handleToggleFormDisplay} {...this.state} />
-
                         </div>
                     </div>
 

@@ -32,7 +32,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
             txtPostType: props.editData.type || 'Post',
             txtCoverImage: props.editData.coverImage || '',
             txtExcerpt: props.editData.excerpt || '',
-            txtareaHtmlCode: props.editData.htmlCode ? props.editData.htmlCode : '',
+            txtareaHtmlCode: props.editData.htmlCode ? $('#txtareaHtmlCode').summernote('code', props.editData.htmlCode) : '',
             // txtareaMarkdownCode: props.editData.markdownCode ? props.editData.markdownCode : ''
         }
 
@@ -72,7 +72,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
             txtPostType: nextProps.editData.type || 'Post',
             txtCoverImage: nextProps.editData.coverImage || '',
             txtExcerpt: nextProps.editData.excerpt || '',
-            txtareaHtmlCode: nextProps.editData.htmlCode ? nextProps.editData.htmlCode : '',
+            txtareaHtmlCode: nextProps.editData.htmlCode ? $('#txtareaHtmlCode').summernote('code', nextProps.editData.htmlCode) : '',
             //txtareaMarkdownCode: nextProps.editData.markdownCode ? nextProps.editData.markdownCode : ''
         })
     }
@@ -138,10 +138,13 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         const formDataObj = {
             ...frontmatterObj,
             'frontmatter': frontmatter,
-            'htmlCode': this.sanitizeHtml(formData.get('txtareaHtmlCode')),
+            'htmlCode': this.sanitizeHtml(formData.get('txtareaHtmlCode') || $('#txtareaHtmlCode').summernote('code')),
             'filePath': `pages/${frontmatterObj.category + '/'}${formData.get('txtSavePostToPath') + '.md'}`,
             //'markdownCode': this.convertedHTML
         }
+
+        console.log('HTML Code ==== ', formData.get('txtareaHtmlCode'));
+        console.log('formDataObj ==== ', formDataObj);
 
         if (this.props.isEditMode) {
             this.props.onEditSaveArticle(this.state.id, formDataObj);
@@ -222,17 +225,29 @@ type: '${frontmatterObj.type}'
                     <button className="uk-modal-close-full uk-close-large uk-align-right" type="button" uk-close=""></button>
 
                     <form name="formCreateEditArticle" id="formCreateEditArticle" method="POST" onSubmit={this.handleSubmit} encType="multipart/form-data">
-                        <div className="uk-grid">
+                        <div className="uk-grid uk-grid-small">
                             <div className="uk-width-3-3@m">
                                 <div className="uk-margin">
                                     <label className="form-label" htmlFor="txtPostTitle">Title</label>
                                     <input type="text" className="uk-input" name="txtPostTitle" id="txtPostTitle" placeholder="Post Title" onChange={this.handleInputChange} value={this.state.txtPostTitle} />
                                 </div>
                             </div>
+                        </div>
+
+                        <div className="uk-grid uk-grid-small">
                             <div className="uk-width-1-3@m">
                                 <div className="uk-margin">
                                     <label className="form-label" htmlFor="txtCategory">Category</label>
-                                    <input type="text" className="uk-input" name="txtCategory" id="txtCategory" placeholder="Category" onChange={this.handleInputChange} value={this.state.txtCategory} />
+                                    <select value={this.state.txtCategory} className="uk-select" name="txtCategory" id="txtCategory" onChange={this.handleInputChange}>
+                                        <option value="JavaScript">JavaScript</option>
+                                        <option value="ES6">ES6</option>
+                                        <option value="React">React</option>
+                                        <option value="Angular">Angular</option>
+                                        <option value="RxJs">RxJs</option>
+                                        <option value="Redux">Redux</option>
+                                        <option value="Vue.js">Vue.js</option>
+                                    </select>
+                                    {/* <input type="text" className="uk-input" name="txtCategory" id="txtCategory" placeholder="Category" onChange={this.handleInputChange} value={this.state.txtCategory} /> */}
                                 </div>
                             </div>
                             <div className="uk-width-1-3@m">
@@ -247,6 +262,21 @@ type: '${frontmatterObj.type}'
                                     <input type="date" className="uk-input" name="txtPostDate" id="txtPostDate" placeholder="Tags" onChange={this.handleInputChange} value={this.state.txtPostDate} />
                                 </div>
                             </div>
+                        </div>
+
+                        <div className="uk-grid">
+                            <div className="uk-width-1-2@m">
+                                <div className="uk-margin">
+                                    <label className="form-label" htmlFor="txtareaHtmlCode">HTML code</label>
+                                    <textarea className="uk-textarea" rows="10" name="txtareaHtmlCode" id="txtareaHtmlCode" onChange={this.handleInputChange} value={this.state.txtareaHtmlCode}></textarea>
+                                </div>
+                            </div>
+                            {/* <div className="uk-width-1-2@m">
+                                <div className="uk-margin">
+                                    <label className="form-label" htmlFor="txtareaMarkdownCode">Markdown code</label>
+                                    <textarea className="uk-textarea" rows="10" name="txtareaMarkdownCode" id="txtareaMarkdownCode" onChange={this.handleInputChange} value={this.state.txtareaMarkdownCode}></textarea>
+                                </div>
+                            </div> */}
                         </div>
 
                         <div className="uk-grid">
@@ -285,20 +315,7 @@ type: '${frontmatterObj.type}'
                             </div>
                         </div>
 
-                        <div className="uk-grid">
-                            <div className="uk-width-1-2@m">
-                                <div className="uk-margin">
-                                    <label className="form-label" htmlFor="txtareaHtmlCode">HTML code</label>
-                                    <textarea className="uk-textarea" rows="10" name="txtareaHtmlCode" id="txtareaHtmlCode" onChange={this.handleInputChange} value={this.state.txtareaHtmlCode}></textarea>
-                                </div>
-                            </div>
-                            {/* <div className="uk-width-1-2@m">
-                                <div className="uk-margin">
-                                    <label className="form-label" htmlFor="txtareaMarkdownCode">Markdown code</label>
-                                    <textarea className="uk-textarea" rows="10" name="txtareaMarkdownCode" id="txtareaMarkdownCode" onChange={this.handleInputChange} value={this.state.txtareaMarkdownCode}></textarea>
-                                </div>
-                            </div> */}
-                        </div>
+
 
                         <p className="uk-text-right">
                             <button id="convertToMarkdown" className="uk-button uk-button-primary">Convert</button>

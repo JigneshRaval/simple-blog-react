@@ -18,10 +18,25 @@ const Tags = (props: any) => {
         return uniqeTags;
     }
 
+    const count = () => {
+        let uniqueTags = getUniqueTags();
+        let total = 0;
+        Object.keys(uniqueTags).forEach(key => {
+            total += uniqueTags[key];
+        });
+
+        return total;
+    }
+
     return (
         <nav className="tags-wrapper tags-wrapper--aside">
             <p className="tag-list__header"><strong>Tags</strong></p>
             <ul className="tag-list">
+                <li className="tag-list__item" key="all">
+                    <a href="javascript: void(0);" data-tag-name="all" onClick={(event) => props.onFilterArticles(event, 'all')}>
+                        All <span className="post-counts">{count()}</span>
+                    </a>
+                </li>
                 {
                     Object.keys(getUniqueTags()).map(tag => {
                         return (

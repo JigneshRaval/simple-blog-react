@@ -36,7 +36,7 @@ routes.get('/articles/:articleId', (request, response) => {
 
 // CREATE : Create or Add new Article (/api/articles/add)
 routes.post('/articles/add', (request, response) => {
-
+    // console.log('request.body ===========\n', request.body);
     var doc = {
         ...request.body
     };

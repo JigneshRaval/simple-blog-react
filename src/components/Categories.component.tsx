@@ -22,6 +22,11 @@ const Categories = ({ articles, onFilterArticles }: any) => {
         <nav className="category-wrapper category-wrapper--aside">
             <p className="category-list__header"><strong>Categories</strong></p>
             <ul className="category-list">
+                <li className="category-list__item">
+                    <a href="javascript: void(0);" data-tag-name='all' onClick={(event) => onFilterArticles(event, 'all')}>
+                        <i className="tag-list__icon icon-technology"><img src="/assets/images/icons/{{this}}.svg" /></i> All
+                    </a>
+                </li>
                 {
                     getUniqueCategories().map((category: any, index: number) => {
                         return (
@@ -33,11 +38,6 @@ const Categories = ({ articles, onFilterArticles }: any) => {
                         )
                     })
                 }
-                <li className="category-list__item">
-                <a href="javascript: void(0);" data-tag-name='all' onClick={(event) => onFilterArticles(event, 'all')}>
-                                    <i className="tag-list__icon icon-technology"><img src="/assets/images/icons/{{this}}.svg" /></i> All
-                                </a>
-                </li>
             </ul>
         </nav>
     )

@@ -9,20 +9,18 @@ import Tags from './Tags.component';
 
 const Sidebar = (props: any) => {
 
-    const openform = () => {
+    /* const openform = () => {
         UIkit.modal('#modal-example').show();
-    }
+    } */
 
     console.log('Sidebar props :', props);
     return (
         <React.Fragment>
-            <header>
-                <h5>WEB-GEMS</h5>
-            </header>
+            {/*
             <button className="uk-button uk-button-secondary" uk-toggle="target: #modal-example" onClick={openform}>Add Article</button>
+            */}
             <Categories {...props}  />
             <Tags {...props} />
-
         </React.Fragment>
     )
 }
