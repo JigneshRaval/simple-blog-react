@@ -17,6 +17,10 @@ routes.get('/articles', (request, response) => {
         if (err) {
             return err;
         }
+        docs = docs.sort((a, b) => {
+            console.log(a.dateCreated, '============', b.dateCreated);
+            return a.dateCreated - b.dateCreated; //you may have to switch the order
+        });
         response.status(200).send({ message: 'Fetched all the articles successfully', docs });
     });
 });
@@ -59,13 +63,15 @@ routes.post('/articles/add', (request, response) => {
 routes.post('/articles/edit/:articleId', (request, response) => {
     // let { title, sourceUrl, path, category, tags, excerpt, date, coverImage, type } = request.body;
     let newData = {
+        date: new Date(),
         title: request.body.title,
         sourceUrl: request.body.sourceUrl,
         path: request.body.path,
         category: request.body.category,
         tags: request.body.tags,
+        author: request.body.author,
         excerpt: request.body.excerpt,
-        date: new Date(),
+        dateUpdated: new Date().getTime(),
         coverImage: request.body.coverImage,
         type: request.body.type,
         htmlCode: request.body.htmlCode,

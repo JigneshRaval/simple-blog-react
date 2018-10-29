@@ -11,8 +11,6 @@ const converter = new ShowdownService.Converter();
 
 export const Article = (props: any) => {
 
-    console.log('Article single : ', props);
-
     const { currentArticle: article } = props;
 
     function createMarkup() {
@@ -22,23 +20,25 @@ export const Article = (props: any) => {
 
     return (
         <article className="uk-article article-view">
-            <header className="article__header">
-                <h1 className="uk-article-title"><a className="uk-link-reset" href="">{article.title}</a></h1>
+            <div className="article-wrapper">
+                <header className="article__header">
+                    <h1 className="uk-article-title"><a className="uk-link-reset" href="">{article.title}</a></h1>
 
-                <p className="uk-article-meta">Written by <a href="#">{article.author}</a> on {article.date}. Posted in <a href="#">{article.category}</a></p>
+                    <p className="uk-article-meta">Written by <a href="#">{article.author}</a> on {article.dateCreated}. Posted in <a href="#">{article.category}</a> | <a href={article.sourceUrl} target="_blank">Original Source</a></p>
 
-                <p className="uk-text-lead">{article.excerpt}</p>
-            </header>
-            <div className="article__content" dangerouslySetInnerHTML={createMarkup()}></div>
-            <footer>
-                <div className="uk-grid-small uk-child-width-auto" uk-grid="true">
-                    {
-                        article.tags.map((tag: any) => {
-                            return <a key={tag} href="#" className="post-list__tags uk-button uk-button-text" data-tag-name={tag} onClick={(event) => props.onFilterArticles(event, 'tag')}>#{tag}</a>
-                        })
-                    }
-                </div>
-            </footer>
+                    <p className="uk-text-lead">{article.excerpt}</p>
+                </header>
+                <div className="article__content" dangerouslySetInnerHTML={createMarkup()}></div>
+                <footer>
+                    <div className="uk-grid-small uk-child-width-auto" uk-grid="true">
+                        {
+                            article.tags.map((tag: any) => {
+                                return <a key={tag} href="#" className="post-list__tags uk-button uk-button-text" data-tag-name={tag} onClick={(event) => props.onFilterArticles(event, 'tag')}>#{tag}</a>
+                            })
+                        }
+                    </div>
+                </footer>
+            </div>
         </article>
     )
 }

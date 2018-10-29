@@ -6,18 +6,26 @@ import * as React from "react";
 // 'HelloProps' describes the shape of props.
 // State is never set so we use the '{}' type.
 export const ArticlesList = (props: any) => {
-    console.log('Props :', props);
-    const getArticles = () => {
-        console.log('Get Articles 123 : ==', props.articleService.getArticlesData());
+    // console.log('Props :', props);
+    const isArticleActive = new Array(props.filteredArticles.length);
+    // this.isArticleActive = [...new Array(props.filteredArticles.length)].map(x => false); // [0, 0, 0, 0, 0]
+    isArticleActive.fill(false, 0, props.filteredArticles.length);
+
+    const getArticles = (articleId: any, index: number) => {
+        // console.log('Get Articles 123 : ==', props.articleService.getArticlesData());
+        props.onDisplaySingleArticleContent(articleId);
+        isArticleActive[index] = !isArticleActive[index];
+
+        console.log(isArticleActive, index, isArticleActive[index])
     }
 
     return (
         <div className="post-list__wrapper">
             <div className="uk-flex uk-flex-column">
                 {
-                    props.filteredArticles.map((article: any) => {
+                    props.filteredArticles.map((article: any, index: number) => {
                         return (
-                            <div className="uk-card uk-card-default" key={article._id}>
+                            <div className={"uk-card uk-card-default " + (isArticleActive[index] ? 'active' : '')} key={article._id}>
                                 <div className="card" data-category={article.category}>
                                     <div className="card-controls uk-inline">
                                         <button className="uk-button uk-button-link" type="button"><i uk-icon="more-vertical"></i></button>
@@ -29,20 +37,11 @@ export const ArticlesList = (props: any) => {
                                             </ul>
                                         </div>
                                     </div>
-
-                                    {/* <div className="card-image">
-                                        <img src="img/osx-el-capitan.jpg" className="img-responsive" />
-                                    </div> */}
-
                                     <div className="card-header">
                                         <div className="article-category">{article.category}</div>
-                                        <h2 className="uk-card-title"><a href="javascript: void(0);" onClick={() => props.onDisplaySingleArticleContent(article._id)}>{article.title}</a></h2>
+                                        {/* <h2 className="uk-card-title"><a href="javascript: void(0);" onClick={() => props.onDisplaySingleArticleContent(article._id)}>{article.title}</a></h2> */}
+                                        <h2 className="uk-card-title"><a href="javascript: void(0);" onClick={() => getArticles(article._id, index)}>{article.title}</a></h2>
                                     </div>
-
-                                    {/* <div className="card-body">
-                                        <p className="post-list__excerpt">{article.excerpt}</p>
-                                    </div> */}
-
                                     <div className="card-footer">
                                         <div>
                                             {

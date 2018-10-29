@@ -23,10 +23,11 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
 
         this.state = {
             id: props.editData._id || '',
+            dateCreated: props.editData.dateCreated || new Date().getTime(),
             txtPostTitle: props.editData.title || '',
             txtCategory: props.editData.category || 'JavaScript',
             txtTags: (props.editData.tags) ? props.editData.tags.join() : 'JavaScript, ES6',
-            txtPostDate: props.editData.date || new Date(),
+            txtAuthor: props.editData.author || '',
             txtWebsiteUrl: props.editData.sourceUrl || '',
             txtSavePostToPath: props.editData.path || '',
             txtPostType: props.editData.type || 'Post',
@@ -63,10 +64,11 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
     componentWillReceiveProps(nextProps: any) {
         this.setState({
             id: nextProps.editData._id || '',
+            dateCreated: nextProps.editData.dateCreated || new Date().getTime(),
             txtPostTitle: nextProps.editData.title || '',
             txtCategory: nextProps.editData.category || 'JavaScript',
             txtTags: (nextProps.editData.tags) ? nextProps.editData.tags.join() : 'JavaScript, ES6',
-            txtPostDate: nextProps.editData.date || new Date(),
+            txtAuthor: nextProps.editData.author || '',
             txtWebsiteUrl: nextProps.editData.sourceUrl || '',
             txtSavePostToPath: nextProps.editData.path || '',
             txtPostType: nextProps.editData.type || 'Post',
@@ -120,13 +122,15 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
 
         // FrontMatter Object
         const frontmatterObj = {
+            date: new Date(),
             title: formData.get('txtPostTitle'),
             sourceUrl: formData.get('txtWebsiteUrl'),
             path: `${formData.get('txtCategory') + '/'}${formData.get('txtSavePostToPath')}`,
             category: formData.get('txtCategory'),
             tags: tags,
+            author: formData.get('txtAuthor'),
             excerpt: formData.get('txtExcerpt'),
-            date: formData.get('txtPostDate'),
+            dateCreated: this.state.dateCreated,
             coverImage: formData.get('txtCoverImage'),
             type: formData.get('txtPostType')
         }
@@ -165,14 +169,20 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         wrapperDiv.innerHTML = html;
 
         wrapperDiv.querySelectorAll('*').forEach(node => {
-            if (node.nodeName !== 'PRE') {
+            if (node.parentElement && (node.parentElement.nodeName !== 'PRE' || node.parentElement.nodeName !== 'CODE')) {
                 node.removeAttribute('id');
                 node.removeAttribute('class');
                 node.removeAttribute('style');
             }
+
+            /* if (node.nodeName !== 'PRE') {
+                node.removeAttribute('id');
+                node.removeAttribute('class');
+                node.removeAttribute('style');
+            } */
         })
 
-        return wrapperDiv.outerHTML;
+        return wrapperDiv.innerHTML;
     }
 
     // convert HTML code to Markdown formate
@@ -258,28 +268,13 @@ type: '${frontmatterObj.type}'
                             </div>
                             <div className="uk-width-1-3@m">
                                 <div className="uk-margin">
-                                    <label className="form-label" htmlFor="txtPostDate">Date</label>
-                                    <input type="date" className="uk-input" name="txtPostDate" id="txtPostDate" placeholder="Tags" onChange={this.handleInputChange} value={this.state.txtPostDate} />
+                                    <label className="form-label" htmlFor="txtAuthor">Author</label>
+                                    <input type="text" className="uk-input" name="txtAuthor" id="txtAuthor" placeholder="Author" onChange={this.handleInputChange} value={this.state.txtAuthor} />
                                 </div>
                             </div>
                         </div>
 
-                        <div className="uk-grid">
-                            <div className="uk-width-1-2@m">
-                                <div className="uk-margin">
-                                    <label className="form-label" htmlFor="txtareaHtmlCode">HTML code</label>
-                                    <textarea className="uk-textarea" rows="10" name="txtareaHtmlCode" id="txtareaHtmlCode" onChange={this.handleInputChange} value={this.state.txtareaHtmlCode}></textarea>
-                                </div>
-                            </div>
-                            {/* <div className="uk-width-1-2@m">
-                                <div className="uk-margin">
-                                    <label className="form-label" htmlFor="txtareaMarkdownCode">Markdown code</label>
-                                    <textarea className="uk-textarea" rows="10" name="txtareaMarkdownCode" id="txtareaMarkdownCode" onChange={this.handleInputChange} value={this.state.txtareaMarkdownCode}></textarea>
-                                </div>
-                            </div> */}
-                        </div>
-
-                        <div className="uk-grid">
+                        <div className="uk-grid uk-grid-small">
                             <div className="uk-width-1-2@m">
                                 <div className="uk-margin">
                                     <label className="form-label" htmlFor="txtWebsiteUrl">Website URL</label>
@@ -300,7 +295,7 @@ type: '${frontmatterObj.type}'
                             </div>
                         </div>
 
-                        <div className="uk-grid">
+                        <div className="uk-grid uk-grid-small">
                             <div className="uk-width-1-2@m">
                                 <div className="uk-margin">
                                     <label className="form-label" htmlFor="txtCoverImage">Cover Image</label>
@@ -315,7 +310,20 @@ type: '${frontmatterObj.type}'
                             </div>
                         </div>
 
-
+                        <div className="uk-grid uk-grid-small">
+                            <div className="uk-width-1-1@m">
+                                <div className="uk-margin">
+                                    <label className="form-label" htmlFor="txtareaHtmlCode">HTML code</label>
+                                    <textarea className="uk-textarea" rows="10" name="txtareaHtmlCode" id="txtareaHtmlCode" onChange={this.handleInputChange} value={this.state.txtareaHtmlCode}></textarea>
+                                </div>
+                            </div>
+                            {/* <div className="uk-width-1-2@m">
+                                <div className="uk-margin">
+                                    <label className="form-label" htmlFor="txtareaMarkdownCode">Markdown code</label>
+                                    <textarea className="uk-textarea" rows="10" name="txtareaMarkdownCode" id="txtareaMarkdownCode" onChange={this.handleInputChange} value={this.state.txtareaMarkdownCode}></textarea>
+                                </div>
+                            </div> */}
+                        </div>
 
                         <p className="uk-text-right">
                             <button id="convertToMarkdown" className="uk-button uk-button-primary">Convert</button>

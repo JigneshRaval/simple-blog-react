@@ -83,6 +83,13 @@ export class App extends React.Component<any, any> {
                 this.setState({ currentArticle: article });
             }
         });
+
+        // Highlight code blocks
+        console.log(window);
+            $('pre code').each(function (i: any, block: any) {
+                window.hljs.highlightBlock(block);
+            });
+
     }
 
 
