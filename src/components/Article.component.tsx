@@ -3,11 +3,11 @@
 // Display Single Article content on click of Article
 
 import React, { Component } from "react";
-let ShowdownService = require("../assets/js/showdown.js");
+// let ShowdownService = require("../assets/js/showdown.js");
 
 // Showdown: Convert Markdown (.md) to HTML
 // ==============================================
-const converter = new ShowdownService.Converter();
+// const converter = new ShowdownService.Converter();
 
 export const Article = (props: any) => {
 
@@ -15,6 +15,14 @@ export const Article = (props: any) => {
 
     function createMarkup() {
         // return { __html: converter.makeHtml(article.htmlCode) };
+
+        // highlight syntax : https://highlightjs.org/
+        $(document).ready(function () {
+            $('pre code').each(function (i: any, block: any) {
+                hljs.highlightBlock(block);
+            });
+        });
+
         return { __html: article.htmlCode };
     }
 

@@ -13,14 +13,14 @@ routes.get('/', (request, response) => {
 // GET : All Articles (/api/articles)
 routes.get('/articles', (request, response) => {
     // Find all documents in the collection
-    db.articles.find({}).sort({ today: -1 }).exec(function (err, docs) {
+    db.articles.find({}).sort({ date: -1 }).exec(function (err, docs) {
         if (err) {
             return err;
         }
-        docs = docs.sort((a, b) => {
-            console.log(a.dateCreated, '============', b.dateCreated);
-            return a.dateCreated - b.dateCreated; //you may have to switch the order
-        });
+        /* docs = docs.sort((a, b) => {
+            console.log('Date : ', a.date, '============', b.date);
+            return a.date - b.date; //you may have to switch the order
+        }); */
         response.status(200).send({ message: 'Fetched all the articles successfully', docs });
     });
 });
@@ -29,7 +29,7 @@ routes.get('/articles', (request, response) => {
 // GET : Get Single Article by Id (/api/articles/:articleId)
 routes.get('/articles/:articleId', (request, response) => {
     // Find all documents in the collection
-    db.articles.find({ _id: request.params.articleId }).sort({ today: -1 }).exec(function (err, docs) {
+    db.articles.find({ _id: request.params.articleId }).exec(function (err, docs) {
         if (err) {
             return err;
         }

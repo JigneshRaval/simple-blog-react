@@ -1,5 +1,5 @@
 import * as React from "react";
-// import { ArticleService } from '../services/articles.service';
+import { ArticleListItem } from './Article-List-Item.component';
 
 // export interface HelloProps { compiler: string; framework: string; }
 
@@ -11,13 +11,13 @@ export const ArticlesList = (props: any) => {
     // this.isArticleActive = [...new Array(props.filteredArticles.length)].map(x => false); // [0, 0, 0, 0, 0]
     isArticleActive.fill(false, 0, props.filteredArticles.length);
 
-    const getArticles = (articleId: any, index: number) => {
+    /* const getArticles = (articleId: any, index: number) => {
         // console.log('Get Articles 123 : ==', props.articleService.getArticlesData());
         props.onDisplaySingleArticleContent(articleId);
         isArticleActive[index] = !isArticleActive[index];
 
         console.log(isArticleActive, index, isArticleActive[index])
-    }
+    } */
 
     return (
         <div className="post-list__wrapper">
@@ -25,7 +25,8 @@ export const ArticlesList = (props: any) => {
                 {
                     props.filteredArticles.map((article: any, index: number) => {
                         return (
-                            <div className={"uk-card uk-card-default " + (isArticleActive[index] ? 'active' : '')} key={article._id}>
+                            <ArticleListItem key={index} article={article} index={index} isArticleActive={isArticleActive[index]} {...props} />
+                            {/* <div className={"uk-card uk-card-default " + (isArticleActive[index] ? 'active' : '')} key={article._id}>
                                 <div className="card" data-category={article.category}>
                                     <div className="card-controls uk-inline">
                                         <button className="uk-button uk-button-link" type="button"><i uk-icon="more-vertical"></i></button>
@@ -33,13 +34,11 @@ export const ArticlesList = (props: any) => {
                                             <ul className="uk-nav uk-dropdown-nav">
                                                 <li className="uk-active"><a href="javascript:void(0);" onClick={() => props.onEditArticle(article._id, true)}>Edit Article</a></li>
                                                 <li><a href="javascript:void(0);" onClick={() => props.onDeleteArticle(article._id)}>Delete Article</a></li>
-                                                {/* <li className="uk-nav-header">Fevorite</li> */}
                                             </ul>
                                         </div>
                                     </div>
                                     <div className="card-header">
                                         <div className="article-category">{article.category}</div>
-                                        {/* <h2 className="uk-card-title"><a href="javascript: void(0);" onClick={() => props.onDisplaySingleArticleContent(article._id)}>{article.title}</a></h2> */}
                                         <h2 className="uk-card-title"><a href="javascript: void(0);" onClick={() => getArticles(article._id, index)}>{article.title}</a></h2>
                                     </div>
                                     <div className="card-footer">
@@ -53,10 +52,10 @@ export const ArticlesList = (props: any) => {
                                     </div>
 
                                 </div>
-                            </div>
+                            </div> */}
                         )
-                    })
-                }
+                })
+            }
             </div>
         </div>
     );
