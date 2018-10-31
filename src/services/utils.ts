@@ -3,7 +3,7 @@
 
 // Utility functions
 
-export class Utils {
+class Utils {
     scrollDuration: number = 250;
 
     constructor() { }
@@ -161,4 +161,58 @@ export class Utils {
             body.classList.remove('showVerticalGrid');
         }
     }
+
+
+    /**
+     * Function to filter Articles by search value and filterBy type
+     * @param searchTerm : string - Provide search value
+     * @param filterBy : string - provide filterBy value like filterBy tags, category, all, search
+     * @param articles : Array - List of all Articles to be filtered.
+     */
+    public filterArticlesBy(searchTerm: string, filterBy: string, articles: any) {
+        switch (filterBy) {
+            // Method 1: filter articles either by tags, category or by title which is matching with search term
+            case 'search':
+                let articleBySearch = articles.filter(({ tags, category, title }: any) => {
+                    return category.toLowerCase().includes(searchTerm.toLowerCase()) || title.toLowerCase().includes(searchTerm.toLowerCase()) || tags.some((tag: any) => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+                }).map((article: any) => article);
+
+                console.log('articleBySearch === ', articleBySearch);
+                return [...articleBySearch];
+                break;
+
+            // Method 2: filter articles by tags matching with search term
+            case 'tag':
+                let articleByTags = articles.filter(({ tags }: any) => {
+                    return tags.some((tag: any) => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+                });
+
+                return [...articleByTags];
+                break;
+
+            // Method 3: filter articles by tags matching with search term
+            case 'category':
+                let articlesByCategory = articles.filter(({ category }: any) => {
+                    return category.toLowerCase().includes(searchTerm.toLowerCase())
+                });
+
+                return [...articlesByCategory];
+                break;
+
+            // Method 4: reset all the filters and display all the articles.
+            case 'all':
+                return [...articles];
+                break;
+
+            // TODO : Remove or update if required
+            default:
+                return articles.map((article: any) => {
+                    if (article[filterBy].indexOf(searchTerm) > -1) {
+                        // filteredList.push(article);
+                    }
+                });
+        }
+    }
 }
+
+export default Utils;

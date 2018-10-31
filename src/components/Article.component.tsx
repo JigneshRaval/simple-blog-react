@@ -3,6 +3,8 @@
 // Display Single Article content on click of Article
 
 import React, { Component } from "react";
+import TagsInline from './Tags-Inline.component';
+
 // let ShowdownService = require("../assets/js/showdown.js");
 
 // Showdown: Convert Markdown (.md) to HTML
@@ -36,14 +38,12 @@ export const Article = (props: any) => {
 
                     <p className="uk-text-lead">{article.excerpt}</p>
                 </header>
+
                 <div className="article__content" dangerouslySetInnerHTML={createMarkup()}></div>
+
                 <footer>
                     <div className="uk-grid-small uk-child-width-auto" uk-grid="true">
-                        {
-                            article.tags.map((tag: any) => {
-                                return <a key={tag} href="#" className="post-list__tags uk-button uk-button-text" data-tag-name={tag} onClick={(event) => props.onFilterArticles(event, 'tag')}>#{tag}</a>
-                            })
-                        }
+                        <TagsInline article={article} onFilterArticles={props.onFilterArticles} className={'post-list__tags uk-button uk-button-text'} />
                     </div>
                 </footer>
             </div>

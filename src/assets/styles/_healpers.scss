@@ -101,7 +101,7 @@
 
 /* = Spacing : Padding (Top, Right, Bottom, Left)
 ====================================================*/
-$spacing-array: 11 22 33 44 55;
+$spacing-array: 1 1 1 1 1 1;
 $spacing-sides: top right bottom left;
 
 @each $sides in $spacing-sides {
@@ -111,7 +111,7 @@ $spacing-sides: top right bottom left;
     	$i: index($spacing-array, $spacing);
 
     	.padding-#{$sides}-#{$i}x {
-        	padding-#{$sides}: #{$i * 11}px;
+        	padding-#{$sides}: #{$i * 8}px;
 	    }
 	}
 }

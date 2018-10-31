@@ -54,7 +54,7 @@
 		background-color: transparent;
 		border-bottom: 1px solid #576574;
 
-		&:hover {
+		&:hover, &.active {
 			background-color: #576574;
 			box-shadow: 0 15px 15px rgba(0, 0, 0, 0.4), 0 -15px 15px rgba(0, 0, 0, 0.4);
 		}

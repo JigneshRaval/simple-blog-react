@@ -1,15 +1,15 @@
 import React from 'react';
 
 // Turndown : Html to Markdown convertor
-let TurndownService = require('../assets/js/turndown.browser.umd.js');
+// let TurndownService = require('../assets/js/turndown.browser.umd.js');
 
 // Showdown : Markdown to HTML convertor
-let ShowdownService = require('../assets/js/showdown.js');
+// let ShowdownService = require('../assets/js/showdown.js');
 
-const converter = new ShowdownService.Converter();
+// const converter = new ShowdownService.Converter();
 
 export class CreateArticleFormComponent extends React.Component<any, any> {
-    turndownService: any;
+    // turndownService: any;
     // editorOutput: any;
     convertedHTML: any;
     postPath: string;
@@ -40,16 +40,16 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         const [month, day, year] = new Date().toString().split('/');
         console.log(month, day, year);
 
-        this.turndownService = new TurndownService({
-            /* codeBlockStyle: 'fenced',
+        /* this.turndownService = new TurndownService({
+            codeBlockStyle: 'fenced',
             fence: '```',
             filter: 'br',
             replacement: function (content: any) {
                 return '\r\n\r\n' + content + '\r\n\r\n'
-            } */
+            }
         });
 
-        this.turndownService.keep(['br', 'pre', 'code']);
+        this.turndownService.keep(['br', 'pre', 'code']); */
     }
 
     componentDidMount() {
@@ -186,15 +186,15 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
     }
 
     // convert HTML code to Markdown formate
-    convert(htmlContent: any) {
+    /* convert(htmlContent: any) {
         if (htmlContent) {
             var markdown = this.turndownService.turndown(htmlContent);
-            console.log('markdown : ', markdown);
             return markdown;
         } else {
             return null;
         }
-    }
+    } */
+
 
     /**
      *

@@ -9,6 +9,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
+        // vendor: './src/vendor.ts',
         app: './src/main.tsx'
     },
     mode: env,

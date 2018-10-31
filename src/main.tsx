@@ -4,19 +4,21 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
+// CSS
 import './assets/styles/main.scss';
 
+// VENDOR
 import './vendor.ts';
 
 // SERVICES
 import { ArticleService } from "./services/articles.service";
+import Utils from './services/utils';
+const utils = new Utils();
 
 // COMPONENTS
 import Header from "./components/Header.component";
-// import Tags from "./components/Tags.component";
-// import Categories from "./components/Categories.component";
 import Sidebar from './components/Sidebar.component';
-import { ArticlesList } from "./components/Articles-List.component";
+import ArticlesList from "./components/Articles-List.component";
 import { Article } from "./components/Article.component";
 import { CreateArticleFormComponent } from './components/Create-Article-Form.component';
 /*
@@ -49,6 +51,7 @@ export class App extends React.Component<any, any> {
         // Render all Articles on component mount
         this.articleService.getAllArticles()
             .then((data) => {
+                console.log('Data : ', data);
                 this.setState({ articles: data.docs, articleCount: data.docs.length, filteredArticles: data.docs, currentArticle: data.docs[0] });
 
                 // Update variable value in articles.service.ts
@@ -86,10 +89,9 @@ export class App extends React.Component<any, any> {
 
         // Highlight code blocks
         console.log(window);
-            $('pre code').each(function (i: any, block: any) {
-                window.hljs.highlightBlock(block);
-            });
-
+        $('pre code').each(function (i: any, block: any) {
+            window.hljs.highlightBlock(block);
+        });
     }
 
 
@@ -103,9 +105,6 @@ export class App extends React.Component<any, any> {
                 this.setState({ editData: article });
             }
         });
-        /* this.articleService.getArticleById(articleId).then(data => {
-            this.setState({ editData: data.docs[0] });
-        }); */
     }
 
 
@@ -146,44 +145,20 @@ export class App extends React.Component<any, any> {
     // =========================================
     handleFilterArticles = (event: any, filterBy: string) => {
         let filteredList: any = [];
-        let searchBarElem = document.querySelector('#searchBar');
+        let searchBarElem = document.querySelector('.uk-search-default');
         let searchTerm = event.target.value || event.target.getAttribute('data-tag-name')
 
-        console.log('searchBarElem :', searchBarElem);
-
         if (searchTerm) {
+            searchBarElem.classList.add('isSearching');
 
-            switch (filterBy) {
-                case 'tag':
-                    // Method 1: filter articles by tags matching with search term
-                    let articleByTags = this.state.articles.filter(({ tags }: any) => {
-                        return tags.some((tag: any) => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-                    });
-
-                    filteredList = [...articleByTags];
-                    break;
-                case 'category':
-                    // Method 1: filter articles by tags matching with search term
-                    let articlesByCategory = this.state.articles.filter(({ category }: any) => {
-                        return category.toLowerCase().includes(searchTerm.toLowerCase())
-                    });
-
-                    filteredList = [...articlesByCategory];
-                    break;
-                case 'all':
-                    filteredList = [...this.state.articles];
-                    break;
-                default:
-                    this.state.articles.map((article: any) => {
-                        if (article[filterBy].indexOf(searchTerm) > -1) {
-                            filteredList.push(article);
-                        }
-                    });
-            }
+            filteredList = utils.filterArticlesBy(searchTerm, filterBy, this.state.articles);
 
             // If "searchTerm" provided then, Set filtered articles in the state
             this.setState({ filteredArticles: filteredList });
         } else {
+            // Hide clear search icon
+            searchBarElem.classList.remove('isSearching');
+
             // If "searchTerm" NOT provided then, Set default articles list into the filtered articles in the state
             this.setState({ filteredArticles: this.state.articles });
         }

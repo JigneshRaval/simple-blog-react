@@ -1,13 +1,21 @@
+// Header.component.tsx
+
+// This component contains Header items like Logo, Search-bar, Navigation etc.
+
 import React from 'react';
 
 const Header = (props: any) => {
+
+    // Open Create Article form in modal overlay
     const openform = () => {
         UIkit.modal('#modal-example').show();
     }
 
-    const clearSearchBox = (event:any) => {
-        event.target.value = '';
-        // props.onFilterArticles(event, 'all');
+    // Clear search-box on click of clear button and display all articles
+    const clearSearchBox = (event: any) => {
+        const searchBox = document.querySelector('#searchBar');
+        searchBox.value = '';
+        props.onFilterArticles(event, 'all');
     }
 
     return (
@@ -22,7 +30,10 @@ const Header = (props: any) => {
                     <div className="uk-navbar-item">
                         <form className="uk-search uk-search-default uk-width-1-1">
                             <span uk-search-icon=""></span>
-                            <input className="uk-search-input" name="searchBar" id="searchBar" type="text" placeholder="Search articles by Tag, Category etc..." onChange={(event) => props.onFilterArticles(event, 'tag')} onBlur={clearSearchBox} />
+                            <button type="button" className="close clear-search" data-dismiss="modal" aria-label="Close" onClick={clearSearchBox}>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <input className="uk-search-input" name="searchBar" id="searchBar" type="text" placeholder="Search articles by Tag, Category etc..." onChange={(event) => props.onFilterArticles(event, 'search')} />
                         </form>
                     </div>
                     <ul className="uk-navbar-nav">
