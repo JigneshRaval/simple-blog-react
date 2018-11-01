@@ -4,7 +4,8 @@
 
 import React, { Component } from "react";
 import TagsInline from './Tags-Inline.component';
-
+import Utils from "../services/utils";
+const utils = new Utils();
 // let ShowdownService = require("../assets/js/showdown.js");
 
 // Showdown: Convert Markdown (.md) to HTML
@@ -25,11 +26,38 @@ export const Article = (props: any) => {
             });
         });
 
+        // Scroll to top functionality
+        setTimeout(() => {
+            handleScrollEvent();
+        }, 1000);
+
         return { __html: article.htmlCode };
+    }
+
+    const handleScrollEvent = () => {
+        let timer;
+        let scrollElement = document.querySelector('#scrollToTop');
+        let scrollParentElement = document.querySelector('.article-view');
+        if (scrollParentElement) {
+            clearTimeout(timer);
+
+            scrollParentElement.addEventListener('scroll', () => {
+                timer = setTimeout(() => {
+                    utils.getScrollPosition(scrollElement, scrollParentElement);
+                }, 500);
+            });
+        }
+    }
+
+    // Go to top on click of up arrow
+    const scrollToTop = (event: any) => {
+        let scrollParentElement = document.querySelector('.article-view');
+        utils.scrollToTop(scrollParentElement);
     }
 
     return (
         <article className="uk-article article-view">
+
             <div className="article-wrapper">
                 <header className="article__header">
                     <h1 className="uk-article-title"><a className="uk-link-reset" href="">{article.title}</a></h1>
@@ -41,10 +69,15 @@ export const Article = (props: any) => {
 
                 <div className="article__content" dangerouslySetInnerHTML={createMarkup()}></div>
 
-                <footer>
-                    <div className="uk-grid-small uk-child-width-auto" uk-grid="true">
-                        <TagsInline article={article} onFilterArticles={props.onFilterArticles} className={'post-list__tags uk-button uk-button-text'} />
+                <footer className="article__footer">
+                    <div className="article__tags-list">
+                        <TagsInline article={article} onFilterArticles={props.onFilterArticles} className={'uk-button'} />
                     </div>
+
+                    <a href="javascript:void(0);" id="scrollToTop" className="scroll-top" onClick={scrollToTop}>
+                        <i className="icon-arrow-up">&#8593;</i>
+                        <span className="sr-only">Scroll To Top</span>
+                    </a>
                 </footer>
             </div>
         </article>

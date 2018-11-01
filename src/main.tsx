@@ -30,6 +30,7 @@ const HOCDemo = HOC(UserName);
 
 export class App extends React.Component<any, any> {
     articleService: ArticleService;
+    timer: any;
 
     constructor(props: any) {
         super(props);
@@ -146,22 +147,33 @@ export class App extends React.Component<any, any> {
     handleFilterArticles = (event: any, filterBy: string) => {
         let filteredList: any = [];
         let searchBarElem = document.querySelector('.uk-search-default');
-        let searchTerm = event.target.value || event.target.getAttribute('data-tag-name')
+        let searchTerm = event.target.value || event.target.getAttribute('data-tag-name');
 
-        if (searchTerm) {
-            searchBarElem.classList.add('isSearching');
-
-            filteredList = utils.filterArticlesBy(searchTerm, filterBy, this.state.articles);
-
-            // If "searchTerm" provided then, Set filtered articles in the state
-            this.setState({ filteredArticles: filteredList });
-        } else {
-            // Hide clear search icon
-            searchBarElem.classList.remove('isSearching');
-
-            // If "searchTerm" NOT provided then, Set default articles list into the filtered articles in the state
-            this.setState({ filteredArticles: this.state.articles });
+        // throttle search event
+        if (this.timer) {
+            clearTimeout(this.timer);
         }
+
+        this.timer = setTimeout(() => {
+            console.log('handleFilterArticles Fired Timeout');
+
+            if (searchTerm) {
+                searchBarElem.classList.add('isSearching');
+
+                filteredList = utils.filterArticlesBy(searchTerm, filterBy, this.state.articles);
+
+                // If "searchTerm" provided then, Set filtered articles in the state
+                this.setState({ filteredArticles: filteredList });
+            } else {
+                // Hide clear search icon
+                searchBarElem.classList.remove('isSearching');
+
+                // If "searchTerm" NOT provided then, Set default articles list into the filtered articles in the state
+                this.setState({ filteredArticles: this.state.articles });
+            }
+
+        }, 500);
+
     }
 
 

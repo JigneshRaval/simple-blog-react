@@ -8,9 +8,15 @@
 	/* box-shadow: 0 18px 37px -7px rgba(39,60,77,.2); */
 	/* position: relative; */
 	/* padding: var(--base-vertical-space-1x); */
+	position: relative;
+	z-index: 5;
 	background-color: var(--header-background);
 	/* border-bottom: var(--light-gray-border);
 	height: calc(var(--base-vertical-space) * 8); */
+
+	.shrinkHeader & {
+		box-shadow: 0 18px 37px -7px rgba(39,60,77,.4);
+	}
 
 	.header-title {
 		margin: 0;

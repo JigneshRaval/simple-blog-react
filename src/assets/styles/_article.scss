@@ -8,12 +8,75 @@
 	height: calc(100vh - 80px);
 
 	.article-wrapper {
-		max-width: 900px;
-    	margin: 0 auto;
+
+	}
+
+	.article__content {
+		margin: 0 auto;
+		max-width: 75%;
+		padding: 2rem;
+		font-size: 20px;
+		font-family: 'Roboto-Serif', Georgia, Cambria,"Times New Roman",Times,serif;
+		font-family: 'PT-Serif', Georgia, Cambria,"Times New Roman",Times,serif;
+		font-family: var(--base-font-family);
+		background-color: #FFF;
+
+		p {
+			margin-bottom: 2rem;
+		}
+	}
+
+	.article__header {
+		margin: 0 0 2rem 0;
+		color: #363636;
+		padding: 2rem 0;
+		position: relative;
+		text-align: center;
+		background: radial-gradient(at top left,#e5d0ad,#d2af73);
+
+		h1 {
+			font-weight: bold;
+		}
+
+		.uk-article-meta,
+		.uk-article-meta a, {
+			color: #363636;
+		}
+	}
+
+	.article__footer {
+		margin: 2rem auto 1rem auto;
+		max-width: 75%;
+		background-color: #FFF;
+		padding: 2rem;
+	}
+
+
+	.article__tags-list a {
+		display: inline-block;
+		padding: var(--base-vertical-space-1x) var(--base-vertical-space-2x);
+		border: 2px solid #CCC;
+		background-color: #FFF;
+		margin-right: 1rem;
+		font-weight: 500;
+	}
+
+	.article__tags-list a:hover,
+	.article__tags-list a:focus {
+		border: 2px solid #555555;
+		background-color: #CCC;
+	}
+
+	blockquote {
+		background-color: #f5f5f5;
+		border-left: 5px solid #dbdbdb;
+		padding: 1.25em 1.5em;
+		font-size: 1.375rem;
+		border-radius: 3px;
+		line-height: 1.7;
 	}
 
 	code {
-		background-color: #e6ebef;
 		font-family: Consolas,monospace;
 		padding: 0 var(--base-vertical-space-1x);
 		border-radius: var(--base-vertical-space-half);
@@ -23,94 +86,46 @@
 	}
 	pre {
 		margin: var(--base-vertical-space-2x) auto;
+		padding: 0;
 		/* width: 100%; */
-		padding: var(--base-vertical-space-3x);
 		font-family: Inconsolata, Consolas, monospace, sans-serif;
 		font-size: 1rem;
 		line-height: 2;
-		overflow: auto;
-		background: #e6ebef;
+		overflow: visible;
 		border-radius: var(--base-vertical-space-half);
 		position:relative;
 		white-space: pre-wrap;
 		word-wrap: break-word;
 	}
-	pre code { background-color: transparent; padding: 0; display: block; border: 0px solid; font-weight: normal; }
-	pre:after {
-		content: "<CODE>";
+	pre code { display: block; border: 0px solid; font-weight: normal; overflow: auto; }
+	pre::before {
+		background: #ffe725;
+		content: 'JavaScript';
 		position: absolute;
-		top:0;
+		top: 8px;
+		padding: 0 10px 3px;
+		font-size: 11px;
+		right: 4rem;
+		text-align: right;
+		color: #444;
+		font-weight: 700;
+		letter-spacing: .8px;
+		text-transform: uppercase;
+		border-radius: 0 0 5px 5px;
+	}
+	pre::after {
+		background: #ffe725;
+		content: "";
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
 		right: 0;
-		padding: 5px 15px;
-		background: #999;
-		color: #FFF;
+		height: 10px;
 	}
 	.hljs {
-		background-color: transparent;
+		background-color: #002b36;
+		padding: var(--base-vertical-space-5x);
 	}
 
-}
-
-.article {
-	line-height: 1.8;
-}
-.article__header {
-	margin: 3em 0;
-	padding: 1em 0;
-	position: relative;
-	text-align: center
-}
-.article__header::after {
-    content: "";
-    position: absolute;
-    background-color: #ccc;
-    height: 4px;
-    left: 50%;
-    width: 10%;
-    transform: translateX(-50%);
-}
-.article__header::before {
-	top: 0%;
-}
-.article__header::after {
-	bottom: 0%;
-}
-.article__header h1 {
-	font-weight: bold;
-}
-.article__content {
-	padding: 2em 0;
-	font-size: 20px;
-	font-family: 'Roboto-Serif', Georgia, Cambria,"Times New Roman",Times,serif;
-	font-family: 'PT-Serif', Georgia, Cambria,"Times New Roman",Times,serif;
-	font-family: var(--base-font-family);
-
-	p {
-		margin-bottom: 2rem;
-	}
-}
-.article__meta {
-	border-bottom: 1px solid #CCC;
-	padding: var(--base-vertical-space-1x);
-}
-
-.article__tags-list {
-	list-style-type: none;
-	margin: 1rem 0;
-	padding: 0;
-}
-.article__tags-list li {
-	float: left;
-	margin-right: var(--base-vertical-space-1x);
-}
-.article__tags-list li a {
-	display: block;
-	padding: var(--base-vertical-space-1x) var(--base-vertical-space-2x);
-	border: 1px solid #CCC;
-	background-color: #FFF;
-	border-radius: 2px;
-}
-.article__tags-list li a:hover,
-.article__tags-list li a:focus {
-	background-color: #CCC;
 }

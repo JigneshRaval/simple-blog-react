@@ -50,7 +50,7 @@ const Header = (props: any) => {
                         </li>
                         <li><a href="#">Item</a></li>
                     </ul>
-                    <button className="uk-button uk-button-secondary" uk-toggle="target: #modal-example" onClick={openform}>Add Article</button>
+                    <button className="uk-button uk-button-secondary" uk-toggle="target: #modal-example" onClick={openform}>Create Article</button>
                     <a id="toggleSidebar" href="#offcanvas-usage" uk-toggle="">&#9776;</a>
                 </div>
             </nav>

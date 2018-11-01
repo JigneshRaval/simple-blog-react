@@ -8,12 +8,17 @@ class Utils {
 
     constructor() { }
 
-    public sgScrollToTop() {
-        let scrollStep = -window.scrollY / (this.scrollDuration / 15);
+    public scrollToTop(element: any) {
+        let elem = element || window;
+        let scrollPosY = elem ? elem.scrollTop : window.scrollY;
+        let scrollStep = -scrollPosY / (this.scrollDuration / 15);
 
         let scrollInterval = setInterval(function () {
-            if (window.scrollY !== 0) {
-                window.scrollBy(0, scrollStep);
+            // TODO: Duplicated here because scrollPosY is not updating
+            scrollPosY = elem ? elem.scrollTop : window.scrollY;
+
+            if (scrollPosY !== 0) {
+                elem.scrollBy(0, scrollStep);
             } else {
                 clearInterval(scrollInterval);
             }
@@ -25,18 +30,18 @@ class Utils {
      * @function : Scroll to top with smooth animation using javascript only
      * @param event
      */
-    public getScrollPosition(elementId: any) {
-        let scrollElement = document.getElementById(elementId);
-
+    public getScrollPosition(scrollElement: any, scrollParentElement: any) {
+        // Show/Hide scrollToTop link at bottom-right corner of the page
         if (scrollElement) {
-            if (window.pageYOffset > 300) {
+            if (scrollParentElement.scrollTop > 300) {
                 scrollElement.classList.add('isVisible');
             } else {
                 scrollElement.classList.remove('isVisible');
             }
         }
 
-        if (window.pageYOffset > 150) {
+        // Shrink/Expand Header bar on scroll
+        if (scrollParentElement.scrollTop > 150) {
             document.body.classList.add('shrinkHeader');
         } else {
             document.body.classList.remove('shrinkHeader');
@@ -177,7 +182,6 @@ class Utils {
                     return category.toLowerCase().includes(searchTerm.toLowerCase()) || title.toLowerCase().includes(searchTerm.toLowerCase()) || tags.some((tag: any) => tag.toLowerCase().includes(searchTerm.toLowerCase()))
                 }).map((article: any) => article);
 
-                console.log('articleBySearch === ', articleBySearch);
                 return [...articleBySearch];
                 break;
 

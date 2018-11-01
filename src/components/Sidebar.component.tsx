@@ -9,7 +9,8 @@ import Tags from './Tags.component';
 
 const Sidebar = (props: any) => {
 
-    console.log('Sidebar props :', props);
+    // console.log('Sidebar props :', props);
+
     return (
         <React.Fragment>
 

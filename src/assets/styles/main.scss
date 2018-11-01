@@ -21,11 +21,12 @@
 @import './uikit-override';
 
 // Highlight.js for Syntax highlighting
-@import './highlight-themes/atom-one-light.css';
+@import './highlight-themes/solarized-dark.css';
+@import './highlight-themes/tomorrow-night-bright.css';
 
 // Custom font face
 @import './fonts';
-
+@import './utils';
 @import './_healpers';
 @import './_categories-color';
 @import './_header';

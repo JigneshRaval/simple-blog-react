@@ -31,6 +31,7 @@
 	},
 	"scripts": {
 		"serve": "nodemon server-express.js",
+		"serve:debug": "nodemon --inspect-brk=8526 server-express.js",
 		"dev": "webpack --mode development",
 		"dev:w": "webpack --mode development -w",
 		"build": "webpack --mode production",
