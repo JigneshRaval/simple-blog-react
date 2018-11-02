@@ -12,10 +12,9 @@ class ArticleListItem extends React.Component<any, any> {
         this.state = {
             isActive: this.props.activeTab
         }
-        // console.log('ArticleListItem Props === ', props);
     }
 
-    getArticles = (articleId: any, index: number) => {
+    getArticleContent = (articleId: any, index: number) => {
         this.props.onDisplaySingleArticleContent(articleId);
         this.props.onActivateTab(index);
         this.setState({ active: !this.state.active });
@@ -40,7 +39,7 @@ class ArticleListItem extends React.Component<any, any> {
 
                     <div className="card-header">
                         <div className="article-category">{article.category}</div>
-                        <h2 className="uk-card-title"><a href="javascript: void(0);" onClick={() => this.getArticles(article._id, this.props.index)}>{article.title}</a></h2>
+                        <h2 className="uk-card-title"><a href="javascript: void(0);" onClick={() => this.getArticleContent(article._id, index)}>{article.title}</a></h2>
                     </div>
 
                     <div className="card-footer">
