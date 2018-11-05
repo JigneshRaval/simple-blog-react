@@ -5,7 +5,8 @@
 	/* padding: 4em 8em; */
 	flex-grow: 1;
 	overflow-y: auto;
-	height: calc(100vh - 80px);
+	/* height: calc(100vh - 80px); */
+	height: 100%;
 
 	.article-wrapper {
 
@@ -30,12 +31,16 @@
 		margin: 0 0 2rem 0;
 		color: #363636;
 		padding: 2rem 0;
-		position: relative;
-		text-align: center;
 		background: radial-gradient(at top left,#e5d0ad,#d2af73);
 
 		h1 {
 			font-weight: bold;
+		}
+
+		.header__content {
+			margin: 0 auto;
+			max-width: 75%;
+			padding: 2rem;
 		}
 
 		.uk-article-meta,
@@ -54,8 +59,8 @@
 
 	.article__tags-list a {
 		display: inline-block;
-		padding: var(--base-vertical-space-1x) var(--base-vertical-space-2x);
-		border: 2px solid #CCC;
+		padding: 0 8px;
+		border: 2px solid #bb975b;
 		background-color: #FFF;
 		margin-right: 1rem;
 		font-weight: 500;

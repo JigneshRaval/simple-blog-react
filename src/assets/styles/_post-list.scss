@@ -5,7 +5,8 @@
 	flex-basis: 20%;
 	flex-shrink: 0;
 	overflow: auto;
-	height: calc(100vh - 80px);
+	/* height: calc(100vh - 80px); */
+	height: 100%;
 	background-color: var(--sidebar-background);
 
 	&::-webkit-scrollbar {
@@ -52,11 +53,12 @@
 	.uk-card-default {
 		box-shadow: none;
 		background-color: transparent;
-		border-bottom: 1px solid #576574;
+		border-bottom: 1px solid rgba(255,255,255, 0.3);
 
 		&:hover, &.active {
-			background-color: #576574;
-			box-shadow: 0 15px 15px rgba(0, 0, 0, 0.4), 0 -15px 15px rgba(0, 0, 0, 0.4);
+			background-color: var(--sidebar-active-background);
+			/* box-shadow: 0 15px 15px rgba(0, 0, 0, 0.4), 0 -15px 15px rgba(0, 0, 0, 0.4); */
+			border-left: 5px solid rgba(255,255,255, 0.8);
 		}
 	}
 

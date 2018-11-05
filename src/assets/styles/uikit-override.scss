@@ -1,4 +1,8 @@
 // UIKit : Override default style
+html,
+.uk-navbar-nav > li > a {
+    font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+}
 
 .uk-navbar-container:not(.uk-navbar-transparent) {
     background-color: #FFF;
@@ -18,8 +22,8 @@
     flex-wrap: nowrap;
 }
 .uk-offcanvas-bar {
-    background-color: #2e86de;
-    color: #FFF;
+    background-color: var(--offcanvas-background);
+    color: var(--offcanvas-foreground);
 }
 .uk-article-meta {
     font-size: 1rem;

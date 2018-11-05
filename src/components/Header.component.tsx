@@ -23,7 +23,7 @@ const Header = (props: any) => {
             <nav className="uk-navbar-container uk-navbar-transparent" uk-navbar="">
                 <div className="uk-navbar-left">
                     <h5 className="header-title uk-navbar-item">
-                        <a href="/">WEBGEMS <span hidden>Developer Resources</span></a>
+                    <a href="/"><img src="../assets/images/Logo-iconic.svg" alt="Code candy logo" className="logo-iconic" /> <img src="../assets/images/Logo-textual.svg" alt="Code candy logo"className="logo-textual" /></a>
                     </h5>
                 </div>
                 <div className="uk-navbar-right">

@@ -60,19 +60,24 @@ export const Article = (props: any) => {
 
             <div className="article-wrapper">
                 <header className="article__header">
-                    <h1 className="uk-article-title"><a className="uk-link-reset" href="">{article.title}</a></h1>
+                    <div className="header__content">
+                        <a href="#"><span className="category-color"></span> {article.category}</a>
+                        <h1 className="uk-article-title"><a className="uk-link-reset" href={article.sourceUrl} target="_blank">{article.title}</a></h1>
 
-                    <p className="uk-article-meta">Written by <a href="#">{article.author}</a> on {article.dateCreated}. Posted in <a href="#">{article.category}</a> | <a href={article.sourceUrl} target="_blank">Original Source</a></p>
-
-                    <p className="uk-text-lead">{article.excerpt}</p>
+                        <p className="uk-article-meta">Written by <a href="#">{article.author}</a> on {article.dateCreated}. <a href={article.sourceUrl} target="_blank">Original Source</a></p>
+                        <div className="article__tags-list">
+                            <TagsInline article={article} onFilterArticles={props.onFilterArticles} className={'uk-button'} />
+                        </div>
+                    </div>
                 </header>
 
-                <div className="article__content" dangerouslySetInnerHTML={createMarkup()}></div>
+                <div className="article__content">
+                    <p className="uk-text-lead">{article.excerpt}</p>
+                    <article dangerouslySetInnerHTML={createMarkup()}></article>
+                </div>
 
                 <footer className="article__footer">
-                    <div className="article__tags-list">
-                        <TagsInline article={article} onFilterArticles={props.onFilterArticles} className={'uk-button'} />
-                    </div>
+
 
                     <a href="javascript:void(0);" id="scrollToTop" className="scroll-top" onClick={scrollToTop}>
                         <i className="icon-arrow-up">&#8593;</i>

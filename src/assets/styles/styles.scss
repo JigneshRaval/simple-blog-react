@@ -33,8 +33,14 @@ h1, h2, h3, h4, h5, h6 {
 	display: flex;
 	flex-direction: row;
 	flex-basis: auto;
-	height: 100%;
+	height: 100vh;
+	transition: transform 0.3s ease-out;
+
+	.shrinkHeader & {
+		transform: translateY(-97px);
+	}
 }
+
 
 .html-to-markdown-convertor {
 	width: 80%;
