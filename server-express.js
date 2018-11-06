@@ -8,9 +8,10 @@ const fs = require('fs');
 const routes = require('./server/router/index');
 
 // This will help to load other included files in index.html
-app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: false })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: false })); // for parsing application/x-www-form-urlencoded
 app.use(express.static(path.resolve(__dirname, 'dist')));
+
 app.use('/api', routes);
 
 app.get('/', (req, res) => {
