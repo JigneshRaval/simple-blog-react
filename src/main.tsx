@@ -150,11 +150,11 @@ export class App extends React.Component<any, any> {
         let searchTerm = event.target.value || event.target.getAttribute('data-tag-name');
 
         // throttle search event
-        if (this.timer) {
+        /* if (this.timer) {
             clearTimeout(this.timer);
-        }
+        } */
 
-        this.timer = setTimeout(() => {
+        // this.timer = setTimeout(() => {
             console.log('handleFilterArticles Fired Timeout');
 
             if (searchTerm) {
@@ -172,7 +172,7 @@ export class App extends React.Component<any, any> {
                 this.setState({ filteredArticles: this.state.articles });
             }
 
-        }, 500);
+        //}, 500);
 
     }
 
