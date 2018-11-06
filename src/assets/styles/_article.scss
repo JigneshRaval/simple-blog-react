@@ -17,9 +17,9 @@
 		max-width: 75%;
 		padding: 2rem;
 		font-size: 20px;
+		font-family: var(--base-font-family);
 		font-family: 'Roboto-Serif', Georgia, Cambria,"Times New Roman",Times,serif;
 		font-family: 'PT-Serif', Georgia, Cambria,"Times New Roman",Times,serif;
-		font-family: var(--base-font-family);
 		background-color: #FFF;
 
 		p {
@@ -32,6 +32,7 @@
 		color: #363636;
 		padding: 2rem 0;
 		background: radial-gradient(at top left,#e5d0ad,#d2af73);
+		/* background-color: #FFF; */
 
 		h1 {
 			font-weight: bold;
@@ -52,7 +53,7 @@
 	.article__footer {
 		margin: 2rem auto 1rem auto;
 		max-width: 75%;
-		background-color: #FFF;
+		/* background-color: #FFF; */
 		padding: 2rem;
 	}
 
@@ -82,15 +83,14 @@
 	}
 
 	code {
-		font-family: Consolas,monospace;
+		font-family: Consolas,Monaco,Andale Mono,Ubuntu Mono,monospace;
 		padding: 0 var(--base-vertical-space-1x);
 		border-radius: var(--base-vertical-space-half);
 		display: inline-block;
-		font-size: 14px;
-		font-weight: bold;
+		font-size: 16px;
 	}
 	pre {
-		margin: var(--base-vertical-space-2x) auto;
+		margin: var(--base-vertical-space-5x) auto;
 		padding: 0;
 		/* width: 100%; */
 		font-family: Inconsolata, Consolas, monospace, sans-serif;
