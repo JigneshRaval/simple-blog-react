@@ -14,13 +14,12 @@ routes.get('/', (request, response) => {
 routes.get('/articles', (request, response) => {
     // Find all documents in the collection
     db.articles.find({}).sort({ date: -1 }).exec(function (err, docs) {
+
         if (err) {
             return err;
         }
-        /* docs = docs.sort((a, b) => {
-            console.log('Date : ', a.date, '============', b.date);
-            return a.date - b.date; //you may have to switch the order
-        }); */
+        docs = docs.sort(date_sort_desc);
+
         response.status(200).send({ message: 'Fetched all the articles successfully', docs });
     });
 });
@@ -108,5 +107,25 @@ routes.delete('/articles/delete/:articleId', (request, response) => {
         });
     });
 });
+
+// Utility functions
+// Now we will define our date comparison functions. These are callbacks
+// that we will be providing to the array sort method below.
+var date_sort_asc = function (date1, date2) {
+    // This is a comparison function that will result in dates being sorted in
+    // ASCENDING order. As you can see, JavaScript's native comparison operators
+    // can be used to compare dates. This was news to me.
+    if (new Date(date1.date) > new Date(date2.date)) return 1;
+    if (new Date(date1.date) < new Date(date2.date)) return -1;
+    return 0;
+};
+
+var date_sort_desc = function (date1, date2) {
+    // This is a comparison function that will result in dates being sorted in
+    // DESCENDING order.
+    if (new Date(date1.date) > new Date(date2.date)) return -1;
+    if (new Date(date1.date) < new Date(date2.date)) return 1;
+    return 0;
+};
 
 module.exports = routes;
