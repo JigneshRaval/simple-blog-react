@@ -15,6 +15,7 @@ const utils = new Utils();
 export const Article = (props: any) => {
 
     const { currentArticle: article } = props;
+    const date = utils.formatDate('dd/mm/yyyy', '-', article.dateCreated);
 
     function createMarkup() {
         // return { __html: converter.makeHtml(article.htmlCode) };
@@ -26,7 +27,7 @@ export const Article = (props: any) => {
             });
         });
 
-        // Scroll to top functionality
+        // Scroll to top functionality, added setTimeout due to DOM not available
         setTimeout(() => {
             handleScrollEvent();
         }, 1000);
@@ -42,10 +43,10 @@ export const Article = (props: any) => {
             clearTimeout(timer);
 
             scrollParentElement.addEventListener('scroll', () => {
-                timer = setTimeout(() => {
-                    utils.getScrollPosition(scrollElement, scrollParentElement);
-                }, 500);
-            });
+                // timer = setTimeout(() => {
+                utils.getScrollPosition(scrollElement, scrollParentElement);
+                // }, 500);
+            }, false);
         }
     }
 
@@ -56,6 +57,8 @@ export const Article = (props: any) => {
     }
 
     return (
+
+
         <article className="uk-article article-view">
 
             <div className="article-wrapper">
@@ -64,7 +67,7 @@ export const Article = (props: any) => {
                         <a href="#"><span className="category-color"></span> {article.category}</a>
                         <h1 className="uk-article-title"><a className="uk-link-reset" href={article.sourceUrl} target="_blank">{article.title}</a></h1>
 
-                        <p className="uk-article-meta">Written by <a href="#">{article.author}</a> on {article.dateCreated}. <a href={article.sourceUrl} target="_blank">Original Source</a></p>
+                        <p className="uk-article-meta">Written by <a href="javascript:;"><strong>{article.author}</strong></a> on <strong>{date.toString()}</strong>. | <a href={article.sourceUrl} target="_blank">Original Source</a></p>
                         <div className="article__tags-list">
                             <TagsInline article={article} onFilterArticles={props.onFilterArticles} className={'uk-button'} />
                         </div>
@@ -77,8 +80,6 @@ export const Article = (props: any) => {
                 </div>
 
                 <footer className="article__footer">
-
-
                     <a href="javascript:void(0);" id="scrollToTop" className="scroll-top" onClick={scrollToTop}>
                         <i className="icon-arrow-up">&#8593;</i>
                         <span className="sr-only">Scroll To Top</span>
