@@ -249,13 +249,19 @@ type: '${frontmatterObj.type}'
                                 <div className="uk-margin">
                                     <label className="form-label" htmlFor="txtCategory">Category</label>
                                     <select value={this.state.txtCategory} className="uk-select" name="txtCategory" id="txtCategory" onChange={this.handleInputChange}>
+                                        <option value="Accessibility">Accessibility</option>
                                         <option value="JavaScript">JavaScript</option>
                                         <option value="ES6">ES6</option>
+                                        <option value="HTML5">HTML5</option>
+                                        <option value="CSS">CSS</option>
                                         <option value="React">React</option>
                                         <option value="Angular">Angular</option>
                                         <option value="RxJs">RxJs</option>
                                         <option value="Redux">Redux</option>
                                         <option value="Vue.js">Vue.js</option>
+                                        <option value="Webpack">Webpack</option>
+                                        <option value="Node.js">Node.js</option>
+                                        <option value="NPM">NPM</option>
                                     </select>
                                     {/* <input type="text" className="uk-input" name="txtCategory" id="txtCategory" placeholder="Category" onChange={this.handleInputChange} value={this.state.txtCategory} /> */}
                                 </div>

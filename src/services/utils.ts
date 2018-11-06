@@ -5,6 +5,7 @@
 
 class Utils {
     scrollDuration: number = 250;
+    lastScrollTop: number = 0;
 
     constructor() { }
 
@@ -30,10 +31,11 @@ class Utils {
      * @function : Scroll to top with smooth animation using javascript only
      * @param event
      */
-    public getScrollPosition(scrollElement: any, scrollParentElement: any) {
+    public getScrollPosition(scrollElement: any, scrollContainer: any) {
+        var scrollTop = window.pageYOffset || scrollContainer.scrollTop;
         // Show/Hide scrollToTop link at bottom-right corner of the page
         if (scrollElement) {
-            if (scrollParentElement.scrollTop > 300) {
+            if (scrollContainer.scrollTop > 300) {
                 scrollElement.classList.add('isVisible');
             } else {
                 scrollElement.classList.remove('isVisible');
@@ -41,11 +43,15 @@ class Utils {
         }
 
         // Shrink/Expand Header bar on scroll
-        if (scrollParentElement.scrollTop > 150) {
+        if (scrollContainer.scrollTop > this.lastScrollTop) {
             document.body.classList.add('shrinkHeader');
         } else {
             document.body.classList.remove('shrinkHeader');
         }
+
+        // console.log('scrollContainer.scrollTop ==', scrollContainer.scrollTop, ', this.lastScrollTop ==', this.lastScrollTop);
+
+        this.lastScrollTop = scrollTop;
     }
 
 
@@ -216,6 +222,24 @@ class Utils {
                     }
                 });
         }
+    }
+
+    public formatDate(dateFormat: any, separator: string, date: any) {
+        let formattedDate,
+            locale = "en-us";
+        let dt = new Date(date);
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let day = dt.getDate();
+        let month = dt.toLocaleString(locale, { month: "long" });
+        let year = dt.getFullYear();
+
+        switch (dateFormat) {
+            case "dd/mm/yyyy":
+                formattedDate = `${day}${separator}${month}${separator}${year}`;
+            default:
+                formattedDate = `${month}-${day}, ${year}`;
+        }
+        return formattedDate;
     }
 }
 

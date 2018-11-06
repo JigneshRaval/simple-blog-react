@@ -21,7 +21,7 @@ class ArticleListItem extends React.Component<any, any> {
     }
 
     render() {
-        const { article, onDeleteArticle, onEditArticle, activeTab, index } = this.props;
+        const { article, onDeleteArticle, onEditArticle, onFilterArticles, activeTab, index } = this.props;
 
         return (
             <div className={"uk-card uk-card-default" + (activeTab === index ? ' active' : '')} key={article._id}>
@@ -31,8 +31,12 @@ class ArticleListItem extends React.Component<any, any> {
                         <button className="uk-button uk-button-link" type="button"><i uk-icon="more-vertical"></i></button>
                         <div uk-dropdown="mode: click; pos: bottom-right" className="uk-dropdown-bottom-right">
                             <ul className="uk-nav uk-dropdown-nav">
-                                <li className="uk-active"><a href="javascript:void(0);" onClick={() => onEditArticle(article._id, true)}>Edit Article</a></li>
-                                <li><a href="javascript:void(0);" onClick={() => onDeleteArticle(article._id)}>Delete Article</a></li>
+                                <li className="uk-nav-header">Actions</li>
+                                <li className="uk-active"><a href="javascript:void(0);" onClick={() => onEditArticle(article._id, true)}><span uk-icon="pencil"></span> Edit Article</a></li>
+                                <li><a href="javascript:void(0);" onClick={() => onDeleteArticle(article._id)}><span uk-icon="trash"></span> Delete Article</a></li>
+                                <li className="uk-nav-header">Tags</li>
+                                <TagsInline article={article} onFilterArticles={this.props.onFilterArticles} />
+                                <li><a href="javascript:void(0);" onClick={(event) => onFilterArticles(event, 'all')}>Clear filter</a></li>
                             </ul>
                         </div>
                     </div>
@@ -44,7 +48,7 @@ class ArticleListItem extends React.Component<any, any> {
 
                     <div className="card-footer">
                         <div>
-                            <TagsInline article={article} onFilterArticles={this.props.onFilterArticles} className={'post-list__tags uk-button uk-button-text'}/>
+
                         </div>
                     </div>
                 </div>
