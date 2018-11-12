@@ -119,4 +119,20 @@ export class ArticleService {
     public deleteAllArticles() {
         console.log('deleteAllArticles :');
     }
+
+    public markAsFavorite(articleId: string, isFavorite: boolean) {
+        let formData = { favorite: !isFavorite };
+
+        return fetch(`/api/articles/favorite/${articleId}`, {
+            method: 'PUT',
+            body: JSON.stringify(formData),
+            mode: 'cors',
+            redirect: 'follow',
+            headers: new Headers({
+                'Content-Type': 'application/json'
+                //"Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            })
+        })
+            .then((response) => response.json());
+    }
 }

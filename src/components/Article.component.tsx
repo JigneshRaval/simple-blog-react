@@ -36,18 +36,18 @@ export const Article = (props: any) => {
     }
 
     const handleScrollEvent = () => {
-        let timer;
+        let timer:any;
         let scrollElement = document.querySelector('#scrollToTop');
-        let scrollParentElement = document.querySelector('.article-view');
-        if (scrollParentElement) {
-            clearTimeout(timer);
 
-            scrollParentElement.addEventListener('scroll', () => {
-                // timer = setTimeout(() => {
-                utils.getScrollPosition(scrollElement, scrollParentElement);
-                // }, 500);
-            }, false);
-        }
+        window.addEventListener('scroll', () => {
+            if (timer) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(() => {
+                utils.getScrollPosition(scrollElement);
+            }, 250);
+        }, false);
+
     }
 
     // Go to top on click of up arrow
@@ -64,24 +64,26 @@ export const Article = (props: any) => {
             <div className="article-wrapper">
                 <header className="article__header">
                     <div className="header__content">
-                        <a href="#"><span className="category-color"></span> {article.category}</a>
-                        <h1 className="uk-article-title"><a className="uk-link-reset" href={article.sourceUrl} target="_blank">{article.title}</a></h1>
+                        <a href="#" className="article-category"><span className="category-color"></span> {article.category}</a>
+                        <h1 className="uk-article-title">
+                            <a className="uk-link-reset" href={article.sourceUrl} target="_blank">{article.title}</a>
+                        </h1>
 
-                        <p className="uk-article-meta">Written by <a href="javascript:;"><strong>{article.author}</strong></a> on <strong>{date.toString()}</strong>. | <a href={article.sourceUrl} target="_blank">Original Source</a></p>
+                        <p className="uk-article-meta">Written by <a href="javascript:;"><strong>{article.author}</strong></a> on <strong>{date.toString()}</strong>.</p>
                         <div className="article__tags-list">
-                            <TagsInline article={article} onFilterArticles={props.onFilterArticles} className={'uk-button'} />
+                            Tagged as <TagsInline article={article} onFilterArticles={props.onFilterArticles} className={'uk-button'} />
                         </div>
                     </div>
                 </header>
 
                 <div className="article__content">
-                    <p className="uk-text-lead">{article.excerpt}</p>
+                    {article.excerpt ? <p className="uk-text-lead">{article.excerpt}</p> : ''}
                     <article dangerouslySetInnerHTML={createMarkup()}></article>
                 </div>
 
                 <footer className="article__footer">
                     <a href="javascript:void(0);" id="scrollToTop" className="scroll-top" onClick={scrollToTop}>
-                        <i className="icon-arrow-up">&#8593;</i>
+                        <i className="ion ion-md-arrow-round-up"></i>
                         <span className="sr-only">Scroll To Top</span>
                     </a>
                 </footer>

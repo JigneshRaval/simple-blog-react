@@ -54,7 +54,7 @@ const Header = (props: any) => {
                         <li><a href="#">Item</a></li>
                     </ul>
                     <button className="uk-button uk-button-secondary" uk-toggle="target: #modal-example" onClick={openform}>Create Article</button>
-                    <a id="toggleSidebar" href="#offcanvas-usage" uk-toggle="">&#9776;</a>
+                    <a id="toggleSidebar" href="#offcanvas-usage" uk-toggle=""><i className="ion ion-md-menu"></i></a>
                 </div>
             </nav>
         </header>

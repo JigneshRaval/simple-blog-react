@@ -2,20 +2,36 @@
 =============================================*/
 
 .post-list__wrapper {
-	flex-basis: 20%;
-	flex-shrink: 0;
-	overflow: auto;
+	/* flex-basis: 20%;
+	flex-shrink: 0; */
 	/* height: calc(100vh - 80px); */
+	position: fixed;
+	z-index: 7;
+	top: 0;
+	left: 0;
+	width: 20%;
 	height: 100%;
 	background-color: var(--sidebar-background);
+	will-change: transform;
+	transition: transform 0.3s ease-out;
 
-	&::-webkit-scrollbar {
-		height: 6px;
-		width: 6px;
+	.isArticleListPanelOpened & {
+		transform: translateX(-100%);
 	}
-	&::-webkit-scrollbar-thumb { background: #e0d6eb; }
-	&::-webkit-scrollbar-thumb:hover { background: #8c65b3; }
-	&::-webkit-scrollbar-track { background: #f5f3f7; }
+
+	> div {
+		overflow: auto;
+		height: 100%;
+
+		/* Custom Scrollbar */
+		&::-webkit-scrollbar {
+			height: 6px;
+			width: 6px;
+		}
+		&::-webkit-scrollbar-thumb { background: #e0d6eb; }
+		&::-webkit-scrollbar-thumb:hover { background: #8c65b3; }
+		&::-webkit-scrollbar-track { background: #f5f3f7; }
+	}
 
 	.columns {
 		flex-direction: column;
@@ -50,6 +66,55 @@
 		color: var(--sidebar-tags-color);
 	}
 
+	/* Show/Hide Left side Panel */
+	.post-list__drawer {
+		display: inline-block;
+		height: 40px;
+		width: 40px;
+		background-color: #fff;
+		position: absolute;
+		bottom: 0;
+		left: 100%;
+		color: #000;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 24px;
+		border-radius: 4px;
+		cursor: pointer;
+
+		.ion-ios-arrow-back:before {
+			.isArticleListPanelOpened & {
+				content: "\f3d1";
+			}
+		}
+	}
+
+	.isFavorite {
+		position: absolute;
+		top: 0;
+			left: 0;
+
+		i.corner {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 0;
+			height: 0;
+			border-top: 40px solid white;
+			border-right: 40px solid transparent;
+
+			&::after {
+				content: '';
+				box-shadow: 0 5px 5px rgba(0,0,0,0.4);
+			}
+		}
+
+		.ion-ios-star {
+			position: relative;
+		}
+	}
+
 	.uk-card-default {
 		box-shadow: none;
 		background-color: transparent;
@@ -59,7 +124,7 @@
 		&::before {
 			content: "";
 			position: absolute;
-			width: 8px;
+			width: 4px;
 			height: 100%;
 			left:0;
 			top: 50%;

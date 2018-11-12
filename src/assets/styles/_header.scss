@@ -2,22 +2,24 @@
 =============================================*/
 
 .header-main {
-	/* display: flex;
-	justify-content: space-between;
-	align-items: center; */
-	box-shadow: 0 18px 37px -7px rgba(39,60,77,.2);
-	/* position: relative; */
-	padding: var(--base-vertical-space-1x) var(--base-vertical-space-3x);
-	position: relative;
+	box-shadow: 0 18px 37px -7px rgba(0,0,0,.3);
+	padding: var(--base-vertical-space-1x) var(--base-vertical-space-5x);
+	position: sticky;
 	z-index: 5;
+	margin-left: 20%;
+	top: 0;
+	opacity: 1;
 	background-color: var(--header-background);
-	transition: transform 0.3s ease-out;
-	/* border-bottom: var(--light-gray-border);
-	height: calc(var(--base-vertical-space) * 8); */
+	transition: opacity 0.1s linear, transform 0.3s ease-out;
 
 	.shrinkHeader & {
-		box-shadow: 0 18px 37px -7px rgba(39,60,77,.4);
+		box-shadow: 0 18px 37px -7px rgba(0,0,0,.4);
 		transform: translateY(-100%);
+		opacity: 0;
+	}
+
+	.isArticleListPanelOpened & {
+		margin-left: 0;
 	}
 
 	.header-title {
@@ -54,10 +56,10 @@
 /* LOGO
 =========================================*/
 .logo-iconic {
-	height: 64px;
+	height: 48px;
 }
 .logo-textual {
-	height: 56px;
+	height: 48px;
 	margin-left: 1rem;
 }
 .main-navigation {

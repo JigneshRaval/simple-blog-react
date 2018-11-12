@@ -187,6 +187,20 @@ export class App extends React.Component<any, any> {
         this.setState({ showForm: isFormVisible });
     }
 
+    handleMarkAsFavorite = (articleId: string, isFavorite: boolean) => {
+        this.articleService.markAsFavorite(articleId, isFavorite).then(data => {
+            let articles = [...this.state.articles];
+            articles.map((article: any, index: number) => {
+                if (article._id === data.docs[0]._id) {
+                    articles[index] = { ...data.docs[0] };
+                    articles[index] = data.docs[0];
+                }
+            });
+
+            this.setState({ filteredArticles: articles });
+        });
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -216,6 +230,7 @@ export class App extends React.Component<any, any> {
                                     onEditArticle={this.handleEditArticle}
                                     onDisplaySingleArticleContent={this.handleDisplaySingleArticleContent}
                                     onFilterArticles={this.handleFilterArticles}
+                                    markAsFavorite={this.handleMarkAsFavorite}
                                 />
 
                                 {

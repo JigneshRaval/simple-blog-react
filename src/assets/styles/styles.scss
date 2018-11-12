@@ -1,7 +1,6 @@
 html {
 	/* font-size: 16px; */
 	height: 100%;
-	overflow: hidden;
 	color: #333333;
 }
 body {
@@ -23,22 +22,19 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 }
 .container-fluid {
-	/* display: flex;
-	flex-direction: row;
-    flex-basis: auto; */
 	margin: 0;
 	padding: 0;
 }
 .content-section {
-	display: flex;
+	/* display: flex;
 	flex-direction: row;
 	flex-basis: auto;
 	height: calc(100vh - 97px);
-	transition: height 0.3s ease-out, transform 0.3s ease-out;
+	transition: height 0.3s ease-out, transform 0.3s ease-out; */
 
 	.shrinkHeader & {
-		transform: translateY(-97px);
-		height: 100vh;
+		//transform: translateY(-97px);
+		//height: 100vh;
 	}
 }
 
@@ -55,6 +51,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #modal-example {
+
 	.uk-modal-body {
 		padding: 30px 100px;
 	}

@@ -6,20 +6,16 @@
 class Utils {
     scrollDuration: number = 250;
     lastScrollTop: number = 0;
+    delta = 5;
 
     constructor() { }
 
     public scrollToTop(element: any) {
-        let elem = element || window;
-        let scrollPosY = elem ? elem.scrollTop : window.scrollY;
-        let scrollStep = -scrollPosY / (this.scrollDuration / 15);
+        let scrollStep = -window.scrollY / (this.scrollDuration / 15);
 
         let scrollInterval = setInterval(function () {
-            // TODO: Duplicated here because scrollPosY is not updating
-            scrollPosY = elem ? elem.scrollTop : window.scrollY;
-
-            if (scrollPosY !== 0) {
-                elem.scrollBy(0, scrollStep);
+            if (window.scrollY !== 0) {
+                window.scrollBy(0, scrollStep);
             } else {
                 clearInterval(scrollInterval);
             }
@@ -31,26 +27,35 @@ class Utils {
      * @function : Scroll to top with smooth animation using javascript only
      * @param event
      */
-    public getScrollPosition(scrollElement: any, scrollContainer: any) {
-        var scrollTop = window.pageYOffset || scrollContainer.scrollTop;
-        // Show/Hide scrollToTop link at bottom-right corner of the page
-        if (scrollElement) {
-            if (scrollContainer.scrollTop > 300) {
-                scrollElement.classList.add('isVisible');
-            } else {
-                scrollElement.classList.remove('isVisible');
+    public getScrollPosition(scrollElement: any) {
+        let scrollTop = window.pageYOffset;
+
+        if (scrollTop > 300) {
+            scrollElement.classList.add('isVisible');
+        } else {
+            scrollElement.classList.remove('isVisible');
+        }
+
+        // Ref: https://medium.com/@mariusc23/hide-header-on-scroll-down-show-on-scroll-up-67bbaae9a78c
+        // Make sure they scroll more than delta ( delta = 5 )
+        if (Math.abs(this.lastScrollTop - scrollTop) <= this.delta) {
+            return;
+        }
+
+        // If they scrolled down and are past the navbar, add class .nav-up.
+        // This is necessary so you never see what is "behind" the navbar.
+        // header height = 96px
+        if (scrollTop > this.lastScrollTop && scrollTop > 96) {
+            // Scroll Down
+            document.body.classList.add('shrinkHeader');
+        } else {
+            // Scroll Up
+            if (scrollTop + window.innerHeight < document.body.offsetHeight) {
+                document.body.classList.remove('shrinkHeader');
             }
         }
 
-        // Shrink/Expand Header bar on scroll
-        if (scrollContainer.scrollTop > this.lastScrollTop) {
-            document.body.classList.add('shrinkHeader');
-        } else {
-            document.body.classList.remove('shrinkHeader');
-        }
-
-        // console.log('scrollContainer.scrollTop ==', scrollContainer.scrollTop, ', this.lastScrollTop ==', this.lastScrollTop);
-
+        console.log('scrollTop =', scrollTop, ' this.lastScrollTop =', this.lastScrollTop)
         this.lastScrollTop = scrollTop;
     }
 
@@ -237,7 +242,7 @@ class Utils {
             case "dd/mm/yyyy":
                 formattedDate = `${day}${separator}${month}${separator}${year}`;
             default:
-                formattedDate = `${month}-${day}, ${year}`;
+                formattedDate = `${month} ${day}, ${year}`;
         }
         return formattedDate;
     }

@@ -12,6 +12,7 @@ class ArticlesList extends React.Component<any, any> {
         };
 
         this.handleActivateTab = this.handleActivateTab.bind(this);
+        this.handleToggleArticleListPanel = this.handleToggleArticleListPanel.bind(this);
     }
 
     // Activate / De-activate selected item
@@ -27,8 +28,16 @@ class ArticlesList extends React.Component<any, any> {
         this.setState({ active: !this.state.active });
     }
 
+    handleToggleArticleListPanel() {
+        if (!document.body.classList.contains('isArticleListPanelOpened')) {
+            document.body.classList.add('isArticleListPanelOpened');
+        } else {
+            document.body.classList.remove('isArticleListPanelOpened');
+        }
+    }
+
     render() {
-        const { filteredArticles, onDeleteArticle, onEditArticle } = this.props;
+        const { filteredArticles } = this.props;
 
         return (
             <div className="post-list__wrapper" >
@@ -47,6 +56,9 @@ class ArticlesList extends React.Component<any, any> {
                         })
                     }
                 </div>
+                <span className="post-list__drawer" onClick={this.handleToggleArticleListPanel}>
+                    <i className="ion-ios-arrow-back"></i><i className="ion-ios-arrow-back"></i>
+                </span>
             </div>
         );
     }

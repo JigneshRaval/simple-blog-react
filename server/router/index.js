@@ -108,6 +108,25 @@ routes.delete('/articles/delete/:articleId', (request, response) => {
     });
 });
 
+
+// Favorite : Edit Article by Id (/api/articles/edit/:articleId)
+routes.put('/articles/favorite/:articleId', (request, response) => {
+    // Set an existing field's value
+    db.articles.update({ _id: request.params.articleId }, { $set: { favorite: request.body.favorite } }, { multi: false }, function (err, numReplaced) {
+        if (err) {
+            return err;
+        } else {
+            db.articles.find({ _id: request.params.articleId }).sort({ today: -1 }).exec(function (err, docs) {
+                if (err) {
+                    return err;
+                }
+                response.status(200).send({ message: 'Article ID#${request.params.articleId} marked as favorite.', docs });
+            });
+        }
+    });
+});
+
+
 // Utility functions
 // Now we will define our date comparison functions. These are callbacks
 // that we will be providing to the array sort method below.

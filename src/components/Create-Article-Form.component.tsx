@@ -173,6 +173,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
                 node.removeAttribute('id');
                 node.removeAttribute('class');
                 node.removeAttribute('style');
+                node.removeAttribute('name');
             }
 
             /* if (node.nodeName !== 'PRE') {

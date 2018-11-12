@@ -21,7 +21,7 @@ class ArticleListItem extends React.Component<any, any> {
     }
 
     render() {
-        const { article, onDeleteArticle, onEditArticle, onFilterArticles, activeTab, index } = this.props;
+        const { article, onDeleteArticle, onEditArticle, onFilterArticles, markAsFavorite, activeTab, index } = this.props;
 
         return (
             <div className={"uk-card uk-card-default" + (activeTab === index ? ' active' : '')} key={article._id}>
@@ -34,6 +34,7 @@ class ArticleListItem extends React.Component<any, any> {
                                 <li className="uk-nav-header">Actions</li>
                                 <li className="uk-active"><a href="javascript:void(0);" onClick={() => onEditArticle(article._id, true)}><span uk-icon="pencil"></span> Edit Article</a></li>
                                 <li><a href="javascript:void(0);" onClick={() => onDeleteArticle(article._id)}><span uk-icon="trash"></span> Delete Article</a></li>
+                                <li><a href="javascript:void(0);" onClick={() => markAsFavorite(article._id, article.favorite)} data-favorite={article.favorite}><span uk-icon="star"></span> Mark as Favorite</a></li>
                                 <li className="uk-nav-header">Tags</li>
                                 <TagsInline article={article} onFilterArticles={this.props.onFilterArticles} />
                                 <li><a href="javascript:void(0);" onClick={(event) => onFilterArticles(event, 'all')}>Clear filter</a></li>
@@ -42,6 +43,9 @@ class ArticleListItem extends React.Component<any, any> {
                     </div>
 
                     <div className="card-header">
+                        {
+                            article.favorite ? <span className="isFavorite" aria-label="favorite"><i className="corner"></i><i className="icon ion-ios-star"></i></span> : ''
+                        }
                         <div className="article-category">{article.category}</div>
                         <h2 className="uk-card-title"><a href="javascript: void(0);" onClick={() => this.getArticleContent(article._id, index)}>{article.title}</a></h2>
                     </div>
