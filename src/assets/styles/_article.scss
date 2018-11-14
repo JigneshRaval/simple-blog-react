@@ -24,6 +24,14 @@
 		font-family: 'PT-Serif', Georgia, Cambria,"Times New Roman",Times,serif;
 		background-color: #FFF;
 
+		.uk-text-lead {
+			line-height: 2.5rem;
+			padding: 1rem;
+			background-color: #EEE;
+			margin-left: -1rem;
+			margin-right: -1rem;
+		}
+
 		p {
 			margin-bottom: 2rem;
 			line-height: 2rem;
