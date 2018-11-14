@@ -28,6 +28,10 @@ import UserName from './components/HOC-examples/username.component';
 const HOCDemo = HOC(UserName);
 */
 
+declare var $: any;
+declare var hljs: any;
+declare var UIkit: any;
+
 export class App extends React.Component<any, any> {
     articleService: ArticleService;
     timer: any;
@@ -91,7 +95,7 @@ export class App extends React.Component<any, any> {
         // Highlight code blocks
         console.log(window);
         $('pre code').each(function (i: any, block: any) {
-            window.hljs.highlightBlock(block);
+            hljs.highlightBlock(block);
         });
     }
 
@@ -155,22 +159,22 @@ export class App extends React.Component<any, any> {
         } */
 
         // this.timer = setTimeout(() => {
-            console.log('handleFilterArticles Fired Timeout');
+        console.log('handleFilterArticles Fired Timeout');
 
-            if (searchTerm) {
-                searchBarElem.classList.add('isSearching');
+        if (searchTerm) {
+            searchBarElem.classList.add('isSearching');
 
-                filteredList = utils.filterArticlesBy(searchTerm, filterBy, this.state.articles);
+            filteredList = utils.filterArticlesBy(searchTerm, filterBy, this.state.articles);
 
-                // If "searchTerm" provided then, Set filtered articles in the state
-                this.setState({ filteredArticles: filteredList });
-            } else {
-                // Hide clear search icon
-                searchBarElem.classList.remove('isSearching');
+            // If "searchTerm" provided then, Set filtered articles in the state
+            this.setState({ filteredArticles: filteredList });
+        } else {
+            // Hide clear search icon
+            searchBarElem.classList.remove('isSearching');
 
-                // If "searchTerm" NOT provided then, Set default articles list into the filtered articles in the state
-                this.setState({ filteredArticles: this.state.articles });
-            }
+            // If "searchTerm" NOT provided then, Set default articles list into the filtered articles in the state
+            this.setState({ filteredArticles: this.state.articles });
+        }
 
         //}, 500);
 

@@ -8,6 +8,9 @@ import React from 'react';
 
 // const converter = new ShowdownService.Converter();
 
+declare var $: any;
+declare var UIkit: any;
+
 export class CreateArticleFormComponent extends React.Component<any, any> {
     // turndownService: any;
     // editorOutput: any;
@@ -169,7 +172,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         wrapperDiv.innerHTML = html;
 
         wrapperDiv.querySelectorAll('*').forEach(node => {
-            if (node.parentElement && (node.parentElement.nodeName !== 'PRE' || node.parentElement.nodeName !== 'CODE')) {
+            if ((node.parentElement && node.parentElement.nodeName !== 'PRE') || (node.parentElement && node.parentElement.nodeName !== 'CODE')) {
                 node.removeAttribute('id');
                 node.removeAttribute('class');
                 node.removeAttribute('style');
@@ -223,7 +226,7 @@ type: '${frontmatterObj.type}'
     handleReset = (event: any) => {
         event.preventDefault();
 
-        const form = document.querySelector('#formCreateEditArticle');
+        const form: HTMLFormElement = document.querySelector('#formCreateEditArticle');
         form.reset();
         // this.props.onToggleAddEditForm(false);
     }
@@ -321,7 +324,7 @@ type: '${frontmatterObj.type}'
                             <div className="uk-width-1-1@m">
                                 <div className="uk-margin">
                                     <label className="form-label" htmlFor="txtareaHtmlCode">HTML code</label>
-                                    <textarea className="uk-textarea" rows="10" name="txtareaHtmlCode" id="txtareaHtmlCode" onChange={this.handleInputChange} value={this.state.txtareaHtmlCode}></textarea>
+                                    <textarea className="uk-textarea" rows={10} name="txtareaHtmlCode" id="txtareaHtmlCode" onChange={this.handleInputChange} value={this.state.txtareaHtmlCode}></textarea>
                                 </div>
                             </div>
                             {/* <div className="uk-width-1-2@m">

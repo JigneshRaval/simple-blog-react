@@ -4,6 +4,8 @@
 
 import React from 'react';
 
+declare var UIkit: any;
+
 const Header = (props: any) => {
 
     // Open Create Article form in modal overlay
@@ -13,7 +15,7 @@ const Header = (props: any) => {
 
     // Clear search-box on click of clear button and display all articles
     const clearSearchBox = (event: any) => {
-        const searchBox = document.querySelector('#searchBar');
+        const searchBox: any = document.querySelector('#searchBar');
         searchBox.value = '';
         props.onFilterArticles(event, 'all');
     }

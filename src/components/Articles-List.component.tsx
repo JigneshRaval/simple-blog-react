@@ -17,7 +17,7 @@ class ArticlesList extends React.Component<any, any> {
 
     // Activate / De-activate selected item
     handleActivateTab(index: number) {
-        this.setState((prev: number) => ({
+        this.setState((prev: any) => ({
             activeTab: prev.activeTab === index ? -1 : index
         }));
     }

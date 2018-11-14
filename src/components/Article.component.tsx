@@ -12,6 +12,9 @@ const utils = new Utils();
 // ==============================================
 // const converter = new ShowdownService.Converter();
 
+declare var $: any;
+declare var hljs: any;
+
 export const Article = (props: any) => {
 
     const { currentArticle: article } = props;
@@ -36,7 +39,7 @@ export const Article = (props: any) => {
     }
 
     const handleScrollEvent = () => {
-        let timer:any;
+        let timer: any;
         let scrollElement = document.querySelector('#scrollToTop');
 
         window.addEventListener('scroll', () => {

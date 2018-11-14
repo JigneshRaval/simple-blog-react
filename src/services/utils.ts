@@ -3,6 +3,10 @@
 
 // Utility functions
 
+declare var $: any;
+declare var hljs: any;
+declare var UIkit: any;
+
 class Utils {
     scrollDuration: number = 250;
     lastScrollTop: number = 0;
