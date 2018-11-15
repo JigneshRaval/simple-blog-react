@@ -75,7 +75,7 @@ export class App extends React.Component<any, any> {
 
             let articles = [data.newDoc, ...this.state.articles];
 
-            this.setState({ articles, filteredArticles: articles });
+            this.setState({ articles, filteredArticles: articles, currentArticle: data.newDoc });
 
             // Update variable value in articles.service.ts
             this.updateArticleDataService(this.state.articles);
@@ -126,7 +126,7 @@ export class App extends React.Component<any, any> {
                 }
             });
 
-            this.setState({ articles: articles, filteredArticles: articles, editData: {}, isEditMode: false });
+            this.setState({ articles: articles, filteredArticles: articles, editData: {}, isEditMode: false, currentArticle: data.docs[0] });
 
             // Update variable value in articles.service.ts
             this.updateArticleDataService(this.state.articles);
@@ -152,6 +152,7 @@ export class App extends React.Component<any, any> {
         let filteredList: any = [];
         let searchBarElem = document.querySelector('.uk-search-default');
         let searchTerm = event.target.value || event.target.getAttribute('data-tag-name');
+        event.target.parentElement.classList.add('active');
 
         // throttle search event
         /* if (this.timer) {
