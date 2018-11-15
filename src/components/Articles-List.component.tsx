@@ -43,6 +43,7 @@ class ArticlesList extends React.Component<any, any> {
             <div className="post-list__wrapper" >
                 <div className="uk-flex uk-flex-column">
                     {
+                        filteredArticles && filteredArticles.length > 0 ?
                         filteredArticles.map((article: any, index: number) => {
                             return (
                                 <ArticleListItem
@@ -53,7 +54,7 @@ class ArticlesList extends React.Component<any, any> {
                                     onActivateTab={this.handleActivateTab.bind(null, index)}
                                     {...this.props} />
                             )
-                        })
+                        }) : <div className="message-no-article">Sorry, No article found</div>
                     }
                 </div>
                 <span className="post-list__drawer" onClick={this.handleToggleArticleListPanel}>
