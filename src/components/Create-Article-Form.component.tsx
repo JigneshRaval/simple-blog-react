@@ -266,6 +266,7 @@ type: '${frontmatterObj.type}'
                                         <option value="Webpack">Webpack</option>
                                         <option value="Node.js">Node.js</option>
                                         <option value="NPM">NPM</option>
+                                        <option value="TypeScript">TypeScript</option>
                                     </select>
                                     {/* <input type="text" className="uk-input" name="txtCategory" id="txtCategory" placeholder="Category" onChange={this.handleInputChange} value={this.state.txtCategory} /> */}
                                 </div>

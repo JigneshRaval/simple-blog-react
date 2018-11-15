@@ -10,16 +10,7 @@ html,
     top: 0;
     z-index: 10;
 }
-.uk-search-default .uk-search-input {
-    border: 1px solid #EEE;
-    padding: 1rem 40px 12px;
-    height: auto;
 
-    &:focus {
-        border: 1px solid #ccc;
-        box-shadow: 0px 1px 5px inset rgba(0,0,0,0.2);
-    }
-}
 .uk-navbar-right {
     flex-wrap: nowrap;
 }

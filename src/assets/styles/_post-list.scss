@@ -2,9 +2,6 @@
 =============================================*/
 
 .post-list__wrapper {
-	/* flex-basis: 20%;
-	flex-shrink: 0; */
-	/* height: calc(100vh - 80px); */
 	position: fixed;
 	z-index: 7;
 	top: 0;
@@ -31,6 +28,14 @@
 		&::-webkit-scrollbar-thumb { background: #e0d6eb; }
 		&::-webkit-scrollbar-thumb:hover { background: #8c65b3; }
 		&::-webkit-scrollbar-track { background: #f5f3f7; }
+	}
+
+	.message-no-article {
+		align-self: center;
+		color: #FFF;
+		font-size: 1.5em;
+		position: relative;
+		top: 50%;
 	}
 
 	.columns {

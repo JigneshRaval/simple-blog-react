@@ -143,8 +143,6 @@
 		background-color: #CCC;
 	}
 
-
-
 	ul li,
 	ol li {
 		margin-bottom: 1rem;
@@ -179,6 +177,7 @@
 		display: inline-block;
 		font-size: 16px;
 	}
+
 	pre {
 		margin: var(--base-vertical-space-5x) -5rem;
 		padding: 0;
@@ -192,10 +191,12 @@
 		white-space: pre-wrap;
 		word-wrap: break-word;
 	}
+
 	pre code { display: block; border: 0px solid; font-weight: normal; overflow: auto; border-radius: 0; }
+
 	pre::before {
 		background: #ffe725;
-		content: 'JavaScript';
+		content: attr(data-title);
 		position: absolute;
 		top: 8px;
 		padding: 0 10px 3px;
@@ -206,8 +207,8 @@
 		font-weight: 700;
 		letter-spacing: .8px;
 		text-transform: uppercase;
-		/* border-radius: 0 0 5px 5px; */
 	}
+
 	pre::after {
 		background: #ffe725;
 		content: "";
@@ -218,6 +219,7 @@
 		right: 0;
 		height: 10px;
 	}
+
 	.hljs {
 		background-color: #002b36;
 		padding: var(--base-vertical-space-5x);

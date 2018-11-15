@@ -35,10 +35,10 @@ const Header = (props: any) => {
                     <div className="uk-navbar-item">
                         <form className="uk-search uk-search-default uk-width-1-1">
                             <span uk-search-icon=""></span>
-                            <button type="button" className="close clear-search" data-dismiss="modal" aria-label="Close" onClick={clearSearchBox}>
+                            <button type="button" className="close clear-search" data-dismiss="modal" aria-label="Close" onClick={clearSearchBox} title="Clear Search">
                                 <span aria-hidden="true">&times;</span>
                             </button>
-                            <input className="uk-search-input" name="searchBar" id="searchBar" type="text" placeholder="Search articles by Tag, Category etc..." onChange={(event) => props.onFilterArticles(event, 'search')} />
+                            <input className="uk-search-input" name="searchBar" id="searchBar" type="text" placeholder="Search articles by Title, Tag or Category" onChange={(event) => props.onFilterArticles(event, 'search')} />
                         </form>
                     </div>
                     <ul className="uk-navbar-nav">

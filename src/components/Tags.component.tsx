@@ -18,6 +18,7 @@ const Tags = (props: any) => {
         return uniqeTags;
     }
 
+    // Get total numbers of all the tags
     const count = () => {
         let uniqueTags = getUniqueTags();
         let total = 0;
@@ -30,7 +31,7 @@ const Tags = (props: any) => {
 
     return (
         <nav className="tags-wrapper tags-wrapper--aside">
-            <p className="tag-list__header"><strong>Tags</strong></p>
+            <p className="tag-list__header"><i className="ion ion-md-pricetags"></i><strong>Tags</strong></p>
             <ul className="tag-list">
                 <li className="tag-list__item" key="all">
                     <a href="javascript: void(0);" data-tag-name="all" onClick={(event) => props.onFilterArticles(event, 'all')}>
@@ -38,7 +39,7 @@ const Tags = (props: any) => {
                     </a>
                 </li>
                 {
-                    Object.keys(getUniqueTags()).map(tag => {
+                    Object.keys(getUniqueTags()).sort().map(tag => {
                         return (
                             <li className="tag-list__item" key={tag}>
                                 <a href="javascript: void(0);" data-tag-name={tag} onClick={(event) => props.onFilterArticles(event, 'tag')}>

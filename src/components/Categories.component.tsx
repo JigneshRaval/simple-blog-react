@@ -20,7 +20,7 @@ const Categories = ({ articles, onFilterArticles }: any) => {
 
     return (
         <nav className="category-wrapper category-wrapper--aside">
-            <p className="category-list__header"><strong>Categories</strong></p>
+            <p className="category-list__header"><i className="ion ion-md-folder"></i> <strong>Categories</strong></p>
             <ul className="category-list">
                 <li className="category-list__item">
                     <a href="javascript: void(0);" data-tag-name='all' onClick={(event) => onFilterArticles(event, 'all')}>
