@@ -16,6 +16,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
     // editorOutput: any;
     convertedHTML: any;
     postPath: string;
+    baseState: any;
 
     constructor(props: any) {
         super(props);
@@ -39,9 +40,10 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
             txtareaHtmlCode: props.editData.htmlCode ? $('#txtareaHtmlCode').summernote('code', props.editData.htmlCode) : '',
             // txtareaMarkdownCode: props.editData.markdownCode ? props.editData.markdownCode : ''
         }
+        // preserve the initial state in a new object
+        this.baseState = this.state
 
         const [month, day, year] = new Date().toString().split('/');
-        console.log(month, day, year);
 
         /* this.turndownService = new TurndownService({
             codeBlockStyle: 'fenced',
@@ -58,7 +60,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
     componentDidMount() {
         $('#txtareaHtmlCode').summernote({
             placeholder: 'Write your article content here...',
-            height: 300
+            height: 500
         });
     }
 
@@ -140,7 +142,6 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
 
         const frontmatter = this.generateFrontMatter(frontmatterObj);
 
-
         // Final Form Object to pass to server
         const formDataObj = {
             ...frontmatterObj,
@@ -149,9 +150,6 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
             'filePath': `pages/${frontmatterObj.category + '/'}${formData.get('txtSavePostToPath') + '.md'}`,
             //'markdownCode': this.convertedHTML
         }
-
-        console.log('HTML Code ==== ', formData.get('txtareaHtmlCode'));
-        console.log('formDataObj ==== ', formDataObj);
 
         if (this.props.isEditMode) {
             this.props.onEditSaveArticle(this.state.id, formDataObj);
@@ -162,7 +160,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         }
 
         // this.props.onToggleAddEditForm(false);
-        UIkit.modal('#modal-example').hide();
+        // UIkit.modal('#modal-example').hide();
     }
 
     // Clean HTML tags by removing Class, ID and Style attributes
@@ -225,10 +223,9 @@ type: '${frontmatterObj.type}'
 
     handleReset = (event: any) => {
         event.preventDefault();
-
         const form: HTMLFormElement = document.querySelector('#formCreateEditArticle');
         form.reset();
-        // this.props.onToggleAddEditForm(false);
+        this.setState(this.baseState);
     }
 
     render() {
@@ -240,94 +237,72 @@ type: '${frontmatterObj.type}'
 
                     <form name="formCreateEditArticle" id="formCreateEditArticle" method="POST" onSubmit={this.handleSubmit} encType="multipart/form-data">
                         <div className="uk-grid uk-grid-small">
-                            <div className="uk-width-3-3@m">
+                            <div className="uk-width-1-2@m">
+
                                 <div className="uk-margin">
                                     <label className="form-label" htmlFor="txtPostTitle">Title</label>
-                                    <input type="text" className="uk-input" name="txtPostTitle" id="txtPostTitle" placeholder="Post Title" onChange={this.handleInputChange} value={this.state.txtPostTitle} />
+                                    <input type="text" className="uk-input" name="txtPostTitle" id="txtPostTitle" placeholder="Post Title" onChange={this.handleInputChange} value={this.state.txtPostTitle} required />
                                 </div>
-                            </div>
-                        </div>
 
-                        <div className="uk-grid uk-grid-small">
-                            <div className="uk-width-1-3@m">
+                                <div className="uk-margin">
+                                    <label className="form-label" htmlFor="txtWebsiteUrl">Website URL</label>
+                                    <input type="text" className="uk-input" name="txtWebsiteUrl" id="txtWebsiteUrl" placeholder="Website URL" onChange={this.handleInputChange} value={this.state.txtWebsiteUrl} required />
+                                </div>
+
                                 <div className="uk-margin">
                                     <label className="form-label" htmlFor="txtCategory">Category</label>
-                                    <select value={this.state.txtCategory} className="uk-select" name="txtCategory" id="txtCategory" onChange={this.handleInputChange}>
-                                        <option value="Accessibility">Accessibility</option>
-                                        <option value="JavaScript">JavaScript</option>
-                                        <option value="ES6">ES6</option>
-                                        <option value="HTML5">HTML5</option>
-                                        <option value="CSS">CSS</option>
-                                        <option value="React">React</option>
-                                        <option value="Angular">Angular</option>
-                                        <option value="RxJs">RxJs</option>
-                                        <option value="Redux">Redux</option>
-                                        <option value="Vue.js">Vue.js</option>
-                                        <option value="Webpack">Webpack</option>
-                                        <option value="Node.js">Node.js</option>
-                                        <option value="NPM">NPM</option>
-                                        <option value="TypeScript">TypeScript</option>
+                                    <select value={this.state.txtCategory} className="uk-select select" name="txtCategory" id="txtCategory" onChange={this.handleInputChange}>
+                                        {
+                                            this.props.categories.map((category: any) => {
+                                                return <option key={category.id} value={category.name}>{category.name}</option>
+                                            })
+                                        }
                                     </select>
-                                    {/* <input type="text" className="uk-input" name="txtCategory" id="txtCategory" placeholder="Category" onChange={this.handleInputChange} value={this.state.txtCategory} /> */}
                                 </div>
-                            </div>
-                            <div className="uk-width-1-3@m">
+
                                 <div className="uk-margin">
                                     <label className="form-label" htmlFor="txtTags">Tags</label>
                                     <input type="text" className="uk-input" name="txtTags" id="txtTags" placeholder="Tags" onChange={this.handleInputChange} value={this.state.txtTags} />
                                 </div>
-                            </div>
-                            <div className="uk-width-1-3@m">
+
                                 <div className="uk-margin">
                                     <label className="form-label" htmlFor="txtAuthor">Author</label>
                                     <input type="text" className="uk-input" name="txtAuthor" id="txtAuthor" placeholder="Author" onChange={this.handleInputChange} value={this.state.txtAuthor} />
                                 </div>
-                            </div>
-                        </div>
 
-                        <div className="uk-grid uk-grid-small">
-                            <div className="uk-width-1-2@m">
-                                <div className="uk-margin">
-                                    <label className="form-label" htmlFor="txtWebsiteUrl">Website URL</label>
-                                    <input type="text" className="uk-input" name="txtWebsiteUrl" id="txtWebsiteUrl" placeholder="Website URL" onChange={this.handleInputChange} value={this.state.txtWebsiteUrl} />
-                                </div>
-                            </div>
-                            <div className="uk-width-1-3@m">
-                                <div className="uk-margin">
-                                    <label className="form-label" htmlFor="txtSavePostToPath">Path to Save</label>
-                                    <input type="text" className="uk-input" name="txtSavePostToPath" id="txtSavePostToPath" onChange={this.handleInputChange} value={this.state.txtSavePostToPath} />
-                                </div>
-                            </div>
-                            <div className="uk-width-1-6@m">
-                                <div className="uk-margin">
-                                    <label className="form-label" htmlFor="txtPostType">Post Type</label>
-                                    <input type="text" className="uk-input" name="txtPostType" id="txtPostType" onChange={this.handleInputChange} value={this.state.txtPostType} />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="uk-grid uk-grid-small">
-                            <div className="uk-width-1-2@m">
-                                <div className="uk-margin">
-                                    <label className="form-label" htmlFor="txtCoverImage">Cover Image</label>
-                                    <input type="text" className="uk-input" name="txtCoverImage" id="txtCoverImage" placeholder="Image path..." onChange={this.handleInputChange} value={this.state.txtCoverImage} />
-                                </div>
-                            </div>
-                            <div className="uk-width-1-2@m">
                                 <div className="uk-margin">
                                     <label className="form-label" htmlFor="txtExcerpt">Excerpt</label>
                                     <input type="text" className="uk-input" name="txtExcerpt" id="txtExcerpt" placeholder="Excerpt" onChange={this.handleInputChange} value={this.state.txtExcerpt} />
                                 </div>
-                            </div>
-                        </div>
 
-                        <div className="uk-grid uk-grid-small">
-                            <div className="uk-width-1-1@m">
+                                <div className="uk-margin">
+                                    <label className="form-label" htmlFor="txtCoverImage">Cover Image</label>
+                                    <input type="text" className="uk-input" name="txtCoverImage" id="txtCoverImage" placeholder="Image path..." onChange={this.handleInputChange} value={this.state.txtCoverImage} />
+                                </div>
+
+                                <div className="uk-margin">
+                                    <label className="form-label" htmlFor="txtPostType">Post Type</label>
+                                    <input type="text" className="uk-input" name="txtPostType" id="txtPostType" onChange={this.handleInputChange} value={this.state.txtPostType} />
+                                </div>
+
+                                <div className="uk-margin">
+                                    <label className="form-label" htmlFor="txtSavePostToPath">Path to Save</label>
+                                    <input type="text" className="uk-input" name="txtSavePostToPath" id="txtSavePostToPath" onChange={this.handleInputChange} value={this.state.txtSavePostToPath} />
+                                </div>
+
+                            </div>
+
+                            <div className="uk-width-1-2@m">
+
                                 <div className="uk-margin">
                                     <label className="form-label" htmlFor="txtareaHtmlCode">HTML code</label>
                                     <textarea className="uk-textarea" rows={10} name="txtareaHtmlCode" id="txtareaHtmlCode" onChange={this.handleInputChange} value={this.state.txtareaHtmlCode}></textarea>
                                 </div>
+
                             </div>
+                        </div>
+
+                        <div className="uk-grid uk-grid-small">
                             {/* <div className="uk-width-1-2@m">
                                 <div className="uk-margin">
                                     <label className="form-label" htmlFor="txtareaMarkdownCode">Markdown code</label>
@@ -338,7 +313,7 @@ type: '${frontmatterObj.type}'
 
                         <p className="uk-text-right">
                             <button id="convertToMarkdown" className="uk-button uk-button-primary">Convert</button>
-                            <button id="btnResetConvertForm" className="uk-button uk-button-default uk-modal-close" onClick={this.handleReset}>Reset Form</button>
+                            <button id="btnResetConvertForm" className="uk-button uk-button-default" onClick={this.handleReset}>Reset Form</button>
                         </p>
                     </form>
 
