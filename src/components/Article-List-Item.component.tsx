@@ -46,7 +46,7 @@ class ArticleListItem extends React.Component<any, any> {
                         {
                             article.favorite ? <span className="isFavorite" aria-label="favorite"><i className="corner"></i><i className="icon ion-ios-star"></i></span> : ''
                         }
-                        <div className="article-category">{article.category}</div>
+                        <div className="article-category"><span className="small-dot" data-category={article.category.toLowerCase()}></span>{article.category}</div>
                         <h2 className="uk-card-title"><a href="javascript: void(0);" onClick={() => this.getArticleContent(article._id, index)}>{article.title}</a></h2>
                     </div>
 
