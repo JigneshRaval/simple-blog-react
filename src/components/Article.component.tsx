@@ -25,7 +25,7 @@ export const Article = (props: any) => {
 
         // highlight syntax : https://highlightjs.org/
         $(document).ready(function () {
-            $('pre code').each(function (i: any, block: any) {
+            $('.article__content').find('pre code').each(function (i: any, block: any) {
                 hljs.highlightBlock(block);
             });
         });
