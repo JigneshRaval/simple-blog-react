@@ -1,0 +1,22 @@
+{
+    "categories" : [
+        { "id": 1, "name": "JavaScript", "color": "#f7df1e"},
+        { "id": 2, "name": "ES6", "color": "#f7df1e"},
+        { "id": 3, "name": "Accessibility", "color": "#ffe725"},
+        { "id": 4, "name": "HTML5", "color": "#f26428"},
+        { "id": 5, "name": "CSS", "color": "#f26428"},
+        { "id": 6, "name": "React", "color": "#61dafb"},
+        { "id": 7, "name": "Angular", "color": "#dd0031"},
+        { "id": 8, "name": "RxJs", "color": "#ffe725"},
+        { "id": 9, "name": "Redux", "color": "#f26428"},
+        { "id": 10, "name": "Vue.js", "color": "#41b883"},
+        { "id": 11, "name": "Webpack", "color": "#ffe725"},
+        { "id": 12, "name": "Node.js", "color": "#026e00"},
+        { "id": 13, "name": "NPM", "color": "#f26428"},
+        { "id": 14, "name": "Vue.js", "color": "#f26428"},
+        { "id": 15, "name": "TypeScript", "color": "#f26428"},
+        { "id": 16, "name": "Web Components", "color": "#f26428"},
+        { "id": 17, "name": "jQuery", "color": "#78cff5"},
+        { "id": 18, "name": "D3.js", "color": "#f68849"}
+    ]
+}

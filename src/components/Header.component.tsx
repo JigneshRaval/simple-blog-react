@@ -20,6 +20,12 @@ const Header = (props: any) => {
         props.onFilterArticles(event, 'all');
     }
 
+    const switchTheme = (event: any, themeName: string) => {
+        const body = document.querySelector('body');
+        body.classList.remove('light', 'dark', 'solarized');
+        body.classList.add(themeName);
+    }
+
     return (
         <header className="header-main uk-container uk-container-expand">
             <nav className="uk-navbar-container uk-navbar-transparent" uk-navbar="">
@@ -47,9 +53,9 @@ const Header = (props: any) => {
                             <a href="#">Themes</a>
                             <div className="uk-navbar-dropdown">
                                 <ul className="uk-nav uk-navbar-dropdown-nav">
-                                    <li className="uk-active"><a href="#">Default Theme</a></li>
-                                    <li><a href="#">Dark Theme</a></li>
-                                    <li><a href="#">Other Theme</a></li>
+                                    <li className="uk-active" onClick={() => switchTheme(event, 'light')}><a href="#">Light Theme</a></li>
+                                    <li><a href="#" onClick={() => switchTheme(event, 'dark')}>Dark Theme</a></li>
+                                    <li><a href="#" onClick={() => switchTheme(event, 'solarized')}>Solarized Theme</a></li>
                                 </ul>
                             </div>
                         </li>

@@ -1,4 +1,11 @@
-:root {
+.light {
+    --body-bg: #ededed;
+    --content-background: #FFF;
+	--content-foreground: #2c3e50;
+	--content-link-color: #ee5252;
+    --content-link-hover: #f73b3b;
+    --content-heading-color: #2c3e50;
+    --code-block-bg: #002b36;
     --header-background:#FFF;
     --sidebar-link-color: #FFF;
     --sidebar-link-active: #ee5253;
@@ -10,4 +17,7 @@
     --offcanvas-background: #222f3e;
     --offcanvas-foreground: #ffffff;
     --light-gray-border: 1px solid #DDD;
+    --table-header-bg: #EEE;
+    --table-odd-row-bg: #fff2dd;
+    --table-even-row-bg: #fffaf2;
 }

@@ -1,14 +1,16 @@
 html {
 	/* font-size: 16px; */
 	height: 100%;
-	color: #333333;
 }
+
 body {
-	background-color: #ededed;
+	background-color: var(--body-bg);
+	color: var(--content-foreground);
 	font-size: 16px;
 	font-size: var(--base-font-size, 16px);
 	line-height: var(--base-line-height, 1.5);
 }
+
 body.showVerticalGrid {
 	background-image: linear-gradient(#d3d1d1 1px, transparent 1px);
 	background-size: 100% 8px;
@@ -20,24 +22,12 @@ body, td, th {
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'Roboto';
 	font-weight: bold;
+	color: var(--content-heading-color);
 }
 .container-fluid {
 	margin: 0;
 	padding: 0;
 }
-.content-section {
-	/* display: flex;
-	flex-direction: row;
-	flex-basis: auto;
-	height: calc(100vh - 97px);
-	transition: height 0.3s ease-out, transform 0.3s ease-out; */
-
-	.shrinkHeader & {
-		//transform: translateY(-97px);
-		//height: 100vh;
-	}
-}
-
 
 .html-to-markdown-convertor {
 	width: 80%;
@@ -53,7 +43,7 @@ h1, h2, h3, h4, h5, h6 {
 #modal-example {
 
 	.uk-modal-body {
-		padding: 30px 100px;
+		padding: 30px 5%;
 	}
 }
 
@@ -61,4 +51,45 @@ h1, h2, h3, h4, h5, h6 {
 	label {
 		font-weight: bold;
 	}
+}
+
+.small-dot {
+	display: inline-block;
+	height: 8px;
+	width: 8px;
+	margin-right: 1rem;
+	background-color: #FFF;
+	border-radius: 100px;
+
+	&[data-category="bash"] {
+		background-color: #363377;
+	}
+
+	&[data-category="php"] {
+		background-color: #6c7eb7;
+	}
+
+	&[data-category="html"] {
+		background-color: #f26428;
+	}
+
+	&[data-category="css"] {
+		background-color: #2caddd;
+	}
+
+	&[data-category="sass"] {
+		background-color: #cc6798;
+	}
+
+	&[data-category="javascript"] {
+		background-color: #ffe725;
+	}
+
+	&[data-category="typescript"] {
+		background-color: #2170c4;
+	}
+}
+.select {
+    height:100px;
+    overflow:scroll;
 }

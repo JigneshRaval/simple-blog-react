@@ -27,6 +27,7 @@ import UserName from './components/HOC-examples/username.component';
 
 const HOCDemo = HOC(UserName);
 */
+let categories = require('./assets/data/categories.json');
 
 declare var $: any;
 declare var hljs: any;
@@ -43,6 +44,7 @@ export class App extends React.Component<any, any> {
         this.state = {
             articles: [],
             filteredArticles: [],
+            categories: categories.categories,
             isEditMode: false,
             articleCount: 0,
             editData: {},
