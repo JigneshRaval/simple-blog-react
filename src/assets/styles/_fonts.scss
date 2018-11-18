@@ -129,3 +129,38 @@
     font-style: normal;
 
 }
+
+
+/* = Product Sans
+=============================================*/
+@font-face {
+    font-family: 'Product Sans';
+    src: url('/assets/fonts/product_sans_bold-webfont.woff2') format('woff2'),
+         url('/assets/fonts/product_sans_bold-webfont.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Product Sans';
+    src: url('/assets/fonts/product_sans_italic-webfont.woff2') format('woff2'),
+         url('/assets/fonts/product_sans_italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Product Sans';
+    src: url('/assets/fonts/product_sans_regular-webfont.woff2') format('woff2'),
+         url('/assets/fonts/product_sans_regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Product Sans';
+    src: url('/assets/fonts/product_sans_bold_italic-webfont.woff2') format('woff2'),
+         url('/assets/fonts/product_sans_bold_italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
