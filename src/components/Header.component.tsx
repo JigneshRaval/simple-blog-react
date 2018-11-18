@@ -32,8 +32,8 @@ const Header = (props: any) => {
                 <div className="uk-navbar-left">
                     <h5 className="header-title uk-navbar-item">
                         <a href="/">
-                            <img src="../assets/images/Logo-iconic-thick.svg" alt="Code candy logo" className="logo-iconic" data-color-old="#9345EB"/>
-                            <img src="../assets/images/Logo-textual.svg" alt="Code candy logo" className="logo-textual" />
+                            <img src="../assets/images/Logo-iconic-thick.svg" alt="Code candy logo" className="logo-iconic" data-color-old="#9345EB" />
+                            <img src="../assets/images/Logo-textual-product-sans.svg" alt="Code candy logo" className="logo-textual" />
                         </a>
                     </h5>
                 </div>
