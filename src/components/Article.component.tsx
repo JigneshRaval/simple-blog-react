@@ -60,8 +60,6 @@ export const Article = (props: any) => {
     }
 
     return (
-
-
         <article className="uk-article article-view">
 
             <div className="article-wrapper">
@@ -91,6 +89,7 @@ export const Article = (props: any) => {
                     </a>
                 </footer>
             </div>
+
         </article>
     )
 }

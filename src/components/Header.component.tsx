@@ -61,6 +61,8 @@ const Header = (props: any) => {
                     <button className="post-list__drawer" onClick={handleToggleArticleListPanel} title="Click this button to view list of Articles." uk-tooltip="Click this button to view list of Articles.">
                         <i className="ion ion-ios-arrow-forward"></i><i className="ion ion-ios-arrow-forward"></i>
                     </button>
+                </div>
+                <div className="uk-navbar-left">
                     <h5 className="header-title uk-navbar-item">
                         <a href="/">
                             <img src="../assets/images/Logo-iconic-thick.svg" alt="Code candy logo" className="logo-iconic" data-color-old="#9345EB" />
@@ -80,9 +82,9 @@ const Header = (props: any) => {
                     </div>
 
                     {/* START : Dropdown Navigation */}
-                    <ul className="uk-navbar-nav">
+                    <ul className="uk-navbar-nav" >
                         <li className="uk-active"><a href="#">Categories</a>
-                            <div className="uk-navbar-dropdown">
+                            <div className="uk-navbar-dropdown" uk-dropdown="mode: click">
                                 <ul className="uk-nav uk-navbar-dropdown-nav">
                                     <li>
                                         <a href="javascript: void(0);" data-tag-name='all' onClick={(event) => props.onFilterArticles(event, 'all')}>View All Articles</a>
@@ -101,7 +103,7 @@ const Header = (props: any) => {
                         </li>
                         <li>
                             <a href="#">Themes</a>
-                            <div className="uk-navbar-dropdown">
+                            <div className="uk-navbar-dropdown" uk-dropdown="mode: click">
                                 <ul className="uk-nav uk-navbar-dropdown-nav">
                                     <li className="uk-active" onClick={() => switchTheme('light')}><a href="#">Light Theme (Default)</a></li>
                                     <li><a href="#" onClick={() => switchTheme('dark')}>Dark Theme</a></li>
@@ -109,7 +111,9 @@ const Header = (props: any) => {
                                 </ul>
                             </div>
                         </li>
-                        <li><a href="#">Item</a></li>
+                        <li>
+                            <a href="#offcanvas-usage" uk-toggle="" title="Click this button to view list of Categories and Tags." uk-tooltip="Click this button to view list of Categories and Tags.">Tags</a>
+                        </li>
                     </ul>
                     {/* END : Dropdown Navigation */}
 
