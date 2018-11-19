@@ -12,7 +12,18 @@ class Utils {
     lastScrollTop: number = 0;
     delta = 5;
 
-    constructor() { }
+    constructor() {
+        this.init();
+    }
+
+    public init() {
+        // show header if mouse reaches near to top browser border
+        document.addEventListener("mousemove", function (e) {
+            if (e.clientY < 10) {
+                document.body.classList.remove('shrinkHeader');
+            }
+        });
+    }
 
     public scrollToTop(element: any) {
         let scrollStep = -window.scrollY / (this.scrollDuration / 15);
