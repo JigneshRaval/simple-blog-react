@@ -9,6 +9,7 @@ body {
 	font-size: 16px;
 	font-size: var(--base-font-size, 16px);
 	line-height: var(--base-line-height, 1.5);
+	transition: background 0.3s linear;
 }
 
 body.showVerticalGrid {
@@ -16,8 +17,9 @@ body.showVerticalGrid {
 	background-size: 100% 8px;
 	background-position-y: -1px;
 }
-body, td, th {
-	font-family: var(--base-font, 'Open Sans')
+td, th {
+	/* font-family: var(--base-font, 'Open Sans') */
+	color: var(--table-content-foreground);
 }
 h1, h2, h3, h4, h5, h6 {
 	font-family: var(--title-font);

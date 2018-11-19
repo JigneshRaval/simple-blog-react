@@ -1,5 +1,6 @@
 .light {
     --body-bg: #ededed;
+    /* Article Content colors */
     --content-background: #FFF;
 	--content-foreground: #2c3e50;
 	--content-link-color: #ee5252;
@@ -11,7 +12,6 @@
     --sidebar-link-active: #ee5253;
     --sidebar-tags-color: #ffeb3b;
     --sidebar-category-color: #c8d6e5;
-    /* --sidebar-background:#222f3e; */
     --sidebar-background:#ee5253;
     --sidebar-active-background:#ee5253;
     --offcanvas-background: #222f3e;
@@ -20,4 +20,5 @@
     --table-header-bg: #EEE;
     --table-odd-row-bg: #fff2dd;
     --table-even-row-bg: #fffaf2;
+    --table-content-foreground: #34495e;
 }

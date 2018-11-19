@@ -17,6 +17,7 @@
         { "id": 15, "name": "TypeScript", "color": "#f26428"},
         { "id": 16, "name": "Web Components", "color": "#f26428"},
         { "id": 17, "name": "jQuery", "color": "#78cff5"},
-        { "id": 18, "name": "D3.js", "color": "#f68849"}
+        { "id": 18, "name": "D3.js", "color": "#f68849"},
+        { "id": 19, "name": "SCSS", "color": "#f26428"}
     ]
 }

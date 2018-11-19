@@ -5,9 +5,10 @@
 	position: relative;
 	margin-left: 0;
 	height: 100%;
+	transition: margin 0.3s ease-out;
 
 	.isArticleListPanelOpened & {
-		margin-left: 20%;
+		margin-left: 25rem;
 	}
 
 	.article__content {
@@ -19,6 +20,7 @@
 		font-family: var(--system-font);
 		font-family: var(--base-font);
 		background-color: var(--content-background);
+		transition: background 0.3s linear;
 
 		.uk-text-lead {
 			line-height: 2.5rem;
@@ -103,6 +105,8 @@
 		.uk-article-meta,
 		.uk-article-meta a, {
 			color: #363636;
+			font-family: var(--title-font);
+			margin: 0;
 		}
 
 		.article-category {
@@ -136,6 +140,9 @@
 		padding: 2rem;
 	}
 
+	.article__tags-list {
+		font-family: var(--title-font);
+	}
 
 	.article__tags-list a {
 		display: inline-block;

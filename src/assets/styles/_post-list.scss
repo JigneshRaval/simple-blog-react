@@ -7,11 +7,11 @@
 	top: 0;
 	left: -100%;
 	transform: translateX(-100%);
-	width: 20%;
+	width: 25rem;
 	height: 100%;
 	background-color: var(--sidebar-background);
 	will-change: transform;
-	transition: transform 0.3s ease-out;
+	transition: transform 0.3s ease-out, left 0.3s ease;
 
 	.isArticleListPanelOpened & {
 		left:0;

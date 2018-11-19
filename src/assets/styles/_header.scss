@@ -10,7 +10,7 @@
 	top: 0;
 	opacity: 1;
 	background-color: var(--header-background);
-	transition: opacity 0.1s linear, transform 0.3s ease-out;
+	transition: opacity 0.1s linear, transform 0.3s ease-out, margin 0.3s ease-out;
 
 	.shrinkHeader & {
 		box-shadow: 0 18px 37px -7px rgba(0,0,0,.4);
@@ -19,7 +19,7 @@
 	}
 
 	.isArticleListPanelOpened & {
-		margin-left: 20%;
+		margin-left: 25rem;
 	}
 
 	/* Show/Hide Left side Panel */
@@ -79,7 +79,7 @@
 			position: absolute;
 			right: 0;
 			visibility: hidden;
-			padding: 10px;
+			padding: 10px 1rem;
 			height: 100%;
 			background-color: #EEE;
 		}
@@ -102,6 +102,20 @@
 	height: 38px;
 	margin-left: 1rem;
 }
+#toggleSidebar {
+    color: #000;
+    font-weight: 700;
+    text-decoration: none;
+    margin: 0;
+    font-size: 1.5em;
+    padding: 0.5em 1em;
+}
+#toggleSidebar:hover,
+#toggleSidebar:focus {
+	text-decoration: none;
+}
+
+/*
 .main-navigation {
 	list-style-type: none;
 	margin: 0;
@@ -145,15 +159,4 @@
 .main-navigation > li .main-navigation__item:active::after {
     transform-origin: bottom left;
     transform: scaleX(1);
-}
-#toggleSidebar {
-	color: #000;
-	font-weight: 700;
-	text-decoration: none;
-	margin: 0 1em 0 1em;
-	font-size: 1.5em;
-}
-#toggleSidebar:hover,
-#toggleSidebar:focus {
-	text-decoration: none;
-}
+} */

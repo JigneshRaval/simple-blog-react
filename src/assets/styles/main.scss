@@ -1,18 +1,18 @@
 // main.scss
 
 @import './variables';
+@import './_mixins';
 // Custom font face
 @import './fonts';
 
-/*= THEMES
+/*= THEMES ( Light, Dark, Solarized )
 ==================================================*/
 @import './_themes/theme-solarized';
 @import './_themes/theme-dark';
 @import './_themes/theme-light';
-@import './_mixins';
 
 
-/*= VENDORS CSS ( THIRD PARTY PLUGINS )
+/*= VENDOR CSS ( THIRD PARTY PLUGINS )
 ==================================================*/
 
 // ionicons : https://ionicons.com/
@@ -23,6 +23,10 @@
 // https://summernote.org/
 @import './vendors/summernote-lite.css';
 
+:root {
+    --uikit-base-font: 'Product Sans', Arial, sans-serif;
+    --uikit-system-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif
+}
 // UIKit : https://getuikit.com/
 @import './vendors/uikit.css';
 // @import './uikit-rtl.css';
@@ -30,8 +34,8 @@
 
 // Highlight.js for Syntax highlighting
 // https://highlightjs.org/
-@import './highlight-themes/solarized-dark.css';
-@import './highlight-themes/tomorrow-night-bright.css';
+@import './highlight-themes/solarized-light';
+@import './highlight-themes/tomorrow-night-bright';
 
 
 // Bootstrap 4.1

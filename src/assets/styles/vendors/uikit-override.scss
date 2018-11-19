@@ -2,6 +2,7 @@
 html,
 .uk-navbar-nav > li > a {
     font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
+    font-family: var(--uikit-base-font);
 }
 
 .uk-navbar-container:not(.uk-navbar-transparent) {
