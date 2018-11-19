@@ -1,18 +1,41 @@
 // main.scss
 
-
-@import './ionicons-v4.2.2.css';
-
 @import './variables';
+// Custom font face
+@import './fonts';
+
+/*= THEMES
+==================================================*/
 @import './_themes/theme-solarized';
 @import './_themes/theme-dark';
 @import './_themes/theme-light';
 @import './_mixins';
 
+
+/*= VENDORS CSS ( THIRD PARTY PLUGINS )
+==================================================*/
+
+// ionicons : https://ionicons.com/
+@import './vendors/ionicons-v4.2.2.css';
+
+// summernote : Super Simple WYSIWYG Editor on Bootstrap
+// https://summernote.org/
+@import './vendors/summernote-lite.css';
+
+// UIKit : https://getuikit.com/
+@import './vendors/uikit.css';
+// @import './uikit-rtl.css';
+@import './vendors/uikit-override';
+
+// Highlight.js for Syntax highlighting
+// https://highlightjs.org/
+@import './highlight-themes/solarized-dark.css';
+@import './highlight-themes/tomorrow-night-bright.css';
+
+
 // Bootstrap 4.1
 // @import './bootstrap.min.css';
 
-@import './summernote-lite.css';
 
 // Spectre.css : https://picturepan2.github.io/spectre/index.html
 /* @import './spectre.min.css';
@@ -20,16 +43,10 @@
 @import './spectre-icons.min.css';
 @import './spectre-override'; */
 
-@import './uikit.css';
-// @import './uikit-rtl.css';
-@import './uikit-override';
 
-// Highlight.js for Syntax highlighting
-@import './highlight-themes/solarized-dark.css';
-@import './highlight-themes/tomorrow-night-bright.css';
+/*= COMPONENT CSS
+==================================================*/
 
-// Custom font face
-@import './fonts';
 @import './utils';
 @import './_healpers';
 @import './_categories-color';
