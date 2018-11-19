@@ -250,7 +250,7 @@ export class App extends React.Component<any, any> {
                         </section>
                     </div>
 
-                    <div id="offcanvas-usage" uk-offcanvas="flip:true">
+                    <div id="offcanvas-usage" uk-offcanvas="flip: true; overlay: true">
                         <div className="uk-offcanvas-bar">
                             <button className="uk-offcanvas-close" type="button" uk-close=""></button>
 
