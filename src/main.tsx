@@ -153,9 +153,10 @@ export class App extends React.Component<any, any> {
     handleFilterArticles = (event: any, filterBy: string) => {
         let filteredList: any = [];
         let searchBarElem = document.querySelector('.uk-search-default');
+        let searchBox = document.querySelector('.uk-search-input');
         let searchTerm = event.target.value || event.target.getAttribute('data-tag-name');
         event.target.parentElement.classList.add('active');
-
+        searchBox.value = searchTerm;
         // throttle search event
         /* if (this.timer) {
             clearTimeout(this.timer);
