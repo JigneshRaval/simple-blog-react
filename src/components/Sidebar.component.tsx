@@ -14,7 +14,8 @@ const Sidebar = (props: any) => {
     return (
         <React.Fragment>
 
-            <Categories {...props} />
+            {/* Moved categories list to Header.component.tsx */}
+            {/* <Categories {...props} /> */}
 
             <Tags {...props} />
 

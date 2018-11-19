@@ -3,11 +3,11 @@
 
 .article-view {
 	position: relative;
-	margin-left: 20%;
+	margin-left: 0;
 	height: 100%;
 
 	.isArticleListPanelOpened & {
-		margin-left: 0;
+		margin-left: 20%;
 	}
 
 	.article__content {

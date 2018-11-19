@@ -4,6 +4,7 @@
 	"description": "Simple blog using React, Webpack 4 and Typescript",
 	"license": "MIT",
 	"dependencies": {
+		"compression": "^1.7.3",
 		"express": "^4.16.3",
 		"highlight.js": "^9.13.1",
 		"nedb": "^1.8.0",

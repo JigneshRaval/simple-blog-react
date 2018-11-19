@@ -222,7 +222,7 @@ export class App extends React.Component<any, any> {
 
                         <section className="content-wrapper">
 
-                            <Header onFilterArticles={this.handleFilterArticles} />
+                            <Header onFilterArticles={this.handleFilterArticles} articles={this.state.articles} />
 
                             <section className="content-section">
                                 {/* If "showform"=true then display Create form else show list items */}

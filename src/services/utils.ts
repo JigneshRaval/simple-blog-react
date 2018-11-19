@@ -95,66 +95,11 @@ class Utils {
         });
     }
 
-
-    public toggleTheme() {
-        const bodyElem = document.querySelector('body');
-        if (bodyElem) {
-            if (bodyElem.classList.contains('darkTheme')) {
-                // Left sidebar navigation closed
-                bodyElem.classList.remove('darkTheme');
-                this.updateLocalStorage('isIndexNavOpened', 'false');
-            } else {
-                bodyElem.classList.add('darkTheme');
-                this.updateLocalStorage('isIndexNavOpened', 'false');
-            }
-        }
-    }
-
-
     public updateLocalStorage(key: any, value: any) {
         if ('localStorage' in (<any>window) && (<any>window)['localStorage'] !== null) {
             localStorage.setItem(key, value);
         }
     }
-
-
-    public switchTotheme(event: any, themeName = 'default') {
-
-        const body = document.querySelector('body');
-        document.querySelector('body').classList.remove(`theme-default`);
-        document.querySelector('body').classList.remove(`theme-red`);
-        document.querySelector('body').classList.remove(`theme-yellow`);
-
-        this.updateLocalStorage('blogTheme', themeName);
-        document.querySelector('body').classList.add(`theme-${themeName}`);
-
-        if ('localStorage' in (<any>window) && (<any>window)['localStorage'] !== null) {
-            if (localStorage.getItem('blogTheme')) {
-                this.updateLocalStorage('blogTheme', localStorage.getItem('blogTheme'));
-                document.querySelector('body').classList.add(`theme-${localStorage.getItem('blogTheme')}`);
-            } else {
-                this.updateLocalStorage('blogTheme', themeName);
-                document.querySelector('body').classList.add(`theme-${themeName}`);
-            }
-        } else {
-            this.updateLocalStorage('blogTheme', themeName);
-            document.querySelector('body').classList.add(`theme-${themeName}`);
-        }
-
-        if (event && event.target) {
-            const dropdownLinks = document.querySelectorAll('dropdown--themes li a');
-            [].forEach.call(dropdownLinks, (link: any) => {
-                link.classList.remove('isActive');
-            });
-
-            if (event.target.classList.contains('isActive')) {
-
-            } else {
-                event.target.classList.add('isActive');
-            }
-        }
-    }
-
 
     /**
      * @function : Toggle settings dropdown in styleguide header section
@@ -250,6 +195,19 @@ class Utils {
         }
         return formattedDate;
     }
+
+    public getUniqueCategories = (articles: any) => {
+        let uniqueCategories = articles.reduce((uniqcats: any, article: any) => {
+            if (uniqcats.indexOf(article.category) === -1) {
+                uniqcats.push(article.category);
+            }
+            return uniqcats;
+        }, []);
+
+        // OUTPUT : ["JavaScript", "React", ...]
+        return uniqueCategories;
+    }
+
 }
 
 export default Utils;

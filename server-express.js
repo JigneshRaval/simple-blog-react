@@ -6,11 +6,19 @@ const path = require('path'),
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const routes = require('./server/router/index');
+const compression = require('compression');
+
+// compress all responses and files
+app.use(compression());
 
 // This will help to load other included files in index.html
 app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: false })); // for parsing application/x-www-form-urlencoded
 app.use(express.static(path.resolve(__dirname, 'dist')));
+
+// Caches the static files for a year.
+// let oneYear = 1 * 365 * 24 * 60 * 60 * 1000;
+// app.use('/', express.static(__dirname + '/public/', { maxAge: oneYear }));
 
 app.use('/api', routes);
 

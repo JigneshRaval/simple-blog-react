@@ -4,19 +4,19 @@
 
 import React from 'react';
 
+import Utils from '../services/utils';
+const utils = new Utils;
+
 const Categories = ({ articles, onFilterArticles }: any) => {
 
-    const getUniqueCategories = () => {
-        let uniqueCategories = articles.reduce((uniqcats: any, article: any) => {
-            if (uniqcats.indexOf(article.category) === -1) {
-                uniqcats.push(article.category);
-            }
-            return uniqcats;
-        }, []);
+    /* As we are calling utils.getUniqueCategories() function from Utils.ts
+    so we don't need this function hence commented this code */
+    /* const getUniqueCategories = () => {
+        let uniqueCategories = utils.getUniqueCategories(articles);
 
         // OUTPUT : ["JavaScript", "React", ...]
         return uniqueCategories;
-    }
+    } */
 
     return (
         <nav className="category-wrapper category-wrapper--aside">
@@ -28,9 +28,9 @@ const Categories = ({ articles, onFilterArticles }: any) => {
                     </a>
                 </li>
                 {
-                    getUniqueCategories().map((category: any, index: number) => {
+                    utils.getUniqueCategories(articles).map((category: any, index: number) => {
                         return (
-                            <li className="category-list__item" key={index}>
+                            <li className="category-list__item" key={category}>
                                 <a href="javascript: void(0);" data-tag-name={category} onClick={(event) => onFilterArticles(event, 'category')}>
                                     <i className="tag-list__icon icon-technology"><img src="/assets/images/icons/{{this}}.svg" /></i> {category}
                                 </a>
