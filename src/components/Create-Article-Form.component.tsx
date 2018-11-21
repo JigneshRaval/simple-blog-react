@@ -225,6 +225,7 @@ type: '${frontmatterObj.type}'
         event.preventDefault();
         const form: HTMLFormElement = document.querySelector('#formCreateEditArticle');
         form.reset();
+        $('#txtareaHtmlCode').summernote('reset');
         this.setState(this.baseState);
     }
 
@@ -232,7 +233,11 @@ type: '${frontmatterObj.type}'
         return (
             <div id="modal-example" className="uk-modal-full" uk-modal="true">
                 <div className="uk-modal-dialog uk-modal-body">
-                    <h2 className="uk-modal-title">Create Article</h2>
+                    <h2 className="uk-modal-title">
+                        {
+                            this.props.isEditMode ? 'Edit Article' : 'Create New Article'
+                        }
+                    </h2>
                     <button className="uk-modal-close-full uk-close-large uk-align-right" type="button" uk-close=""></button>
 
                     <form name="formCreateEditArticle" id="formCreateEditArticle" method="POST" onSubmit={this.handleSubmit} encType="multipart/form-data">
@@ -312,7 +317,11 @@ type: '${frontmatterObj.type}'
                         </div>
 
                         <p className="uk-text-right">
-                            <button id="convertToMarkdown" className="uk-button uk-button-primary">Convert</button>
+                            <button id="convertToMarkdown" className="uk-button uk-button-primary">
+                                {
+                                    this.props.isEditMode ? 'Update Article' : 'Save Article'
+                                }
+                            </button>&nbsp;&nbsp;
                             <button id="btnResetConvertForm" className="uk-button uk-button-default" onClick={this.handleReset}>Reset Form</button>
                         </p>
                     </form>
