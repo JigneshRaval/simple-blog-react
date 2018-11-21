@@ -18,6 +18,22 @@
         { "id": 16, "name": "Web Components", "color": "#f26428"},
         { "id": 17, "name": "jQuery", "color": "#78cff5"},
         { "id": 18, "name": "D3.js", "color": "#f68849"},
-        { "id": 19, "name": "SCSS", "color": "#f26428"}
+        { "id": 19, "name": "SCSS", "color": "#f26428"},
+        { "id": 20, "name": "SVG", "color": "#f26428"},
+        { "id": 21, "name": "Canvas", "color": "#f26428"},
+        { "id": 22, "name": "Unit Testing", "color": "#f26428"},
+        { "id": 23, "name": "Karma", "color": "#f26428"},
+        { "id": 24, "name": "Jasmine", "color": "#f26428"},
+        { "id": 25, "name": "Github", "color": "#f26428"},
+        { "id": 26, "name": "Electron", "color": "#f26428"},
+        { "id": 27, "name": "VS Code", "color": "#f26428"},
+        { "id": 28, "name": "Markdown", "color": "#f26428"},
+        { "id": 29, "name": "GraphQL", "color": "#f26428"},
+        { "id": 30, "name": "Static Site", "color": "#f26428"},
+        { "id": 31, "name": "General", "color": "#f26428"},
+        { "id": 32, "name": "Health", "color": "#f26428"},
+        { "id": 33, "name": "UI Inspiration", "color": "#f26428"},
+        { "id": 34, "name": "Express.js", "color": "#f26428"},
+        { "id": 35, "name": "Koa", "color": "#f26428"}
     ]
 }
