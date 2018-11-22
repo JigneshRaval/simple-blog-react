@@ -285,9 +285,18 @@ type: '${frontmatterObj.type}'
                                     <input type="text" className="uk-input" name="txtCoverImage" id="txtCoverImage" placeholder="Image path..." onChange={this.handleInputChange} value={this.state.txtCoverImage} />
                                 </div>
 
-                                <div className="uk-margin">
+                                {/* <div className="uk-margin">
                                     <label className="form-label" htmlFor="txtPostType">Post Type</label>
                                     <input type="text" className="uk-input" name="txtPostType" id="txtPostType" onChange={this.handleInputChange} value={this.state.txtPostType} />
+                                </div> */}
+
+                                <div className="uk-margin">
+                                    <label className="form-label" htmlFor="txtPostType">Post Type</label>
+                                    <select value={this.state.txtPostType} className="uk-select select" name="txtPostType" id="txtPostType" onChange={this.handleInputChange}>
+                                        <option value="Post">Post</option>
+                                        <option value="Snippet">Snippet</option>
+                                        <option value="Personal">Personal</option>
+                                    </select>
                                 </div>
 
                                 <div className="uk-margin">
