@@ -34,6 +34,8 @@
         { "id": 32, "name": "Health", "color": "#f26428"},
         { "id": 33, "name": "UI Inspiration", "color": "#f26428"},
         { "id": 34, "name": "Express.js", "color": "#f26428"},
-        { "id": 35, "name": "Koa", "color": "#f26428"}
+        { "id": 35, "name": "Koa", "color": "#f26428"},
+        { "id": 36, "name": "Tips & Tricks", "color": "#f26428"},
+        { "id": 37, "name": "Snippet", "color": "#f26428"}
     ]
 }
