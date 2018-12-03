@@ -79,6 +79,7 @@ const Header = (props: any) => {
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </form>
+                        <button className="ad2hs-prompt uk-button uk-button-primary">Add to Home</button>
                     </div>
 
                     {/* START : Dropdown Navigation */}
