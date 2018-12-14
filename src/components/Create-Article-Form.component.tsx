@@ -159,6 +159,11 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
             form.reset();
         }
 
+        let dbCon = this.props.firebase.database().ref('/articles');
+        dbCon.push({
+            ...formDataObj
+        });
+
         // this.props.onToggleAddEditForm(false);
         // UIkit.modal('#modal-example').hide();
     }

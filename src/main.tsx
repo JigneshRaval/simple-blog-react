@@ -10,6 +10,12 @@ import './assets/styles/main.scss';
 // VENDOR
 import './vendor.ts';
 
+// FIREBASE
+import firebase from './firebase';
+const dbRef = firebase.database().ref('articles');
+dbRef.on("value", function (snapshot) {
+    console.log('Firebase snapshot ==', snapshot.val());
+});
 // SERVICES
 import { ArticleService } from "./services/articles.service";
 import Utils from './services/utils';
@@ -231,7 +237,9 @@ export class App extends React.Component<any, any> {
                                     {...this.state}
                                     onCreateArticle={this.handleCreateArticle}
                                     onEditSaveArticle={this.handleEditSaveArticle}
-                                    onToggleAddEditForm={this.handleToggleFormDisplay} />
+                                    onToggleAddEditForm={this.handleToggleFormDisplay}
+                                    firebase={firebase}
+                                />
 
                                 <ArticlesList {...this.state}
                                     onDeleteArticle={this.handleDeleteArticle}

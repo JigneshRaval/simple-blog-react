@@ -86,7 +86,7 @@
             });
 
             function addToHomeScreen() {
-                 btnAdd2Home.style.display = 'block';
+                btnAdd2Home.style.display = 'block';
 
                 // Show the prompt
                 deferredPrompt.prompt();
@@ -112,6 +112,45 @@
 
         });
     </script>
+
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script> -->
+
+    <!-- Firebase App is always required and must be first -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-app.js"></script> -->
+
+    <!-- Add additional services that you want to use -->
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase-functions.js"></script>
+    <div style="position: relative; z-index: 5"><button onClick="writeUserData();">Add Record</button></div>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDuF3aJJ0UdGcgG74XqDeUPXfZiVWXAGXM",
+            authDomain: "simple-react-blog.firebaseapp.com",
+            databaseURL: "https://simple-react-blog.firebaseio.com",
+            projectId: "simple-react-blog",
+            storageBucket: "simple-react-blog.appspot.com",
+            messagingSenderId: "609289394377"
+        };
+        firebase.initializeApp(config);
+        console.log('firebase =', firebase);
+
+        var ref = firebase.database().ref();
+        ref.on("value", function (snapshot) {
+            console.log('snapshot ==', snapshot.val());
+        });
+        let dbCon = firebase.database().ref('/articles');
+
+        function writeUserData() {
+            dbCon.push({
+                message: 'Hi test'
+            });
+        }
+        // writeUserData();
+    </script> -->
 
 </body>
 
