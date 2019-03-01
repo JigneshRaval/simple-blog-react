@@ -7,6 +7,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" href="/assets/images/favicon.ico">
+    <link rel="icon" type="image/png" href="/assets/images/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+    <!-- <link rel="manifest" href="/assets/images/site.webmanifest"> -->
+    <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg" color="#d5605b">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
     <!-- Add manifest -->
     <link rel="manifest" href="../manifest.json">
     <!-- Tell the browser it's a PWA -->
@@ -53,7 +61,7 @@
             // START :: Progressive web app ( PWA ) Code
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function () {
-                    navigator.serviceWorker.register('service-worker.js').then(function (registration) {
+                    navigator.serviceWorker.register('../service-worker.js').then(function (registration) {
                         // Registration was successful
                         console.log('ServiceWorker registration successful with scope: ', registration.scope);
                     }, function (err) {

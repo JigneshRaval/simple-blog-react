@@ -86,7 +86,7 @@ module.exports = {
 
         new HtmlWebpackPlugin({
             inject: true,
-            title: 'React Typescript blog',
+            title: 'CodeCandy',
             template: `${__dirname}/src/index.html`,
             filename: `${__dirname}/dist/index.html`, //relative to root of the application
         }),

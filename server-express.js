@@ -6,6 +6,8 @@ const path = require('path'),
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const routes = require('./server/router/index');
+
+// Compress all the assets and server response
 const compression = require('compression');
 
 // compress all responses and files
@@ -36,7 +38,7 @@ app.use(function (error, req, res, next) {
     res.status(500).send({ error: '500: Internal Server Error', message: error });
 });
 
-app.listen(port, () => { console.log(`App is listening on port ${port}`) });
+app.listen(port, () => { console.log(`App is listening on port http://localhost:${port}`) });
 
 
 // 1. Car brands page ( cars.js )

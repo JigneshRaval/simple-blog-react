@@ -1,6 +1,6 @@
 // Set this to true for production
 var doCache = false;
-const CACHE_NAME = "cache-v3";
+const CACHE_NAME = "cache-v4";
 const assetToCache = [
     "/index.html",
     "/manifest.json",
@@ -18,7 +18,7 @@ self.addEventListener("install", function (event) {
 });
 
 self.addEventListener('activate', function (event) {
-    var cacheKeeplist = ['v3'];
+    var cacheKeeplist = ['v5'];
 
     event.waitUntil(
         caches.keys().then(function (assetToCache) {
