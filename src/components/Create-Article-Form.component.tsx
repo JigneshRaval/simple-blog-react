@@ -11,6 +11,23 @@ import React from 'react';
 declare var $: any;
 declare var UIkit: any;
 
+
+let HelloButton = function () {
+    var ui = $.summernote.ui;
+
+    // create button
+    var button = ui.button({
+        contents: 'Code block',
+        tooltip: 'hello',
+        click: function () {
+            $('#txtareaHtmlCode').summernote('editor.pasteHTML', '<pre><code class="html">Place your code here.</code></pre>');
+        }
+    });
+
+    return button.render();   // return button as jquery object
+}
+
+
 export class CreateArticleFormComponent extends React.Component<any, any> {
     // turndownService: any;
     // editorOutput: any;
@@ -60,7 +77,30 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
     componentDidMount() {
         $('#txtareaHtmlCode').summernote({
             placeholder: 'Write your article content here...',
-            height: 500
+            height: 500,
+            minHeight: 200,
+            toolbar: [
+                ['font', ['strikethrough', 'superscript', 'subscript']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['height', ['height']],
+                ['insert', ['link', 'picture', 'table', 'hr']],
+                ['view', ['fullscreen', 'codeview']],
+                // ['mybutton', ['hello']],
+                ['help', ['help']]
+            ],
+            buttons: {
+                hello: HelloButton
+            },
+            callbacks: {
+                onPaste: function (event: any) {
+                    // console.log('Called event paste', event);
+                    // $('#txtareaHtmlCode').summernote('removeFormat');
+                }
+            }
         });
     }
 
@@ -164,6 +204,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
             ...formDataObj
         });
 
+        $('#txtareaHtmlCode').summernote('reset');
         // this.props.onToggleAddEditForm(false);
         // UIkit.modal('#modal-example').hide();
     }
@@ -187,7 +228,16 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
                 node.removeAttribute('class');
                 node.removeAttribute('style');
             } */
-        })
+        });
+
+        wrapperDiv.querySelectorAll('pre').forEach(node => {
+            let codeContent = node.innerText || node.textContent;
+            codeContent = codeContent.replace(/</ig, '&lt;');
+            console.log('codeContent :', codeContent);
+            if (codeContent) {
+                node.innerHTML = `<code>${codeContent}</code>`;
+            }
+        });
 
         return wrapperDiv.innerHTML;
     }
