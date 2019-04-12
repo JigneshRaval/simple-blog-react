@@ -7,6 +7,7 @@
 
 /*= THEMES ( Light, Dark, Solarized )
 ==================================================*/
+@import './_themes/theme-solarized-dark';
 @import './_themes/theme-solarized';
 @import './_themes/theme-dark';
 @import './_themes/theme-light';
@@ -34,6 +35,7 @@
 
 // Highlight.js for Syntax highlighting
 // https://highlightjs.org/
+@import './highlight-themes/solarized-dark';
 @import './highlight-themes/solarized-light';
 @import './highlight-themes/tomorrow-night-bright';
 
