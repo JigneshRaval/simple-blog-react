@@ -233,7 +233,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         wrapperDiv.querySelectorAll('pre').forEach(node => {
             let codeContent = node.innerText || node.textContent;
             codeContent = codeContent.replace(/</ig, '&lt;');
-            console.log('codeContent :', codeContent);
+            // console.log('codeContent :', codeContent);
             if (codeContent) {
                 node.innerHTML = `<code>${codeContent}</code>`;
             }

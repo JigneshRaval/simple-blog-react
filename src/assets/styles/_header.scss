@@ -67,6 +67,7 @@
 			transition: width 0.3s ease;
 			font-size: 1rem;
 
+			&:hover,
 			&:focus {
 				width: 450px;
 				border: 1px solid #ccc;

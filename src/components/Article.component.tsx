@@ -14,10 +14,29 @@ const utils = new Utils();
 
 declare var $: any;
 declare var hljs: any;
+export const Home = ({ match }) => {
+    console.log('Home', match);
+    return(
+    <div>
+        <h2>Home </h2>
+    </div>
+)
+}
+
 
 export const Article = (props: any) => {
+    console.log('this.props.match.params =', props);
 
-    const { currentArticle: article } = props;
+    // props.onDisplaySingleArticleContent(props.match.params.id);
+        // props.onActivateTab(index);
+
+
+    // const { currentArticle: article } = props;
+    const article = props.articles.find((article: any) => {
+        if (article._id === props.match.params.id) {
+            return article;
+        }
+    });
     const date = utils.formatDate('dd/mm/yyyy', '-', article.dateCreated);
 
     function createMarkup() {

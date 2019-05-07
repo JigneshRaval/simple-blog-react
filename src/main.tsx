@@ -1,7 +1,8 @@
 // ./src/main.tsx
 
 // REACT
-import * as React from "react";
+import React from "react";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import * as ReactDOM from "react-dom";
 
 // CSS
@@ -25,7 +26,7 @@ const utils = new Utils();
 import Header from "./components/Header.component";
 import Sidebar from './components/Sidebar.component';
 import ArticlesList from "./components/Articles-List.component";
-import { Article } from "./components/Article.component";
+import { Article, Home } from "./components/Article.component";
 import { CreateArticleFormComponent } from './components/Create-Article-Form.component';
 /*
 import HOC from './components/HOC-examples/HOC.component';
@@ -33,6 +34,10 @@ import UserName from './components/HOC-examples/username.component';
 
 const HOCDemo = HOC(UserName);
 */
+
+import ArticleContext from './services/context';
+
+
 let categories = require('./assets/data/categories.json');
 
 declare var $: any;
@@ -58,6 +63,8 @@ export class App extends React.Component<any, any> {
             showForm: false,
             articleService: this.articleService
         };
+
+        console.log('Props 123 ===', props);
     }
 
     componentDidMount() {
@@ -101,10 +108,10 @@ export class App extends React.Component<any, any> {
         });
 
         // Highlight code blocks
-        console.log(window);
+        /* console.log(window);
         $('pre code').each(function (i: any, block: any) {
             hljs.highlightBlock(block);
-        });
+        }); */
     }
 
 
@@ -162,7 +169,9 @@ export class App extends React.Component<any, any> {
         let searchBox = document.querySelector('.uk-search-input');
         let searchTerm = event.target.value || event.target.getAttribute('data-tag-name');
         event.target.parentElement.classList.add('active');
-        searchBox.value = searchTerm;
+        if (searchBox) {
+            (searchBox as HTMLInputElement).value = searchTerm;
+        }
         // throttle search event
         /* if (this.timer) {
             clearTimeout(this.timer);
@@ -197,9 +206,9 @@ export class App extends React.Component<any, any> {
         this.articleService.setArticlesData(data);
     }
 
-    handleToggleFormDisplay = (isFormVisible: boolean) => {
+    /* handleToggleFormDisplay = (isFormVisible: boolean) => {
         this.setState({ showForm: isFormVisible });
-    }
+    } */
 
     handleMarkAsFavorite = (articleId: string, isFavorite: boolean) => {
         this.articleService.markAsFavorite(articleId, isFavorite).then(data => {
@@ -210,65 +219,82 @@ export class App extends React.Component<any, any> {
                     articles[index] = data.docs[0];
                 }
             });
-
+            console.log('Mark fav :', articles);
             this.setState({ filteredArticles: articles });
         });
     }
 
     render() {
         return (
-            <React.Fragment>
-                <main className="wrapper uk-offcanvas-content">
-                    <div className="container-fluid">
+            <Router>
+                <React.Fragment>
+                    <main className="wrapper uk-offcanvas-content">
+                        <div className="container-fluid">
 
-                        {/* <aside className="sidebar-panel">
+                            <section className="content-wrapper">
 
-                            <Sidebar onFilterArticles={this.handleFilterArticles} onShowAddEditForm={this.handleToggleFormDisplay} {...this.state} />
+                                {/* Example of using Context */}
 
-                        </aside> */}
+                                <ArticleContext.Provider value={
+                                    {
+                                        state: this.state.articles,
+                                        actions: {
+                                            onFilterArticles: this.handleFilterArticles
+                                        }
+                                    }
+                                }>
+                                    <Header />
+                                </ArticleContext.Provider>
 
-                        <section className="content-wrapper">
+                                <section className="content-section">
 
-                            <Header onFilterArticles={this.handleFilterArticles} articles={this.state.articles} />
+                                    {/* If "showform"=true then display Create form else show list items */}
+                                    <CreateArticleFormComponent
+                                        {...this.state}
+                                        onCreateArticle={this.handleCreateArticle}
+                                        onEditSaveArticle={this.handleEditSaveArticle}
+                                        firebase={firebase}
+                                    />
 
-                            <section className="content-section">
-                                {/* If "showform"=true then display Create form else show list items */}
-                                <CreateArticleFormComponent
-                                    {...this.state}
-                                    onCreateArticle={this.handleCreateArticle}
-                                    onEditSaveArticle={this.handleEditSaveArticle}
-                                    onToggleAddEditForm={this.handleToggleFormDisplay}
-                                    firebase={firebase}
-                                />
+                                    <ArticlesList {...this.state}
+                                        onDeleteArticle={this.handleDeleteArticle}
+                                        onEditArticle={this.handleEditArticle}
+                                        onDisplaySingleArticleContent={this.handleDisplaySingleArticleContent}
+                                        onFilterArticles={this.handleFilterArticles}
+                                        markAsFavorite={this.handleMarkAsFavorite}
+                                    />
 
-                                <ArticlesList {...this.state}
-                                    onDeleteArticle={this.handleDeleteArticle}
-                                    onEditArticle={this.handleEditArticle}
-                                    onDisplaySingleArticleContent={this.handleDisplaySingleArticleContent}
-                                    onFilterArticles={this.handleFilterArticles}
-                                    markAsFavorite={this.handleMarkAsFavorite}
-                                />
+                                    {/*
+                                    Changed display single article using Router to get help of browser back button usage,
+                                    to navigate through previously visited articles.
+                                     */}
+                                    <Route
+                                        path="/:id"
+                                        render={(props: any) => <Article currentArticle={this.state.currentArticle} onFilterArticles={this.handleFilterArticles} articles={this.state.articles} {...props} />}
+                                    />
 
-                                {
+                                    {/*
                                     this.state.currentArticle ? (
                                         <Article currentArticle={this.state.currentArticle} onFilterArticles={this.handleFilterArticles} />
-                                    ) : ''
-                                }
+                                    ) : <p>No Article found</p>
+                                    */}
+
+                                </section>
 
                             </section>
-                        </section>
-                    </div>
-
-                    <div id="offcanvas-usage" uk-offcanvas="flip: true; overlay: true">
-                        <div className="uk-offcanvas-bar">
-                            <button className="uk-offcanvas-close" type="button" uk-close=""></button>
-
-                            <Sidebar onFilterArticles={this.handleFilterArticles} onShowAddEditForm={this.handleToggleFormDisplay} {...this.state} />
                         </div>
-                    </div>
 
-                </main>
-            </React.Fragment>
+                        <div id="offcanvas-usage" uk-offcanvas="flip: true; overlay: true">
+                            <div className="uk-offcanvas-bar">
+                                <button className="uk-offcanvas-close" type="button" uk-close=""></button>
+
+                                <Sidebar onFilterArticles={this.handleFilterArticles} {...this.state} />
+                            </div>
+                        </div>
+
+                    </main>
+                </React.Fragment>
+            </Router>
         )
     }
 }

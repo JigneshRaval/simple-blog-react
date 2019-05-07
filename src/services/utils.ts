@@ -70,7 +70,7 @@ class Utils {
             }
         }
 
-        console.log('scrollTop =', scrollTop, ' this.lastScrollTop =', this.lastScrollTop)
+        // console.log('scrollTop =', scrollTop, ' this.lastScrollTop =', this.lastScrollTop)
         this.lastScrollTop = scrollTop;
     }
 
