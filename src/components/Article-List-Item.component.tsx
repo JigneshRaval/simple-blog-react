@@ -5,7 +5,7 @@
 // REACT
 // ==========================
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // COMPONENTS
 // ==========================
@@ -14,21 +14,6 @@ import TagsInline from './Tags-Inline.component';
 
 const ArticleListItem = (props: any) => {
 
-    /* constructor(props: any) {
-        super(props);
-        this.state = {
-            // isActive: this.props.activeTab
-        }
-    } */
-
-
-    const getArticleContent = (articleId: any, index: number) => {
-        props.onDisplaySingleArticleContent(articleId);
-        props.onActivateTab(index);
-        // this.setState({ active: !this.state.active });
-    }
-
-    // render() {
     const { article, onDeleteArticle, onEditArticle, onFilterArticles, markAsFavorite, activeTab, index } = props;
 
     return (
@@ -56,7 +41,7 @@ const ArticleListItem = (props: any) => {
                     }
                     <div className="article-category"><span className="small-dot" data-category={article.category.toLowerCase()}></span>{article.category}</div>
                     <h2 className="uk-card-title">
-                        <Link to={'/' + article._id}>{article.title}</Link>
+                        <Link to={'/articles/' + article._id} onClick={() => props.onActivateTab(index)}>{article.title}</Link>
                         {/* <a href="javascript: void(0);" onClick={() => getArticleContent(article._id, index)}>{article.title}</a> */}
                     </h2>
                 </div>
@@ -70,7 +55,7 @@ const ArticleListItem = (props: any) => {
 
         </div>
     );
-    // }
+
 }
 
 export default ArticleListItem;

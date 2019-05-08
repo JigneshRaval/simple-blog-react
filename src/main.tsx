@@ -2,7 +2,7 @@
 
 // REACT
 import React from "react";
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import * as ReactDOM from "react-dom";
 
 // CSS
@@ -165,9 +165,10 @@ export class App extends React.Component<any, any> {
     // =========================================
     handleFilterArticles = (event: any, filterBy: string) => {
         let filteredList: any = [];
+        let searchTerm = event.target.value || event.target.getAttribute('data-tag-name');
         let searchBarElem = document.querySelector('.uk-search-default');
         let searchBox = document.querySelector('.uk-search-input');
-        let searchTerm = event.target.value || event.target.getAttribute('data-tag-name');
+
         event.target.parentElement.classList.add('active');
         if (searchBox) {
             (searchBox as HTMLInputElement).value = searchTerm;
@@ -181,21 +182,29 @@ export class App extends React.Component<any, any> {
         console.log('handleFilterArticles Fired Timeout');
 
         if (searchTerm) {
-            searchBarElem.classList.add('isSearching');
+            if (event && event.keyCode) {
+                if (event.keyCode === 13) {
+                    searchBarElem.classList.add('isSearching');
 
-            filteredList = utils.filterArticlesBy(searchTerm, filterBy, this.state.articles);
+                    filteredList = utils.filterArticlesBy(searchTerm, filterBy, this.state.articles);
 
-            // If "searchTerm" provided then, Set filtered articles in the state
-            this.setState({ filteredArticles: filteredList });
+                    // If "searchTerm" provided then, Set filtered articles in the state
+                    this.setState({ filteredArticles: filteredList });
+                }
+            }
         } else {
+
             // Hide clear search icon
             searchBarElem.classList.remove('isSearching');
 
             // If "searchTerm" NOT provided then, Set default articles list into the filtered articles in the state
             this.setState({ filteredArticles: this.state.articles });
+
         }
 
         //}, 500);
+
+
 
     }
 
@@ -232,9 +241,12 @@ export class App extends React.Component<any, any> {
                         <div className="container-fluid">
 
                             <section className="content-wrapper">
+                                {/* Redirect to first article on initalizing app */}
+                                {
+                                    this.state.filteredArticles && this.state.filteredArticles.length > 0 ? <Redirect to={'/articles/' + this.state.filteredArticles[0]._id} /> : ''
+                                }
 
                                 {/* Example of using Context */}
-
                                 <ArticleContext.Provider value={
                                     {
                                         state: this.state.articles,
@@ -269,7 +281,7 @@ export class App extends React.Component<any, any> {
                                     to navigate through previously visited articles.
                                      */}
                                     <Route
-                                        path="/:id"
+                                        path="/articles/:id"
                                         render={(props: any) => <Article currentArticle={this.state.currentArticle} onFilterArticles={this.handleFilterArticles} articles={this.state.articles} {...props} />}
                                     />
 

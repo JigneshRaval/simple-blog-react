@@ -57,7 +57,7 @@ const Header = (props: any) => {
                             </div>
                             <div className="uk-navbar-right">
                                 <div className="uk-navbar-item">
-                                    <SearchComponent />
+                                    <SearchComponent onFilterArticles={actions.onFilterArticles} />
                                 </div>
 
                                 {/* START : Dropdown Navigation */}
