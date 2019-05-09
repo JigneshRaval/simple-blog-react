@@ -1,5 +1,8 @@
 import React from 'react';
 
+import Utils from "../services/utils";
+const utils = new Utils();
+
 // Turndown : Html to Markdown convertor
 // let TurndownService = require('../assets/js/turndown.browser.umd.js');
 
@@ -77,7 +80,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
     componentDidMount() {
         $('#txtareaHtmlCode').summernote({
             placeholder: 'Write your article content here...',
-            height: 500,
+            height: 600,
             minHeight: 200,
             toolbar: [
                 ['font', ['strikethrough', 'superscript', 'subscript']],
@@ -97,6 +100,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
             },
             callbacks: {
                 onPaste: function (event: any) {
+                    $("#summernote").code().replace(/&nbsp;|<br>/g, '<br/>');
                     // console.log('Called event paste', event);
                     // $('#txtareaHtmlCode').summernote('removeFormat');
                 }
@@ -193,10 +197,10 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
 
         if (this.props.isEditMode) {
             this.props.onEditSaveArticle(this.state.id, formDataObj);
-            form.reset();
+            // form.reset();
         } else {
             this.props.onCreateArticle(formDataObj);
-            form.reset();
+            // form.reset();
         }
 
         let dbCon = this.props.firebase.database().ref('/articles');
@@ -215,28 +219,38 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         wrapperDiv.id = "wrapper-container";
         wrapperDiv.innerHTML = html;
 
+        wrapperDiv.querySelectorAll('pre').forEach(node => {
+            let codeContent = node.innerText || node.textContent;
+            codeContent = codeContent.replace(/</ig, '&lt;');
+
+            if (codeContent) {
+                node.innerHTML = `<code>${codeContent}</code>`;
+            }
+        });
+
+        wrapperDiv = utils.extractCleanCode(wrapperDiv, wrapperDiv.innerHTML, 'gist');
+
+        // wrapperDiv = utils.extractCleanCode(wrapperDiv, wrapperDiv.innerHTML, 'github');
+
         wrapperDiv.querySelectorAll('*').forEach(node => {
+
             if ((node.parentElement && node.parentElement.nodeName !== 'PRE') || (node.parentElement && node.parentElement.nodeName !== 'CODE')) {
                 node.removeAttribute('id');
                 node.removeAttribute('class');
                 node.removeAttribute('style');
                 node.removeAttribute('name');
             }
-
-            /* if (node.nodeName !== 'PRE') {
-                node.removeAttribute('id');
-                node.removeAttribute('class');
-                node.removeAttribute('style');
-            } */
-        });
-
-        wrapperDiv.querySelectorAll('pre').forEach(node => {
-            let codeContent = node.innerText || node.textContent;
-            codeContent = codeContent.replace(/</ig, '&lt;');
-            // console.log('codeContent :', codeContent);
-            if (codeContent) {
-                node.innerHTML = `<code>${codeContent}</code>`;
+            // Remove empty nodes
+            if (node.textContent.trim() === '') {
+                // node.parentElement.removeChild(node);
             }
+
+            if (node.nodeName === 'SCRIPT' || node.nodeName === 'LINK') {
+                if (node.parentElement) {
+                    node.parentElement.removeChild(node);
+                }
+            }
+
         });
 
         return wrapperDiv.innerHTML;

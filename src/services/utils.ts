@@ -37,6 +37,20 @@ class Utils {
         }, 5);
     }
 
+    public handleScrollEvent = () => {
+        let timer: any;
+        let scrollElement = document.querySelector('#scrollToTop');
+
+        window.addEventListener('scroll', () => {
+            if (timer) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(() => {
+                this.getScrollPosition(scrollElement);
+            }, 250);
+        }, false);
+
+    }
 
     /**
      * @function : Scroll to top with smooth animation using javascript only
@@ -138,6 +152,36 @@ class Utils {
         }
     }
 
+    public filterArticles(event: any, filterBy: string, articles: any) {
+
+        let searchTerm = event.target.value || event.target.getAttribute('data-tag-name');
+        let searchBarElem = document.querySelector('.uk-search-default');
+        let searchBox = document.querySelector('.uk-search-input');
+
+        event.target.parentElement.classList.add('active');
+        if (searchBox) {
+            (searchBox as HTMLInputElement).value = searchTerm;
+        }
+
+        if (searchTerm) {
+            searchBarElem.classList.add('isSearching');
+
+            // If "searchTerm" provided then, Set filtered articles in the state
+            // this.setState({ filteredArticles: filteredList });
+
+            return this.filterArticlesBy(searchTerm, filterBy, articles);
+        } else {
+
+            // Hide clear search icon
+            searchBarElem.classList.remove('isSearching');
+
+            // If "searchTerm" NOT provided then, Set default articles list into the filtered articles in the state
+            // this.setState({ filteredArticles: this.state.articles });
+
+            return articles;
+
+        }
+    }
 
     /**
      * Function to filter Articles by search value and filterBy type
@@ -217,6 +261,68 @@ class Utils {
 
         // OUTPUT : ["JavaScript", "React", ...]
         return uniqueCategories;
+    }
+
+    public extractCleanCode(parent: any, content: any, type: string) {
+        switch (type) {
+            case "github":
+                var iFrames = parent.querySelectorAll('iframe'); // Select all iFrame elements
+                var figures = parent.querySelectorAll('figure.graf--iframe'); // Select all iFrame parent Elements
+
+                if (parent) {
+                    if (iFrames && iFrames.length > 0) {
+                        // Loop through all the iFrames
+                        for (var i = 0, len = iFrames.length; i < len; i++) {
+                            var preNode = document.createElement('pre');
+                            var codeNode = document.createElement('code');
+
+                            var contDoc = iFrames[i].contentDocument || iFrames[i].contentWindow ? iFrames[i].contentWindow.document : null;
+
+                            if (contDoc) {
+                                var iframeContent = contDoc.querySelector('table').innerText || contDoc.querySelector('table').textContent;
+
+                                codeNode.innerText = iframeContent;
+                                preNode.appendChild(codeNode);
+                                // replace all iFrame parent nodes with the new <pre> tags
+                                iFrames[i].closest('figure').parentElement.replaceChild(preNode, figures[i]);
+                            }
+                        }
+                    }
+                    // console.log('content - github :', parent);
+                    return parent;
+                } else {
+                    console.log("Please assign id to content wrapper.")
+                }
+            case "gist":
+                // var parent = content.parentElement;
+                var gists = parent.querySelectorAll('.oembed-gist') || parent.querySelectorAll('.gist');
+
+                if (parent) {
+                    if (gists && gists.length > 0) {
+                        // Loop through all the iFrames
+                        for (var i = 0, len = gists.length; i < len; i++) {
+                            if (gists[i].querySelector('table')) {
+                                var preNode = document.createElement('pre');
+                                var codeNode = document.createElement('code');
+
+                                var gistContent = gists[i].querySelector('table').innerText || gists[i].querySelector('table').textContent;
+                                codeNode.innerText = gistContent;
+                                preNode.appendChild(codeNode);
+                                // replace all iFrame parent nodes with the new <pre> tags
+                                gists[i].parentElement.replaceChild(preNode, gists[i]);
+                            }
+                        }
+
+                    }
+                    // console.log('content - gists :', parent);
+                    return parent;
+                } else {
+                    console.log("Please assign id to content wrapper.")
+                }
+            default:
+                return parent;
+        }
+
     }
 
 }

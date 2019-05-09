@@ -10,6 +10,11 @@ const ArticlesList = (props: any) => {
         setActiveTab(activeTab === index ? -1 : index);
     }
 
+    /* const getArticleContent = (articleId: any, index: number) => {
+        props.onDisplaySingleArticleContent(articleId);
+        props.onActivateTab(index);
+    } */
+
     const { filteredArticles } = props;
 
     return (

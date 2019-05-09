@@ -14,6 +14,12 @@ import TagsInline from './Tags-Inline.component';
 
 const ArticleListItem = (props: any) => {
 
+    const getArticleContent = (articleId: any, index: number) => {
+        props.onDisplaySingleArticleContent(articleId);
+        props.onActivateTab(index);
+        // this.setState({ active: !this.state.active });
+    }
+
     const { article, onDeleteArticle, onEditArticle, onFilterArticles, markAsFavorite, activeTab, index } = props;
 
     return (
@@ -41,8 +47,8 @@ const ArticleListItem = (props: any) => {
                     }
                     <div className="article-category"><span className="small-dot" data-category={article.category.toLowerCase()}></span>{article.category}</div>
                     <h2 className="uk-card-title">
-                        <Link to={'/articles/' + article._id} onClick={() => props.onActivateTab(index)}>{article.title}</Link>
-                        {/* <a href="javascript: void(0);" onClick={() => getArticleContent(article._id, index)}>{article.title}</a> */}
+                        {/* <Link to={'/articles/' + article._id} onClick={() => props.onActivateTab(index)}>{article.title}</Link> */}
+                        <a href="javascript: void(0);" article-id={article._id} onClick={() => getArticleContent(article._id, index)}>{article.title}</a>
                     </h2>
                 </div>
 

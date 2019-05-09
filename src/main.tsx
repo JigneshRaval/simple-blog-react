@@ -40,8 +40,8 @@ import ArticleContext from './services/context';
 
 let categories = require('./assets/data/categories.json');
 
-declare var $: any;
-declare var hljs: any;
+// declare var $: any;
+// declare var hljs: any;
 declare var UIkit: any;
 
 export class App extends React.Component<any, any> {
@@ -63,8 +63,6 @@ export class App extends React.Component<any, any> {
             showForm: false,
             articleService: this.articleService
         };
-
-        console.log('Props 123 ===', props);
     }
 
     componentDidMount() {
@@ -94,7 +92,9 @@ export class App extends React.Component<any, any> {
 
             // Update variable value in articles.service.ts
             this.updateArticleDataService(this.state.articles);
-        });
+        }).catch((err) => {
+            console.log('Error in creating new article', err);
+        });;
     }
 
 
@@ -145,7 +145,9 @@ export class App extends React.Component<any, any> {
 
             // Update variable value in articles.service.ts
             this.updateArticleDataService(this.state.articles);
-        });
+        }).catch((err) => {
+            console.log('Error in edit or save article : ', err);
+        });;
     }
 
 
@@ -157,55 +159,9 @@ export class App extends React.Component<any, any> {
 
             // Update variable value in articles.service.ts
             this.updateArticleDataService(this.state.articles);
-        });
-    }
-
-
-    // Filter all the articles by Tag, Category or the search value provided by the user
-    // =========================================
-    handleFilterArticles = (event: any, filterBy: string) => {
-        let filteredList: any = [];
-        let searchTerm = event.target.value || event.target.getAttribute('data-tag-name');
-        let searchBarElem = document.querySelector('.uk-search-default');
-        let searchBox = document.querySelector('.uk-search-input');
-
-        event.target.parentElement.classList.add('active');
-        if (searchBox) {
-            (searchBox as HTMLInputElement).value = searchTerm;
-        }
-        // throttle search event
-        /* if (this.timer) {
-            clearTimeout(this.timer);
-        } */
-
-        // this.timer = setTimeout(() => {
-        console.log('handleFilterArticles Fired Timeout');
-
-        if (searchTerm) {
-            if (event && event.keyCode) {
-                if (event.keyCode === 13) {
-                    searchBarElem.classList.add('isSearching');
-
-                    filteredList = utils.filterArticlesBy(searchTerm, filterBy, this.state.articles);
-
-                    // If "searchTerm" provided then, Set filtered articles in the state
-                    this.setState({ filteredArticles: filteredList });
-                }
-            }
-        } else {
-
-            // Hide clear search icon
-            searchBarElem.classList.remove('isSearching');
-
-            // If "searchTerm" NOT provided then, Set default articles list into the filtered articles in the state
-            this.setState({ filteredArticles: this.state.articles });
-
-        }
-
-        //}, 500);
-
-
-
+        }).catch((err) => {
+            console.log('Error in deleting article : ', err);
+        });;
     }
 
 
@@ -214,10 +170,6 @@ export class App extends React.Component<any, any> {
     updateArticleDataService = (data: any) => {
         this.articleService.setArticlesData(data);
     }
-
-    /* handleToggleFormDisplay = (isFormVisible: boolean) => {
-        this.setState({ showForm: isFormVisible });
-    } */
 
     handleMarkAsFavorite = (articleId: string, isFavorite: boolean) => {
         this.articleService.markAsFavorite(articleId, isFavorite).then(data => {
@@ -233,6 +185,25 @@ export class App extends React.Component<any, any> {
         });
     }
 
+    // Filter all the articles by Tag, Category or the search value provided by the user
+    // =========================================
+    handleFilterArticles = (event: any, filterBy: string) => {
+        this.setState({ filteredArticles: utils.filterArticles(event, filterBy, this.state.articles) });
+        /* let searchTerm = event.target.value || event.target.getAttribute('data-tag-name');
+        if (searchTerm) {
+            if (event && event.keyCode) {
+                if (event.keyCode === 13) {
+                    this.setState({ filteredArticles: utils.filterArticles(event, filterBy, this.state.articles) });
+                }
+            }
+        } else {
+            this.setState({ filteredArticles: utils.filterArticles(event, filterBy, this.state.articles) });
+        } */
+    }
+
+
+
+
     render() {
         return (
             <Router>
@@ -242,9 +213,11 @@ export class App extends React.Component<any, any> {
 
                             <section className="content-wrapper">
                                 {/* Redirect to first article on initalizing app */}
+                                {/*
                                 {
                                     this.state.filteredArticles && this.state.filteredArticles.length > 0 ? <Redirect to={'/articles/' + this.state.filteredArticles[0]._id} /> : ''
                                 }
+                            */}
 
                                 {/* Example of using Context */}
                                 <ArticleContext.Provider value={
@@ -280,16 +253,19 @@ export class App extends React.Component<any, any> {
                                     Changed display single article using Router to get help of browser back button usage,
                                     to navigate through previously visited articles.
                                      */}
+                                    {/*
                                     <Route
                                         path="/articles/:id"
                                         render={(props: any) => <Article currentArticle={this.state.currentArticle} onFilterArticles={this.handleFilterArticles} articles={this.state.articles} {...props} />}
                                     />
-
-                                    {/*
-                                    this.state.currentArticle ? (
-                                        <Article currentArticle={this.state.currentArticle} onFilterArticles={this.handleFilterArticles} />
-                                    ) : <p>No Article found</p>
                                     */}
+
+                                    {
+                                        this.state.currentArticle ? (
+                                            <Article currentArticle={this.state.currentArticle} onFilterArticles={this.handleFilterArticles} />
+                                        ) : <p>No Article found</p>
+                                    }
+
 
                                 </section>
 
