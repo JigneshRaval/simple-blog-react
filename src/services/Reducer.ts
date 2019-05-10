@@ -1,12 +1,12 @@
-const initialState = {
+const initialState: any = {
     username: null,
     gender: null,
     age: null
 };
 
-const UPDATE_USER = "UPDATE_USER";
-const SET_GENDER = "SET_GENDER";
-const SET_AGE = "SET_AGE";
+const UPDATE_USER: string = "UPDATE_USER";
+const SET_GENDER: string = "SET_GENDER";
+const SET_AGE: string = "SET_AGE";
 
 function reducer(state: any, action: any) {
     switch (action.type) {

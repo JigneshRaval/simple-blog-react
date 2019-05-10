@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ArticleListItem from './Article-List-Item.component';
+import LoadingSpinner from './loadingSpinner';
 // import TagsInline from './Tags-Inline.component';
 
 const ArticlesList = (props: any) => {
@@ -15,13 +16,13 @@ const ArticlesList = (props: any) => {
         props.onActivateTab(index);
     } */
 
-    const { filteredArticles } = props;
+    const { filteredArticles, loading } = props;
 
     return (
         <div className="post-list__wrapper" >
             <div className="uk-flex uk-flex-column">
                 {
-                    filteredArticles && filteredArticles.length > 0 ?
+                    loading ? <LoadingSpinner /> : filteredArticles && filteredArticles.length > 0 ?
                         filteredArticles.map((article: any, index: number) => {
                             return (
                                 <ArticleListItem

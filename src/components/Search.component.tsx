@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, { useRef } from 'react';
 import ArticleContext from '../services/context';
 
 const SearchComponent = (props: any) => {
@@ -29,7 +29,6 @@ const SearchComponent = (props: any) => {
                     </React.Fragment>
                 )
             }
-
         </ArticleContext.Consumer>
     );
 }

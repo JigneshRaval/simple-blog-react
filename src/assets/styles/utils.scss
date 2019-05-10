@@ -31,3 +31,16 @@
     visibility: visible;
     opacity: 1;
 }
+
+
+.uk-alert {
+    position: fixed;
+    top: 100px;
+    z-index: 10;
+    width: 100%;
+}
+.toast-message {
+    position: fixed;
+    top: 100px;
+
+}

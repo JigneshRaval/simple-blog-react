@@ -26,7 +26,8 @@ const utils = new Utils();
 import Header from "./components/Header.component";
 import Sidebar from './components/Sidebar.component';
 import ArticlesList from "./components/Articles-List.component";
-import { Article, Home } from "./components/Article.component";
+import ToastMessage from "./components/ToastMessage";
+import { Article } from "./components/Article.component";
 import { CreateArticleFormComponent } from './components/Create-Article-Form.component';
 /*
 import HOC from './components/HOC-examples/HOC.component';
@@ -61,16 +62,19 @@ export class App extends React.Component<any, any> {
             editData: {},
             currentArticle: '',
             showForm: false,
-            articleService: this.articleService
+            articleService: this.articleService,
+            loading: false, // will be true when ajax request is running,
+            displayToastMessage: false
         };
     }
 
     componentDidMount() {
+        this.setState({ loading: true, displayToastMessage: true });
         // Render all Articles on component mount
         this.articleService.getAllArticles()
             .then((data) => {
                 console.log('Data : ', data);
-                this.setState({ articles: data.docs, articleCount: data.docs.length, filteredArticles: data.docs, currentArticle: data.docs[0] });
+                this.setState({ articles: data.docs, articleCount: data.docs.length, filteredArticles: data.docs, currentArticle: data.docs[0], loading: false, displayToastMessage: false });
 
                 // Update variable value in articles.service.ts
                 this.updateArticleDataService(this.state.articles);
@@ -218,7 +222,8 @@ export class App extends React.Component<any, any> {
                                     this.state.filteredArticles && this.state.filteredArticles.length > 0 ? <Redirect to={'/articles/' + this.state.filteredArticles[0]._id} /> : ''
                                 }
                             */}
-
+                                <ToastMessage displayToastMessage={this.state.displayToastMessage}>ToastMessage</ToastMessage>
+                                {this.state.displayToastMessage ? <ToastMessage displayToastMessage={this.state.displayToastMessage}>ToastMessage</ToastMessage> : null}
                                 {/* Example of using Context */}
                                 <ArticleContext.Provider value={
                                     {
