@@ -20,7 +20,7 @@ const ArticleListItem = (props: any) => {
         // this.setState({ active: !this.state.active });
     }
 
-    const { article, onDeleteArticle, onEditArticle, onFilterArticles, markAsFavorite, activeTab, index } = props;
+    const { article, onDeleteArticle, onEditArticle, onFilterArticles, markAsFavorite, activeTab, index, onAddToastMessage } = props;
 
     return (
         <div className={"uk-card uk-card-default" + (activeTab === index ? ' active' : '')} key={article._id}>
@@ -32,7 +32,7 @@ const ArticleListItem = (props: any) => {
                         <ul className="uk-nav uk-dropdown-nav">
                             <li className="uk-nav-header">Actions</li>
                             <li className="uk-active"><a href="javascript:void(0);" onClick={() => onEditArticle(article._id, true)}><span uk-icon="pencil"></span> Edit Article</a></li>
-                            <li><a href="javascript:void(0);" onClick={() => onDeleteArticle(article._id)}><span uk-icon="trash"></span> Delete Article</a></li>
+                            <li><a href="javascript:void(0);" onClick={() => onAddToastMessage('warning', `Are you sure you want to delete this article?.`, true)}><span uk-icon="trash"></span> Delete Article</a></li>
                             <li><a href="javascript:void(0);" onClick={() => markAsFavorite(article._id, article.favorite)} data-favorite={article.favorite}><span uk-icon="star"></span> Mark as Favorite</a></li>
                             <li className="uk-nav-header">Tags</li>
                             <TagsInline article={article} onFilterArticles={props.onFilterArticles} />

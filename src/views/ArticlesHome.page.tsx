@@ -66,6 +66,7 @@ class ArticleHome extends React.Component<any, any> {
 
     // Dynamically add multiple ToastMessage components.
     addToastMessage(messageType: string, message: string, isConfirm: boolean = false) {
+        let _this = this;
         this.setState({ isConfirm: isConfirm });
         const toastChild = <ToastMessage displayToastMessage={true} toastMessageType={messageType} isConfirm={isConfirm} onConfirm={this.handleConfirmEvent.bind(this)}>{message}</ToastMessage>;
         const newChildren = [...this.state.toastChildren, toastChild];
@@ -73,10 +74,10 @@ class ArticleHome extends React.Component<any, any> {
     }
 
     handleConfirmEvent() {
-        this.setState({ deleteArticle: true });
-        if (this.state.deleteArticle) {
+        //this.setState({ deleteArticle: true });
+        //if (this.state.deleteArticle) {
             this.handleDeleteArticle(this.state.currentArticle._id);
-        }
+        //}
     }
 
     componentDidMount() {
@@ -177,9 +178,9 @@ class ArticleHome extends React.Component<any, any> {
     // =========================================
     handleDeleteArticle = (articleId: string): void => {
         // display message
-        this.addToastMessage('warning', `Are you sure you want to delete this article?.`, true);
+//         this.addToastMessage('warning', `Are you sure you want to delete this article?.`, true);
 
-        if (this.state.deleteArticle) {
+        //if (this.state.deleteArticle) {
             this.articleService.deleteArticle(articleId).then((data: any) => {
                 this.setState({ articles: data.docs, filteredArticles: data.docs });
 
@@ -193,7 +194,7 @@ class ArticleHome extends React.Component<any, any> {
             });
 
             this.setState({ deleteArticle: false });
-        }
+        //}
     }
 
 
@@ -266,6 +267,7 @@ class ArticleHome extends React.Component<any, any> {
                                     />
 
                                     <ArticlesList {...this.state}
+                                    onAddToastMessage={this.addToastMessage.bind(this)}
                                         onDeleteArticle={this.handleDeleteArticle}
                                         onEditArticle={this.handleEditArticle}
                                         onDisplaySingleArticleContent={this.handleDisplaySingleArticleContent}
