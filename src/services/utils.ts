@@ -4,8 +4,8 @@
 // Utility functions
 
 declare var $: any;
-declare var hljs: any;
-declare var UIkit: any;
+// declare var hljs: any;
+// declare var UIkit: any;
 
 class Utils {
     scrollDuration: number = 250;
@@ -324,6 +324,25 @@ class Utils {
         }
 
     }
+
+    /**
+     * @function : Toggle Sidebar Panel containing list of Articles
+     * @param event
+     */
+    public handleToggleArticleListPanel() {
+        if (!document.body.classList.contains('isArticleListPanelOpened')) {
+            document.body.classList.add('isArticleListPanelOpened');
+            if ('localStorage' in window && window['localStorage'] !== null) {
+                localStorage.setItem('isArticleListPanelOpened', 'true');
+            }
+        } else {
+            document.body.classList.remove('isArticleListPanelOpened');
+            if ('localStorage' in window && window['localStorage'] !== null) {
+                localStorage.setItem('isArticleListPanelOpened', 'false');
+            }
+        }
+    }
+
 
 }
 

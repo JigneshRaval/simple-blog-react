@@ -14,26 +14,8 @@ declare var UIkit: any;
 const Header = (props: any) => {
 
     // Open Create Article form in modal overlay
-    const openform = () => {
+    const openForm = () => {
         UIkit.modal('#modal-example').show();
-    }
-
-    /**
-     * @function : Toggle Sidebar Panel containing list of Articles
-     * @param event
-     */
-    const handleToggleArticleListPanel = () => {
-        if (!document.body.classList.contains('isArticleListPanelOpened')) {
-            document.body.classList.add('isArticleListPanelOpened');
-            if ('localStorage' in window && window['localStorage'] !== null) {
-                localStorage.setItem('isArticleListPanelOpened', 'true');
-            }
-        } else {
-            document.body.classList.remove('isArticleListPanelOpened');
-            if ('localStorage' in window && window['localStorage'] !== null) {
-                localStorage.setItem('isArticleListPanelOpened', 'false');
-            }
-        }
     }
 
     return (
@@ -43,7 +25,7 @@ const Header = (props: any) => {
                     <header className="header-main uk-container uk-container-expand">
                         <nav className="uk-navbar-container uk-navbar-transparent" uk-navbar="">
                             <div className="uk-navbar-left">
-                                <button className="post-list__drawer" onClick={handleToggleArticleListPanel} title="Click this button to view list of Articles." uk-tooltip="Click this button to view list of Articles.">
+                                <button className="post-list__drawer" onClick={utils.handleToggleArticleListPanel} title="Click this button to view list of Articles." uk-tooltip="Click this button to view list of Articles.">
                                     <i className="ion ion-ios-arrow-forward"></i><i className="ion ion-ios-arrow-forward"></i>
                                 </button>
                             </div>
@@ -90,7 +72,7 @@ const Header = (props: any) => {
                                 </ul>
                                 {/* END : Dropdown Navigation */}
 
-                                <button className="uk-button uk-button-secondary" uk-toggle="target: #modal-example" onClick={openform}>Create Article</button>
+                                <button className="uk-button uk-button-secondary" uk-toggle="target: #modal-example" onClick={openForm}>Create Article</button>
                                 <a id="toggleSidebar" href="#offcanvas-usage" uk-toggle="" title="Click this button to view list of Categories and Tags." uk-tooltip="Click this button to view list of Categories and Tags."><i className="ion ion-md-menu"></i></a>
                             </div>
                         </nav>

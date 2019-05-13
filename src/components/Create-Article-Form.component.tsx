@@ -41,10 +41,6 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
 
-        console.log('Form props: ', props);
-
-        // $('#txtareaHtmlCode').summernote('code', converter.makeHtml(props.editData.markdownCode));
-
         this.state = {
             id: props.editData._id || '',
             dateCreated: props.editData.dateCreated || new Date().getTime(),
@@ -62,8 +58,6 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         }
         // preserve the initial state in a new object
         this.baseState = this.state
-
-        const [month, day, year] = new Date().toString().split('/');
 
         /* this.turndownService = new TurndownService({
             codeBlockStyle: 'fenced',
