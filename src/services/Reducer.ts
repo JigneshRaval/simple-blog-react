@@ -4,25 +4,22 @@ const initialState: any = {
     age: null
 };
 
-const UPDATE_USER: string = "UPDATE_USER";
-const SET_GENDER: string = "SET_GENDER";
-const SET_AGE: string = "SET_AGE";
 
-function reducer(state: any, action: any) {
+function articleReducer(state: any, action: any) {
     switch (action.type) {
-        case UPDATE_USER:
+        case "ADD_ARTICLE":
             return {
                 username: action.username,
                 gender: null,
                 age: null
             };
-        case SET_GENDER:
+        case "DELETE_ARTICLE":
             return {
                 username: state.username,
                 gender: action.gender,
                 age: null
             };
-        case SET_AGE:
+        case "MARK_FAVORITE":
             return {
                 username: state.username,
                 gender: state.gender,
@@ -32,3 +29,5 @@ function reducer(state: any, action: any) {
             return initialState;
     }
 }
+
+export default articleReducer;
