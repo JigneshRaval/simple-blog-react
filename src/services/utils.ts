@@ -263,6 +263,49 @@ class Utils {
         return uniqueCategories;
     }
 
+    // Clean HTML tags by removing Class, ID and Style attributes
+    sanitizeHtml(html: any) {
+        let wrapperDiv = document.createElement('div');
+        wrapperDiv.id = "wrapper-container";
+        wrapperDiv.innerHTML = html;
+
+        wrapperDiv.querySelectorAll('pre').forEach(node => {
+            let codeContent = node.innerText || node.textContent;
+            codeContent = codeContent.replace(/</ig, '&lt;');
+
+            if (codeContent) {
+                node.innerHTML = `<code>${codeContent}</code>`;
+            }
+        });
+
+        wrapperDiv = this.extractCleanCode(wrapperDiv, wrapperDiv.innerHTML, 'gist');
+
+        // wrapperDiv = utils.extractCleanCode(wrapperDiv, wrapperDiv.innerHTML, 'github');
+
+        wrapperDiv.querySelectorAll('*').forEach(node => {
+
+            if ((node.parentElement && node.parentElement.nodeName !== 'PRE') || (node.parentElement && node.parentElement.nodeName !== 'CODE')) {
+                node.removeAttribute('id');
+                node.removeAttribute('class');
+                node.removeAttribute('style');
+                node.removeAttribute('name');
+            }
+            // Remove empty nodes
+            if (node.textContent.trim() === '') {
+                // node.parentElement.removeChild(node);
+            }
+
+            if (node.nodeName === 'SCRIPT' || node.nodeName === 'LINK') {
+                if (node.parentElement) {
+                    node.parentElement.removeChild(node);
+                }
+            }
+
+        });
+
+        return wrapperDiv.innerHTML;
+    }
+
     public extractCleanCode(parent: any, content: any, type: string) {
         switch (type) {
             case "github":

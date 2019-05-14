@@ -55,12 +55,8 @@ class ArticleHome extends React.Component<any, any> {
             showForm: false,
             articleService: this.articleService,
             loading: false, // will be true when ajax request is running,
-            // displayToastMessage: false,
-            // toastMessage: 'Test',
-            // toastMessageType: '',
             toastChildren: [],
-            isConfirm: false,
-            deleteArticle: false
+            isConfirm: false
         };
     }
 
@@ -74,10 +70,7 @@ class ArticleHome extends React.Component<any, any> {
     }
 
     handleConfirmEvent() {
-        //this.setState({ deleteArticle: true });
-        //if (this.state.deleteArticle) {
-            this.handleDeleteArticle(this.state.currentArticle._id);
-        //}
+        this.handleDeleteArticle(this.state.currentArticle._id);
     }
 
     componentDidMount() {
@@ -147,6 +140,9 @@ class ArticleHome extends React.Component<any, any> {
         });
     }
 
+    updateState = () => {
+
+    }
 
     // Update data on the server
     // =========================================
@@ -177,24 +173,19 @@ class ArticleHome extends React.Component<any, any> {
     // Delete single article by articleId
     // =========================================
     handleDeleteArticle = (articleId: string): void => {
-        // display message
-//         this.addToastMessage('warning', `Are you sure you want to delete this article?.`, true);
+        this.articleService.deleteArticle(articleId).then((data: any) => {
+            this.setState({ articles: data.docs, filteredArticles: data.docs });
 
-        //if (this.state.deleteArticle) {
-            this.articleService.deleteArticle(articleId).then((data: any) => {
-                this.setState({ articles: data.docs, filteredArticles: data.docs });
+            // display message
+            this.addToastMessage('success', `Article <b>${articleId}</b> deleted successfully.`, false);
 
-                // display message
-                this.addToastMessage('success', `Article <b>${articleId}</b> deleted successfully.`, false);
+            // Update variable value in articles.service.ts
+            this.updateArticleDataService(this.state.articles);
+        }).catch((err) => {
+            console.log('Error in deleting article : ', err);
+        });
 
-                // Update variable value in articles.service.ts
-                this.updateArticleDataService(this.state.articles);
-            }).catch((err) => {
-                console.log('Error in deleting article : ', err);
-            });
-
-            this.setState({ deleteArticle: false });
-        //}
+        this.setState({ deleteArticle: false });
     }
 
 
@@ -267,7 +258,7 @@ class ArticleHome extends React.Component<any, any> {
                                     />
 
                                     <ArticlesList {...this.state}
-                                    onAddToastMessage={this.addToastMessage.bind(this)}
+                                        onAddToastMessage={this.addToastMessage.bind(this)}
                                         onDeleteArticle={this.handleDeleteArticle}
                                         onEditArticle={this.handleEditArticle}
                                         onDisplaySingleArticleContent={this.handleDisplaySingleArticleContent}

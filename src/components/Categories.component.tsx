@@ -9,15 +9,6 @@ const utils = new Utils;
 
 const Categories = ({ articles, onFilterArticles }: any) => {
 
-    /* As we are calling utils.getUniqueCategories() function from Utils.ts
-    so we don't need this function hence commented this code */
-    /* const getUniqueCategories = () => {
-        let uniqueCategories = utils.getUniqueCategories(articles);
-
-        // OUTPUT : ["JavaScript", "React", ...]
-        return uniqueCategories;
-    } */
-
     return (
         <nav className="category-wrapper category-wrapper--aside">
             <p className="category-list__header"><i className="ion ion-md-folder"></i> <strong>Categories</strong></p>

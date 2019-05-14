@@ -3,14 +3,6 @@ import React from 'react';
 import Utils from "../services/utils";
 const utils = new Utils();
 
-// Turndown : Html to Markdown convertor
-// let TurndownService = require('../assets/js/turndown.browser.umd.js');
-
-// Showdown : Markdown to HTML convertor
-// let ShowdownService = require('../assets/js/showdown.js');
-
-// const converter = new ShowdownService.Converter();
-
 declare var $: any;
 declare var UIkit: any;
 
@@ -32,8 +24,6 @@ let HelloButton = function () {
 
 
 export class CreateArticleFormComponent extends React.Component<any, any> {
-    // turndownService: any;
-    // editorOutput: any;
     convertedHTML: any;
     postPath: string;
     baseState: any;
@@ -59,16 +49,6 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         // preserve the initial state in a new object
         this.baseState = this.state
 
-        /* this.turndownService = new TurndownService({
-            codeBlockStyle: 'fenced',
-            fence: '```',
-            filter: 'br',
-            replacement: function (content: any) {
-                return '\r\n\r\n' + content + '\r\n\r\n'
-            }
-        });
-
-        this.turndownService.keep(['br', 'pre', 'code']); */
     }
 
     componentDidMount() {
@@ -94,7 +74,7 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
             },
             callbacks: {
                 onPaste: function (event: any) {
-                    $("#summernote").code().replace(/&nbsp;|<br>/g, '<br/>');
+                    // $("#summernote").code().replace(/&nbsp;|<br>/g, '<br/>');
                     // console.log('Called event paste', event);
                     // $('#txtareaHtmlCode').summernote('removeFormat');
                 }
@@ -122,17 +102,6 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         })
     }
 
-    formatDate(date: any, format: string) {
-        let dateObj = new Date(date);
-
-        let year = dateObj.getFullYear();
-        let month = dateObj.getMonth() + 1;
-        let day = dateObj.getDate();
-
-        // return {year, month, day}
-        return `${month}/${day}/${year}`;
-    }
-
     handleInputChange = (event: any) => {
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -143,11 +112,10 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         });
     }
 
+
     // Handle Html to Markdown form submit
     handleSubmit = (event: any) => {
         event.preventDefault();
-
-        // this.editorOutput = document.querySelector('#txtareaMarkdownCode');
 
         // Syntax : var formData = new FormData(form)
         // Ref : https://medium.com/@everdimension/how-to-handle-forms-with-just-react-ac066c48bd4f
@@ -184,17 +152,17 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         const formDataObj = {
             ...frontmatterObj,
             'frontmatter': frontmatter,
-            'htmlCode': this.sanitizeHtml(formData.get('txtareaHtmlCode') || $('#txtareaHtmlCode').summernote('code')),
+            'htmlCode': utils.sanitizeHtml(formData.get('txtareaHtmlCode') || $('#txtareaHtmlCode').summernote('code')),
             'filePath': `pages/${frontmatterObj.category + '/'}${formData.get('txtSavePostToPath') + '.md'}`,
             //'markdownCode': this.convertedHTML
         }
 
         if (this.props.isEditMode) {
             this.props.onEditSaveArticle(this.state.id, formDataObj);
-            // form.reset();
+            form.reset();
         } else {
             this.props.onCreateArticle(formDataObj);
-            // form.reset();
+            form.reset();
         }
 
         let dbCon = this.props.firebase.database().ref('/articles');
@@ -203,63 +171,8 @@ export class CreateArticleFormComponent extends React.Component<any, any> {
         });
 
         $('#txtareaHtmlCode').summernote('reset');
-        // this.props.onToggleAddEditForm(false);
-        // UIkit.modal('#modal-example').hide();
+
     }
-
-    // Clean HTML tags by removing Class, ID and Style attributes
-    sanitizeHtml(html: any) {
-        let wrapperDiv = document.createElement('div');
-        wrapperDiv.id = "wrapper-container";
-        wrapperDiv.innerHTML = html;
-
-        wrapperDiv.querySelectorAll('pre').forEach(node => {
-            let codeContent = node.innerText || node.textContent;
-            codeContent = codeContent.replace(/</ig, '&lt;');
-
-            if (codeContent) {
-                node.innerHTML = `<code>${codeContent}</code>`;
-            }
-        });
-
-        wrapperDiv = utils.extractCleanCode(wrapperDiv, wrapperDiv.innerHTML, 'gist');
-
-        // wrapperDiv = utils.extractCleanCode(wrapperDiv, wrapperDiv.innerHTML, 'github');
-
-        wrapperDiv.querySelectorAll('*').forEach(node => {
-
-            if ((node.parentElement && node.parentElement.nodeName !== 'PRE') || (node.parentElement && node.parentElement.nodeName !== 'CODE')) {
-                node.removeAttribute('id');
-                node.removeAttribute('class');
-                node.removeAttribute('style');
-                node.removeAttribute('name');
-            }
-            // Remove empty nodes
-            if (node.textContent.trim() === '') {
-                // node.parentElement.removeChild(node);
-            }
-
-            if (node.nodeName === 'SCRIPT' || node.nodeName === 'LINK') {
-                if (node.parentElement) {
-                    node.parentElement.removeChild(node);
-                }
-            }
-
-        });
-
-        return wrapperDiv.innerHTML;
-    }
-
-    // convert HTML code to Markdown formate
-    /* convert(htmlContent: any) {
-        if (htmlContent) {
-            var markdown = this.turndownService.turndown(htmlContent);
-            return markdown;
-        } else {
-            return null;
-        }
-    } */
-
 
     /**
      *
