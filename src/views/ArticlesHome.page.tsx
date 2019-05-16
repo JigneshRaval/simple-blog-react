@@ -33,69 +33,75 @@ const articleService = new ArticleService();
 // declare var $: any;
 // declare var hljs: any;
 declare var UIkit: any;
+
 /*
-const initialState = {
-    articles: [],
-    filteredArticles: [],
-    categories: categories.categories,
-    isEditMode: false,
-    articleCount: 0,
-    editData: {},
-    currentArticle: '',
-    showForm: false,
-    articleService: this.articleService,
-    loading: false, // will be true when ajax request is running,
-    toastChildren: [],
-    isConfirm: false
-} */
+// https://react-hooks-cheatsheet.com/usestate
+() => {
+    const [state, setState] = useState({ age: 19, siblingsNum: 4 })
+
+    useEffect(() => {
+        setState({
+            ...state,
+            age: 40
+        })
+    }, []);
+
+    const updateAge = () => {
+        setState({
+            ...state,
+            age: state.age + 5
+        })
+    }
+
+    const handleClick = val =>
+        setState({
+            ...state,
+            [val]: state[val] + 1
+        })
+
+    const { age, siblingsNum } = state
+
+    return (
+        <div>
+            <p>Today I am {age} Years of Age</p>
+            <p>I have {siblingsNum} siblings</p>
+
+            <div>
+                <button onClick={updateAge}>Update Age!</button>
+
+                <button onClick={handleClick.bind(null, 'age')}>Get older!</button>
+                <button onClick={handleClick.bind(null, 'siblingsNum')}>
+                    More siblings!
+          </button>
+            </div>
+        </div>
+    )
+}
+*/
 
 const ArticleHome = () => {
     // articleService: ArticleService;
     // timer: any;
 
-
     const [state, setState] = useState({
+        articleService: new ArticleService(),
         articles: [],
-        filteredArticles: [],
-        categories: categories.categories,
-        isEditMode: false,
         articleCount: 0,
         editData: {},
         currentArticle: '',
+        filteredArticles: [],
+        categories: categories.categories,
+        isEditMode: false,
         showForm: false,
-        articleService: articleService,
         loading: false, // will be true when ajax request is running,
         toastChildren: [],
         isConfirm: false
     });
 
-    const [todos, dispatch] = useReducer(
+    /* const [todos, dispatch] = useReducer(
         articleReducer,
         state.articles
-    );
-
-    console.log('Todos :', todos);
-    /* constructor(props: any) {
-        super(props);
-
-        this.articleService = new ArticleService();
-
-        this.state = {
-            articles: [],
-            filteredArticles: [],
-            categories: categories.categories,
-            isEditMode: false,
-            articleCount: 0,
-            editData: {},
-            currentArticle: '',
-            showForm: false,
-            articleService: this.articleService,
-            loading: false, // will be true when ajax request is running,
-            toastChildren: [],
-            isConfirm: false
-        };
-    } */
-
+    ); */
 
     useEffect(() => {
         // Show loading indicator
@@ -117,7 +123,7 @@ const ArticleHome = () => {
                 });
 
                 // Update variable value in articles.service.ts
-                this.updateArticleDataService(state.articles);
+                updateArticleDataService(state.articles);
             })
             .catch((err: any) => {
                 console.log('Error in fetching all the records : ', err);
@@ -134,7 +140,7 @@ const ArticleHome = () => {
             ...state,
             isConfirm: isConfirm
         });
-        const toastChild = <ToastMessage displayToastMessage={true} toastMessageType={messageType} isConfirm={isConfirm} onConfirm={this.handleConfirmEvent.bind(this)}>{message}</ToastMessage>;
+        const toastChild = <ToastMessage displayToastMessage={true} toastMessageType={messageType} isConfirm={isConfirm} onConfirm={handleConfirmEvent.bind(this)}>{message}</ToastMessage>;
         const newChildren = [...state.toastChildren, toastChild];
         setState({
             ...state,
@@ -143,7 +149,7 @@ const ArticleHome = () => {
     }
 
     const handleConfirmEvent = () => {
-        this.handleDeleteArticle(state.currentArticle._id);
+        handleDeleteArticle(state.currentArticle._id);
     }
 
     // Create new article
@@ -159,10 +165,10 @@ const ArticleHome = () => {
             });
 
             // display message
-            this.addToastMessage('success', `New Article created successfully. ${data.newDoc.title}`)
+            addToastMessage('success', `New Article created successfully. ${data.newDoc.title}`)
 
             // Update variable value in articles.service.ts
-            this.updateArticleDataService(state.articles);
+            updateArticleDataService(state.articles);
         }).catch((err) => {
             console.log('Error in creating new article', err);
         });;
@@ -196,8 +202,8 @@ const ArticleHome = () => {
 
         setState({
             ...state,
-            isEditMode: true,
-            showForm: isFormVisible
+            ['isEditMode']: true,
+            ['showForm']: isFormVisible
         });
 
         state.articles.map((article: any) => {
@@ -208,6 +214,8 @@ const ArticleHome = () => {
                 });
             }
         });
+
+        console.log('STATE1 : ', state);
     }
 
     const updateState = () => {
@@ -237,10 +245,10 @@ const ArticleHome = () => {
             });
 
             // display message
-            this.addToastMessage('success', `Article updated successfully... ${data.docs[0].title}`);
+            addToastMessage('success', `Article updated successfully... ${data.docs[0].title}`);
 
             // Update variable value in articles.service.ts
-            this.updateArticleDataService(state.articles);
+            updateArticleDataService(state.articles);
         }).catch((err: any) => {
             console.log('Error in edit or save article : ', err);
         });;
@@ -258,15 +266,15 @@ const ArticleHome = () => {
             });
 
             // display message
-            this.addToastMessage('success', `Article <b>${articleId}</b> deleted successfully.`, false);
+            addToastMessage('success', `Article <b>${articleId}</b> deleted successfully.`, false);
 
             // Update variable value in articles.service.ts
-            this.updateArticleDataService(state.articles);
+            updateArticleDataService(state.articles);
         }).catch((err: any) => {
             console.log('Error in deleting article : ', err);
         });
 
-        // this.setState({ deleteArticle: false });
+        // setState({ deleteArticle: false });
     }
 
 

@@ -1,8 +1,20 @@
 // src/firebase.js
 
 // Initialize Firebase
-// import firebase from 'firebase';
-import firebase from 'firebase';
+
+// This import loads the firebase namespace along with all its type information.
+import * as firebase from 'firebase/app';
+
+// These imports load individual services into the firebase namespace.
+// firebase-app         - The core firebase client (required).
+// firebase-auth        - Firebase Authentication (optional).
+// firebase-database    - The Firebase Realtime Database (optional).
+// firebase-firestore   - Cloud Firestore (optional).
+// firebase-storage     - Firebase Storage (optional).
+// firebase-messaging   - Firebase Cloud Messaging (optional).
+// firebase-functions   - Firebase Cloud Functions (optional).
+import 'firebase/auth';
+import 'firebase/database';
 
 var config = {
     apiKey: "AIzaSyDuF3aJJ0UdGcgG74XqDeUPXfZiVWXAGXM",
@@ -12,6 +24,7 @@ var config = {
     storageBucket: "simple-react-blog.appspot.com",
     messagingSenderId: "609289394377"
 };
+
 firebase.initializeApp(config);
 /*
 var ref = firebase.database().ref();
