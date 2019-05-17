@@ -3,11 +3,11 @@ import React, { useState, useEffect } from "react";
 
 
 const ToastMessage = (props: any) => {
-    const [isToastVisible, setToastVisibility] = useState(props.displayToastMessage);
+    const [isToastVisible, setToastVisibility] = useState(false);
 
     useEffect(() => {
         // componentDidMount
-        setToastVisibility(props.displayToastMessage);
+        setToastVisibility(true);
 
         if (!props.isConfirm) {
             setTimeout(() => {

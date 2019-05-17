@@ -34,23 +34,48 @@ const articleService = new ArticleService();
 // declare var hljs: any;
 declare var UIkit: any;
 
-/*
+
 // https://react-hooks-cheatsheet.com/usestate
-() => {
-    const [state, setState] = useState({ age: 19, siblingsNum: 4 })
+/*
+const ArticleHome1 = () => {
+    const [state, setState] = useState({
+        age: 20,
+        isConfirm: false,
+        isEditMode: false,
+        loading: false,
+        showForm: false,
+        siblingsNum: 4,
+        toastChildren: []
+    })
 
     useEffect(() => {
         setState({
             ...state,
-            age: 40
+            age: 40,
+            isEditMode: false
         })
     }, []);
 
     const updateAge = () => {
+
+        setState((prevState) => {
+            return ({
+                ...state,
+                age: state.age + 5,
+                isEditMode: true,
+                showForm: true
+            })
+        });
+
         setState({
             ...state,
-            age: state.age + 5
-        })
+            age: state.age + 5,
+            isEditMode: true,
+            showForm: true
+        });
+
+
+        console.log('STATE: ', state);
     }
 
     const handleClick = val =>
@@ -59,12 +84,15 @@ declare var UIkit: any;
             [val]: state[val] + 1
         })
 
-    const { age, siblingsNum } = state
+    const { age, siblingsNum, isEditMode, showForm } = state;
+
 
     return (
         <div>
             <p>Today I am {age} Years of Age</p>
             <p>I have {siblingsNum} siblings</p>
+            <p>isEditMode : {isEditMode.toString()}</p>
+            <p>showForm : {showForm.toString()}</p>
 
             <div>
                 <button onClick={updateAge}>Update Age!</button>
@@ -95,7 +123,8 @@ const ArticleHome = () => {
         showForm: false,
         loading: false, // will be true when ajax request is running,
         toastChildren: [],
-        isConfirm: false
+        isConfirm: false,
+        reRender: true
     });
 
     /* const [todos, dispatch] = useReducer(
@@ -104,52 +133,68 @@ const ArticleHome = () => {
     ); */
 
     useEffect(() => {
-        // Show loading indicator
-        setState({
-            ...state,
-            loading: true
-        });
-
-        // Get all Articles on component mount
-        articleService.getAllArticles()
-            .then((data: any) => {
-                setState({
-                    ...state,
-                    articles: data.docs,
-                    articleCount: data.docs.length,
-                    filteredArticles: data.docs,
-                    currentArticle: data.docs[0],
-                    loading: false
-                });
-
-                // Update variable value in articles.service.ts
-                updateArticleDataService(state.articles);
-            })
-            .catch((err: any) => {
-                console.log('Error in fetching all the records : ', err);
+        if (state.reRender) {
+            // Show loading indicator
+            setState({
+                ...state,
+                loading: true
             });
 
-        console.log('State : ', state);
-    }, []);
+            // Get all Articles on component mount
+            articleService.getAllArticles()
+                .then((data: any) => {
+                    setState({
+                        ...state,
+                        articles: data.docs,
+                        articleCount: data.docs.length,
+                        filteredArticles: data.docs,
+                        currentArticle: data.docs[0],
+                        loading: false
+                    });
+
+                    // Update variable value in articles.service.ts
+                    updateArticleDataService(state.articles);
+                })
+                .catch((err: any) => {
+                    console.log('Error in fetching all the records : ', err);
+                });
+
+            console.log('State : ', state);
+        }
+
+        // componentWillUnmount
+        return () => {
+            setState({
+                ...state,
+                reRender: false,
+                toastChildren: []
+            });
+        }
+    }, [state.reRender]);
 
 
     // Dynamically add multiple ToastMessage components.
-    const addToastMessage = (messageType: string, message: string, isConfirm: boolean = false) => {
-        let _this = this;
+    const addToastMessage = (messageType: string, message: string, isConfirm: boolean = false, articleId: string = '') => {
+
         setState({
             ...state,
             isConfirm: isConfirm
         });
-        const toastChild = <ToastMessage displayToastMessage={true} toastMessageType={messageType} isConfirm={isConfirm} onConfirm={handleConfirmEvent.bind(this)}>{message}</ToastMessage>;
+
+        const toastChild = <ToastMessage displayToastMessage={true} toastMessageType={messageType} isConfirm={isConfirm} onConfirm={handleConfirmEvent.bind(this, articleId)}>{message}</ToastMessage>;
+
         const newChildren = [...state.toastChildren, toastChild];
+
         setState({
             ...state,
             toastChildren: newChildren
         });
     }
 
-    const handleConfirmEvent = () => {
-        handleDeleteArticle(state.currentArticle._id);
+    const handleConfirmEvent = (articleId: string) => {
+        if (articleId) {
+            handleDeleteArticle(articleId);
+        }
     }
 
     // Create new article
@@ -161,7 +206,10 @@ const ArticleHome = () => {
 
             setState({
                 ...state,
-                articles, filteredArticles: articles, currentArticle: data.newDoc
+                articles: articles,
+                filteredArticles: articles,
+                currentArticle: data.newDoc,
+                reRender: true
             });
 
             // display message
@@ -171,13 +219,19 @@ const ArticleHome = () => {
             updateArticleDataService(state.articles);
         }).catch((err) => {
             console.log('Error in creating new article', err);
-        });;
+        });
+
+        setState({
+            ...state,
+            reRender: false
+        });
     }
 
 
     // Display Single Article Content
     // =========================================
     const handleDisplaySingleArticleContent = (articleId: string) => {
+
         state.articles.map((article: any, index: number) => {
             if (article._id === articleId) {
                 setState({
@@ -200,16 +254,16 @@ const ArticleHome = () => {
     const handleEditArticle = (articleId: string, isFormVisible: boolean) => {
         UIkit.modal('#modal-example').show();
 
-        setState({
+        /* setState({
             ...state,
-            ['isEditMode']: true,
-            ['showForm']: isFormVisible
-        });
+            showForm: true
+        }); */
 
         state.articles.map((article: any) => {
             if (article._id === articleId) {
                 setState({
                     ...state,
+                    isEditMode: true,
                     editData: article
                 });
             }
@@ -235,23 +289,31 @@ const ArticleHome = () => {
                 }
             });
 
-            setState({
+            setState(state => ({
                 ...state,
                 articles: articles,
                 filteredArticles: articles,
                 editData: {},
                 isEditMode: false,
-                currentArticle: data.docs[0]
-            });
+                currentArticle: data.docs[0],
+                reRender: true
+            }));
 
             // display message
             addToastMessage('success', `Article updated successfully... ${data.docs[0].title}`);
 
             // Update variable value in articles.service.ts
             updateArticleDataService(state.articles);
+
+            console.log('Edit update article State : ', state);
         }).catch((err: any) => {
             console.log('Error in edit or save article : ', err);
-        });;
+        });
+
+        setState(state => ({
+            ...state,
+            reRender: false
+        }));
     }
 
 
@@ -262,7 +324,8 @@ const ArticleHome = () => {
             setState({
                 ...state,
                 articles: data.docs,
-                filteredArticles: data.docs
+                filteredArticles: data.docs,
+                reRender: true
             });
 
             // display message
@@ -270,11 +333,16 @@ const ArticleHome = () => {
 
             // Update variable value in articles.service.ts
             updateArticleDataService(state.articles);
+
+            console.log('Delete Article State : ', state);
         }).catch((err: any) => {
             console.log('Error in deleting article : ', err);
         });
 
-        // setState({ deleteArticle: false });
+        setState(state => ({
+            ...state,
+            reRender: false
+        }));
     }
 
 
@@ -310,92 +378,61 @@ const ArticleHome = () => {
             filteredArticles: utils.filterArticles(event, filterBy, state.articles)
         });
     }
-
+    const { articles, isEditMode, currentArticle, filteredArticles, loading } = state;
 
     // render() {
     return (
-        <Router>
-            <React.Fragment>
-                <main className="wrapper uk-offcanvas-content">
-                    <div className="container-fluid">
+        <main className="wrapper uk-offcanvas-content">
+            <div className="container-fluid">
 
-                        <section className="content-wrapper">
-                            {/* Redirect to first article on initalizing app */}
-                            {/*
-                                {
-                                    state.filteredArticles && state.filteredArticles.length > 0 ? <Redirect to={'/articles/' + state.filteredArticles[0]._id} /> : ''
-                                }
-                            */}
+                <section className="content-wrapper">
+                    {/* <div style={{ 'position': 'fixed', zIndex: 1050 }}>{isEditMode.toString()}</div> */}
 
-                            {/* <ToastMessage displayToastMessage={state.displayToastMessage} toastMessageType={state.toastMessageType}>{state.toastMessage}</ToastMessage> */}
+                    <Header articles={articles} onFilterArticles={handleFilterArticles} />
 
-                            {/* Example of using Context */}
-                            <ArticleContext.Provider value={
-                                {
-                                    state: state.articles,
-                                    actions: {
-                                        onFilterArticles: handleFilterArticles
-                                    }
-                                }
-                            }>
+                    <section className="content-section">
 
-                                <Header />
-                            </ArticleContext.Provider>
+                        <CreateArticleFormComponent
+                            {...state}
+                            onCreateArticle={handleCreateArticle}
+                            onEditSaveArticle={handleEditSaveArticle}
+                            firebase={firebase}
+                        />
 
-                            <section className="content-section">
-
-                                {/* If "showform"=true then display Create form else show list items */}
-                                <CreateArticleFormComponent
-                                    {...state}
-                                    onCreateArticle={handleCreateArticle}
-                                    onEditSaveArticle={handleEditSaveArticle}
-                                    firebase={firebase}
-                                />
-
-                                <ArticlesList {...state}
-                                    onAddToastMessage={addToastMessage.bind(this)}
-                                    onDeleteArticle={handleDeleteArticle}
-                                    onEditArticle={handleEditArticle}
-                                    onDisplaySingleArticleContent={handleDisplaySingleArticleContent}
-                                    onFilterArticles={handleFilterArticles}
-                                    markAsFavorite={handleMarkAsFavorite}
-                                />
-
-                                {/*
-                                    Changed display single article using Router to get help of browser back button usage,
-                                    to navigate through previously visited articles.
-                                     */}
-                                {/*
-                                    <Route
-                                        path="/articles/:id"
-                                        render={(props: any) => <Article currentArticle={state.currentArticle} onFilterArticles={this.handleFilterArticles} articles={state.articles} {...props} />}
-                                    />
-                                    */}
-
-                                {
-                                    state.currentArticle ? (
-
-                                        <Article currentArticle={state.currentArticle} onFilterArticles={handleFilterArticles} />
-                                    ) : <p>No Article found</p>
-                                }
+                        <ArticlesList
+                            filteredArticles={filteredArticles}
+                            loading={loading}
+                            onAddToastMessage={addToastMessage.bind(this)}
+                            onDeleteArticle={handleDeleteArticle}
+                            onEditArticle={handleEditArticle}
+                            onDisplaySingleArticleContent={handleDisplaySingleArticleContent}
+                            onFilterArticles={handleFilterArticles}
+                            markAsFavorite={handleMarkAsFavorite}
+                        />
 
 
-                            </section>
+                        {
+                            currentArticle ? (
+                                <Article currentArticle={currentArticle} onFilterArticles={handleFilterArticles} />
+                            ) : <p>No Article found</p>
+                        }
 
-                        </section>
-                    </div>
 
-                    <div id="offcanvas-usage" uk-offcanvas="flip: true; overlay: true">
-                        <div className="uk-offcanvas-bar">
-                            <button className="uk-offcanvas-close" type="button" uk-close=""></button>
+                    </section>
 
-                            <Sidebar onFilterArticles={handleFilterArticles} {...state} />
-                        </div>
-                    </div>
-                    <div className="toast-message__wrapper">{state.toastChildren}</div>
-                </main>
-            </React.Fragment>
-        </Router>
+                </section>
+            </div>
+
+            <div id="offcanvas-usage" uk-offcanvas="flip: true; overlay: true">
+                <div className="uk-offcanvas-bar">
+                    <button className="uk-offcanvas-close" type="button" uk-close=""></button>
+
+                    <Sidebar onFilterArticles={handleFilterArticles} {...state} />
+                </div>
+            </div>
+            <div className="toast-message__wrapper">{state.toastChildren}</div>
+        </main>
+
     )
     // }
 }
