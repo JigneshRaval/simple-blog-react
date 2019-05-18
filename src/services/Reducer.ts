@@ -1,10 +1,3 @@
-const initialState: any = {
-    username: null,
-    gender: null,
-    age: null
-};
-
-
 function articleReducer(state: any, action: any) {
     switch (action.type) {
         case "ADD_ARTICLE":
@@ -13,6 +6,18 @@ function articleReducer(state: any, action: any) {
                 gender: null,
                 age: null
             };
+        case "EDIT_ARTICLE":
+            let newState = {
+                ...state,
+                articles: action.articles,
+                filteredArticles: action.articles,
+                editData: {},
+                isEditMode: false,
+                currentArticle: action.currentArticle,
+                reRender: true
+            }
+            console.log('EDIT_ARTICLE :', state, action.articles);
+            return newState;
         case "DELETE_ARTICLE":
             return {
                 username: state.username,
@@ -26,7 +31,7 @@ function articleReducer(state: any, action: any) {
                 age: action.age
             };
         default:
-            return initialState;
+            return state;
     }
 }
 

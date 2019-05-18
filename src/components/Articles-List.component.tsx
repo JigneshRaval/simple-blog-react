@@ -4,11 +4,11 @@ import LoadingSpinner from './loadingSpinner';
 // import TagsInline from './Tags-Inline.component';
 
 const ArticlesList = (props: any) => {
-    // const [activeTab, setActiveTab] = useState(0);
+    const [activeTab, setActiveTab] = useState(0);
 
     // Activate / De-activate selected item
     const handleActivateTab = (index: number) => {
-        // setActiveTab(activeTab === index ? -1 : index);
+        setActiveTab(activeTab === index ? -1 : index);
     }
 
     const { filteredArticles, loading } = props;

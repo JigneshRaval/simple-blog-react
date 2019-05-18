@@ -127,6 +127,8 @@ const ArticleHome = () => {
         reRender: true
     });
 
+    const [newState, dispatch] = useReducer(articleReducer, state);
+
     /* const [todos, dispatch] = useReducer(
         articleReducer,
         state.articles
@@ -268,8 +270,6 @@ const ArticleHome = () => {
                 });
             }
         });
-
-        console.log('STATE1 : ', state);
     }
 
     const updateState = () => {
@@ -289,7 +289,7 @@ const ArticleHome = () => {
                 }
             });
 
-            setState(state => ({
+            /* setState(state => ({
                 ...state,
                 articles: articles,
                 filteredArticles: articles,
@@ -297,7 +297,13 @@ const ArticleHome = () => {
                 isEditMode: false,
                 currentArticle: data.docs[0],
                 reRender: true
-            }));
+            })); */
+
+            dispatch({ type: 'EDIT_ARTICLE', articles: articles, currentArticle: data.docs[0] });
+
+            console.log('newState :', newState);
+
+            setState(newState);
 
             // display message
             addToastMessage('success', `Article updated successfully... ${data.docs[0].title}`);
@@ -311,7 +317,7 @@ const ArticleHome = () => {
         });
 
         setState(state => ({
-            ...state,
+            ...newState,
             reRender: false
         }));
     }
@@ -378,6 +384,7 @@ const ArticleHome = () => {
             filteredArticles: utils.filterArticles(event, filterBy, state.articles)
         });
     }
+
     const { articles, isEditMode, currentArticle, filteredArticles, loading } = state;
 
     // render() {
