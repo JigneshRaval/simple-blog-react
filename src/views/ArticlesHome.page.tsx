@@ -127,6 +127,8 @@ const ArticleHome = () => {
         reRender: true
     });
 
+
+
     const [newState, dispatch] = useReducer(articleReducer, state);
 
     /* const [todos, dispatch] = useReducer(
@@ -145,17 +147,17 @@ const ArticleHome = () => {
             // Get all Articles on component mount
             articleService.getAllArticles()
                 .then((data: any) => {
-                    setState({
+                    /* setState({
                         ...state,
                         articles: data.docs,
                         articleCount: data.docs.length,
                         filteredArticles: data.docs,
                         currentArticle: data.docs[0],
                         loading: false
-                    });
-
+                    }); */
+                    dispatch({ type: 'GET_ALL_ARTICLES', data: data.docs })
                     // Update variable value in articles.service.ts
-                    updateArticleDataService(state.articles);
+                    updateArticleDataService(newState.articles);
                 })
                 .catch((err: any) => {
                     console.log('Error in fetching all the records : ', err);
@@ -166,6 +168,8 @@ const ArticleHome = () => {
 
         // componentWillUnmount
         return () => {
+
+            console.log('unmounting 1...');
             setState({
                 ...state,
                 reRender: false,
@@ -173,6 +177,18 @@ const ArticleHome = () => {
             });
         }
     }, [state.reRender]);
+
+    /* const [reRender, setReRender] = useState(false);
+    useEffect(() => {
+        console.log('mounted 2');
+        // setReRender(false);
+        setState({
+            ...state
+        });
+        return () => {
+            console.log('unmounting 2...');
+        }
+    }, [reRender]) */
 
 
     // Dynamically add multiple ToastMessage components.
@@ -183,7 +199,7 @@ const ArticleHome = () => {
             isConfirm: isConfirm
         });
 
-        const toastChild = <ToastMessage displayToastMessage={true} toastMessageType={messageType} isConfirm={isConfirm} onConfirm={handleConfirmEvent.bind(this, articleId)}>{message}</ToastMessage>;
+        const toastChild = <ToastMessage displayToastMessage={true} toastMessageType={messageType} isConfirm={isConfirm} onConfirm={handleConfirmEvent.bind(this, articleId)} key={articleId + Math.floor((Math.random() * 100) + 1)}>{message}</ToastMessage>;
 
         const newChildren = [...state.toastChildren, toastChild];
 
@@ -204,44 +220,36 @@ const ArticleHome = () => {
     const handleCreateArticle = (formDataObj: any) => {
         articleService.createArticle(formDataObj).then((data: any) => {
 
-            let articles = [data.newDoc, ...state.articles];
+            let articles = [data.newDoc, ...newState.articles];
 
-            setState({
+            dispatch({ type: 'ADD_ARTICLE', articles: articles, currentArticle: data.newDoc });
+            /* setState({
                 ...state,
                 articles: articles,
                 filteredArticles: articles,
                 currentArticle: data.newDoc,
                 reRender: true
-            });
+            }); */
+            // setReRender(true);
 
             // display message
             addToastMessage('success', `New Article created successfully. ${data.newDoc.title}`)
 
             // Update variable value in articles.service.ts
-            updateArticleDataService(state.articles);
+            updateArticleDataService(newState.articles);
         }).catch((err) => {
             console.log('Error in creating new article', err);
         });
 
-        setState({
-            ...state,
-            reRender: false
-        });
+
     }
 
 
     // Display Single Article Content
     // =========================================
     const handleDisplaySingleArticleContent = (articleId: string) => {
+        dispatch({ type: 'GET_SINGLE_ARTICLE', articleId: articleId });
 
-        state.articles.map((article: any, index: number) => {
-            if (article._id === articleId) {
-                setState({
-                    ...state,
-                    currentArticle: article
-                });
-            }
-        });
 
         // Highlight code blocks
         /* console.log(window);
@@ -256,25 +264,9 @@ const ArticleHome = () => {
     const handleEditArticle = (articleId: string, isFormVisible: boolean) => {
         UIkit.modal('#modal-example').show();
 
-        /* setState({
-            ...state,
-            showForm: true
-        }); */
-
-        state.articles.map((article: any) => {
-            if (article._id === articleId) {
-                setState({
-                    ...state,
-                    isEditMode: true,
-                    editData: article
-                });
-            }
-        });
+        dispatch({ type: 'SET_EDIT_MODE', articleId: articleId });
     }
 
-    const updateState = () => {
-
-    }
 
     // Update data on the server
     // =========================================
@@ -303,15 +295,19 @@ const ArticleHome = () => {
 
             console.log('newState :', newState);
 
-            setState(newState);
+            /* setState(state => ({
+                ...state,
+                ...newState
+            })); */
 
             // display message
             addToastMessage('success', `Article updated successfully... ${data.docs[0].title}`);
 
             // Update variable value in articles.service.ts
-            updateArticleDataService(state.articles);
+            updateArticleDataService(newState.articles);
 
-            console.log('Edit update article State : ', state);
+            console.log('Edit update article State : ', newState);
+            // setReRender(true);
         }).catch((err: any) => {
             console.log('Error in edit or save article : ', err);
         });
@@ -327,18 +323,21 @@ const ArticleHome = () => {
     // =========================================
     const handleDeleteArticle = (articleId: string): void => {
         articleService.deleteArticle(articleId).then((data: any) => {
-            setState({
+
+            dispatch({ type: 'DELETE_ARTICLE', data: data.docs });
+
+            /* setState({
                 ...state,
                 articles: data.docs,
                 filteredArticles: data.docs,
-                reRender: true
-            });
-
+                // reRender: true
+            }); */
+            // setReRender(true);
             // display message
             addToastMessage('success', `Article <b>${articleId}</b> deleted successfully.`, false);
 
             // Update variable value in articles.service.ts
-            updateArticleDataService(state.articles);
+            updateArticleDataService(newState.articles);
 
             console.log('Delete Article State : ', state);
         }).catch((err: any) => {
@@ -379,13 +378,15 @@ const ArticleHome = () => {
     // Filter all the articles by Tag, Category or the search value provided by the user
     // =========================================
     const handleFilterArticles = (event: any, filterBy: string) => {
-        setState({
+
+        dispatch({ type: 'FILTER_ALL_ARTICLES', filteredArticles: utils.filterArticles(event, filterBy, newState.articles) });
+        /* setState({
             ...state,
             filteredArticles: utils.filterArticles(event, filterBy, state.articles)
-        });
+        }); */
     }
 
-    const { articles, isEditMode, currentArticle, filteredArticles, loading } = state;
+    const { articles, isEditMode, currentArticle, filteredArticles, loading } = newState;
 
     // render() {
     return (
@@ -393,14 +394,14 @@ const ArticleHome = () => {
             <div className="container-fluid">
 
                 <section className="content-wrapper">
-                    {/* <div style={{ 'position': 'fixed', zIndex: 1050 }}>{isEditMode.toString()}</div> */}
+                    <div style={{ 'position': 'fixed', zIndex: 1050 }}>{isEditMode.toString()}</div>
 
                     <Header articles={articles} onFilterArticles={handleFilterArticles} />
 
                     <section className="content-section">
 
                         <CreateArticleFormComponent
-                            {...state}
+                            {...newState}
                             onCreateArticle={handleCreateArticle}
                             onEditSaveArticle={handleEditSaveArticle}
                             firebase={firebase}

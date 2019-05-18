@@ -1,13 +1,58 @@
 function articleReducer(state: any, action: any) {
     switch (action.type) {
-        case "ADD_ARTICLE":
+        case "GET_ALL_ARTICLES":
+            console.log('GET_ALL_ARTICLES :', state, action);
             return {
-                username: action.username,
-                gender: null,
-                age: null
+                ...state,
+                articles: action.data,
+                articleCount: action.data.length,
+                filteredArticles: action.data,
+                currentArticle: action.data[0],
+                loading: false
+            }
+        case "SET_EDIT_MODE":
+            console.log('SET_EDIT_MODE :', state, action);
+            let articleToEdit;
+            state.articles.map((article: any) => {
+                if (article._id === action.articleId) {
+                    articleToEdit = article;
+                }
+            });
+
+            return {
+                ...state,
+                isEditMode: true,
+                editData: articleToEdit
+            }
+        case "ADD_ARTICLE":
+            console.log('ADD_ARTICLE :', state, action);
+            return {
+                ...state,
+                isEditMode: false,
+                articles: action.articles,
+                filteredArticles: action.articles,
+                currentArticle: action.currentArticle,
+                reRender: true
             };
+        case "GET_SINGLE_ARTICLE":
+            console.log('GET_SINGLE_ARTICLE :', state, action);
+            let singleArticle;
+
+            state.articles.map((article: any, index: number) => {
+                if (article._id === action.articleId) {
+                    singleArticle = article;
+                }
+            });
+
+            return {
+                ...state,
+                currentArticle: singleArticle
+            };
+        // return newState;
+
         case "EDIT_ARTICLE":
-            let newState = {
+            console.log('EDIT_ARTICLE :', state, action);
+            return {
                 ...state,
                 articles: action.articles,
                 filteredArticles: action.articles,
@@ -15,14 +60,17 @@ function articleReducer(state: any, action: any) {
                 isEditMode: false,
                 currentArticle: action.currentArticle,
                 reRender: true
-            }
-            console.log('EDIT_ARTICLE :', state, action.articles);
-            return newState;
+            };
         case "DELETE_ARTICLE":
             return {
-                username: state.username,
-                gender: action.gender,
-                age: null
+                ...state,
+                articles: action.data,
+                filteredArticles: action.data,
+            };
+        case "FILTER_ALL_ARTICLES":
+            return {
+                ...state,
+                filteredArticles: action.filteredArticles,
             };
         case "MARK_FAVORITE":
             return {
