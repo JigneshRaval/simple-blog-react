@@ -20,11 +20,13 @@ const Tags = (props: any) => {
 
     // Get total numbers of all the tags
     const count = () => {
-        let uniqueTags = getUniqueTags();
+        let total = 0;
+        total = Object.keys(getUniqueTags()).length;
+        /* let uniqueTags = getUniqueTags();
         let total = 0;
         Object.keys(uniqueTags).forEach(key => {
             total += uniqueTags[key];
-        });
+        }); */
 
         return total;
     }
@@ -33,6 +35,11 @@ const Tags = (props: any) => {
         <nav className="tags-wrapper tags-wrapper--aside">
             <p className="tag-list__header"><i className="ion ion-md-pricetags"></i><strong>Tags</strong></p>
             <ul className="tag-list">
+                <li className="tag-list__item" key="allArticles">
+                    <a href="javascript: void(0);" data-tag-name="all" onClick={(event) => props.onFilterArticles(event, 'all')}>
+                        All Articles <span className="post-counts">{props.articleCount}</span>
+                    </a>
+                </li>
                 <li className="tag-list__item" key="all">
                     <a href="javascript: void(0);" data-tag-name="all" onClick={(event) => props.onFilterArticles(event, 'all')}>
                         All <span className="post-counts">{count()}</span>

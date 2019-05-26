@@ -2,7 +2,7 @@
 
 // Display Single Article content on click of Article
 
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import TagsInline from './Tags-Inline.component';
 import Utils from "../services/utils";
 const utils = new Utils();
@@ -24,17 +24,23 @@ export const Article = (props: any) => {
         }
     }); */
 
-    const date = utils.formatDate('dd/mm/yyyy', '-', article.dateCreated);
-
-    function createMarkup() {
-        // return { __html: converter.makeHtml(article.htmlCode) };
-
+    useEffect(() => {
+        console.log('Single Article Component');
         // highlight syntax : https://highlightjs.org/
         $(document).ready(function () {
             $('.article__content').find('pre code').each(function (i: any, block: any) {
                 hljs.highlightBlock(block);
             });
         });
+    }, [article._id]);
+
+
+    const date = utils.formatDate('dd/mm/yyyy', '-', article.dateCreated);
+
+    function createMarkup() {
+        // return { __html: converter.makeHtml(article.htmlCode) };
+
+
 
         // Scroll to top functionality, added setTimeout due to DOM not available
         setTimeout(() => {

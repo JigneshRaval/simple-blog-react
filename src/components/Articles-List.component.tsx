@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ArticleListItem from './Article-List-Item.component';
 import LoadingSpinner from './loadingSpinner';
 // import TagsInline from './Tags-Inline.component';
@@ -8,7 +8,8 @@ const ArticlesList = (props: any) => {
 
     // Activate / De-activate selected item
     const handleActivateTab = (index: number) => {
-        setActiveTab(activeTab === index ? -1 : index);
+        // setActiveTab(activeTab === index ? -1 : index);
+        setActiveTab(index);
     }
 
     const { filteredArticles, loading } = props;
@@ -24,7 +25,7 @@ const ArticlesList = (props: any) => {
                                     key={index}
                                     article={article}
                                     index={index}
-                                    activeTab={0}
+                                    activeTab={activeTab}
                                     onActivateTab={handleActivateTab.bind(null, index)}
                                     {...props} />
                             )

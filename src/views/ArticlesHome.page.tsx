@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+// import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 // SERVICES
 // ==========================
@@ -27,6 +27,7 @@ dbRef.on("value", function (snapshot) {
     console.log('Firebase snapshot ==', snapshot.val());
 });
 
+declare var require: any;
 let categories = require('../assets/data/categories.json');
 const utils = new Utils();
 const articleService = new ArticleService();
@@ -147,14 +148,10 @@ const ArticleHome = () => {
             // Get all Articles on component mount
             articleService.getAllArticles()
                 .then((data: any) => {
-                    /* setState({
+                    setState({
                         ...state,
-                        articles: data.docs,
-                        articleCount: data.docs.length,
-                        filteredArticles: data.docs,
-                        currentArticle: data.docs[0],
                         loading: false
-                    }); */
+                    });
                     dispatch({ type: 'GET_ALL_ARTICLES', data: data.docs })
                     // Update variable value in articles.service.ts
                     updateArticleDataService(newState.articles);
@@ -334,7 +331,7 @@ const ArticleHome = () => {
             }); */
             // setReRender(true);
             // display message
-            addToastMessage('success', `Article <b>${articleId}</b> deleted successfully.`, false);
+            addToastMessage('success', `Article ${articleId} deleted successfully.`, false);
 
             // Update variable value in articles.service.ts
             updateArticleDataService(newState.articles);
@@ -359,18 +356,19 @@ const ArticleHome = () => {
 
     const handleMarkAsFavorite = (articleId: string, isFavorite: boolean) => {
         articleService.markAsFavorite(articleId, isFavorite).then((data: any) => {
-            let articles = [...state.articles];
+            let articles = [...newState.articles];
             articles.map((article: any, index: number) => {
                 if (article._id === data.docs[0]._id) {
                     articles[index] = { ...data.docs[0] };
                     articles[index] = data.docs[0];
                 }
             });
+            dispatch({ type: 'MARK_FAVORITE', data: articles });
             console.log('Mark fav :', articles);
-            setState({
+            /* setState({
                 ...state,
                 filteredArticles: articles
-            });
+            }); */
         });
     }
 
@@ -386,7 +384,7 @@ const ArticleHome = () => {
         }); */
     }
 
-    const { articles, isEditMode, currentArticle, filteredArticles, loading } = newState;
+    const { articles, isEditMode, currentArticle, filteredArticles, loading, articleCount } = newState;
 
     // render() {
     return (
@@ -394,7 +392,7 @@ const ArticleHome = () => {
             <div className="container-fluid">
 
                 <section className="content-wrapper">
-                    <div style={{ 'position': 'fixed', zIndex: 1050 }}>{isEditMode.toString()}</div>
+                    {/* <div style={{ 'position': 'fixed', zIndex: 1050 }}>{isEditMode.toString()}</div> */}
 
                     <Header articles={articles} onFilterArticles={handleFilterArticles} />
 
@@ -409,7 +407,7 @@ const ArticleHome = () => {
 
                         <ArticlesList
                             filteredArticles={filteredArticles}
-                            loading={loading}
+                            loading={state.loading}
                             onAddToastMessage={addToastMessage.bind(this)}
                             onDeleteArticle={handleDeleteArticle}
                             onEditArticle={handleEditArticle}
@@ -435,7 +433,7 @@ const ArticleHome = () => {
                 <div className="uk-offcanvas-bar">
                     <button className="uk-offcanvas-close" type="button" uk-close=""></button>
 
-                    <Sidebar onFilterArticles={handleFilterArticles} {...state} />
+                    <Sidebar onFilterArticles={handleFilterArticles} articleCount={articleCount} {...newState} />
                 </div>
             </div>
             <div className="toast-message__wrapper">{state.toastChildren}</div>

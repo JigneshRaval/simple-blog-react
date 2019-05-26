@@ -28,10 +28,30 @@ function articleReducer(state: any, action: any) {
             console.log('ADD_ARTICLE :', state, action);
             return {
                 ...state,
+                articleCount: action.articles.length,
                 isEditMode: false,
                 articles: action.articles,
                 filteredArticles: action.articles,
                 currentArticle: action.currentArticle,
+                reRender: true
+            };
+        case "EDIT_ARTICLE":
+            console.log('EDIT_ARTICLE :', state, action);
+            return {
+                ...state,
+                articles: action.articles,
+                filteredArticles: action.articles,
+                editData: {},
+                isEditMode: false,
+                currentArticle: action.currentArticle,
+                reRender: true
+            };
+        case "DELETE_ARTICLE":
+            return {
+                ...state,
+                articleCount: state.articles.length,
+                articles: action.data,
+                filteredArticles: action.data,
                 reRender: true
             };
         case "GET_SINGLE_ARTICLE":
@@ -49,34 +69,16 @@ function articleReducer(state: any, action: any) {
                 currentArticle: singleArticle
             };
         // return newState;
-
-        case "EDIT_ARTICLE":
-            console.log('EDIT_ARTICLE :', state, action);
-            return {
-                ...state,
-                articles: action.articles,
-                filteredArticles: action.articles,
-                editData: {},
-                isEditMode: false,
-                currentArticle: action.currentArticle,
-                reRender: true
-            };
-        case "DELETE_ARTICLE":
-            return {
-                ...state,
-                articles: action.data,
-                filteredArticles: action.data,
-            };
         case "FILTER_ALL_ARTICLES":
             return {
                 ...state,
                 filteredArticles: action.filteredArticles,
             };
         case "MARK_FAVORITE":
+
             return {
-                username: state.username,
-                gender: state.gender,
-                age: action.age
+                ...state,
+                filteredArticles: action.data
             };
         default:
             return state;

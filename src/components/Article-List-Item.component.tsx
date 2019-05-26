@@ -4,8 +4,8 @@
 
 // REACT
 // ==========================
-import React from 'react';
-import { Link } from "react-router-dom";
+import React, { useEffect } from 'react';
+// import { Link } from "react-router-dom";
 
 // COMPONENTS
 // ==========================
@@ -14,10 +14,16 @@ import TagsInline from './Tags-Inline.component';
 
 const ArticleListItem = (props: any) => {
 
+    // IMP : Added this to not render whole list every time when user clicks on any article from left navigation
+    // or any new article added or deleted, or filtering or serching articles
+    useEffect(() => {
+        // console.log('activeTab : ', props);
+    }, []);
+
+
     const getArticleContent = (articleId: any, index: number) => {
         props.onDisplaySingleArticleContent(articleId);
         props.onActivateTab(index);
-        // this.setState({ active: !this.state.active });
     }
 
     const { article, onDeleteArticle, onEditArticle, onFilterArticles, markAsFavorite, activeTab, index, onAddToastMessage } = props;

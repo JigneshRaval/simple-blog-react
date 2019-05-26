@@ -117,6 +117,10 @@
 			transition: height 0.3s ease-out, transform 0.3s ease-out;
 		}
 
+		&.active {
+			background-color: var(--sidebar-active-background);
+		}
+
 		&:hover::before,
 		&.active::before {
 			transform: translateY(-50%) scale(1);

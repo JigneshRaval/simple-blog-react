@@ -99,10 +99,11 @@ routes.delete('/articles/delete/:articleId', (request, response) => {
             return err;
         }
         // Find all documents in the collection
-        db.articles.find({}).sort({ today: -1 }).exec(function (err, docs) {
+        db.articles.find({}).sort({ date: -1 }).exec(function (err, docs) {
             if (err) {
                 return err;
             }
+            docs = docs.sort(date_sort_desc);
             response.status(200).send({ status: 'OK', message: `Item ID#${request.params.articleId} removed successfully from database.`, docs });
         });
     });
