@@ -362,6 +362,23 @@ class Utils {
                 } else {
                     console.log("Please assign id to content wrapper.")
                 }
+            case "crayon-table":
+                // Method 2 for Crayons highlighter
+                //============================================
+                var crayonDivs = document.querySelectorAll('.crayon-syntax');
+
+                if (crayonDivs && crayonDivs.length > 0) {
+                    for (var i = 0; i < crayonDivs.length; i++) {
+                        var preEle = document.createElement('pre');
+                        preEle.innerHTML = crayonDivs[i].querySelector('.crayon-code').innerText;
+
+                        crayonDivs[i].parentNode.insertBefore(preEle, crayonDivs[i]);
+
+                        crayonDivs[i].parentNode.removeChild(crayonDivs[i]);
+
+                        console.log(preEle);
+                    }
+                }
             default:
                 return parent;
         }
