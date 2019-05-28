@@ -280,7 +280,11 @@ class Utils {
 
         wrapperDiv = this.extractCleanCode(wrapperDiv, wrapperDiv.innerHTML, 'gist');
 
+        wrapperDiv = this.extractCleanCode(wrapperDiv, wrapperDiv.innerHTML, 'crayon-table');
+
         // wrapperDiv = utils.extractCleanCode(wrapperDiv, wrapperDiv.innerHTML, 'github');
+
+        console.log('wrapperDiv :', wrapperDiv);
 
         wrapperDiv.querySelectorAll('*').forEach(node => {
 
@@ -365,20 +369,25 @@ class Utils {
             case "crayon-table":
                 // Method 2 for Crayons highlighter
                 //============================================
-                var crayonDivs = document.querySelectorAll('.crayon-syntax');
+                var crayonDivs = parent.querySelectorAll('.crayon-syntax');
 
                 if (crayonDivs && crayonDivs.length > 0) {
                     for (var i = 0; i < crayonDivs.length; i++) {
-                        var preEle = document.createElement('pre');
-                        preEle.innerHTML = crayonDivs[i].querySelector('.crayon-code').innerText;
+                        var preNode = document.createElement('pre');
+                        var codeNode = document.createElement('code');
 
-                        crayonDivs[i].parentNode.insertBefore(preEle, crayonDivs[i]);
+                        codeNode.innerHTML = crayonDivs[i].querySelector('.crayon-code').innerText;
+                        preNode.appendChild(codeNode);
+
+                        crayonDivs[i].parentNode.insertBefore(preNode, crayonDivs[i]);
 
                         crayonDivs[i].parentNode.removeChild(crayonDivs[i]);
 
-                        console.log(preEle);
+                        console.log('crayonDivs[i].querySelector innerText', crayonDivs[i].querySelector('.crayon-code').innerText);
                     }
                 }
+
+                return parent;
             default:
                 return parent;
         }

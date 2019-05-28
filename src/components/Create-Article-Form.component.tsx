@@ -68,6 +68,7 @@ export const CreateArticleFormComponent = (props: any) => {
             },
             callbacks: {
                 onPaste: function (event: any) {
+                    utils.sanitizeHtml($('#txtareaHtmlCode').summernote('code'));
                     // $("#summernote").code().replace(/&nbsp;|<br>/g, '<br/>');
                     // console.log('Called event paste', event);
                     // $('#txtareaHtmlCode').summernote('removeFormat');
