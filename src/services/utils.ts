@@ -265,28 +265,28 @@ class Utils {
 
     // Clean HTML tags by removing Class, ID and Style attributes
     sanitizeHtml(html: any) {
-        let wrapperDiv = document.createElement('div');
-        wrapperDiv.id = "wrapper-container";
-        wrapperDiv.innerHTML = html;
+        // let wrapperDiv = document.createElement('div');
+        // wrapperDiv.id = "wrapper-container";
+        // wrapperDiv.innerHTML = html;
 
-        wrapperDiv.querySelectorAll('pre').forEach(node => {
+        /* html.querySelectorAll('pre').forEach((node: any) => {
             let codeContent = node.innerText || node.textContent;
             codeContent = codeContent.replace(/</ig, '&lt;');
 
             if (codeContent) {
                 node.innerHTML = `<code>${codeContent}</code>`;
             }
-        });
+        }); */
 
-        wrapperDiv = this.extractCleanCode(wrapperDiv, wrapperDiv.innerHTML, 'gist');
+        // wrapperDiv = this.extractCleanCode(wrapperDiv, wrapperDiv.innerHTML, 'gist');
 
-        wrapperDiv = this.extractCleanCode(wrapperDiv, wrapperDiv.innerHTML, 'crayon-table');
+        // wrapperDiv = this.extractCleanCode(wrapperDiv, wrapperDiv.innerHTML, 'crayon-table');
 
         // wrapperDiv = utils.extractCleanCode(wrapperDiv, wrapperDiv.innerHTML, 'github');
 
-        console.log('wrapperDiv :', wrapperDiv);
+        // console.log('wrapperDiv :', wrapperDiv);
 
-        wrapperDiv.querySelectorAll('*').forEach(node => {
+        html.querySelectorAll('*').forEach((node: any) => {
 
             if ((node.parentElement && node.parentElement.nodeName !== 'PRE') || (node.parentElement && node.parentElement.nodeName !== 'CODE')) {
                 node.removeAttribute('id');
@@ -307,7 +307,7 @@ class Utils {
 
         });
 
-        return wrapperDiv.innerHTML;
+        return html.innerHTML;
     }
 
     public extractCleanCode(parent: any, content: any, type: string) {

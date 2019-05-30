@@ -27,7 +27,7 @@ export const CreateArticleFormComponent = (props: any) => {
     /*     convertedHTML: any;
         postPath: string;
         */
-       let originalState : any;
+    let originalState: any;
 
     const [formState, updateFormState] = useState({
         id: props.editData._id || '',
@@ -68,7 +68,7 @@ export const CreateArticleFormComponent = (props: any) => {
             },
             callbacks: {
                 onPaste: function (event: any) {
-                    utils.sanitizeHtml($('#txtareaHtmlCode').summernote('code'));
+                    // utils.sanitizeHtml($('#txtareaHtmlCode').summernote('code'));
                     // $("#summernote").code().replace(/&nbsp;|<br>/g, '<br/>');
                     // console.log('Called event paste', event);
                     // $('#txtareaHtmlCode').summernote('removeFormat');
@@ -91,7 +91,8 @@ export const CreateArticleFormComponent = (props: any) => {
             txtExcerpt: props.editData.excerpt || '',
             txtareaHtmlCode: props.editData.htmlCode ? $('#txtareaHtmlCode').summernote('code', props.editData.htmlCode) : '',
             //txtareaMarkdownCode: props.editData.markdownCode ? props.editData.markdownCode : ''
-        })
+        });
+
     }, [props.editData._id])
 
 
@@ -138,15 +139,42 @@ export const CreateArticleFormComponent = (props: any) => {
 
         const frontmatter = generateFrontMatter(frontmatterObj);
 
-        // Final Form Object to pass to server
+        let cleanCode;
+        let testDiv = document.querySelector('#test');
+
+        let wrapperDiv = document.createElement('div');
+        wrapperDiv.id = "wrapper-container";
+        wrapperDiv.innerHTML = $('#txtareaHtmlCode').summernote('code');
+
+        wrapperDiv.querySelectorAll('pre').forEach((node: any) => {
+            let codeContent = node.innerText || node.textContent;
+            codeContent = codeContent.replace(/</ig, '&lt;');
+
+            if (codeContent) {
+                node.innerHTML = `<code>${codeContent}</code>`;
+            }
+        });
+        console.log('wrapperDiv : ', wrapperDiv.innerHTML);
+        (testDiv as Element).innerHTML = wrapperDiv.innerHTML; // $('#txtareaHtmlCode').summernote('code');
+
+        cleanCode = utils.extractCleanCode(testDiv, testDiv.innerHTML, 'crayon-table');
+
+        (testDiv as Element).innerHTML = cleanCode.innerHTML;
+
+        cleanCode = utils.extractCleanCode(testDiv, testDiv.innerHTML, 'gist');
+
+        (testDiv as Element).innerHTML = cleanCode.innerHTML;
+
         const formDataObj = {
             ...frontmatterObj,
             'frontmatter': frontmatter,
-            'htmlCode': utils.sanitizeHtml(formData.get('txtareaHtmlCode') || $('#txtareaHtmlCode').summernote('code')),
+            'htmlCode': utils.sanitizeHtml(testDiv),
             'filePath': `pages/${frontmatterObj.category + '/'}${formData.get('txtSavePostToPath') + '.md'}`,
             //'markdownCode': this.convertedHTML
         }
 
+        // Submit response to server
+        // =====================================
         if (props.isEditMode) {
             props.onEditSaveArticle(formState.id, formDataObj);
             form.reset();
@@ -155,10 +183,10 @@ export const CreateArticleFormComponent = (props: any) => {
             form.reset();
         }
 
-        let dbCon = props.firebase.database().ref('/articles');
-        dbCon.push({
-            ...formDataObj
-        });
+        // let dbCon = props.firebase.database().ref('/articles');
+        // dbCon.push({
+        //     ...formDataObj
+        // });
 
         $('#txtareaHtmlCode').summernote('reset');
 
@@ -272,7 +300,8 @@ type: '${frontmatterObj.type}'
                         </div>
 
                         <div className="uk-width-1-2@m">
-
+                            <div contentEditable id="test" style={{ 'height': '500px', 'whiteSpace': 'pre-wrap', 'overflow':'auto' }}>
+                            </div>
                             <div className="uk-margin">
                                 <label className="form-label" htmlFor="txtareaHtmlCode">HTML code</label>
                                 <textarea className="uk-textarea" rows={10} name="txtareaHtmlCode" id="txtareaHtmlCode" onChange={handleInputChange} value={formState.txtareaHtmlCode}></textarea>
