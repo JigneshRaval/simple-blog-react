@@ -125,7 +125,8 @@ const ArticleHome = () => {
         loading: false, // will be true when ajax request is running,
         toastChildren: [],
         isConfirm: false,
-        reRender: true
+        reRender: true,
+        tags: {}
     });
 
 
@@ -145,6 +146,7 @@ const ArticleHome = () => {
                 loading: true
             });
 
+
             // Get all Articles on component mount
             articleService.getAllArticles()
                 .then((data: any) => {
@@ -153,8 +155,31 @@ const ArticleHome = () => {
                         loading: false
                     });
                     dispatch({ type: 'GET_ALL_ARTICLES', data: data.docs })
+
+                    return data.docs;
+                })
+                .then(data => {
                     // Update variable value in articles.service.ts
-                    updateArticleDataService(newState.articles);
+                    updateArticleDataService(data);
+
+                    setState({
+                        ...state,
+                        tags: getUniqueTags(data)
+                    });
+                    // console.log('window :', window);
+
+                    // Get list of all the events attached to dom, run this in browser console
+                    /* Array.from(document.querySelectorAll('*')).reduce(function (pre, dom) {
+                        var evtObj = getEventListeners(dom);
+                        Object.keys(evtObj).forEach(function (evt) {
+                            if (typeof pre[evt] === 'undefined') {
+                                pre[evt] = 0
+                            }
+                            pre[evt] += evtObj[evt].length
+                        })
+                        return pre
+                    }, {}); */
+
                 })
                 .catch((err: any) => {
                     console.log('Error in fetching all the records : ', err);
@@ -384,6 +409,29 @@ const ArticleHome = () => {
         }); */
     }
 
+    const getUniqueTags = (articles: any) => {
+        const uniqeTags = articles.map((article: any) => article.tags)
+            .reduce((allTags: any, tags: any) => allTags.concat(tags), [])
+            .reduce((uniqtags: any, tag: any) => {
+                uniqtags[tag.trim()] = (uniqtags[tag.trim()] || 0) + 1
+                return uniqtags;
+            }, {});
+
+        // OUTPUT : {JavaScript: 3, ES6: 3, React: 1, Form: 1}
+        /* this.setState({
+            ...state,
+            tags: uniqeTags
+        }) */
+        return uniqeTags;
+    }
+
+    /* const myfunc = (e: any, articleId: any, index: number, onActivateTabCallback: any) => {
+        // console.log('E :', e.target, articleId, index);
+        handleDisplaySingleArticleContent(articleId);
+        onActivateTabCallback(index);
+        // onActivateTab(index);
+    } */
+
     const { articles, isEditMode, currentArticle, filteredArticles, loading, articleCount } = newState;
 
     // render() {
@@ -433,7 +481,7 @@ const ArticleHome = () => {
                 <div className="uk-offcanvas-bar">
                     <button className="uk-offcanvas-close" type="button" uk-close=""></button>
 
-                    <Sidebar onFilterArticles={handleFilterArticles} articleCount={articleCount} {...newState} />
+                    <Sidebar onFilterArticles={handleFilterArticles} articleCount={articleCount} {...newState} tags={state.tags} />
                 </div>
             </div>
             <div className="toast-message__wrapper">{state.toastChildren}</div>

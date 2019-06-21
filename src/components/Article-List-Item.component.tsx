@@ -14,13 +14,16 @@ import TagsInline from './Tags-Inline.component';
 
 const ArticleListItem = (props: any) => {
 
+    // console.log('Article list item props :', props);
+
     // IMP : Added this to not render whole list every time when user clicks on any article from left navigation
     // or any new article added or deleted, or filtering or serching articles
     useEffect(() => {
         // console.log('activeTab : ', props);
     }, []);
 
-
+    // Removed in favour of event delegation
+    // Attached event to parent component and will listen event from there
     const getArticleContent = (articleId: any, index: number) => {
         props.onDisplaySingleArticleContent(articleId);
         props.onActivateTab(index);
@@ -55,6 +58,7 @@ const ArticleListItem = (props: any) => {
                     <h2 className="uk-card-title">
                         {/* <Link to={'/articles/' + article._id} onClick={() => props.onActivateTab(index)}>{article.title}</Link> */}
                         <a href="javascript: void(0);" article-id={article._id} onClick={() => getArticleContent(article._id, index)}>{article.title}</a>
+                        {/* <a href="javascript: void(0);" article-id={article._id} onClick={(event) => props.click(event, article._id, index, props.onActivateTab)}>{article.title}</a> */}
                     </h2>
                 </div>
 

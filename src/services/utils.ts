@@ -11,6 +11,8 @@ class Utils {
     scrollDuration: number = 250;
     lastScrollTop: number = 0;
     delta = 5;
+    scrollTimer: any;
+    timer: any;
 
     constructor() {
         this.init();
@@ -38,14 +40,14 @@ class Utils {
     }
 
     public handleScrollEvent = () => {
-        let timer: any;
+        // let timer: any;
         let scrollElement = document.querySelector('#scrollToTop');
 
         window.addEventListener('scroll', () => {
-            if (timer) {
-                clearTimeout(timer);
+            if (this.scrollTimer) {
+                clearTimeout(this.scrollTimer);
             }
-            timer = setTimeout(() => {
+            this.scrollTimer = setTimeout(() => {
                 this.getScrollPosition(scrollElement);
             }, 250);
         }, false);
@@ -153,34 +155,38 @@ class Utils {
     }
 
     public filterArticles(event: any, filterBy: string, articles: any) {
+        // if (this.timer) {
+        //     clearTimeout(this.timer);
+        // }
+        // this.timer = setTimeout(() => {
+            let searchTerm = event.target.value || event.target.getAttribute('data-tag-name');
+            let searchBarElem = document.querySelector('.uk-search-default');
+            let searchBox = document.querySelector('.uk-search-input');
 
-        let searchTerm = event.target.value || event.target.getAttribute('data-tag-name');
-        let searchBarElem = document.querySelector('.uk-search-default');
-        let searchBox = document.querySelector('.uk-search-input');
+            event.target.parentElement.classList.add('active');
+            if (searchBox) {
+                (searchBox as HTMLInputElement).value = searchTerm;
+            }
 
-        event.target.parentElement.classList.add('active');
-        if (searchBox) {
-            (searchBox as HTMLInputElement).value = searchTerm;
-        }
+            if (searchTerm) {
+                searchBarElem.classList.add('isSearching');
 
-        if (searchTerm) {
-            searchBarElem.classList.add('isSearching');
+                // If "searchTerm" provided then, Set filtered articles in the state
+                // this.setState({ filteredArticles: filteredList });
 
-            // If "searchTerm" provided then, Set filtered articles in the state
-            // this.setState({ filteredArticles: filteredList });
+                return this.filterArticlesBy(searchTerm, filterBy, articles);
+            } else {
 
-            return this.filterArticlesBy(searchTerm, filterBy, articles);
-        } else {
+                // Hide clear search icon
+                searchBarElem.classList.remove('isSearching');
 
-            // Hide clear search icon
-            searchBarElem.classList.remove('isSearching');
+                // If "searchTerm" NOT provided then, Set default articles list into the filtered articles in the state
+                // this.setState({ filteredArticles: this.state.articles });
 
-            // If "searchTerm" NOT provided then, Set default articles list into the filtered articles in the state
-            // this.setState({ filteredArticles: this.state.articles });
+                return articles;
 
-            return articles;
-
-        }
+            }
+        // }, 1000);
     }
 
     /**
@@ -328,7 +334,7 @@ class Utils {
                             if (contDoc) {
                                 var iframeContent = contDoc.querySelector('table').innerText || contDoc.querySelector('table').textContent;
 
-                                codeNode.innerText = iframeContent;
+                                codeNode.innerText = iframeContent.replace(/</ig, '&lt;');
                                 preNode.appendChild(codeNode);
                                 // replace all iFrame parent nodes with the new <pre> tags
                                 iFrames[i].closest('figure').parentElement.replaceChild(preNode, figures[i]);
@@ -353,7 +359,7 @@ class Utils {
                                 var codeNode = document.createElement('code');
 
                                 var gistContent = gists[i].querySelector('table').innerText || gists[i].querySelector('table').textContent;
-                                codeNode.innerText = gistContent;
+                                codeNode.innerText = gistContent.replace(/</ig, '&lt;');
                                 preNode.appendChild(codeNode);
                                 // replace all iFrame parent nodes with the new <pre> tags
                                 gists[i].parentElement.replaceChild(preNode, gists[i]);
@@ -376,7 +382,7 @@ class Utils {
                         var preNode = document.createElement('pre');
                         var codeNode = document.createElement('code');
 
-                        codeNode.innerHTML = crayonDivs[i].querySelector('.crayon-code').innerText;
+                        codeNode.innerHTML = crayonDivs[i].querySelector('.crayon-code').innerText.replace(/</ig, '&lt;');
                         preNode.appendChild(codeNode);
 
                         crayonDivs[i].parentNode.insertBefore(preNode, crayonDivs[i]);

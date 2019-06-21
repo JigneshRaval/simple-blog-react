@@ -154,7 +154,10 @@ export const CreateArticleFormComponent = (props: any) => {
                 node.innerHTML = `<code>${codeContent}</code>`;
             }
         });
-        console.log('wrapperDiv : ', wrapperDiv.innerHTML);
+
+
+        // (testDiv as Element).innerHTML = wrapperDiv.innerHTML;
+
         (testDiv as Element).innerHTML = wrapperDiv.innerHTML; // $('#txtareaHtmlCode').summernote('code');
 
         cleanCode = utils.extractCleanCode(testDiv, testDiv.innerHTML, 'crayon-table');
@@ -300,7 +303,7 @@ type: '${frontmatterObj.type}'
                         </div>
 
                         <div className="uk-width-1-2@m">
-                            <div contentEditable id="test" style={{ 'height': '500px', 'whiteSpace': 'pre-wrap', 'overflow':'auto' }}>
+                            <div contentEditable id="test" style={{ 'height': '500px', 'whiteSpace': 'pre-wrap', 'overflow': 'auto' }}>
                             </div>
                             <div className="uk-margin">
                                 <label className="form-label" htmlFor="txtareaHtmlCode">HTML code</label>
