@@ -401,7 +401,7 @@ const ArticleHome = () => {
     // Filter all the articles by Tag, Category or the search value provided by the user
     // =========================================
     const handleFilterArticles = (event: any, filterBy: string) => {
-
+        // console.log('handleFilterArticles...');
         dispatch({ type: 'FILTER_ALL_ARTICLES', filteredArticles: utils.filterArticles(event, filterBy, newState.articles) });
         /* setState({
             ...state,
@@ -463,7 +463,6 @@ const ArticleHome = () => {
                             onFilterArticles={handleFilterArticles}
                             markAsFavorite={handleMarkAsFavorite}
                         />
-
 
                         {
                             currentArticle ? (

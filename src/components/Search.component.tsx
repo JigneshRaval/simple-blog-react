@@ -2,14 +2,27 @@ import React, { useRef } from 'react';
 import ArticleContext from '../services/context';
 
 const SearchComponent = (props: any) => {
+    let timer: any;
+    const { onFilterArticles } = props;
+
     const inputRef = useRef();
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
-        console.log(event)
+        // console.log(event)
     }
 
-    const { onFilterArticles } = props;
+    const filterArticles = (event: any, type: string) => {
+        event.persist();
+        if (timer) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout((ev) => {
+            onFilterArticles(event, type);
+        }, 1000);
+    }
+
+
 
     return (
 
@@ -17,9 +30,9 @@ const SearchComponent = (props: any) => {
 
             <form className="uk-search uk-search-default uk-width-1-1" onSubmit={handleSubmit}>
                 <span uk-search-icon=""></span>
-                <input className="uk-search-input" name="searchBar" id="searchBar" type="text" placeholder="Search articles by Title, Tag or Category" onKeyDown={(event) => onFilterArticles(event, 'search')} ref={inputRef} />
+                <input className="uk-search-input" name="searchBar" id="searchBar" type="text" placeholder="Search articles by Title, Tag or Category" onChange={(event) => filterArticles(event, 'search')} ref={inputRef} />
 
-                <button type="button" className="close clear-search" data-dismiss="modal" aria-label="Close" onClick={(event) => { (inputRef.current as HTMLInputElement).value = ''; onFilterArticles(event, 'all') }} title="Clear Search">
+                <button type="button" className="close clear-search" data-dismiss="modal" aria-label="Close" onClick={(event) => { (inputRef.current as HTMLInputElement).value = ''; filterArticles(event, 'all') }} title="Clear Search">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </form>

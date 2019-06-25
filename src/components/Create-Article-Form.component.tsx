@@ -68,6 +68,7 @@ export const CreateArticleFormComponent = (props: any) => {
             },
             callbacks: {
                 onPaste: function (event: any) {
+
                     // utils.sanitizeHtml($('#txtareaHtmlCode').summernote('code'));
                     // $("#summernote").code().replace(/&nbsp;|<br>/g, '<br/>');
                     // console.log('Called event paste', event);
@@ -154,9 +155,6 @@ export const CreateArticleFormComponent = (props: any) => {
                 node.innerHTML = `<code>${codeContent}</code>`;
             }
         });
-
-
-        // (testDiv as Element).innerHTML = wrapperDiv.innerHTML;
 
         (testDiv as Element).innerHTML = wrapperDiv.innerHTML; // $('#txtareaHtmlCode').summernote('code');
 
