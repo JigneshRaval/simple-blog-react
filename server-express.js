@@ -3,6 +3,10 @@ const path = require('path'),
     app = express(),
     router = express.Router(),
     port = process.env.PORT || 3001;
+
+// console.log('process.argv :', process.argv);
+// console.log('process.env :', process.env, process.env.npm_package_config_myPort);
+
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const routes = require('./server/router/index');
@@ -14,7 +18,7 @@ const compression = require('compression');
 app.use(compression());
 
 // This will help to load other included files in index.html
-app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
+app.use(bodyParser.json({ limit: '50mb' })); // for parsing application/json
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: false })); // for parsing application/x-www-form-urlencoded
 app.use(express.static(path.resolve(__dirname, 'dist')));
 

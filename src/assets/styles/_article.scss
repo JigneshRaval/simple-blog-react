@@ -186,7 +186,22 @@
 		border: 2px solid #696969;
 		border-radius: 3px;
 		line-height: 1.7;
-		box-shadow: 6px 6px 0 0 #696969;
+		box-shadow: 10px 10px 0 0 #696969;
+		font-style: normal;
+		margin: 2em 0;
+
+		&:first-child {
+			margin: 0 0 2em 0;
+		}
+
+		&:last-child {
+			margin: 2em 0 0 0;
+		}
+
+		em {
+			color: var(--content-foreground);
+    		font-style: normal;
+		}
 
 		p:last-child {
 			margin-bottom: 0;

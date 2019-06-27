@@ -32,7 +32,7 @@
 		"webpack-cli": "^3.1.2"
 	},
 	"scripts": {
-		"serve": "nodemon server-express.js",
+		"serve": "nodemon server-express.js $PORT",
 		"serve:debug": "nodemon --inspect-brk=8526 server-express.js",
 		"dev": "webpack --mode development",
 		"dev:w": "webpack --mode development -w",
@@ -44,5 +44,8 @@
 		"images": "xcopy .\\src\\assets\\images .\\dist\\assets\\images /E",
 		"assets": "npm run tools && npm run js && npm run fonts && npm run images",
 		"copy": "npm run assets"
+	},
+	"config": {
+		"myPort": "8080"
 	}
 }
