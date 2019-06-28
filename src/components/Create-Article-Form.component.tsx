@@ -145,6 +145,10 @@ export const CreateArticleFormComponent = (props: any) => {
 
         let wrapperDiv = document.createElement('div');
         wrapperDiv.id = "wrapper-container";
+
+        // Add this wrapper div element to document body tag ( IMP )
+        document.body.append(wrapperDiv);
+
         wrapperDiv.innerHTML = $('#txtareaHtmlCode').summernote('code');
 
         wrapperDiv.querySelectorAll('pre').forEach((node: any) => {
@@ -154,6 +158,20 @@ export const CreateArticleFormComponent = (props: any) => {
             if (codeContent) {
                 node.innerHTML = `<code>${codeContent}</code>`;
             }
+
+            /* if (node.classList.contains('graf')) {
+                console.log('pre tag contains .graf css class.');
+                node.innerHTML = `<code>${node.innerHTML}</code>`;
+                node.classList.add('modified');
+            } else {
+                let codeContent = node.innerText || node.textContent;
+                codeContent = codeContent.replace(/</ig, '&lt;');
+
+                if (codeContent) {
+                    node.innerHTML = `<code>${codeContent}</code>`;
+                }
+            } */
+
         });
 
         (testDiv as Element).innerHTML = wrapperDiv.innerHTML; // $('#txtareaHtmlCode').summernote('code');
@@ -173,6 +191,9 @@ export const CreateArticleFormComponent = (props: any) => {
             'filePath': `pages/${frontmatterObj.category + '/'}${formData.get('txtSavePostToPath') + '.md'}`,
             //'markdownCode': this.convertedHTML
         }
+
+        // remove wrapper node after all the code cleanup process
+        wrapperDiv.parentNode.removeChild(wrapperDiv);
 
         // Submit response to server
         // =====================================

@@ -159,33 +159,33 @@ class Utils {
         //     clearTimeout(this.timer);
         // }
         // this.timer = setTimeout(() => {
-            let searchTerm = event.target.value || event.target.getAttribute('data-tag-name');
-            let searchBarElem = document.querySelector('.uk-search-default');
-            let searchBox = document.querySelector('.uk-search-input');
+        let searchTerm = event.target.value || event.target.getAttribute('data-tag-name');
+        let searchBarElem = document.querySelector('.uk-search-default');
+        let searchBox = document.querySelector('.uk-search-input');
 
-            event.target.parentElement.classList.add('active');
-            if (searchBox) {
-                (searchBox as HTMLInputElement).value = searchTerm;
-            }
+        event.target.parentElement.classList.add('active');
+        if (searchBox) {
+            (searchBox as HTMLInputElement).value = searchTerm;
+        }
 
-            if (searchTerm) {
-                searchBarElem.classList.add('isSearching');
+        if (searchTerm) {
+            searchBarElem.classList.add('isSearching');
 
-                // If "searchTerm" provided then, Set filtered articles in the state
-                // this.setState({ filteredArticles: filteredList });
+            // If "searchTerm" provided then, Set filtered articles in the state
+            // this.setState({ filteredArticles: filteredList });
 
-                return this.filterArticlesBy(searchTerm, filterBy, articles);
-            } else {
+            return this.filterArticlesBy(searchTerm, filterBy, articles);
+        } else {
 
-                // Hide clear search icon
-                searchBarElem.classList.remove('isSearching');
+            // Hide clear search icon
+            searchBarElem.classList.remove('isSearching');
 
-                // If "searchTerm" NOT provided then, Set default articles list into the filtered articles in the state
-                // this.setState({ filteredArticles: this.state.articles });
+            // If "searchTerm" NOT provided then, Set default articles list into the filtered articles in the state
+            // this.setState({ filteredArticles: this.state.articles });
 
-                return articles;
+            return articles;
 
-            }
+        }
         // }, 1000);
     }
 
@@ -300,6 +300,11 @@ class Utils {
                 node.removeAttribute('style');
                 node.removeAttribute('name');
             }
+
+            if (node.nodeName === 'PRE') {
+                node.classList.add('code-candy');
+            }
+
             // Remove empty nodes
             if (node.textContent.trim() === '') {
                 // node.parentElement.removeChild(node);
