@@ -4,8 +4,6 @@
 // Utility functions
 
 declare var $: any;
-// declare var hljs: any;
-// declare var UIkit: any;
 
 class Utils {
     scrollDuration: number = 250;
@@ -147,10 +145,12 @@ class Utils {
 
     public toggleGrid() {
         let body = document.querySelector('body');
-        if (!body.classList.contains('showVerticalGrid')) {
-            body.classList.add('showVerticalGrid');
-        } else {
-            body.classList.remove('showVerticalGrid');
+        if (body) {
+            if (!body.classList.contains('showVerticalGrid')) {
+                body.classList.add('showVerticalGrid');
+            } else {
+                body.classList.remove('showVerticalGrid');
+            }
         }
     }
 
@@ -204,7 +204,6 @@ class Utils {
                 }).map((article: any) => article);
 
                 return [...articleBySearch];
-                break;
 
             // Method 2: filter articles by tags matching with search term
             case 'tag':
@@ -213,7 +212,6 @@ class Utils {
                 });
 
                 return [...articleByTags];
-                break;
 
             // Method 3: filter articles by tags matching with search term
             case 'category':
@@ -222,12 +220,10 @@ class Utils {
                 });
 
                 return [...articlesByCategory];
-                break;
 
             // Method 4: reset all the filters and display all the articles.
             case 'all':
                 return [...articles];
-                break;
 
             // TODO : Remove or update if required
             default:
@@ -410,19 +406,20 @@ class Utils {
      * @param event
      */
     public handleToggleArticleListPanel() {
-        if (!document.body.classList.contains('isArticleListPanelOpened')) {
-            document.body.classList.add('isArticleListPanelOpened');
-            if ('localStorage' in window && window['localStorage'] !== null) {
-                localStorage.setItem('isArticleListPanelOpened', 'true');
-            }
-        } else {
-            document.body.classList.remove('isArticleListPanelOpened');
-            if ('localStorage' in window && window['localStorage'] !== null) {
-                localStorage.setItem('isArticleListPanelOpened', 'false');
+        if (document.body) {
+            if (!document.body.classList.contains('isArticleListPanelOpened')) {
+                document.body.classList.add('isArticleListPanelOpened');
+                if ('localStorage' in window && window['localStorage'] !== null) {
+                    localStorage.setItem('isArticleListPanelOpened', 'true');
+                }
+            } else {
+                document.body.classList.remove('isArticleListPanelOpened');
+                if ('localStorage' in window && window['localStorage'] !== null) {
+                    localStorage.setItem('isArticleListPanelOpened', 'false');
+                }
             }
         }
     }
-
 
 }
 

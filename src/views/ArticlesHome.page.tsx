@@ -31,8 +31,7 @@ declare var require: any;
 let categories = require('../assets/data/categories.json');
 const utils = new Utils();
 const articleService = new ArticleService();
-// declare var $: any;
-// declare var hljs: any;
+
 declare var UIkit: any;
 
 
@@ -109,8 +108,6 @@ const ArticleHome1 = () => {
 */
 
 const ArticleHome = () => {
-    // articleService: ArticleService;
-    // timer: any;
 
     const [state, setState] = useState({
         articleService: new ArticleService(),
@@ -129,14 +126,7 @@ const ArticleHome = () => {
         tags: {}
     });
 
-
-
     const [newState, dispatch] = useReducer(articleReducer, state);
-
-    /* const [todos, dispatch] = useReducer(
-        articleReducer,
-        state.articles
-    ); */
 
     useEffect(() => {
         if (state.reRender) {
@@ -200,17 +190,16 @@ const ArticleHome = () => {
         }
     }, [state.reRender]);
 
-    /* const [reRender, setReRender] = useState(false);
+    const [reRender, setReRender] = useState(false);
+
     useEffect(() => {
         console.log('mounted 2');
-        // setReRender(false);
-        setState({
-            ...state
-        });
+        setReRender(false);
+
         return () => {
             console.log('unmounting 2...');
         }
-    }, [reRender]) */
+    }, [reRender])
 
 
     // Dynamically add multiple ToastMessage components.
@@ -271,13 +260,6 @@ const ArticleHome = () => {
     // =========================================
     const handleDisplaySingleArticleContent = (articleId: string) => {
         dispatch({ type: 'GET_SINGLE_ARTICLE', articleId: articleId });
-
-
-        // Highlight code blocks
-        /* console.log(window);
-        $('pre code').each(function (i: any, block: any) {
-            hljs.highlightBlock(block);
-        }); */
     }
 
 
@@ -303,24 +285,7 @@ const ArticleHome = () => {
                 }
             });
 
-            /* setState(state => ({
-                ...state,
-                articles: articles,
-                filteredArticles: articles,
-                editData: {},
-                isEditMode: false,
-                currentArticle: data.docs[0],
-                reRender: true
-            })); */
-
             dispatch({ type: 'EDIT_ARTICLE', articles: articles, currentArticle: data.docs[0] });
-
-            console.log('newState :', newState);
-
-            /* setState(state => ({
-                ...state,
-                ...newState
-            })); */
 
             // display message
             addToastMessage('success', `Article updated successfully... ${data.docs[0].title}`);
@@ -328,7 +293,6 @@ const ArticleHome = () => {
             // Update variable value in articles.service.ts
             updateArticleDataService(newState.articles);
 
-            console.log('Edit update article State : ', newState);
             // setReRender(true);
         }).catch((err: any) => {
             console.log('Error in edit or save article : ', err);
@@ -348,13 +312,6 @@ const ArticleHome = () => {
 
             dispatch({ type: 'DELETE_ARTICLE', data: data.docs });
 
-            /* setState({
-                ...state,
-                articles: data.docs,
-                filteredArticles: data.docs,
-                // reRender: true
-            }); */
-            // setReRender(true);
             // display message
             addToastMessage('success', `Article ${articleId} deleted successfully.`, false);
 
@@ -388,12 +345,8 @@ const ArticleHome = () => {
                     articles[index] = data.docs[0];
                 }
             });
+
             dispatch({ type: 'MARK_FAVORITE', data: articles });
-            console.log('Mark fav :', articles);
-            /* setState({
-                ...state,
-                filteredArticles: articles
-            }); */
         });
     }
 
@@ -401,12 +354,7 @@ const ArticleHome = () => {
     // Filter all the articles by Tag, Category or the search value provided by the user
     // =========================================
     const handleFilterArticles = (event: any, filterBy: string) => {
-        // console.log('handleFilterArticles...');
         dispatch({ type: 'FILTER_ALL_ARTICLES', filteredArticles: utils.filterArticles(event, filterBy, newState.articles) });
-        /* setState({
-            ...state,
-            filteredArticles: utils.filterArticles(event, filterBy, state.articles)
-        }); */
     }
 
     const getUniqueTags = (articles: any) => {
@@ -418,23 +366,13 @@ const ArticleHome = () => {
             }, {});
 
         // OUTPUT : {JavaScript: 3, ES6: 3, React: 1, Form: 1}
-        /* this.setState({
-            ...state,
-            tags: uniqeTags
-        }) */
+
         return uniqeTags;
     }
 
-    /* const myfunc = (e: any, articleId: any, index: number, onActivateTabCallback: any) => {
-        // console.log('E :', e.target, articleId, index);
-        handleDisplaySingleArticleContent(articleId);
-        onActivateTabCallback(index);
-        // onActivateTab(index);
-    } */
-
     const { articles, isEditMode, currentArticle, filteredArticles, loading, articleCount } = newState;
 
-    // render() {
+
     return (
         <main className="wrapper uk-offcanvas-content">
             <div className="container-fluid">
@@ -486,8 +424,7 @@ const ArticleHome = () => {
             <div className="toast-message__wrapper">{state.toastChildren}</div>
         </main>
 
-    )
-    // }
+    );
 }
 
 export default ArticleHome;

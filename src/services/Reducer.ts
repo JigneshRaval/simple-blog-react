@@ -1,7 +1,6 @@
 function articleReducer(state: any, action: any) {
     switch (action.type) {
         case "GET_ALL_ARTICLES":
-            // console.log('GET_ALL_ARTICLES :', state, action);
             return {
                 ...state,
                 articles: action.data,
@@ -11,7 +10,6 @@ function articleReducer(state: any, action: any) {
                 loading: false
             }
         case "SET_EDIT_MODE":
-            // console.log('SET_EDIT_MODE :', state, action);
             let articleToEdit;
             state.articles.map((article: any) => {
                 if (article._id === action.articleId) {
@@ -25,7 +23,6 @@ function articleReducer(state: any, action: any) {
                 editData: articleToEdit
             }
         case "ADD_ARTICLE":
-            // console.log('ADD_ARTICLE :', state, action);
             return {
                 ...state,
                 articleCount: action.articles.length,
@@ -36,7 +33,6 @@ function articleReducer(state: any, action: any) {
                 reRender: true
             };
         case "EDIT_ARTICLE":
-            // console.log('EDIT_ARTICLE :', state, action);
             return {
                 ...state,
                 articles: action.articles,
@@ -55,7 +51,7 @@ function articleReducer(state: any, action: any) {
                 reRender: true
             };
         case "GET_SINGLE_ARTICLE":
-            // console.log('GET_SINGLE_ARTICLE :', state, action);
+
             let singleArticle;
 
             state.articles.map((article: any, index: number) => {
