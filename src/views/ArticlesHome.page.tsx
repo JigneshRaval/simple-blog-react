@@ -358,7 +358,7 @@ const ArticleHome = () => {
     }
 
     const getUniqueTags = (articles: any) => {
-        const uniqeTags = articles.map((article: any) => article.tags)
+        const uniqueTags = articles.map((article: any) => article.tags)
             .reduce((allTags: any, tags: any) => allTags.concat(tags), [])
             .reduce((uniqtags: any, tag: any) => {
                 uniqtags[tag.trim()] = (uniqtags[tag.trim()] || 0) + 1
@@ -367,7 +367,7 @@ const ArticleHome = () => {
 
         // OUTPUT : {JavaScript: 3, ES6: 3, React: 1, Form: 1}
 
-        return uniqeTags;
+        return uniqueTags;
     }
 
     const { articles, isEditMode, currentArticle, filteredArticles, loading, articleCount } = newState;
