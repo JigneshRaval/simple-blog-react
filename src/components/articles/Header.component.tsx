@@ -3,8 +3,8 @@
 // This component contains Header items like Logo, Search-bar, Navigation etc.
 
 import React from 'react';
-import ArticleContext from '../services/context';
-import Utils from '../services/utils';
+import ArticleContext from '../../services/context';
+import Utils from '../../services/utils';
 import SearchComponent from './Search.component';
 import ThemeSwitcherDropdownComponent from './ThemeDropdown.component';
 const utils = new Utils;

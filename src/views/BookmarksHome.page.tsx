@@ -16,16 +16,7 @@ import ToastMessage from "../components/articles/ToastMessage";
 import { Article } from "../components/articles/Article.component";
 import { CreateArticleFormComponent } from '../components/articles/Create-Article-Form.component';
 
-import ArticleContext from '../services/context';
 import articleReducer from '../services/Reducer';
-
-// FIREBASE
-// ==========================
-import firebase from '../firebase';
-const dbRef = firebase.database().ref('articles');
-dbRef.on("value", function (snapshot) {
-    console.log('Firebase snapshot ==', snapshot.val());
-});
 
 declare var require: any;
 let categories = require('../assets/data/categories.json');
@@ -34,80 +25,7 @@ const articleService = new ArticleService();
 
 declare var UIkit: any;
 
-
-// https://react-hooks-cheatsheet.com/usestate
-/*
-const ArticleHome1 = () => {
-    const [state, setState] = useState({
-        age: 20,
-        isConfirm: false,
-        isEditMode: false,
-        loading: false,
-        showForm: false,
-        siblingsNum: 4,
-        toastChildren: []
-    })
-
-    useEffect(() => {
-        setState({
-            ...state,
-            age: 40,
-            isEditMode: false
-        })
-    }, []);
-
-    const updateAge = () => {
-
-        setState((prevState) => {
-            return ({
-                ...state,
-                age: state.age + 5,
-                isEditMode: true,
-                showForm: true
-            })
-        });
-
-        setState({
-            ...state,
-            age: state.age + 5,
-            isEditMode: true,
-            showForm: true
-        });
-
-
-        console.log('STATE: ', state);
-    }
-
-    const handleClick = val =>
-        setState({
-            ...state,
-            [val]: state[val] + 1
-        })
-
-    const { age, siblingsNum, isEditMode, showForm } = state;
-
-
-    return (
-        <div>
-            <p>Today I am {age} Years of Age</p>
-            <p>I have {siblingsNum} siblings</p>
-            <p>isEditMode : {isEditMode.toString()}</p>
-            <p>showForm : {showForm.toString()}</p>
-
-            <div>
-                <button onClick={updateAge}>Update Age!</button>
-
-                <button onClick={handleClick.bind(null, 'age')}>Get older!</button>
-                <button onClick={handleClick.bind(null, 'siblingsNum')}>
-                    More siblings!
-          </button>
-            </div>
-        </div>
-    )
-}
-*/
-
-const ArticleHome = () => {
+const BookmarkHome = () => {
 
     const [state, setState] = useState({
         articleService: new ArticleService(),
@@ -388,7 +306,6 @@ const ArticleHome = () => {
                             {...newState}
                             onCreateArticle={handleCreateArticle}
                             onEditSaveArticle={handleEditSaveArticle}
-                            firebase={firebase}
                         />
 
                         <ArticlesList
@@ -427,4 +344,4 @@ const ArticleHome = () => {
     );
 }
 
-export default ArticleHome;
+export default BookmarkHome;

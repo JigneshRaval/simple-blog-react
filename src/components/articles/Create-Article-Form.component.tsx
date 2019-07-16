@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import Utils from "../services/utils";
+import Utils from "../../services/utils";
 const utils = new Utils();
 
 declare var $: any;

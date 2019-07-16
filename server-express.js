@@ -9,7 +9,8 @@ const path = require('path'),
 
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const routes = require('./server/router/index');
+const articleRoutes = require('./server/router/index');
+const bookmarkRoutes = require('./server/router/bookmarks.router');
 
 // Compress all the assets and server response
 const compression = require('compression');
@@ -26,7 +27,8 @@ app.use(express.static(path.resolve(__dirname, 'dist')));
 // let oneYear = 1 * 365 * 24 * 60 * 60 * 1000;
 // app.use('/', express.static(__dirname + '/public/', { maxAge: oneYear }));
 
-app.use('/api', routes);
+app.use('/api', articleRoutes);
+app.use('/api', bookmarkRoutes);
 
 app.get('/', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));

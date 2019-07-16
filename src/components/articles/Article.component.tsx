@@ -4,7 +4,7 @@
 
 import React, { Component, useEffect } from "react";
 import TagsInline from './Tags-Inline.component';
-import Utils from "../services/utils";
+import Utils from "../../services/utils";
 const utils = new Utils();
 // let ShowdownService = require("../assets/js/showdown.js");
 

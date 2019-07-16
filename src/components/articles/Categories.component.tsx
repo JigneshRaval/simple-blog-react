@@ -4,7 +4,7 @@
 
 import React from 'react';
 
-import Utils from '../services/utils';
+import Utils from '../../services/utils';
 const utils = new Utils;
 
 const Categories = ({ articles, onFilterArticles }: any) => {
