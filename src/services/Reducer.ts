@@ -1,12 +1,12 @@
 function articleReducer(state: any, action: any) {
     switch (action.type) {
-        case "GET_ALL_ARTICLES":
+        case "GET_ALL_RECORDS":
             return {
                 ...state,
                 articles: action.data,
-                articleCount: action.data.length,
-                filteredArticles: action.data,
-                currentArticle: action.data[0],
+                totalRecords: action.data.length,
+                filteredRecords: action.data,
+                currentRecord: action.data[0],
                 loading: false
             }
         case "SET_EDIT_MODE":
@@ -25,29 +25,29 @@ function articleReducer(state: any, action: any) {
         case "ADD_ARTICLE":
             return {
                 ...state,
-                articleCount: action.articles.length,
+                totalRecords: action.articles.length,
                 isEditMode: false,
                 articles: action.articles,
-                filteredArticles: action.articles,
-                currentArticle: action.currentArticle,
+                filteredRecords: action.articles,
+                currentRecord: action.currentRecord,
                 reRender: true
             };
         case "EDIT_ARTICLE":
             return {
                 ...state,
                 articles: action.articles,
-                filteredArticles: action.articles,
+                filteredRecords: action.articles,
                 editData: {},
                 isEditMode: false,
-                currentArticle: action.currentArticle,
+                currentRecord: action.currentRecord,
                 reRender: true
             };
         case "DELETE_ARTICLE":
             return {
                 ...state,
-                articleCount: state.articles.length,
+                totalRecords: state.articles.length,
                 articles: action.data,
-                filteredArticles: action.data,
+                filteredRecords: action.data,
                 reRender: true
             };
         case "GET_SINGLE_ARTICLE":
@@ -62,19 +62,19 @@ function articleReducer(state: any, action: any) {
 
             return {
                 ...state,
-                currentArticle: singleArticle
+                currentRecord: singleArticle
             };
         // return newState;
         case "FILTER_ALL_ARTICLES":
             return {
                 ...state,
-                filteredArticles: action.filteredArticles,
+                filteredRecords: action.filteredRecords,
             };
         case "MARK_FAVORITE":
 
             return {
                 ...state,
-                filteredArticles: action.data
+                filteredRecords: action.data
             };
         default:
             return state;

@@ -9,7 +9,7 @@ import React, { useEffect } from 'react';
 
 // COMPONENTS
 // ==========================
-import TagsInline from './Tags-Inline.component';
+import TagsInline from '../shared/Tags-Inline.component';
 
 
 const ArticleListItem = (props: any) => {
@@ -29,7 +29,7 @@ const ArticleListItem = (props: any) => {
         props.onActivateTab(index);
     }
 
-    const { article, onDeleteArticle, onEditArticle, onFilterArticles, markAsFavorite, activeTab, index, onAddToastMessage } = props;
+    const { article, onDeleteArticle, onEditArticle, onFilterRecords, markAsFavorite, activeTab, index, onAddToastMessage } = props;
 
     return (
         <div className={"uk-card uk-card-default" + (activeTab === index ? ' active' : '')} key={article._id}>
@@ -44,8 +44,8 @@ const ArticleListItem = (props: any) => {
                             <li><a href="javascript:void(0);" onClick={() => onAddToastMessage('warning', `Are you sure you want to delete this article?.`, true, article._id)}><span uk-icon="trash"></span> Delete Article</a></li>
                             <li><a href="javascript:void(0);" onClick={() => markAsFavorite(article._id, article.favorite)} data-favorite={article.favorite}><span uk-icon="star"></span> Mark as Favorite</a></li>
                             <li className="uk-nav-header">Tags</li>
-                            <TagsInline article={article} onFilterArticles={props.onFilterArticles} />
-                            <li><a href="javascript:void(0);" onClick={(event) => onFilterArticles(event, 'all')}>Clear filter</a></li>
+                            <TagsInline data={article} onFilterRecords={props.onFilterRecords} />
+                            <li><a href="javascript:void(0);" onClick={(event) => onFilterRecords(event, 'all')}>Clear filter</a></li>
                         </ul>
                     </div>
                 </div>

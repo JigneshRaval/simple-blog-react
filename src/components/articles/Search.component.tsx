@@ -3,7 +3,7 @@ import ArticleContext from '../../services/context';
 
 const SearchComponent = (props: any) => {
     let timer: any;
-    const { onFilterArticles } = props;
+    const { onFilterRecords } = props;
 
     const inputRef = useRef();
 
@@ -18,7 +18,7 @@ const SearchComponent = (props: any) => {
             clearTimeout(timer);
         }
         timer = setTimeout((ev) => {
-            onFilterArticles(event, type);
+            onFilterRecords(event, type);
         }, 1000);
     }
 

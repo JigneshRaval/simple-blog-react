@@ -15,7 +15,11 @@ const Header = (props: any) => {
 
     // Open Create Article form in modal overlay
     const openForm = () => {
-        UIkit.modal('#modal-example').show();
+        UIkit.modal('#modal-articles').show();
+    }
+
+    const openBookmarkForm = () => {
+        UIkit.modal('#modal-bookmarks').show();
     }
 
     return (
@@ -37,7 +41,7 @@ const Header = (props: any) => {
                 </div>
                 <div className="uk-navbar-right">
                     <div className="uk-navbar-item">
-                        <SearchComponent onFilterArticles={props.onFilterArticles} />
+                        <SearchComponent onFilterRecords={props.onFilterRecords} />
                     </div>
 
                     {/* START : Dropdown Navigation */}
@@ -47,13 +51,13 @@ const Header = (props: any) => {
                             <div className="uk-navbar-dropdown" uk-dropdown="mode: click">
                                 <ul className="uk-nav uk-navbar-dropdown-nav">
                                     <li>
-                                        <a href="javascript: void(0);" data-tag-name='all' onClick={(event) => props.onFilterArticles(event, 'all')}>View All Articles</a>
+                                        <a href="javascript: void(0);" data-tag-name='all' onClick={(event) => props.onFilterRecords(event, 'all')}>View All Articles</a>
                                     </li>
                                     {
                                         utils.getUniqueCategories(props.articles).map((category: any, index: number) => {
                                             return (
                                                 <li key={category}>
-                                                    <a href="javascript: void(0);" data-tag-name={category} onClick={(event) => props.onFilterArticles(event, 'category')}>{category}</a>
+                                                    <a href="javascript: void(0);" data-tag-name={category} onClick={(event) => props.onFilterRecords(event, 'category')}>{category}</a>
                                                 </li>
                                             )
                                         })
@@ -70,7 +74,8 @@ const Header = (props: any) => {
                     </ul>
                     {/* END : Dropdown Navigation */}
 
-                    <button className="uk-button uk-button-secondary" uk-toggle="target: #modal-example" onClick={openForm}>Create Article</button>
+                    <button className="uk-button uk-button-secondary" uk-toggle="target: #modal-articles" onClick={openForm}>Create Article</button>
+                    <button className="uk-button uk-button-secondary" uk-toggle="target: #modal-bookmarks" onClick={openBookmarkForm}>Create Bookmark</button>
                     <a id="toggleSidebar" href="#offcanvas-usage" uk-toggle="" title="Click this button to view list of Categories and Tags." uk-tooltip="Click this button to view list of Categories and Tags."><i className="ion ion-md-menu"></i></a>
                 </div>
             </nav>

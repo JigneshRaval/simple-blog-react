@@ -30,92 +30,19 @@ dbRef.on("value", function (snapshot) {
 declare var require: any;
 let categories = require('../assets/data/categories.json');
 const utils = new Utils();
-const articleService = new ArticleService();
+const dataService = new ArticleService();
 
 declare var UIkit: any;
-
-
-// https://react-hooks-cheatsheet.com/usestate
-/*
-const ArticleHome1 = () => {
-    const [state, setState] = useState({
-        age: 20,
-        isConfirm: false,
-        isEditMode: false,
-        loading: false,
-        showForm: false,
-        siblingsNum: 4,
-        toastChildren: []
-    })
-
-    useEffect(() => {
-        setState({
-            ...state,
-            age: 40,
-            isEditMode: false
-        })
-    }, []);
-
-    const updateAge = () => {
-
-        setState((prevState) => {
-            return ({
-                ...state,
-                age: state.age + 5,
-                isEditMode: true,
-                showForm: true
-            })
-        });
-
-        setState({
-            ...state,
-            age: state.age + 5,
-            isEditMode: true,
-            showForm: true
-        });
-
-
-        console.log('STATE: ', state);
-    }
-
-    const handleClick = val =>
-        setState({
-            ...state,
-            [val]: state[val] + 1
-        })
-
-    const { age, siblingsNum, isEditMode, showForm } = state;
-
-
-    return (
-        <div>
-            <p>Today I am {age} Years of Age</p>
-            <p>I have {siblingsNum} siblings</p>
-            <p>isEditMode : {isEditMode.toString()}</p>
-            <p>showForm : {showForm.toString()}</p>
-
-            <div>
-                <button onClick={updateAge}>Update Age!</button>
-
-                <button onClick={handleClick.bind(null, 'age')}>Get older!</button>
-                <button onClick={handleClick.bind(null, 'siblingsNum')}>
-                    More siblings!
-          </button>
-            </div>
-        </div>
-    )
-}
-*/
 
 const ArticleHome = () => {
 
     const [state, setState] = useState({
-        articleService: new ArticleService(),
+        dataService: new ArticleService(),
         articles: [],
-        articleCount: 0,
+        totalRecords: 0,
         editData: {},
-        currentArticle: '',
-        filteredArticles: [],
+        currentRecord: '',
+        filteredRecords: [],
         categories: categories.categories,
         isEditMode: false,
         showForm: false,
@@ -138,13 +65,13 @@ const ArticleHome = () => {
 
 
             // Get all Articles on component mount
-            articleService.getAllArticles()
+            dataService.getAllArticles()
                 .then((data: any) => {
                     setState({
                         ...state,
                         loading: false
                     });
-                    dispatch({ type: 'GET_ALL_ARTICLES', data: data.docs })
+                    dispatch({ type: 'GET_ALL_RECORDS', data: data.docs })
 
                     return data.docs;
                 })
@@ -229,19 +156,11 @@ const ArticleHome = () => {
     // Create new article
     // =========================================
     const handleCreateArticle = (formDataObj: any) => {
-        articleService.createArticle(formDataObj).then((data: any) => {
+        dataService.createArticle(formDataObj).then((data: any) => {
 
             let articles = [data.newDoc, ...newState.articles];
 
-            dispatch({ type: 'ADD_ARTICLE', articles: articles, currentArticle: data.newDoc });
-            /* setState({
-                ...state,
-                articles: articles,
-                filteredArticles: articles,
-                currentArticle: data.newDoc,
-                reRender: true
-            }); */
-            // setReRender(true);
+            dispatch({ type: 'ADD_ARTICLE', articles: articles, currentRecord: data.newDoc });
 
             // display message
             addToastMessage('success', `New Article created successfully. ${data.newDoc.title}`)
@@ -277,7 +196,7 @@ const ArticleHome = () => {
     const handleEditSaveArticle = (articleId: string, formDataObj: any) => {
         let articles = [...state.articles];
 
-        articleService.editArticle(articleId, formDataObj).then((data: any) => {
+        dataService.editArticle(articleId, formDataObj).then((data: any) => {
             articles.map((article, index) => {
                 if (article._id === data.docs[0]._id) {
                     articles[index] = { ...data.docs[0] };
@@ -285,7 +204,7 @@ const ArticleHome = () => {
                 }
             });
 
-            dispatch({ type: 'EDIT_ARTICLE', articles: articles, currentArticle: data.docs[0] });
+            dispatch({ type: 'EDIT_ARTICLE', articles: articles, currentRecord: data.docs[0] });
 
             // display message
             addToastMessage('success', `Article updated successfully... ${data.docs[0].title}`);
@@ -308,7 +227,7 @@ const ArticleHome = () => {
     // Delete single article by articleId
     // =========================================
     const handleDeleteArticle = (articleId: string): void => {
-        articleService.deleteArticle(articleId).then((data: any) => {
+        dataService.deleteArticle(articleId).then((data: any) => {
 
             dispatch({ type: 'DELETE_ARTICLE', data: data.docs });
 
@@ -333,11 +252,11 @@ const ArticleHome = () => {
     // Update variable value in articles.service.ts
     // =========================================
     const updateArticleDataService = (data: any) => {
-        articleService.setArticlesData(data);
+        dataService.setArticlesData(data);
     }
 
     const handleMarkAsFavorite = (articleId: string, isFavorite: boolean) => {
-        articleService.markAsFavorite(articleId, isFavorite).then((data: any) => {
+        dataService.markAsFavorite(articleId, isFavorite).then((data: any) => {
             let articles = [...newState.articles];
             articles.map((article: any, index: number) => {
                 if (article._id === data.docs[0]._id) {
@@ -353,8 +272,8 @@ const ArticleHome = () => {
 
     // Filter all the articles by Tag, Category or the search value provided by the user
     // =========================================
-    const handleFilterArticles = (event: any, filterBy: string) => {
-        dispatch({ type: 'FILTER_ALL_ARTICLES', filteredArticles: utils.filterArticles(event, filterBy, newState.articles) });
+    const handleFilterRecords = (event: any, filterBy: string) => {
+        dispatch({ type: 'FILTER_ALL_ARTICLES', filteredRecords: utils.filterArticles(event, filterBy, newState.articles) });
     }
 
     const getUniqueTags = (articles: any) => {
@@ -370,7 +289,7 @@ const ArticleHome = () => {
         return uniqueTags;
     }
 
-    const { articles, isEditMode, currentArticle, filteredArticles, loading, articleCount } = newState;
+    const { articles, isEditMode, currentRecord, filteredRecords, loading, totalRecords } = newState;
 
 
     return (
@@ -380,7 +299,7 @@ const ArticleHome = () => {
                 <section className="content-wrapper">
                     {/* <div style={{ 'position': 'fixed', zIndex: 1050 }}>{isEditMode.toString()}</div> */}
 
-                    <Header articles={articles} onFilterArticles={handleFilterArticles} />
+                    <Header articles={articles} onFilterRecords={handleFilterRecords} />
 
                     <section className="content-section">
 
@@ -392,19 +311,19 @@ const ArticleHome = () => {
                         />
 
                         <ArticlesList
-                            filteredArticles={filteredArticles}
+                            filteredRecords={filteredRecords}
                             loading={state.loading}
                             onAddToastMessage={addToastMessage.bind(this)}
                             onDeleteArticle={handleDeleteArticle}
                             onEditArticle={handleEditArticle}
                             onDisplaySingleArticleContent={handleDisplaySingleArticleContent}
-                            onFilterArticles={handleFilterArticles}
+                            onFilterRecords={handleFilterRecords}
                             markAsFavorite={handleMarkAsFavorite}
                         />
 
                         {
-                            currentArticle ? (
-                                <Article currentArticle={currentArticle} onFilterArticles={handleFilterArticles} />
+                            currentRecord ? (
+                                <Article currentRecord={currentRecord} onFilterRecords={handleFilterRecords} />
                             ) : <p>No Article found</p>
                         }
 
@@ -418,7 +337,7 @@ const ArticleHome = () => {
                 <div className="uk-offcanvas-bar">
                     <button className="uk-offcanvas-close" type="button" uk-close=""></button>
 
-                    <Sidebar onFilterArticles={handleFilterArticles} articleCount={articleCount} {...newState} tags={state.tags} />
+                    <Sidebar onFilterRecords={handleFilterRecords} articleCount={totalRecords} {...newState} tags={state.tags} />
                 </div>
             </div>
             <div className="toast-message__wrapper">{state.toastChildren}</div>

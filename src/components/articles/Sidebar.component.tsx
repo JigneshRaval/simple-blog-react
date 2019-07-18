@@ -4,18 +4,12 @@
 
 import React, { Component } from 'react';
 
-import Categories from './Categories.component';
-import Tags from './Tags.component';
+import Tags from '../shared/Tags.component';
 
 const Sidebar = (props: any) => {
 
-    // console.log('Sidebar props :', props);
-
     return (
         <React.Fragment>
-
-            {/* Moved categories list to Header.component.tsx */}
-            {/* <Categories {...props} /> */}
 
             <Tags {...props} />
 

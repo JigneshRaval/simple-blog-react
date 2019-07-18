@@ -3,7 +3,7 @@
 // Display Single Article content on click of Article
 
 import React, { Component, useEffect } from "react";
-import TagsInline from './Tags-Inline.component';
+import TagsInline from '../shared/Tags-Inline.component';
 import Utils from "../../services/utils";
 const utils = new Utils();
 // let ShowdownService = require("../assets/js/showdown.js");
@@ -17,15 +17,9 @@ declare var hljs: any;
 
 
 export const Article = (props: any) => {
-    const { currentArticle: article } = props;
-    /* const article = props.articles.find((article: any) => {
-        if (article._id === props.match.params.id) {
-            return article;
-        }
-    }); */
+    const { currentRecord: article } = props;
 
     useEffect(() => {
-        console.log('Single Article Component');
         // highlight syntax : https://highlightjs.org/
         $(document).ready(function () {
             $('.article__content').find('pre code').each(function (i: any, block: any) {
@@ -39,8 +33,6 @@ export const Article = (props: any) => {
 
     function createMarkup() {
         // return { __html: converter.makeHtml(article.htmlCode) };
-
-
 
         // Scroll to top functionality, added setTimeout due to DOM not available
         setTimeout(() => {
@@ -69,7 +61,7 @@ export const Article = (props: any) => {
 
                         <p className="uk-article-meta">Written by <a href="javascript:;"><strong>{article.author}</strong></a> on <strong>{date.toString()}</strong>.</p>
                         <div className="article__tags-list">
-                            Tagged as <TagsInline article={article} onFilterArticles={props.onFilterArticles} className={'uk-button'} />
+                            Tagged as <TagsInline data={article} onFilterRecords={props.onFilterRecords} className={'uk-button'} />
                         </div>
                     </div>
                 </header>

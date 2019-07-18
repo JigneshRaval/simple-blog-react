@@ -24,9 +24,7 @@ let HelloButton = function () {
 
 
 export const CreateArticleFormComponent = (props: any) => {
-    /*     convertedHTML: any;
-        postPath: string;
-        */
+
     let originalState: any;
 
     const [formState, updateFormState] = useState({
@@ -158,19 +156,6 @@ export const CreateArticleFormComponent = (props: any) => {
             if (codeContent) {
                 node.innerHTML = `<code>${codeContent}</code>`;
             }
-
-            /* if (node.classList.contains('graf')) {
-                console.log('pre tag contains .graf css class.');
-                node.innerHTML = `<code>${node.innerHTML}</code>`;
-                node.classList.add('modified');
-            } else {
-                let codeContent = node.innerText || node.textContent;
-                codeContent = codeContent.replace(/</ig, '&lt;');
-
-                if (codeContent) {
-                    node.innerHTML = `<code>${codeContent}</code>`;
-                }
-            } */
 
         });
 

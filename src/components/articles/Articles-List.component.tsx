@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ArticleListItem from './Article-List-Item.component';
-import LoadingSpinner from './loadingSpinner';
-// import TagsInline from './Tags-Inline.component';
+import LoadingSpinner from '../shared/LoadingSpinner';
 
 const ArticlesList = (props: any) => {
     const [activeTab, setActiveTab] = useState(0);
@@ -12,14 +11,14 @@ const ArticlesList = (props: any) => {
         setActiveTab(index);
     }
 
-    const { filteredArticles, loading } = props;
+    const { filteredRecords, loading } = props;
 
     return (
         <div className="post-list__wrapper" >
             <div className="uk-flex uk-flex-column">
                 {
-                    loading ? <LoadingSpinner /> : filteredArticles && filteredArticles.length > 0 ?
-                        filteredArticles.map((article: any, index: number) => {
+                    loading ? <LoadingSpinner text={'Loading articles...'} /> : filteredRecords && filteredRecords.length > 0 ?
+                        filteredRecords.map((article: any, index: number) => {
                             return (
                                 <ArticleListItem
                                     key={index}

@@ -8,10 +8,8 @@ export class ArticleService {
     constructor() { }
 
     getArticlesData() {
-        // this.articles = this.getAllArticles().then(data => data);
         return this.articles;
     }
-
 
     setArticlesData(articles: any) {
         this.articles = articles;

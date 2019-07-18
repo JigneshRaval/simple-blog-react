@@ -12,8 +12,8 @@ class App extends React.Component<any, any> {
     render() {
         return (
             <React.Fragment>
-                <ArticleHome />
-                <BookmarkHome />
+                {/*  <ArticleHome /> */}
+                 <BookmarkHome />
             </React.Fragment>
         );
     }
