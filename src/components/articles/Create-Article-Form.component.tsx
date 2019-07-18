@@ -231,7 +231,7 @@ type: '${frontmatterObj.type}'
     }
 
     return (
-        <div id="modal-example" className="uk-modal-full" uk-modal="true">
+        <div id="modal-articles" className="uk-modal-full" uk-modal="true">
             <div className="uk-modal-dialog uk-modal-body">
                 <h2 className="uk-modal-title">
                     {

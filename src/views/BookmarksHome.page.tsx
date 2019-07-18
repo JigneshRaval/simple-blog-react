@@ -3,7 +3,7 @@ import React, { useReducer, useEffect, useState } from "react";
 
 // SERVICES
 // ==========================
-import { BookmarkService } from "../services/bookmarks.service";
+import { DataService } from "../services/data.service";
 import Utils from '../services/utils';
 
 
@@ -21,14 +21,14 @@ import articleReducer from '../services/Reducer';
 declare var require: any;
 let categories = require('../assets/data/categories.json');
 const utils = new Utils();
-const dataService = new BookmarkService();
+const dataService = new DataService('bookmarks');
 
 declare var UIkit: any;
 
 const BookmarkHome = () => {
 
     const [state, setState] = useState({
-        dataService: new BookmarkService(),
+        dataService: new DataService('bookmarks'),
         articles: [],
         articleCount: 0,
         editData: {},
@@ -56,7 +56,7 @@ const BookmarkHome = () => {
 
 
             // Get all Articles on component mount
-            dataService.getAllBookmarks()
+            dataService.getAllRecords()
                 .then((data: any) => {
                     setState({
                         ...state,
@@ -131,7 +131,7 @@ const BookmarkHome = () => {
     // Create new article
     // =========================================
     const handleCreateBookmark = (formDataObj: any) => {
-        dataService.createBookmark(formDataObj).then((data: any) => {
+        dataService.createRecord(formDataObj).then((data: any) => {
 
             let articles = [data.newDoc, ...newState.articles];
 
@@ -164,7 +164,7 @@ const BookmarkHome = () => {
     const handleEditSaveBookmark = (articleId: string, formDataObj: any) => {
         let articles = [...state.articles];
 
-        dataService.editBookmark(articleId, formDataObj).then((data: any) => {
+        dataService.editRecord(articleId, formDataObj).then((data: any) => {
             articles.map((article, index) => {
                 if (article._id === data.docs[0]._id) {
                     articles[index] = { ...data.docs[0] };
@@ -195,7 +195,7 @@ const BookmarkHome = () => {
     // Delete single article by articleId
     // =========================================
     const handleDeleteBookmark = (articleId: string): void => {
-        dataService.deleteBookmark(articleId).then((data: any) => {
+        dataService.deleteRecord(articleId).then((data: any) => {
 
             dispatch({ type: 'DELETE_ARTICLE', data: data.docs });
 
@@ -220,7 +220,7 @@ const BookmarkHome = () => {
     // Update variable value in articles.service.ts
     // =========================================
     const updateBookmarkDataService = (data: any) => {
-        dataService.setBookmarksData(data);
+        dataService.setData(data);
     }
 
     const handleMarkAsFavorite = (articleId: string, isFavorite: boolean) => {

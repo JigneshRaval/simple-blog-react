@@ -2,25 +2,28 @@
 
 // Service for CRUD operations
 // Create, Read, Update and Delete articles
-export class ArticleService {
+export class DataService {
     articles: any;
+    API_URL: string;
 
-    constructor() { }
+    constructor(serviceType: string) {
+        this.API_URL = `/api/${serviceType}`;
+    }
 
-    getArticlesData() {
+    getData() {
         return this.articles;
     }
 
-    setArticlesData(articles: any) {
+    setData(articles: any) {
         this.articles = articles;
     }
 
     /**
-     * getAllArticles: Get all the articles from database
+     * getAllRecords: Get all the records from database
      */
-    public getAllArticles() {
+    public getAllRecords() {
         // Render all Todo items on component render
-        return fetch('/api/articles')
+        return fetch(`${this.API_URL}`)
             .then((response) => {
                 // If error then exit
                 if (response.status !== 200) {
@@ -36,12 +39,12 @@ export class ArticleService {
 
 
     /**
-     * getArticleById: Get single articles by Id
+     * getRecordById: Get single articles by Id
      */
-    public getArticleById(articleId: string) {
-        console.log('getArticleById :', articleId);
+    public getRecordById(recordId: string) {
+        console.log('getRecordById :', recordId);
 
-        return fetch(`/api/articles/${articleId}`)
+        return fetch(`${this.API_URL}/${recordId}`)
             .then((response) => {
                 // If error then exit
                 if (response.status !== 200) {
@@ -59,10 +62,10 @@ export class ArticleService {
     /**
      * createArticle: Create new article
      */
-    public createArticle(formData: any) {
-        console.log('getAllArticles :');
+    public createRecord(formData: any) {
+        console.log('createRecord :');
         // Post form data to server
-        return fetch('/api/articles/add', {
+        return fetch(`${this.API_URL}/add`, {
             method: 'POST',
             body: JSON.stringify(formData),
             mode: 'cors',
@@ -85,9 +88,9 @@ export class ArticleService {
             });
     }
 
-    public editArticle(articleId: string, formData: any) {
-        console.log('editArticle :', articleId);
-        return fetch(`/api/articles/edit/${articleId}`, {
+    public editRecord(recordId: string, formData: any) {
+        console.log('editRecord :', recordId);
+        return fetch(`${this.API_URL}/edit/${recordId}`, {
             method: 'POST',
             body: JSON.stringify(formData),
             mode: 'cors',
@@ -100,9 +103,9 @@ export class ArticleService {
             .then((response) => response.json());
     }
 
-    public deleteArticle(articleId: string) {
-        console.log(`deleteArticle - ${articleId}:`);
-        return fetch(`/api/articles/delete/${articleId}`, {
+    public deleteRecord(recordId: string) {
+        console.log(`deleteRecord - ${recordId}:`);
+        return fetch(`${this.API_URL}/delete/${recordId}`, {
             method: 'DELETE',
             mode: 'cors',
             redirect: 'follow',
@@ -114,14 +117,14 @@ export class ArticleService {
             .then((response) => response.json());
     }
 
-    public deleteAllArticles() {
-        console.log('deleteAllArticles :');
+    public deleteAllRecords() {
+        console.log('deleteAllRecords :');
     }
 
-    public markAsFavorite(articleId: string, isFavorite: boolean) {
+    public markAsFavorite(recordId: string, isFavorite: boolean) {
         let formData = { favorite: !isFavorite };
 
-        return fetch(`/api/articles/favorite/${articleId}`, {
+        return fetch(`${this.API_URL}/favorite/${recordId}`, {
             method: 'PUT',
             body: JSON.stringify(formData),
             mode: 'cors',

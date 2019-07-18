@@ -3,7 +3,7 @@ import React, { useReducer, useEffect, useState } from "react";
 
 // SERVICES
 // ==========================
-import { ArticleService } from "../services/articles.service";
+import { DataService } from "../services/data.service";
 import Utils from '../services/utils';
 
 
@@ -30,14 +30,14 @@ dbRef.on("value", function (snapshot) {
 declare var require: any;
 let categories = require('../assets/data/categories.json');
 const utils = new Utils();
-const dataService = new ArticleService();
+const dataService = new DataService('articles');
 
 declare var UIkit: any;
 
 const ArticleHome = () => {
 
     const [state, setState] = useState({
-        dataService: new ArticleService(),
+        dataService: new DataService('articles'),
         articles: [],
         totalRecords: 0,
         editData: {},
@@ -65,7 +65,7 @@ const ArticleHome = () => {
 
 
             // Get all Articles on component mount
-            dataService.getAllArticles()
+            dataService.getAllRecords()
                 .then((data: any) => {
                     setState({
                         ...state,
@@ -75,7 +75,7 @@ const ArticleHome = () => {
 
                     return data.docs;
                 })
-                .then(data => {
+                .then((data: any) => {
                     // Update variable value in articles.service.ts
                     updateArticleDataService(data);
 
@@ -156,7 +156,7 @@ const ArticleHome = () => {
     // Create new article
     // =========================================
     const handleCreateArticle = (formDataObj: any) => {
-        dataService.createArticle(formDataObj).then((data: any) => {
+        dataService.createRecord(formDataObj).then((data: any) => {
 
             let articles = [data.newDoc, ...newState.articles];
 
@@ -185,7 +185,7 @@ const ArticleHome = () => {
     // Get Article data on click of Edit button
     // =========================================
     const handleEditArticle = (articleId: string, isFormVisible: boolean) => {
-        UIkit.modal('#modal-example').show();
+        UIkit.modal('#modal-articles').show();
 
         dispatch({ type: 'SET_EDIT_MODE', articleId: articleId });
     }
@@ -196,7 +196,7 @@ const ArticleHome = () => {
     const handleEditSaveArticle = (articleId: string, formDataObj: any) => {
         let articles = [...state.articles];
 
-        dataService.editArticle(articleId, formDataObj).then((data: any) => {
+        dataService.editRecord(articleId, formDataObj).then((data: any) => {
             articles.map((article, index) => {
                 if (article._id === data.docs[0]._id) {
                     articles[index] = { ...data.docs[0] };
@@ -227,7 +227,7 @@ const ArticleHome = () => {
     // Delete single article by articleId
     // =========================================
     const handleDeleteArticle = (articleId: string): void => {
-        dataService.deleteArticle(articleId).then((data: any) => {
+        dataService.deleteRecord(articleId).then((data: any) => {
 
             dispatch({ type: 'DELETE_ARTICLE', data: data.docs });
 
@@ -252,7 +252,7 @@ const ArticleHome = () => {
     // Update variable value in articles.service.ts
     // =========================================
     const updateArticleDataService = (data: any) => {
-        dataService.setArticlesData(data);
+        dataService.setData(data);
     }
 
     const handleMarkAsFavorite = (articleId: string, isFavorite: boolean) => {
