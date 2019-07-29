@@ -307,7 +307,9 @@ type: '${frontmatterObj.type}'
                         </div>
 
                         <div className="uk-width-1-2@m">
-                            <div contentEditable id="test" style={{ 'height': '500px', 'whiteSpace': 'pre-wrap', 'overflow': 'auto' }}>
+                            <div contentEditable
+                                id="test"
+                                style={{ 'height': '50px', 'whiteSpace': 'pre-wrap', 'overflow': 'auto', 'opacity': 0.5, 'resize': 'auto' }}>
                             </div>
                             <div className="uk-margin">
                                 <label className="form-label" htmlFor="txtareaHtmlCode">HTML code</label>
