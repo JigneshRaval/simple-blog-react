@@ -7,7 +7,7 @@ const BookmarksList = (props: any) => {
     const { filteredRecords, loading } = props;
 
     return (
-        <div className="post-list__wrapper" >
+        <div className="bookmark-list__wrapper" >
             <div className="uk-flex uk-flex-column">
                 {
                     loading ? <LoadingSpinner text={'Loading bookmarks...'} /> : filteredRecords && filteredRecords.length > 0 ?

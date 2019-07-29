@@ -65,16 +65,12 @@ routes.post('/bookmarks/edit/:bookmarkId', (request, response) => {
         date: new Date(),
         title: request.body.title,
         sourceUrl: request.body.sourceUrl,
-        path: request.body.path,
         category: request.body.category,
         tags: request.body.tags,
-        author: request.body.author,
-        excerpt: request.body.excerpt,
         dateUpdated: new Date().getTime(),
         coverImage: request.body.coverImage,
-        type: request.body.type,
         htmlCode: request.body.htmlCode,
-        markdownCode: request.body.markdownCode
+        description: request.body.description
     }
     // Set an existing field's value
     db.bookmarks.update({ _id: request.params.bookmarkId }, { $set: newData }, { multi: false }, function (err, numReplaced) {

@@ -3,6 +3,8 @@
 // This component contains Header items like Logo, Search-bar, Navigation etc.
 
 import React from 'react';
+import { Link } from "react-router-dom";
+
 import ArticleContext from '../../services/context';
 import Utils from '../../services/utils';
 import SearchComponent from './Search.component';
@@ -68,14 +70,22 @@ const Header = (props: any) => {
                         <li>
                             <ThemeSwitcherDropdownComponent />
                         </li>
+
+                        {
+                            props.type && props.type === 'articles' ? <li><Link to="/bookmarks">Bookmarks</Link></li> : <li><Link to="/articles">Articles</Link></li>
+                        }
+
                         <li>
                             <a href="#offcanvas-usage" uk-toggle="" title="Click this button to view list of Categories and Tags." uk-tooltip="Click this button to view list of Categories and Tags.">Tags</a>
                         </li>
                     </ul>
                     {/* END : Dropdown Navigation */}
 
-                    <button className="uk-button uk-button-secondary" uk-toggle="target: #modal-articles" onClick={openForm}>Create Article</button>
-                    <button className="uk-button uk-button-secondary" uk-toggle="target: #modal-bookmarks" onClick={openBookmarkForm}>Create Bookmark</button>
+                    {
+                        props.type && props.type === 'articles' ? <button className="uk-button uk-button-secondary" uk-toggle="target: #modal-articles" onClick={openForm}>Create Article</button> : <button className="uk-button uk-button-secondary" uk-toggle="target: #modal-bookmarks" onClick={openBookmarkForm}>Create Bookmark</button>
+                    }
+
+
                     <a id="toggleSidebar" href="#offcanvas-usage" uk-toggle="" title="Click this button to view list of Categories and Tags." uk-tooltip="Click this button to view list of Categories and Tags."><i className="ion ion-md-menu"></i></a>
                 </div>
             </nav>

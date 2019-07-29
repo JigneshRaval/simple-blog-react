@@ -49,8 +49,13 @@ const BookmarkListItem = (props: any) => {
                     }
                     <div className="bookmark-category"><span className="small-dot" data-category={bookmark.category.toLowerCase()}></span>{bookmark.category}</div>
                     <h2 className="uk-card-title">
-                        <a href={bookmark.url} target="_blank" bookmark-id={bookmark._id} >{bookmark.title}</a>
+                        <a href={bookmark.sourceUrl} target="_blank" bookmark-id={bookmark._id} >{bookmark.title}</a>
                     </h2>
+                    <a
+                        target="_blank"
+                        href={bookmark.sourceUrl.split('/')[0] + "//" + bookmark.sourceUrl.split('/')[2]}
+                        style={{ textTransform: 'uppercase' }}>{bookmark.sourceUrl.split('/')[2]}</a>
+                    <p>{bookmark.description}</p>
                 </div>
 
                 <div className="card-footer">

@@ -54,6 +54,7 @@ const BookmarkHome = () => {
                 loading: true
             });
 
+            document.getElementsByTagName('body')[0].classList.remove('isArticleListPanelOpened');
 
             // Get all Articles on component mount
             dataService.getAllRecords()
@@ -153,7 +154,7 @@ const BookmarkHome = () => {
     // Get Article data on click of Edit button
     // =========================================
     const handleEditBookmark = (articleId: string, isFormVisible: boolean) => {
-        UIkit.modal('#modal-example').show();
+        UIkit.modal('#modal-bookmarks').show();
 
         dispatch({ type: 'SET_EDIT_MODE', articleId: articleId });
     }

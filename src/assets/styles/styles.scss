@@ -83,6 +83,10 @@ h1, h2, h3, h4, h5, h6 {
 		background-color: #cc6798;
 	}
 
+	&[data-category="vue.js"] {
+		background-color: #4ed696;
+	}
+
 	&[data-category="javascript"] {
 		background-color: #ffe725;
 	}

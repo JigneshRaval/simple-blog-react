@@ -34,8 +34,9 @@ const dataService = new DataService('articles');
 
 declare var UIkit: any;
 
-const ArticleHome = () => {
+const ArticleHome = (props: any) => {
 
+    console.log('Article Home props :', props);
     const [state, setState] = useState({
         dataService: new DataService('articles'),
         articles: [],
@@ -63,6 +64,7 @@ const ArticleHome = () => {
                 loading: true
             });
 
+            document.getElementsByTagName('body')[0].classList.add('isArticleListPanelOpened');
 
             // Get all Articles on component mount
             dataService.getAllRecords()
@@ -299,7 +301,7 @@ const ArticleHome = () => {
                 <section className="content-wrapper">
                     {/* <div style={{ 'position': 'fixed', zIndex: 1050 }}>{isEditMode.toString()}</div> */}
 
-                    <Header articles={articles} onFilterRecords={handleFilterRecords} />
+                    <Header articles={articles} onFilterRecords={handleFilterRecords} {...props} />
 
                     <section className="content-section">
 

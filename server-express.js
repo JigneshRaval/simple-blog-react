@@ -15,6 +15,10 @@ const bookmarkRoutes = require('./server/router/bookmarks.router');
 // Compress all the assets and server response
 const compression = require('compression');
 
+app.use((req, res, next) => {
+    next();
+});
+
 // compress all responses and files
 app.use(compression());
 
@@ -30,9 +34,15 @@ app.use(express.static(path.resolve(__dirname, 'dist')));
 app.use('/api', articleRoutes);
 app.use('/api', bookmarkRoutes);
 
-app.get('/', (req, res) => {
+app.get('**', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
 });
+/* app.get('/articles', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+});
+app.get('/bookmarks', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+}); */
 
 // Handle 404 Error
 app.use(function (req, res) {

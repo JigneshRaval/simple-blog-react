@@ -78,45 +78,48 @@
             let deferredPrompt;
             let btnAdd2Home = document.querySelector('.ad2hs-prompt');
 
-            window.addEventListener('beforeinstallprompt', (e) => {
-                // Prevent Chrome 67 and earlier from automatically showing the prompt
-                // e.preventDefault();
+            if (btnAdd2Home) {
 
-                // Stash the event so it can be triggered later.
-                deferredPrompt = e;
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    // Prevent Chrome 67 and earlier from automatically showing the prompt
+                    // e.preventDefault();
 
-                // Update UI notify the user they can add to home screen
-                btnAdd2Home.style.display = 'block';
-            });
+                    // Stash the event so it can be triggered later.
+                    deferredPrompt = e;
 
-            btnAdd2Home.addEventListener('click', (e) => {
-                addToHomeScreen();
-            });
+                    // Update UI notify the user they can add to home screen
+                    btnAdd2Home.style.display = 'block';
+                });
 
-            function addToHomeScreen() {
-                btnAdd2Home.style.display = 'block';
+                btnAdd2Home.addEventListener('click', (e) => {
+                    addToHomeScreen();
+                });
 
-                // Show the prompt
-                deferredPrompt.prompt();
+                function addToHomeScreen() {
+                    btnAdd2Home.style.display = 'block';
 
-                // Wait for the user to respond to the prompt
-                deferredPrompt.userChoice
-                    .then(function (choiceResult) {
-                        if (choiceResult.outcome === 'accepted') {
-                            console.log('User accepted the A2HS prompt');
-                        } else {
-                            console.log('User dismissed the A2HS prompt');
-                        }
+                    // Show the prompt
+                    deferredPrompt.prompt();
 
-                        deferredPrompt = null;
-                    });
+                    // Wait for the user to respond to the prompt
+                    deferredPrompt.userChoice
+                        .then(function (choiceResult) {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('User accepted the A2HS prompt');
+                            } else {
+                                console.log('User dismissed the A2HS prompt');
+                            }
+
+                            deferredPrompt = null;
+                        });
+                }
+
+                // Determine if the app was successfully installed
+                window.addEventListener('appinstalled', (evt) => {
+                    btnAdd2Home.style.display = 'none';
+                    app.logEvent('a2hs', 'installed');
+                });
             }
-
-            // Determine if the app was successfully installed
-            window.addEventListener('appinstalled', (evt) => {
-                btnAdd2Home.style.display = 'none';
-                app.logEvent('a2hs', 'installed');
-            });
 
         });
     </script>

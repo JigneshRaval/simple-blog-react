@@ -11,7 +11,7 @@ export const CreateBookmarkFormComponent = (props: any) => {
         txtCategory: props.editData.category || 'JavaScript',
         txtTags: (props.editData.tags) ? props.editData.tags.join() : 'JavaScript, ES6',
         txtWebsiteUrl: props.editData.sourceUrl || '',
-        txtareaDescription: props.editData.htmlCode
+        txtareaDescription: props.editData.description
     })
 
     useEffect(() => {
@@ -25,7 +25,7 @@ export const CreateBookmarkFormComponent = (props: any) => {
             txtCategory: props.editData.category || 'JavaScript',
             txtTags: (props.editData.tags) ? props.editData.tags.join() : 'JavaScript, ES6',
             txtWebsiteUrl: props.editData.sourceUrl || '',
-            txtareaDescription: props.editData.htmlCode
+            txtareaDescription: props.editData.description
         });
 
     }, [props.editData._id])
@@ -65,7 +65,8 @@ export const CreateBookmarkFormComponent = (props: any) => {
             category: formData.get('txtCategory'),
             tags: tags,
             dateCreated: formState.dateCreated,
-            description: formData.get('txtareaDescription')
+            description: formData.get('txtareaDescription'),
+            type: 'bookmark'
         }
 
         const formDataObj = {
@@ -103,6 +104,8 @@ export const CreateBookmarkFormComponent = (props: any) => {
 
                 <form name="formCreateEditBookmark" id="formCreateEditBookmark" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
                     <div className="uk-grid uk-grid-small">
+
+                        {/* START Column */}
                         <div className="uk-width-1-2@m">
 
                             <div className="uk-margin">
@@ -131,17 +134,19 @@ export const CreateBookmarkFormComponent = (props: any) => {
                                 <input type="text" className="uk-input" name="txtTags" id="txtTags" placeholder="Tags" onChange={handleInputChange} value={formState.txtTags} />
                             </div>
 
-                            <div className="uk-width-1-2@m">
-                                <div contentEditable id="test" style={{ 'height': '500px', 'whiteSpace': 'pre-wrap', 'overflow': 'auto' }}>
-                                </div>
-                                <div className="uk-margin">
-                                    <label className="form-label" htmlFor="txtareaDescription">Description</label>
-                                    <textarea className="uk-textarea" rows={10} name="txtareaDescription" id="txtareaDescription" onChange={handleInputChange} value={formState.txtareaDescription}></textarea>
-                                </div>
+                        </div>
+                        {/* END Column */}
 
+                        {/* START Column */}
+                        <div className="uk-width-1-2@m">
+
+                            <div className="uk-margin">
+                                <label className="form-label" htmlFor="txtareaDescription">Description</label>
+                                <textarea className="uk-textarea" rows={10} name="txtareaDescription" id="txtareaDescription" onChange={handleInputChange} value={formState.txtareaDescription}></textarea>
                             </div>
 
                         </div>
+                        {/* END Column */}
 
                     </div>
 
