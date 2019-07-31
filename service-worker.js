@@ -31,13 +31,26 @@ self.addEventListener('activate', function (event) {
     );
 });
 
-self.addEventListener("fetch", function (event) {
+/* self.addEventListener("fetch", function (event) {
     event.respondWith(
         caches.match(event.request).then(function (response) {
             if (response) {
                 return response;
             }
             return fetch(event.request);
+        })
+    );
+}); */
+
+self.addEventListener('fetch', function (event) {
+    event.respondWith(
+        caches.open('cache-v4').then(function (cache) {
+            return cache.match(event.request).then(function (response) {
+                return response || fetch(event.request).then(function (response) {
+                    cache.put(event.request, response.clone());
+                    return response;
+                });
+            });
         })
     );
 });

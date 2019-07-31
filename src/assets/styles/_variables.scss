@@ -1,8 +1,9 @@
 :root {
-    --system-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-    --title-font: 'Product Sans', Arial, sans-serif;
-    --base-font: 'Open Sans', Arial, sans-serif;
-    --roboto: 'Roboto', 'Helvetica Neue', Helvetica, sans-serif;
+    --system-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    --title-font: 'Product Sans', Arial, sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    --base-font: 'Open Sans', Arial, sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    --roboto: 'Roboto', 'Helvetica Neue', Helvetica, sans-serif, "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    --base-gradient: linear-gradient(45deg,#f012be,#0074d9);
     --base-font-size: 1rem; // 16px;
     --base-line-height: 1.5;
     --base-vertical-space: 8px;

@@ -64,6 +64,8 @@ const ArticleHome = (props: any) => {
                 loading: true
             });
 
+            utils.isServerOnline();
+
             document.getElementsByTagName('body')[0].classList.add('isArticleListPanelOpened');
 
             // Get all Articles on component mount

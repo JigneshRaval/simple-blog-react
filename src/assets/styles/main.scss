@@ -26,7 +26,7 @@
 
 :root {
     --uikit-base-font: 'Product Sans', Arial, sans-serif;
-    --uikit-system-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif
+    --uikit-system-font: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
 }
 // UIKit : https://getuikit.com/
 @import './vendors/uikit.css';

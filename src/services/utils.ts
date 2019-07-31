@@ -421,6 +421,25 @@ class Utils {
         }
     }
 
+    public isServerOnline() {
+        let isOnline = true;
+        let url = "http://localhost:3001/assets/images/favicon.ico";
+        let img = new Image();
+        img.src = url;
+
+        img.onload = function () {
+            // If the server is up, do this.
+            console.log("Server is up!");
+            isOnline = true;
+        }
+
+        img.onerror = function () {
+            // If the server is down, do that.
+            console.log("Server is down!");
+            isOnline = false;
+        }
+    }
+
 }
 
 export default Utils;
