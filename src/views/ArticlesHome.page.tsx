@@ -36,7 +36,6 @@ declare var UIkit: any;
 
 const ArticleHome = (props: any) => {
 
-    console.log('Article Home props :', props);
     const [state, setState] = useState({
         dataService: new DataService('articles'),
         articles: [],
@@ -106,7 +105,6 @@ const ArticleHome = (props: any) => {
                     console.log('Error in fetching all the records : ', err);
                 });
 
-            console.log('State : ', state);
         }
 
         // componentWillUnmount

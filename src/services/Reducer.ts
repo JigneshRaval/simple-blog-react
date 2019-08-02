@@ -7,7 +7,8 @@ function articleReducer(state: any, action: any) {
                 totalRecords: action.data.length,
                 filteredRecords: action.data,
                 currentRecord: action.data[0],
-                loading: false
+                loading: false,
+                reRender: false
             }
         case "SET_EDIT_MODE":
             let articleToEdit;

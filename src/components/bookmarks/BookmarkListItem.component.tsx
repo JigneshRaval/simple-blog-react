@@ -54,7 +54,7 @@ const BookmarkListItem = (props: any) => {
                     <a
                         target="_blank"
                         href={bookmark.sourceUrl.split('/')[0] + "//" + bookmark.sourceUrl.split('/')[2]}
-                        style={{ textTransform: 'uppercase' }}>{bookmark.sourceUrl.split('/')[2]}</a>
+                        style={{ textTransform: 'uppercase', fontSize: '12px' }}>{bookmark.sourceUrl.split('/')[2]}</a>
                     <p>{bookmark.description}</p>
                 </div>
 

@@ -214,6 +214,7 @@
 		border-radius: var(--base-vertical-space-half);
 		display: inline-block;
 		font-size: 16px;
+		background: linear-gradient(to right,#fce4ed,#ffe8cc);
 	}
 
 	pre {
@@ -256,6 +257,12 @@
 		left: 0;
 		right: 0;
 		height: 10px;
+	}
+
+	:not(pre) > code,
+	:not(pre) > kbd,
+	:not(pre) > samp {
+		color: #831026;
 	}
 
 	.hljs {
