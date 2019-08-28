@@ -43,6 +43,11 @@
         { "id": 41, "name": "UX", "color": "#f26428"},
         { "id": 42, "name": "UI", "color": "#f26428"},
         { "id": 43, "name": "Web Worker", "color": "#f26428"},
-        { "id": 44, "name": "Service Worker", "color": "#f26428"}
+        { "id": 44, "name": "Service Worker", "color": "#f26428"},
+        { "id": 45, "name": "Svelte", "color": "#ff3e00"},
+        { "id": 46, "name": "Performance Optimization", "color": "#ff3e00"},
+        { "id": 47, "name": "Firebase", "color": "#ff3e00"},
+        { "id": 48, "name": "Softwares", "color": "#ff3e00"},
+        { "id": 49, "name": "Desktop App Development", "color": "#ff3e00"}
     ]
 }

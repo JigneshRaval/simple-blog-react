@@ -21,7 +21,13 @@ export class DataService {
     /**
      * getAllRecords: Get all the records from database
      */
-    public getAllRecords() {
+    public async getAllRecords() {
+        let response = await fetch(`${this.API_URL}`);
+        this.articles = await response.json()
+        return this.articles;
+    }
+
+    /* public getAllRecords() {
         // Render all Todo items on component render
         return fetch(`${this.API_URL}`)
             .then((response) => {
@@ -35,7 +41,7 @@ export class DataService {
                 this.articles = response.json();
                 return this.articles;
             });
-    }
+    } */
 
 
     /**
