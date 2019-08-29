@@ -12,6 +12,7 @@ class App extends React.Component<any, any> {
 
     constructor(props: any) {
         super(props);
+        navigator.serviceWorker.getRegistration().then(function(r){r.unregister();});
     }
 
     render() {

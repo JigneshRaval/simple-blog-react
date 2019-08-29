@@ -21,11 +21,11 @@ import articleReducer from '../services/Reducer';
 
 // FIREBASE
 // ==========================
-import firebase from '../firebase';
-const dbRef = firebase.database().ref('articles');
-dbRef.on("value", function (snapshot) {
-    console.log('Firebase snapshot ==', snapshot.val());
-});
+// import firebase from '../firebase';
+// const dbRef = firebase.database().ref('articles');
+// dbRef.on("value", function (snapshot) {
+//     console.log('Firebase snapshot ==', snapshot.val());
+// });
 
 declare var require: any;
 let categories = require('../assets/data/categories.json');
@@ -309,7 +309,7 @@ const ArticleHome = (props: any) => {
                             {...newState}
                             onCreateArticle={handleCreateArticle}
                             onEditSaveArticle={handleEditSaveArticle}
-                            firebase={firebase}
+                            // firebase={firebase}
                         />
 
                         <ArticlesList
