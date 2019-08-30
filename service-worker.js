@@ -5,10 +5,23 @@ const STORE_NAME = 'articles';
 let code_candy_db;
 
 const assetToCache = [
-    "/index.html",
-    "/manifest.json",
-    "/assets/css/style.css"
+    "/",
+    "articles/",
+    "index.html",
+    "manifest.json",
+    "assets/css/style.css",
+    "app.bundle.js",
+    "app.bundle.js.map",
+    "vendors~app.bundle.js",
+    "vendors~app.bundle.js.map",
+    "assets/css/app.bundle.css",
+    "assets/css/app.bundle.css.map",
+    "assets/css/tomorrow-night-bright.css",
+    "assets/js/jquery-3.3.1.min.js",
+    "assets/js/summernote-lite.js",
+    "assets/js/highlight.pack.js"
 ];
+
 self.addEventListener("install", function (event) {
     event.waitUntil(
         caches
