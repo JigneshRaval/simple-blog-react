@@ -23,7 +23,8 @@ export class DataService {
      */
     public async getAllRecords() {
         let response = await fetch(`${this.API_URL}`);
-        this.articles = await response.json()
+        this.articles = await response.json();
+        navigator.serviceWorker.controller.postMessage(this.articles)  // <--- This line right here sends our data to sw.js
         return this.articles;
     }
 

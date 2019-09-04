@@ -89,7 +89,25 @@
             } else {
                 console.log('service worker is not supported');
             } */
+            window.addEventListener('online', function (e) {
+                // re-sync data with server
+                console.log("You are online");
+                // hideOfflineWarning();
+            }, false);
 
+            window.addEventListener('offline', function (e) {
+                // queue up events for server
+                console.log("You are offline");
+                // showOfflineWarning();
+            }, false);
+
+            // check if the user is connected
+            if (navigator.onLine) {
+                // loadData();
+            } else {
+                // show offline message
+                // showOfflineWarning();
+            }
 
             const isLocalhost = Boolean(
                 window.location.hostname === 'localhost' ||
@@ -102,19 +120,19 @@
             );
 
             function register(config) {
-                console.log('${process.env.PUBLIC_URL} ', `${process.env.PUBLIC_URL}`)
-                if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+                console.log('${process.env.PUBLIC_URL} process.env.NODE_ENV === "production"', `${process.env.PUBLIC_URL}`)
+                if ('serviceWorker' in navigator) {
                     // The URL constructor is available in all browsers that support SW.
-                    const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
-                    if (publicUrl.origin !== window.location.origin) {
+                    // const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
+                    /* if (publicUrl.origin !== window.location.origin) {
                         // Our service worker won't work if PUBLIC_URL is on a different origin
                         // from what our page is served on. This might happen if a CDN is used to
                         // serve assets; see https://github.com/facebook/create-react-app/issues/2374
                         return;
-                    }
+                    } */
 
                     window.addEventListener('load', () => {
-                        const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+                        const swUrl = `../service-worker.js`;
 
                         if (isLocalhost) {
                             // This is running on localhost. Let's check if a service worker still exists or not.
@@ -218,6 +236,7 @@
 
 
             register();
+
             let deferredPrompt;
             let btnAdd2Home = document.querySelector('.ad2hs-prompt');
 

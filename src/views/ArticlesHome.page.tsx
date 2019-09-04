@@ -18,6 +18,8 @@ import { CreateArticleFormComponent } from '../components/articles/Create-Articl
 
 import ArticleContext from '../services/context';
 import articleReducer from '../services/Reducer';
+import { IndexedDBService } from '../services/indexedDb.service';
+
 
 // FIREBASE
 // ==========================
@@ -31,6 +33,7 @@ declare var require: any;
 let categories = require('../assets/data/categories.json');
 const utils = new Utils();
 const dataService = new DataService('articles');
+let idbService = new IndexedDBService();
 
 declare var UIkit: any;
 
@@ -56,6 +59,7 @@ const ArticleHome = (props: any) => {
     const [newState, dispatch] = useReducer(articleReducer, state);
 
     useEffect(() => {
+        idbService.openDatabase({});
         if (state.reRender) {
             // Show loading indicator
             setState({
@@ -81,7 +85,18 @@ const ArticleHome = (props: any) => {
                 .then((data: any) => {
                     // Update variable value in articles.service.ts
                     updateArticleDataService(data);
-
+                    idbService.addAllRecord(data);
+                    idbService.idbGetAllRecords().then((data: any) => {
+                        console.log('DATA 123 :', data);
+                        data.onsuccess = function () {
+                            if (data.result !== undefined) {
+                                console.log("Articles", data.result); // array of books with price=10
+                            } else {
+                                console.log("No such books");
+                            }
+                        };
+                    });
+                    // console.log('TEST : ', test);
                     setState({
                         ...state,
                         tags: getUniqueTags(data)
@@ -309,7 +324,7 @@ const ArticleHome = (props: any) => {
                             {...newState}
                             onCreateArticle={handleCreateArticle}
                             onEditSaveArticle={handleEditSaveArticle}
-                            // firebase={firebase}
+                        // firebase={firebase}
                         />
 
                         <ArticlesList
