@@ -71,6 +71,37 @@ self.addEventListener('fetch', function (event) {
     );
 });
 
+// https://github.com/AdeyinkaAdegbenro/Offline_Flask_Form/blob/master/static/sw.js
+/* self.addEventListener('fetch', function (event) {
+    // every request from our site, passes through the fetch handler
+    // I have proof
+    console.log('I am a request with url: ', event.request.clone().url)
+    if (event.request.method === 'GET') {
+        event.respondWith(
+            // check all the caches in the browser and find
+            // out whether our request is in any of them
+            caches.match(event.request)
+                .then(function (response) {
+                    if (response) {
+                        // if we are here, that means there's a match
+                        //return the response stored in browser
+                        return response;
+                    }
+                    // no match in cache, use the network instead
+                    return fetch(event.request);
+                }
+                )
+        );
+    } else if (event.request.clone().method === 'POST') {
+        // attempt to send request normally
+        console.log('form_data', form_data)
+        event.respondWith(fetch(event.request.clone()).catch(function (error) {
+            // only save post requests in browser, if an error occurs
+            // savePostRequests(event.request.clone().url, form_data)
+        }))
+    }
+}); */
+
 self.addEventListener('message', function (event) {
     console.log('form data', event.data)
     if (event.data.hasOwnProperty('data')) {
@@ -80,7 +111,7 @@ self.addEventListener('message', function (event) {
 });
 
 self.addEventListener('sync', function (event) {
-    console.log('now online')
+    console.log('now online. Sync data')
     if (event.tag === 'sendFormData') { // event.tag name checked here must be the same as the one used while registering sync
         event.waitUntil(
             // Send our POST request to the server, now that the user is online

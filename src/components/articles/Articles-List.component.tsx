@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import ArticleListItem from './Article-List-Item.component';
 import LoadingSpinner from '../shared/LoadingSpinner';
 
@@ -12,26 +12,26 @@ const ArticlesList = (props: any) => {
     }
 
     const { filteredRecords, loading } = props;
+    if (!filteredRecords) return null;
+    if (loading) return (<LoadingSpinner text={'Loading articles...'} />);
+    if (!filteredRecords.length && !loading) return (<div className="message-no-article">Sorry, No article found</div>);
 
     return (
-        <div className="post-list__wrapper" >
-            <div className="uk-flex uk-flex-column">
-                {
-                    loading ? <LoadingSpinner text={'Loading articles...'} /> : filteredRecords && filteredRecords.length > 0 ?
-                        filteredRecords.map((article: any, index: number) => {
-                            return (
-                                <ArticleListItem
-                                    key={index}
-                                    article={article}
-                                    index={index}
-                                    activeTab={activeTab}
-                                    onActivateTab={handleActivateTab.bind(null, index)}
-                                    {...props} />
-                            )
-                        }) : <div className="message-no-article">Sorry, No article found</div>
-                }
-            </div>
-        </div>
+        <Fragment>
+            {
+                filteredRecords.map((article: any, index: number) => {
+                    return (
+                        <ArticleListItem
+                            key={index}
+                            article={article}
+                            index={index}
+                            activeTab={activeTab}
+                            onActivateTab={handleActivateTab.bind(null, index)}
+                            {...props} />
+                    )
+                })
+            }
+        </Fragment>
     );
 }
 

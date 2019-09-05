@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useState } from "react";
+import React, { useReducer, useEffect, useState, lazy, Suspense } from "react";
 // import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 // SERVICES
@@ -11,7 +11,7 @@ import Utils from '../services/utils';
 // ==========================
 import Header from "../components/articles/Header.component";
 import Sidebar from '../components/articles/Sidebar.component';
-import ArticlesList from "../components/articles/Articles-List.component";
+// import ArticlesList from "../components/articles/Articles-List.component";
 import ToastMessage from "../components/articles/ToastMessage";
 import { Article } from "../components/articles/Article.component";
 import { CreateArticleFormComponent } from '../components/articles/Create-Article-Form.component';
@@ -20,6 +20,10 @@ import ArticleContext from '../services/context';
 import articleReducer from '../services/Reducer';
 import { IndexedDBService } from '../services/indexedDb.service';
 
+// A dynamic import call in ES5/ES3 requires the 'Promise' constructor.
+// Make sure you have a declaration for the 'Promise' constructor or include 'ES2015' in your`--lib` option.ts(2712)
+// update tsconfig.json with "compilerOptions": { "lib": [ "dom", "es2015", "es6"] }
+const ArticlesList = React.lazy(() => import('../components/articles/Articles-List.component'))
 
 // FIREBASE
 // ==========================
@@ -86,7 +90,7 @@ const ArticleHome = (props: any) => {
                     // Update variable value in articles.service.ts
                     updateArticleDataService(data);
                     idbService.addAllRecord(data);
-                    idbService.idbGetAllRecords().then((data: any) => {
+                    /* idbService.idbGetAllRecords().then((data: any) => {
                         console.log('DATA 123 :', data);
                         data.onsuccess = function () {
                             if (data.result !== undefined) {
@@ -95,7 +99,7 @@ const ArticleHome = (props: any) => {
                                 console.log("No such books");
                             }
                         };
-                    });
+                    }); */
                     // console.log('TEST : ', test);
                     setState({
                         ...state,
@@ -327,21 +331,27 @@ const ArticleHome = (props: any) => {
                         // firebase={firebase}
                         />
 
-                        <ArticlesList
-                            filteredRecords={filteredRecords}
-                            loading={state.loading}
-                            onAddToastMessage={addToastMessage.bind(this)}
-                            onDeleteArticle={handleDeleteArticle}
-                            onEditArticle={handleEditArticle}
-                            onDisplaySingleArticleContent={handleDisplaySingleArticleContent}
-                            onFilterRecords={handleFilterRecords}
-                            markAsFavorite={handleMarkAsFavorite}
-                        />
+                        <Suspense fallback={<div>Loading 123...</div>}>
+                            <div className="post-list__wrapper" >
+                                <div className="uk-flex uk-flex-column">
+                                    <ArticlesList
+                                        filteredRecords={filteredRecords}
+                                        loading={state.loading}
+                                        onAddToastMessage={addToastMessage.bind(this)}
+                                        onDeleteArticle={handleDeleteArticle}
+                                        onEditArticle={handleEditArticle}
+                                        onDisplaySingleArticleContent={handleDisplaySingleArticleContent}
+                                        onFilterRecords={handleFilterRecords}
+                                        markAsFavorite={handleMarkAsFavorite}
+                                    />
+                                </div>
+                            </div>
+                        </Suspense>
 
                         {
                             currentRecord ? (
                                 <Article currentRecord={currentRecord} onFilterRecords={handleFilterRecords} />
-                            ) : <p>No Article found</p>
+                            ) : <p>No Article selected. Please select any article from the list.</p>
                         }
 
 
