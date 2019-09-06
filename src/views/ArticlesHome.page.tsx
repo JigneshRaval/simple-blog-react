@@ -89,7 +89,11 @@ const ArticleHome = (props: any) => {
                 .then((data: any) => {
                     // Update variable value in articles.service.ts
                     updateArticleDataService(data);
-                    idbService.addAllRecord(data);
+
+                    // Add all the articles to indexedDb
+                    // idbService.addAllRecord(data);
+
+                    // get all the articles stored in indexedDb
                     /* idbService.idbGetAllRecords().then((data: any) => {
                         console.log('DATA 123 :', data);
                         data.onsuccess = function () {
