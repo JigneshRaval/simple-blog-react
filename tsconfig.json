@@ -16,6 +16,10 @@
             "es2015",
             "es6"
         ],
+        /* Type declaration files to be included in compilation. */
+        "types": [
+            "@types/**"
+        ]
     },
     "include": [
         "./src/**/*"

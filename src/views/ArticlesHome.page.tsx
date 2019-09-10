@@ -83,28 +83,11 @@ const ArticleHome = (props: any) => {
 
             document.getElementsByTagName('body')[0].classList.add('isArticleListPanelOpened');
 
-            // Get all Articles on component mount
-            dataService.getAllRecords()
-                .then((data: any) => {
-                    setIsLoading(false);
-                    dispatch({ type: 'GET_ALL_RECORDS', data: data.docs })
-
-                    return data.docs;
-                })
-                .then((data: any) => {
-                    // Update variable value in data.service.ts
-                    updateArticleDataService(data);
-                    /* setState({
-                        ...state,
-                        tags: utils.getUniqueTags(data)
-                    }); */
-                })
-                .catch((error: any) => {
-                    console.log('Error in fetching all the records : ', error);
-                });
+            fetchAllRecords();
 
         }
 
+        // const pollForData = setInterval(() => fetchAllRecords(), 5000);
         // componentWillUnmount
         return () => {
             console.log('Unmounting ArticleHome component...');
@@ -113,9 +96,34 @@ const ArticleHome = (props: any) => {
                 ...state,
                 toastChildren: []
             });
+            // clearTimeout(pollForData);
         }
 
     }, [reRender]);
+
+
+    const fetchAllRecords = () => {
+        // Get all Articles on component mount
+        dataService.getAllRecords()
+            .then((data: any) => {
+                setIsLoading(false);
+                dispatch({ type: 'GET_ALL_RECORDS', data: data.docs })
+
+                return data.docs;
+            })
+            .then((data: any) => {
+                // Update variable value in data.service.ts
+                updateArticleDataService(data);
+                /* setState({
+                    ...state,
+                    tags: utils.getUniqueTags(data)
+                }); */
+            })
+            .catch((error: any) => {
+                console.log('Error in fetching all the records : ', error);
+            });
+    }
+
 
     // Dynamically add multiple ToastMessage components.
     const addToastMessage = (messageType: string, message: string, isConfirm: boolean = false, articleId: string = '') => {
@@ -135,11 +143,13 @@ const ArticleHome = (props: any) => {
         });
     }
 
+
     const handleConfirmEvent = (articleId: string) => {
         if (articleId) {
             handleDeleteArticle(articleId);
         }
     }
+
 
     // Create new article
     // =========================================

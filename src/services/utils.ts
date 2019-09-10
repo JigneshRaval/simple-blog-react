@@ -169,7 +169,9 @@ class Utils {
         }
 
         if (searchTerm) {
-            searchBarElem.classList.add('isSearching');
+            if (searchBarElem) {
+                searchBarElem.classList.add('isSearching');
+            }
 
             // If "searchTerm" provided then, Set filtered articles in the state
             // this.setState({ filteredArticles: filteredList });
@@ -178,7 +180,9 @@ class Utils {
         } else {
 
             // Hide clear search icon
-            searchBarElem.classList.remove('isSearching');
+            if (searchBarElem) {
+                searchBarElem.classList.remove('isSearching');
+            }
 
             // If "searchTerm" NOT provided then, Set default articles list into the filtered articles in the state
             // this.setState({ filteredArticles: this.state.articles });
