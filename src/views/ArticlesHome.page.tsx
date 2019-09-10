@@ -1,9 +1,13 @@
 import React, { useReducer, useEffect, useState, lazy, Suspense } from "react";
 // import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
+
 // SERVICES
 // ==========================
 import { DataService } from "../services/data.service";
+// import ArticleContext from '../services/context';
+import articleReducer from '../services/Reducer';
+import { IndexedDBService } from '../services/indexedDb.service';
 import Utils from '../services/utils';
 
 
@@ -16,14 +20,12 @@ import ToastMessage from "../components/articles/ToastMessage";
 import { Article } from "../components/articles/Article.component";
 import { CreateArticleFormComponent } from '../components/articles/Create-Article-Form.component';
 
-import ArticleContext from '../services/context';
-import articleReducer from '../services/Reducer';
-import { IndexedDBService } from '../services/indexedDb.service';
 
 // A dynamic import call in ES5/ES3 requires the 'Promise' constructor.
 // Make sure you have a declaration for the 'Promise' constructor or include 'ES2015' in your`--lib` option.ts(2712)
 // update tsconfig.json with "compilerOptions": { "lib": [ "dom", "es2015", "es6"] }
 const ArticlesList = React.lazy(() => import('../components/articles/Articles-List.component'))
+
 
 // FIREBASE
 // ==========================
@@ -34,42 +36,48 @@ const ArticlesList = React.lazy(() => import('../components/articles/Articles-Li
 // });
 
 declare var require: any;
+declare var UIkit: any;
+
 let categories = require('../assets/data/categories.json');
 const utils = new Utils();
 const dataService = new DataService('articles');
 let idbService = new IndexedDBService();
 
-declare var UIkit: any;
+const initialState: any = {
+    dataService: new DataService('articles'),
+    articles: [],
+    totalRecords: 0,
+    editData: {},
+    currentRecord: '',
+    filteredRecords: [],
+    categories: categories.categories,
+    isEditMode: false,
+    toastChildren: [],
+    isConfirm: false,
+    tags: {}
+};
 
 const ArticleHome = (props: any) => {
 
-    const [state, setState] = useState({
-        dataService: new DataService('articles'),
-        articles: [],
-        totalRecords: 0,
-        editData: {},
-        currentRecord: '',
-        filteredRecords: [],
-        categories: categories.categories,
-        isEditMode: false,
-        showForm: false,
-        loading: false, // will be true when ajax request is running,
-        toastChildren: [],
-        isConfirm: false,
-        reRender: true,
-        tags: {}
-    });
+    const [state, setState] = useState(initialState);
 
-    const [newState, dispatch] = useReducer(articleReducer, state);
+    // Show loading spinner icon, when ajax request is running,
+    const [isLoading, setIsLoading] = React.useState(false);
+
+    const [reRender, setReRender] = useState(false);
+
+    const [newState, dispatch] = useReducer(articleReducer, initialState);
 
     useEffect(() => {
-        idbService.openDatabase({});
-        if (state.reRender) {
+        console.log('Rendering ArticleHome page.');
+
+        // idbService.openDatabase({});
+
+        setReRender(true);
+
+        if (reRender) {
             // Show loading indicator
-            setState({
-                ...state,
-                loading: true
-            });
+            setIsLoading(true);
 
             utils.isServerOnline();
 
@@ -78,81 +86,36 @@ const ArticleHome = (props: any) => {
             // Get all Articles on component mount
             dataService.getAllRecords()
                 .then((data: any) => {
-                    setState({
-                        ...state,
-                        loading: false
-                    });
+                    setIsLoading(false);
                     dispatch({ type: 'GET_ALL_RECORDS', data: data.docs })
 
                     return data.docs;
                 })
                 .then((data: any) => {
-                    // Update variable value in articles.service.ts
+                    // Update variable value in data.service.ts
                     updateArticleDataService(data);
-
-                    // Add all the articles to indexedDb
-                    // idbService.addAllRecord(data);
-
-                    // get all the articles stored in indexedDb
-                    /* idbService.idbGetAllRecords().then((data: any) => {
-                        console.log('DATA 123 :', data);
-                        data.onsuccess = function () {
-                            if (data.result !== undefined) {
-                                console.log("Articles", data.result); // array of books with price=10
-                            } else {
-                                console.log("No such books");
-                            }
-                        };
-                    }); */
-                    // console.log('TEST : ', test);
-                    setState({
+                    /* setState({
                         ...state,
-                        tags: getUniqueTags(data)
-                    });
-                    // console.log('window :', window);
-
-                    // Get list of all the events attached to dom, run this in browser console
-                    /* Array.from(document.querySelectorAll('*')).reduce(function (pre, dom) {
-                        var evtObj = getEventListeners(dom);
-                        Object.keys(evtObj).forEach(function (evt) {
-                            if (typeof pre[evt] === 'undefined') {
-                                pre[evt] = 0
-                            }
-                            pre[evt] += evtObj[evt].length
-                        })
-                        return pre
-                    }, {}); */
-
+                        tags: utils.getUniqueTags(data)
+                    }); */
                 })
-                .catch((err: any) => {
-                    console.log('Error in fetching all the records : ', err);
+                .catch((error: any) => {
+                    console.log('Error in fetching all the records : ', error);
                 });
 
         }
 
         // componentWillUnmount
         return () => {
-
-            console.log('unmounting 1...');
+            console.log('Unmounting ArticleHome component...');
+            setReRender(false);
             setState({
                 ...state,
-                reRender: false,
                 toastChildren: []
             });
         }
-    }, [state.reRender]);
 
-    const [reRender, setReRender] = useState(false);
-
-    useEffect(() => {
-        console.log('mounted 2');
-        setReRender(false);
-
-        return () => {
-            console.log('unmounting 2...');
-        }
-    }, [reRender])
-
+    }, [reRender]);
 
     // Dynamically add multiple ToastMessage components.
     const addToastMessage = (messageType: string, message: string, isConfirm: boolean = false, articleId: string = '') => {
@@ -192,11 +155,13 @@ const ArticleHome = (props: any) => {
 
             // Update variable value in articles.service.ts
             updateArticleDataService(newState.articles);
+
+            setReRender(true);
         }).catch((err) => {
             console.log('Error in creating new article', err);
         });
 
-
+        setReRender(false);
     }
 
 
@@ -228,7 +193,7 @@ const ArticleHome = (props: any) => {
                     articles[index] = data.docs[0];
                 }
             });
-
+            // setReRender(true);
             dispatch({ type: 'EDIT_ARTICLE', articles: articles, currentRecord: data.docs[0] });
 
             // display message
@@ -237,15 +202,12 @@ const ArticleHome = (props: any) => {
             // Update variable value in articles.service.ts
             updateArticleDataService(newState.articles);
 
-            // setReRender(true);
+            setReRender(true);
         }).catch((err: any) => {
             console.log('Error in edit or save article : ', err);
         });
 
-        setState(state => ({
-            ...newState,
-            reRender: false
-        }));
+        setReRender(false);
     }
 
 
@@ -261,16 +223,12 @@ const ArticleHome = (props: any) => {
 
             // Update variable value in articles.service.ts
             updateArticleDataService(newState.articles);
-
-            console.log('Delete Article State : ', state);
+            setReRender(true);
         }).catch((err: any) => {
             console.log('Error in deleting article : ', err);
         });
 
-        setState(state => ({
-            ...state,
-            reRender: false
-        }));
+        setReRender(false);
     }
 
 
@@ -301,19 +259,6 @@ const ArticleHome = (props: any) => {
         dispatch({ type: 'FILTER_ALL_ARTICLES', filteredRecords: utils.filterArticles(event, filterBy, newState.articles) });
     }
 
-    const getUniqueTags = (articles: any) => {
-        const uniqueTags = articles.map((article: any) => article.tags)
-            .reduce((allTags: any, tags: any) => allTags.concat(tags), [])
-            .reduce((uniqtags: any, tag: any) => {
-                uniqtags[tag.trim()] = (uniqtags[tag.trim()] || 0) + 1
-                return uniqtags;
-            }, {});
-
-        // OUTPUT : {JavaScript: 3, ES6: 3, React: 1, Form: 1}
-
-        return uniqueTags;
-    }
-
     const { articles, isEditMode, currentRecord, filteredRecords, loading, totalRecords } = newState;
 
 
@@ -340,7 +285,7 @@ const ArticleHome = (props: any) => {
                                 <div className="uk-flex uk-flex-column">
                                     <ArticlesList
                                         filteredRecords={filteredRecords}
-                                        loading={state.loading}
+                                        loading={isLoading}
                                         onAddToastMessage={addToastMessage.bind(this)}
                                         onDeleteArticle={handleDeleteArticle}
                                         onEditArticle={handleEditArticle}
@@ -364,13 +309,13 @@ const ArticleHome = (props: any) => {
                 </section>
             </div>
 
-            <div id="offcanvas-usage" uk-offcanvas="flip: true; overlay: true">
-                <div className="uk-offcanvas-bar">
-                    <button className="uk-offcanvas-close" type="button" uk-close=""></button>
+            <Sidebar
+                onFilterRecords={handleFilterRecords}
+                articleCount={totalRecords}
+            // {...newState}
+            // tags={state.tags}
+            />
 
-                    <Sidebar onFilterRecords={handleFilterRecords} articleCount={totalRecords} {...newState} tags={state.tags} />
-                </div>
-            </div>
             <div className="toast-message__wrapper">{state.toastChildren}</div>
         </main>
 

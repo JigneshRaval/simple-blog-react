@@ -421,6 +421,19 @@ class Utils {
         }
     }
 
+    public getUniqueTags(articles: any) {
+        const uniqueTags = articles.map((article: any) => article.tags)
+            .reduce((allTags: any, tags: any) => allTags.concat(tags), [])
+            .reduce((uniqtags: any, tag: any) => {
+                uniqtags[tag.trim()] = (uniqtags[tag.trim()] || 0) + 1
+                return uniqtags;
+            }, {});
+
+        // OUTPUT : {JavaScript: 3, ES6: 3, React: 1, Form: 1}
+
+        return uniqueTags;
+    }
+
     public isServerOnline() {
         let isServerUp = true;
         let url = "http://localhost:3001/assets/images/favicon.ico";

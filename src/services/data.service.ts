@@ -22,10 +22,14 @@ export class DataService {
      * getAllRecords: Get all the records from database
      */
     public async getAllRecords() {
-        let response = await fetch(`${this.API_URL}`);
-        this.articles = await response.json();
-        // navigator.serviceWorker.controller.postMessage(this.articles)  // <--- This line right here sends our data to sw.js
-        return this.articles;
+        try {
+            let response = await fetch(`${this.API_URL}`);
+            this.articles = await response.json();
+            // navigator.serviceWorker.controller.postMessage(this.articles)  // <--- This line right here sends our data to sw.js
+            return this.articles;
+        } catch (error) {
+            console.log('Looks like there was a problem. Status Code: ', error)
+        }
     }
 
     /* public getAllRecords() {

@@ -24,6 +24,24 @@ routes.get('/articles', (request, response) => {
     });
 });
 
+// GET : All tags (/api/articles/tags)
+routes.get('/articles/tags', (request, response) => {
+    // Find all documents in the collection
+    db.articles.find({}).sort({ date: -1 }).exec(function (err, docs) {
+
+        const uniqueTags = docs.map((article) => article.tags)
+            .reduce((allTags, tags) => allTags.concat(tags), [])
+            .reduce((uniqtags, tag) => {
+                uniqtags[tag.trim()] = (uniqtags[tag.trim()] || 0) + 1
+                return uniqtags;
+            }, {});
+
+        // OUTPUT : {JavaScript: 3, ES6: 3, React: 1, Form: 1}
+
+        response.status(200).send({ message: 'Fetching all the tags :', tags: uniqueTags });
+    });
+});
+
 
 // GET : Get Single Article by Id (/api/articles/:articleId)
 routes.get('/articles/:articleId', (request, response) => {

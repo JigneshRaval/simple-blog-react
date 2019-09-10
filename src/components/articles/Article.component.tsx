@@ -17,6 +17,7 @@ declare var hljs: any;
 
 
 export const Article = (props: any) => {
+
     const { currentRecord: article } = props;
 
     useEffect(() => {
@@ -61,7 +62,10 @@ export const Article = (props: any) => {
 
                         <p className="uk-article-meta">Written by <a href="javascript:;"><strong>{article.author}</strong></a> on <strong>{date.toString()}</strong>.</p>
                         <div className="article__tags-list">
-                            Tagged as <TagsInline data={article} onFilterRecords={props.onFilterRecords} className={'uk-button'} />
+                            Tagged as <TagsInline
+                                data={article}
+                                onFilterRecords={props.onFilterRecords}
+                                className={'uk-button'} />
                         </div>
                     </div>
                 </header>

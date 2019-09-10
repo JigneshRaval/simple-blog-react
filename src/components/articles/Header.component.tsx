@@ -50,7 +50,7 @@ const Header = (props: any) => {
                     <ul className="uk-navbar-nav" >
                         <li className="uk-active">
                             <a href="#">Categories</a>
-                            <div className="uk-navbar-dropdown" uk-dropdown="mode: click">
+                            <div className="uk-navbar-dropdown dropdown-categories" uk-dropdown="mode: click">
                                 <ul className="uk-nav uk-navbar-dropdown-nav">
                                     <li>
                                         <a href="javascript: void(0);" data-tag-name='all' onClick={(event) => props.onFilterRecords(event, 'all')}>View All Articles</a>

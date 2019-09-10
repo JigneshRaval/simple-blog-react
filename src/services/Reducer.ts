@@ -6,12 +6,11 @@ function articleReducer(state: any, action: any) {
                 articles: action.data,
                 totalRecords: action.data.length,
                 filteredRecords: action.data,
-                currentRecord: action.data[0],
-                loading: false,
-                reRender: false
+                currentRecord: action.data[0]
             }
         case "SET_EDIT_MODE":
             let articleToEdit;
+
             state.articles.map((article: any) => {
                 if (article._id === action.articleId) {
                     articleToEdit = article;
@@ -30,8 +29,7 @@ function articleReducer(state: any, action: any) {
                 isEditMode: false,
                 articles: action.articles,
                 filteredRecords: action.articles,
-                currentRecord: action.currentRecord,
-                reRender: true
+                currentRecord: action.currentRecord
             };
         case "EDIT_ARTICLE":
             return {
@@ -40,16 +38,14 @@ function articleReducer(state: any, action: any) {
                 filteredRecords: action.articles,
                 editData: {},
                 isEditMode: false,
-                currentRecord: action.currentRecord,
-                reRender: true
+                currentRecord: action.currentRecord
             };
         case "DELETE_ARTICLE":
             return {
                 ...state,
                 totalRecords: state.articles.length,
                 articles: action.data,
-                filteredRecords: action.data,
-                reRender: true
+                filteredRecords: action.data
             };
         case "GET_SINGLE_ARTICLE":
 

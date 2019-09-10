@@ -9,11 +9,14 @@ import Tags from '../shared/Tags.component';
 const Sidebar = (props: any) => {
 
     return (
-        <React.Fragment>
+        <div id="offcanvas-usage" uk-offcanvas="flip: true; overlay: true">
+            <div className="uk-offcanvas-bar">
+                <button className="uk-offcanvas-close" type="button" uk-close=""></button>
 
-            <Tags {...props} />
+                <Tags {...props} />
 
-        </React.Fragment>
+            </div>
+        </div>
     )
 }
 

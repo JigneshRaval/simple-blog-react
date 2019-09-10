@@ -37,6 +37,11 @@ module.exports = {
     module: {
         rules: [
             {
+                /**
+                 * Styles
+                 *
+                 * Inject CSS into the head with source maps.
+                 */
                 // SCSS Compilation : sass / scss loader for webpack
                 test: /\.(sass|scss)$/i,
                 use: ExtractTextPlugin.extract({
@@ -57,6 +62,11 @@ module.exports = {
                     ]
                 })
             },
+            /**
+             * Fonts
+             *
+             * Inline font files.
+             */
             {
                 test: /\.(woff(2)?|ttf|eot|svg|png|jpg|gif|svg)(\?v=\d+\.\d+\.\d+)?$/,
                 use: [{
@@ -67,6 +77,11 @@ module.exports = {
                     }
                 }]
             },
+            /**
+             * JavaScript
+             *
+             * Use Babel to transpile JavaScript files.
+             */
             // TK THE LOADER: needed to process typescript files. Note the option used. We'll also need sfc.d.ts so that typescript can find the necessary .vue files
             // TK make sure to npm install ts-loader and npm link typscript if its installed globally
             {
@@ -83,7 +98,11 @@ module.exports = {
             filename: 'assets/css/[name].bundle.css',
             allChunks: true
         }),
-
+        /**
+         * HtmlWebpackPlugin
+         *
+         * Generates an HTML file from a template.
+         */
         new HtmlWebpackPlugin({
             inject: true,
             title: 'CodeCandy',

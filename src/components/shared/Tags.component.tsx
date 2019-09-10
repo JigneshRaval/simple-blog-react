@@ -2,11 +2,21 @@
 
 // Display list of all the unique tags
 
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useFetch } from '../../services/useFetch.hook';
+
 
 const Tags = (props: any) => {
 
-    const total = Object.keys(props.tags).length;
+    useEffect(() => {
+        console.log('Tags mounted');
+    }, []);
+
+    const data = useFetch(`/api/articles/tags`, {});
+
+    if (!data.response) return null;
+    const tags = data.response.tags;
+    const total = Object.keys(tags).length;
 
     return (
         <nav className="tags-wrapper tags-wrapper--aside">
@@ -23,15 +33,15 @@ const Tags = (props: any) => {
                     </a>
                 </li>
                 {
-                    Object.keys(props.tags).sort().map(tag => {
+                    total > 0 ? Object.keys(tags).sort().map(tag => {
                         return (
                             <li className="tag-list__item" key={tag}>
                                 <a href="javascript: void(0);" data-tag-name={tag} onClick={(event) => props.onFilterRecords(event, 'tag')}>
-                                    {tag} <span className="post-counts">{props.tags[tag]}</span>
+                                    {tag} <span className="post-counts">{tags[tag]}</span>
                                 </a>
                             </li>
                         )
-                    })
+                    }) : <p>Tags are not available</p>
                 }
             </ul>
         </nav>
