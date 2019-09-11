@@ -73,25 +73,28 @@ const ArticleHome = (props: any) => {
 
         // idbService.openDatabase({});
 
-        setReRender(true);
+        // setReRender(true);
 
-        if (reRender) {
-            // Show loading indicator
-            setIsLoading(true);
+        // if (reRender) {
+        // Show loading indicator
+        setIsLoading(true);
 
-            utils.isServerOnline();
+        utils.isServerOnline();
 
-            document.getElementsByTagName('body')[0].classList.add('isArticleListPanelOpened');
+        document.getElementsByTagName('body')[0].classList.add('isArticleListPanelOpened');
 
+        setTimeout(() => {
             fetchAllRecords();
+        }, 2500)
 
-        }
+
+        // }
 
         // const pollForData = setInterval(() => fetchAllRecords(), 5000);
         // componentWillUnmount
         return () => {
             console.log('Unmounting ArticleHome component...');
-            setReRender(false);
+            // setReRender(false);
             setState({
                 ...state,
                 toastChildren: []
@@ -99,7 +102,7 @@ const ArticleHome = (props: any) => {
             // clearTimeout(pollForData);
         }
 
-    }, [reRender]);
+    }, []);
 
 
     const fetchAllRecords = () => {
@@ -137,10 +140,10 @@ const ArticleHome = (props: any) => {
 
         const newChildren = [...state.toastChildren, toastChild];
 
-        setState({
+        setState((prevState: any) => ({
             ...state,
             toastChildren: newChildren
-        });
+        }));
     }
 
 
@@ -166,12 +169,12 @@ const ArticleHome = (props: any) => {
             // Update variable value in articles.service.ts
             updateArticleDataService(newState.articles);
 
-            setReRender(true);
+            // setReRender(true);
         }).catch((err) => {
             console.log('Error in creating new article', err);
         });
 
-        setReRender(false);
+        // setReRender(false);
     }
 
 
@@ -194,15 +197,17 @@ const ArticleHome = (props: any) => {
     // Update data on the server
     // =========================================
     const handleEditSaveArticle = (articleId: string, formDataObj: any) => {
-        let articles = [...state.articles];
+        let articles = [...newState.articles];
 
         dataService.editRecord(articleId, formDataObj).then((data: any) => {
+
             articles.map((article, index) => {
                 if (article._id === data.docs[0]._id) {
                     articles[index] = { ...data.docs[0] };
                     articles[index] = data.docs[0];
                 }
             });
+
             // setReRender(true);
             dispatch({ type: 'EDIT_ARTICLE', articles: articles, currentRecord: data.docs[0] });
 
@@ -212,12 +217,12 @@ const ArticleHome = (props: any) => {
             // Update variable value in articles.service.ts
             updateArticleDataService(newState.articles);
 
-            setReRender(true);
+            // setReRender(true);
         }).catch((err: any) => {
             console.log('Error in edit or save article : ', err);
         });
 
-        setReRender(false);
+        // setReRender(false);
     }
 
 
@@ -233,12 +238,12 @@ const ArticleHome = (props: any) => {
 
             // Update variable value in articles.service.ts
             updateArticleDataService(newState.articles);
-            setReRender(true);
+            // setReRender(true);
         }).catch((err: any) => {
             console.log('Error in deleting article : ', err);
         });
 
-        setReRender(false);
+        // setReRender(false);
     }
 
 

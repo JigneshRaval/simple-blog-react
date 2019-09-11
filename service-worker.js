@@ -8,6 +8,8 @@ const assetToCache = [
     "index.html",
     "manifest.json",
     "assets/css/style.css",
+    "addTohome.js",
+    "serviceWorkerInit.js",
     "app.bundle.js",
     "app.bundle.js.map",
     "vendors~app.bundle.js",
@@ -111,7 +113,13 @@ self.addEventListener('message', function (event) {
 });
 
 self.addEventListener('sync', function (event) {
-    console.log('now online. Sync data')
+    console.log('now online. Sync data');
+    try {
+        fetch(`/api/articles`).then((response => response.json())).catch((error)> console.log('Error in fetching articles from service worker.', error));
+    } catch (error) {
+        console.log('Looks like there was a problem. Status Code: ', error)
+    }
+
     if (event.tag === 'sendFormData') { // event.tag name checked here must be the same as the one used while registering sync
         event.waitUntil(
             // Send our POST request to the server, now that the user is online

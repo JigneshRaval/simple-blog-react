@@ -18,7 +18,7 @@
         ],
         /* Type declaration files to be included in compilation. */
         "types": [
-            "@types/**"
+            "./src/@types/**"
         ]
     },
     "include": [

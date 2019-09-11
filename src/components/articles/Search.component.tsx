@@ -17,7 +17,7 @@ const SearchComponent = (props: any) => {
         if (timer) {
             clearTimeout(timer);
         }
-        timer = setTimeout((ev) => {
+        timer = setTimeout(() => {
             onFilterRecords(event, type);
         }, 1000);
     }
@@ -30,9 +30,10 @@ const SearchComponent = (props: any) => {
 
             <form className="uk-search uk-search-default uk-width-1-1" onSubmit={handleSubmit}>
                 <span uk-search-icon=""></span>
-                <input className="uk-search-input" name="searchBar" id="searchBar" type="text" placeholder="Search articles by Title, Tag or Category" onChange={(event) => filterArticles(event, 'search')} ref={inputRef} />
+                <label className="visually-hidden" htmlFor="searchBar">Search articles by Title, Tag or Category</label>
+                <input className="uk-search-input" name="searchBar" id="searchBar" type="text" placeholder="Search articles by Title, Tag or Category" onChange={(event) => filterArticles(event, 'search')} ref={inputRef} aria-label="Search" />
 
-                <button type="button" className="close clear-search" data-dismiss="modal" aria-label="Close" onClick={(event) => { (inputRef.current as HTMLInputElement).value = ''; filterArticles(event, 'all') }} title="Clear Search">
+                <button type="button" className="close clear-search" data-dismiss="modal" aria-label="Close" onClick={(event) => { (inputRef.current as HTMLInputElement).value = ''; filterArticles(event, 'all') }} title="Click this button to clear search results.">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </form>

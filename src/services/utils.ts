@@ -127,7 +127,7 @@ class Utils {
     }
 
     /**
-     * @function : Toggle settings dropdown in styleguide header section
+     * @function : Toggle settings dropdown in header section
      * @param event
      */
     public toggleDropdown(event: any) {
@@ -135,10 +135,10 @@ class Utils {
 
         if (event.target.classList.contains('isActive')) {
             event.target.classList.remove('isActive');
-            node.classList.remove('styleguide-dropdown-active');
+            node.classList.remove('dropdown-active');
         } else {
             event.target.classList.add('isActive');
-            node.classList.add('styleguide-dropdown-active');
+            node.classList.add('dropdown-active');
         }
     }
 
@@ -154,6 +154,12 @@ class Utils {
         }
     }
 
+    /**
+     * Function to filter Articles by search value and filterBy type
+     * @param event : object - Provide search value
+     * @param filterBy : string - provide filterBy value like filterBy tags, category, all, search
+     * @param articles : Array - List of all Articles to be filtered.
+     */
     public filterArticles(event: any, filterBy: string, articles: any) {
         // if (this.timer) {
         //     clearTimeout(this.timer);
@@ -165,7 +171,7 @@ class Utils {
 
         event.target.parentElement.classList.add('active');
         if (searchBox) {
-            (searchBox as HTMLInputElement).value = searchTerm;
+            // (searchBox as HTMLInputElement).value = searchTerm;
         }
 
         if (searchTerm) {

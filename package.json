@@ -41,7 +41,7 @@
 		"dev:w": "webpack --mode development -w",
 		"build": "webpack --mode production",
 		"tools": "copy .\\server.js .\\dist && copy .\\server-express.js .\\dist",
-		"pwa": "copy .\\manifest.json .\\dist && copy .\\service-worker.js .\\dist && copy .\\service-worker-react.js .\\dist",
+		"pwa": "copy .\\manifest.json .\\dist && copy .\\service-worker.js .\\dist && copy .\\service-worker-react.js .\\dist && copy .\\src\\addToHome.js .\\dist && copy .\\src\\serviceWorkerInit.js .\\dist",
 		"fonts": "xcopy .\\src\\assets\\fonts .\\dist\\assets\\fonts /E",
 		"js": "xcopy .\\src\\assets\\js .\\dist\\assets\\js /E",
 		"images": "xcopy .\\src\\assets\\images .\\dist\\assets\\images /E",

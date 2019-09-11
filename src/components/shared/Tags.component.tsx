@@ -29,7 +29,7 @@ const Tags = (props: any) => {
                 </li>
                 <li className="tag-list__item" key="all">
                     <a href="javascript: void(0);" data-tag-name="all" onClick={(event) => props.onFilterRecords(event, 'all')}>
-                        All <span className="post-counts">{total}</span>
+                        All Tags <span className="post-counts">{total}</span>
                     </a>
                 </li>
                 {
