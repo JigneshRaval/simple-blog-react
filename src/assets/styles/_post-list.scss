@@ -10,7 +10,7 @@
 	width: 25rem;
 	height: 100%;
 	background-color: var(--sidebar-background);
-	will-change: transform;
+	will-change: transform, left;
 	transition: transform 0.3s ease-out, left 0.3s ease;
 
 	.isArticleListPanelOpened & {
@@ -48,15 +48,52 @@
 	.card {
 		position: relative;
 		padding: 1.5em;
+		background-color: transparent;
+		border: 0px solid;
+
+		.card-body {
+			padding: 0%;
+		}
+
+		.card-header {
+			background-color: transparent;
+		}
 
 		.card-title {
-			font-size: 1rem;
+			font-size: 1.3rem;
+
+			a {
+				color: var(--sidebar-link-color);
+			}
 		}
 
 		.card-controls {
 			position: absolute;
 			right:0;
 			top: 0;
+
+			.btn-link {
+				color: #FFF;
+				font-size: 1.6em;
+				line-height: 0;
+			}
+
+			.dropdown-menu {
+				ul {
+					padding: 0;
+				}
+
+				a {
+					color: #111111;
+					display: block;
+				}
+
+				i.icon {
+					font-size: 24px;
+					margin-right: 1rem;
+				}
+			}
+
 		}
 
 		.article-category {
@@ -99,10 +136,10 @@
 		}
 	}
 
-	.uk-card-default {
+	.card {
 		box-shadow: none;
 		background-color: transparent;
-		border-bottom: 1px solid rgba(255,255,255, 0.3);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 		position: relative;
 
 		&::before {
@@ -126,26 +163,10 @@
 			transform: translateY(-50%) scale(1);
 			height: 100%;
 		}
-	}
 
-	.uk-card-title {
-		font-size: 20px;
-		margin: 0;
-		font-weight: normal;
-    	padding: 0.5em 0 0 0;
-
-		a {
-			display: block;
-			color: var(--sidebar-link-color);
-
-			&:hover {
-				text-decoration: none;
-			}
+		&:hover {
+			background-color: var(--sidebar-active-background);
 		}
 	}
 
-	.uk-button {
-		padding: 5px;
-		color: var(--sidebar-tags-color);
-	}
 }

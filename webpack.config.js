@@ -2,6 +2,7 @@
 
 const env = process.env.NODE_ENV;
 const path = require('path');
+const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -109,6 +110,12 @@ module.exports = {
             template: `${__dirname}/src/index.html`,
             filename: `${__dirname}/dist/index.html`, //relative to root of the application
         }),
+        // This will let bootstrap to find jquery
+        new webpack.ProvidePlugin({
+            jQuery: 'jquery',
+            $: 'jquery',
+            jquery: 'jquery'
+        })
     ],
     /* devServer: {
         historyApiFallback: true,

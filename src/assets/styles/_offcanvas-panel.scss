@@ -1,0 +1,16 @@
+/* = Offcanvas sliding panel
+=============================================*/
+
+.offcanvas-panel {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 300px;
+    background-color: black;
+    will-change: transform, right;
+	transition: transform 0.3s ease-out, right 0.3s ease;
+
+    &.isVisible {
+        right:0;
+    }
+}

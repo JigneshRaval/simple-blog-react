@@ -23,7 +23,7 @@ let categories = require('../assets/data/categories.json');
 const utils = new Utils();
 const dataService = new DataService('bookmarks');
 
-declare var UIkit: any;
+// declare var UIkit: any;
 
 const BookmarkHome = () => {
 
@@ -154,7 +154,7 @@ const BookmarkHome = () => {
     // Get Article data on click of Edit button
     // =========================================
     const handleEditBookmark = (articleId: string, isFormVisible: boolean) => {
-        UIkit.modal('#modal-bookmarks').show();
+        // UIkit.modal('#modal-bookmarks').show();
 
         dispatch({ type: 'SET_EDIT_MODE', articleId: articleId });
     }

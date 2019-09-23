@@ -69,6 +69,7 @@ const ArticleHome = (props: any) => {
     const [newState, dispatch] = useReducer(articleReducer, initialState);
 
     useEffect(() => {
+        // componentDidMount, componentDidUpdate, and componentWillUnmount
         console.log('Rendering ArticleHome page.');
 
         // idbService.openDatabase({});
@@ -188,7 +189,7 @@ const ArticleHome = (props: any) => {
     // Get Article data on click of Edit button
     // =========================================
     const handleEditArticle = (articleId: string, isFormVisible: boolean) => {
-        UIkit.modal('#modal-articles').show();
+        // UIkit.modal('#modal-articles').show();
 
         dispatch({ type: 'SET_EDIT_MODE', articleId: articleId });
     }

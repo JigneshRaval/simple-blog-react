@@ -16,14 +16,12 @@ const ThemeSwitcherDropdownComponent = () => {
 
     return (
         <React.Fragment>
-            <a href="#" uk-tooltip="Click this button to view list of available themes.">Themes</a>
-            <div className="uk-navbar-dropdown" uk-dropdown="mode: click">
-                <ul className="uk-nav uk-navbar-dropdown-nav">
-                    <li className="uk-active" onClick={() => switchTheme('light')}><a href="#">Light Theme (Default)</a></li>
-                    <li><a href="#" onClick={() => switchTheme('dark')}>Dark Theme</a></li>
-                    <li><a href="#" onClick={() => switchTheme('solarized')}>Solarized Theme</a></li>
-                    <li><a href="#" onClick={() => switchTheme('solarized-dark')}>Solarized Dark Theme</a></li>
-                </ul>
+            <button className="btn nav-link dropdown-toggle" type="button" id="dropdownMenuTheme" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Click this button to view list of available themes.">Themes</button>
+            <div className="dropdown-menu" aria-labelledby="dropdownMenuTheme">
+                <a className="dropdown-item" onClick={() => switchTheme('light')}>Light Theme (Default)</a>
+                <a className="dropdown-item" onClick={() => switchTheme('dark')}>Dark Theme</a>
+                <a className="dropdown-item" onClick={() => switchTheme('solarized')}>Solarized Theme</a>
+                <a className="dropdown-item" onClick={() => switchTheme('solarized-dark')}>Solarized Dark Theme</a>
             </div>
         </React.Fragment>
     )

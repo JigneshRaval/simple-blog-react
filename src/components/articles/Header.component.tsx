@@ -26,39 +26,46 @@ const Header = (props: any) => {
 
     return (
 
-        <header className="header-main uk-container uk-container-expand">
-            <nav className="uk-navbar-container uk-navbar-transparent" uk-navbar="">
-                <div className="uk-navbar-left">
-                    <button className="post-list__drawer" onClick={utils.handleToggleArticleListPanel} title="Click this button to view list of Articles." uk-tooltip="Click this button to view list of Articles.">
-                        <i className="ion ion-ios-arrow-forward"></i><i className="ion ion-ios-arrow-forward"></i>
-                    </button>
-                </div>
-                <div className="uk-navbar-left">
-                    <h5 className="header-title uk-navbar-item">
+        <header className="header-main">
+            <nav className="[ navbar navbar-expand-lg navbar-light bg-light ] [ d-flex align-items-stretch ]">
+                <button className="post-list__drawer" onClick={utils.handleToggleArticleListPanel} title="Click this button to view list of Articles." uk-tooltip="Click this button to view list of Articles.">
+                    <i className="ion ion-ios-arrow-forward"></i><i className="ion ion-ios-arrow-forward"></i>
+                </button>
+
+                {/* START : Logo */}
+                <div className="navbar-brand">
+                    <h5 className="header-title">
                         <a href="/">
                             <img src="../assets/images/Logo-iconic-thick.svg" alt="Code candy logo" className="logo-iconic" data-color-old="#9345EB" />
                             <img src="../assets/images/Logo-textual-product-sans.svg" alt="Code candy logo" className="logo-textual" />
                         </a>
                     </h5>
                 </div>
-                <div className="uk-navbar-right">
-                    <div className="uk-navbar-item">
+                {/* END : Logo */}
+
+                {/* START : Toggle/Collapse navigation in Mobile device view */}
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                {/* END : Toggle/Collapse navigation in Mobile device view */}
+
+                <div className="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
+                    <div className="navbar-nav">
                         <SearchComponent onFilterRecords={props.onFilterRecords} />
                     </div>
-
                     {/* START : Dropdown Navigation */}
-                    <ul className="uk-navbar-nav" >
-                        <li className="uk-active">
-                            <a href="#">Categories</a>
-                            <div className="uk-navbar-dropdown dropdown-categories" uk-dropdown="mode: click">
-                                <ul className="uk-nav uk-navbar-dropdown-nav">
-                                    <li>
+                    <ul className="navbar-nav">
+                        <li className="nav-item dropdown">
+                            <button type="button" className="btn nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="dropdownCategories" title="Click this button to show list of categories.">Categories</button>
+                            <div className="dropdown-menu dropdown-categories" aria-labelledby="dropdownCategories">
+                                <ul>
+                                    <li className="dropdown-item">
                                         <a href="javascript: void(0);" data-tag-name='all' onClick={(event) => props.onFilterRecords(event, 'all')}>View All Articles</a>
                                     </li>
                                     {
                                         utils.getUniqueCategories(props.articles).map((category: any, index: number) => {
                                             return (
-                                                <li key={category}>
+                                                <li key={category} className="dropdown-item">
                                                     <a href="javascript: void(0);" data-tag-name={category} onClick={(event) => props.onFilterRecords(event, 'category')}>{category}</a>
                                                 </li>
                                             )
@@ -67,27 +74,27 @@ const Header = (props: any) => {
                                 </ul>
                             </div>
                         </li>
-                        <li>
+                        <li className="nav-item dropdown">
                             <ThemeSwitcherDropdownComponent />
                         </li>
 
                         {
-                            props.type && props.type === 'articles' ? <li><Link to="/bookmarks">Bookmarks</Link></li> : <li><Link to="/articles">Articles</Link></li>
+                            props.type && props.type === 'articles' ? <li className="nav-item nav-link"><Link to="/bookmarks">Bookmarks</Link></li> : <li className="nav-item nav-link"><Link to="/articles">Articles</Link></li>
                         }
 
-                        <li>
-                            <a href="#offcanvas-usage" uk-toggle="" title="Click this button to view list of Categories and Tags." uk-tooltip="Click this button to view list of Categories and Tags.">Tags</a>
+                        <li className="nav-item">
+                            <a href="#offcanvas-usage" className="nav-item nav-link" title="Click this button to view list of Categories and Tags.">Tags</a>
                         </li>
                     </ul>
                     {/* END : Dropdown Navigation */}
 
                     {
-                        props.type && props.type === 'articles' ? <button className="uk-button uk-button-secondary" uk-toggle="target: #modal-articles" onClick={openForm}>Create Article</button> : <button className="uk-button uk-button-secondary" uk-toggle="target: #modal-bookmarks" onClick={openBookmarkForm}>Create Bookmark</button>
+                        props.type && props.type === 'articles' ? <button className="btn btn-primary" data-toggle="modal" data-target="#modal-articles">Create Article</button> : <button className="btn btn-primary" data-toggle="modal" data-target="#modal-bookmarks">Create Bookmark</button>
                     }
 
-
-                    <a id="toggleSidebar" href="#offcanvas-usage" uk-toggle="" title="Click this button to view list of Categories and Tags." uk-tooltip="Click this button to view list of Categories and Tags."><i className="ion ion-md-menu"></i></a>
+                    <a id="toggleSidebar" href="#offcanvas-usage" title="Click this button to view list of Categories and Tags."><i className="ion ion-md-menu"></i></a>
                 </div>
+
             </nav>
         </header>
 

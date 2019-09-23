@@ -4,7 +4,6 @@ import Utils from "../../services/utils";
 const utils = new Utils();
 
 declare var $: any;
-declare var UIkit: any;
 
 
 let HelloButton = function () {
@@ -231,117 +230,117 @@ type: '${frontmatterObj.type}'
     }
 
     return (
-        <div id="modal-articles" className="uk-modal-full" uk-modal="true">
-            <div className="uk-modal-dialog uk-modal-body">
-                <h2 className="uk-modal-title">
-                    {
-                        props.isEditMode ? 'Edit Article' : 'Create New Article'
-                    }
-                </h2>
-                <button className="uk-modal-close-full uk-close-large uk-align-right" type="button" uk-close=""></button>
+        <div className="modal fade" id="modal-articles" role="dialog" aria-labelledby="modal-articles_Title" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered modal-full" role="document">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h2 className="modal-title" id="modal-articles_Title">
+                            {
+                                props.isEditMode ? 'Edit Article' : 'Create New Article'
+                            }
+                        </h2>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div className="modal-body">
+                        <form name="formCreateEditArticle" id="formCreateEditArticle" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
+                            <div className="form-row">
 
-                <form name="formCreateEditArticle" id="formCreateEditArticle" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
-                    <div className="uk-grid uk-grid-small">
-                        <div className="uk-width-1-2@m">
+                                {/* START Column */}
+                                <div className="col">
 
-                            <div className="uk-margin">
-                                <label className="form-label" htmlFor="txtPostTitle">Title</label>
-                                <input type="text" className="uk-input" name="txtPostTitle" id="txtPostTitle" placeholder="Post Title" onChange={handleInputChange} value={formState.txtPostTitle} required />
-                            </div>
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="txtPostTitle">Title</label>
+                                        <input type="text" className="form-control" name="txtPostTitle" id="txtPostTitle" placeholder="Post Title" onChange={handleInputChange} value={formState.txtPostTitle} required />
+                                    </div>
 
-                            <div className="uk-margin">
-                                <label className="form-label" htmlFor="txtWebsiteUrl">Website URL</label>
-                                <input type="text" className="uk-input" name="txtWebsiteUrl" id="txtWebsiteUrl" placeholder="Website URL" onChange={handleInputChange} value={formState.txtWebsiteUrl} required />
-                            </div>
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="txtWebsiteUrl">Website URL</label>
+                                        <input type="text" className="form-control" name="txtWebsiteUrl" id="txtWebsiteUrl" placeholder="Website URL" onChange={handleInputChange} value={formState.txtWebsiteUrl} required />
+                                    </div>
 
-                            <div className="uk-margin">
-                                <label className="form-label" htmlFor="txtCategory">Category</label>
-                                <select value={formState.txtCategory} className="uk-select select" name="txtCategory" id="txtCategory" onChange={handleInputChange}>
-                                    {
-                                        props.categories.map((category: any) => {
-                                            return <option key={category.id} value={category.name}>{category.name}</option>
-                                        })
-                                    }
-                                </select>
-                            </div>
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="txtCategory">Category</label>
+                                        <select value={formState.txtCategory} className="form-control" name="txtCategory" id="txtCategory" onChange={handleInputChange}>
+                                            {
+                                                props.categories.map((category: any) => {
+                                                    return <option key={category.id} value={category.name}>{category.name}</option>
+                                                })
+                                            }
+                                        </select>
+                                    </div>
 
-                            <div className="uk-margin">
-                                <label className="form-label" htmlFor="txtTags">Tags</label>
-                                <input type="text" className="uk-input" name="txtTags" id="txtTags" placeholder="Tags" onChange={handleInputChange} value={formState.txtTags} />
-                            </div>
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="txtTags">Tags</label>
+                                        <input type="text" className="form-control" name="txtTags" id="txtTags" placeholder="Tags" onChange={handleInputChange} value={formState.txtTags} />
+                                    </div>
 
-                            <div className="uk-margin">
-                                <label className="form-label" htmlFor="txtAuthor">Author</label>
-                                <input type="text" className="uk-input" name="txtAuthor" id="txtAuthor" placeholder="Author" onChange={handleInputChange} value={formState.txtAuthor} />
-                            </div>
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="txtAuthor">Author</label>
+                                        <input type="text" className="form-control" name="txtAuthor" id="txtAuthor" placeholder="Author" onChange={handleInputChange} value={formState.txtAuthor} />
+                                    </div>
 
-                            <div className="uk-margin">
-                                <label className="form-label" htmlFor="txtExcerpt">Excerpt</label>
-                                <input type="text" className="uk-input" name="txtExcerpt" id="txtExcerpt" placeholder="Excerpt" onChange={handleInputChange} value={formState.txtExcerpt} />
-                            </div>
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="txtExcerpt">Excerpt</label>
+                                        <input type="text" className="form-control" name="txtExcerpt" id="txtExcerpt" placeholder="Excerpt" onChange={handleInputChange} value={formState.txtExcerpt} />
+                                    </div>
 
-                            <div className="uk-margin">
-                                <label className="form-label" htmlFor="txtCoverImage">Cover Image</label>
-                                <input type="text" className="uk-input" name="txtCoverImage" id="txtCoverImage" placeholder="Image path..." onChange={handleInputChange} value={formState.txtCoverImage} />
-                            </div>
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="txtCoverImage">Cover Image</label>
+                                        <input type="text" className="form-control" name="txtCoverImage" id="txtCoverImage" placeholder="Image path..." onChange={handleInputChange} value={formState.txtCoverImage} />
+                                    </div>
 
-                            {/* <div className="uk-margin">
+                                    {/* <div className="form-group">
                                     <label className="form-label" htmlFor="txtPostType">Post Type</label>
-                                    <input type="text" className="uk-input" name="txtPostType" id="txtPostType" onChange={this.handleInputChange} value={this.formState.txtPostType} />
+                                    <input type="text" className="form-control" name="txtPostType" id="txtPostType" onChange={this.handleInputChange} value={this.formState.txtPostType} />
                                 </div> */}
 
-                            <div className="uk-margin">
-                                <label className="form-label" htmlFor="txtPostType">Post Type</label>
-                                <select value={formState.txtPostType} className="uk-select select" name="txtPostType" id="txtPostType" onChange={handleInputChange}>
-                                    <option value="Post">Post</option>
-                                    <option value="Snippet">Snippet</option>
-                                    <option value="Personal">Personal</option>
-                                </select>
-                            </div>
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="txtPostType">Post Type</label>
+                                        <select value={formState.txtPostType} className="form-control" name="txtPostType" id="txtPostType" onChange={handleInputChange}>
+                                            <option value="Post">Post</option>
+                                            <option value="Snippet">Snippet</option>
+                                            <option value="Personal">Personal</option>
+                                        </select>
+                                    </div>
 
-                            <div className="uk-margin">
-                                <label className="form-label" htmlFor="txtSavePostToPath">Path to Save</label>
-                                <input type="text" className="uk-input" name="txtSavePostToPath" id="txtSavePostToPath" onChange={handleInputChange} value={formState.txtSavePostToPath} />
-                            </div>
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="txtSavePostToPath">Path to Save</label>
+                                        <input type="text" className="form-control" name="txtSavePostToPath" id="txtSavePostToPath" onChange={handleInputChange} value={formState.txtSavePostToPath} />
+                                    </div>
 
-                        </div>
-
-                        <div className="uk-width-1-2@m">
-                            <div contentEditable
-                                id="test"
-                                style={{ 'height': '50px', 'whiteSpace': 'pre-wrap', 'overflow': 'auto', 'opacity': 0.5, 'resize': 'auto' }}>
-                            </div>
-                            <div className="uk-margin">
-                                <label className="form-label" htmlFor="txtareaHtmlCode">HTML code</label>
-                                <textarea className="uk-textarea" rows={10} name="txtareaHtmlCode" id="txtareaHtmlCode" onChange={handleInputChange} value={formState.txtareaHtmlCode}></textarea>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div className="uk-grid uk-grid-small">
-                        {/* <div className="uk-width-1-2@m">
-                                <div className="uk-margin">
-                                    <label className="form-label" htmlFor="txtareaMarkdownCode">Markdown code</label>
-                                    <textarea className="uk-textarea" rows="10" name="txtareaMarkdownCode" id="txtareaMarkdownCode" onChange={this.handleInputChange} value={this.formState.txtareaMarkdownCode}></textarea>
                                 </div>
-                            </div> */}
+                                {/* END Column */}
+
+                                {/* START Column */}
+                                <div className="col">
+                                    <div contentEditable
+                                        id="test"
+                                        style={{ 'height': '50px', 'whiteSpace': 'pre-wrap', 'overflow': 'auto', 'opacity': 0.5, 'resize': 'auto' }}>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="txtareaHtmlCode">HTML code</label>
+                                        <textarea className="form-control" rows={10} name="txtareaHtmlCode" id="txtareaHtmlCode" onChange={handleInputChange} value={formState.txtareaHtmlCode}></textarea>
+                                    </div>
+
+                                </div>
+                                {/* END Column */}
+                            </div>
+
+                        </form>
                     </div>
 
-                    <p className="uk-text-right">
-                        <button id="convertToMarkdown" className="uk-button uk-button-primary">
-                            {
-                                props.isEditMode ? 'Update Article' : 'Save Article'
-                            }
-                        </button>&nbsp;&nbsp;
-                            <button id="btnResetConvertForm" className="uk-button uk-button-default" onClick={handleReset}>Reset Form</button>
-                    </p>
-                </form>
-
+                    <div className="modal-footer">
+                        <button id="convertToMarkdown" type="button" className="btn btn-primary"> {
+                            props.isEditMode ? 'Update Article' : 'Save Article'
+                        }</button>
+                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button id="btnResetConvertForm" className="btn btn-secondary" onClick={handleReset}>Reset Form</button>
+                    </div>
+                </div>
             </div>
         </div>
-
-
     )
 
 }

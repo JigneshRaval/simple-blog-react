@@ -12,7 +12,7 @@ const TagsInline = ({ data, onFilterRecords, className }: any) => {
         });
     } else {
         return data.tags.map((tag: any) => {
-            return <li key={tag}><a href="javascript:void(0);" className={className} data-tag-name={tag} onClick={(event) => onFilterRecords(event, 'tag')}><span uk-icon="tag"></span> #{tag.trim()}</a></li>;
+            return <li key={tag} className={className}><a href="javascript:void(0);" data-tag-name={tag} onClick={(event) => onFilterRecords(event, 'tag')}><span uk-icon="tag"></span> #{tag.trim()}</a></li>;
         });
     }
 

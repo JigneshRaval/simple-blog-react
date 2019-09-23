@@ -93,76 +93,82 @@ export const CreateBookmarkFormComponent = (props: any) => {
     }
 
     return (
-        <div id="modal-bookmarks" className="uk-modal-full" uk-modal="true">
-            <div className="uk-modal-dialog uk-modal-body">
-                <h2 className="uk-modal-title">
-                    {
-                        props.isEditMode ? 'Edit Bookmark' : 'Create New Bookmark'
-                    }
-                </h2>
-                <button className="uk-modal-close-full uk-close-large uk-align-right" type="button" uk-close=""></button>
+        <div className="modal fade" id="modal-bookmarks" role="dialog" aria-labelledby="modal-bookmarks_Title" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered modal-full" role="document">
+                <div className="modal-content">
+                    <div className="modal-header">
 
-                <form name="formCreateEditBookmark" id="formCreateEditBookmark" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
-                    <div className="uk-grid uk-grid-small">
+                        <h2 className="modal-title" id="modal-bookmarks_Title">
+                            {
+                                props.isEditMode ? 'Edit Bookmark' : 'Create New Bookmark'
+                            }
+                        </h2>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div className="modal-body">
+                        <form name="formCreateEditBookmark" id="formCreateEditBookmark" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
+                            <div className="form-row">
 
-                        {/* START Column */}
-                        <div className="uk-width-1-2@m">
+                                {/* START Column */}
+                                <div className="col">
 
-                            <div className="uk-margin">
-                                <label className="form-label" htmlFor="txtPostTitle">Title</label>
-                                <input type="text" className="uk-input" name="txtPostTitle" id="txtPostTitle" placeholder="Post Title" onChange={handleInputChange} value={formState.txtPostTitle} required />
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="txtPostTitle">Title</label>
+                                        <input type="text" className="form-control" name="txtPostTitle" id="txtPostTitle" placeholder="Post Title" onChange={handleInputChange} value={formState.txtPostTitle} required />
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="txtWebsiteUrl">Website URL</label>
+                                        <input type="text" className="form-control" name="txtWebsiteUrl" id="txtWebsiteUrl" placeholder="Website URL" onChange={handleInputChange} value={formState.txtWebsiteUrl} required />
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="txtCategory">Category</label>
+                                        <select value={formState.txtCategory} className="form-control" name="txtCategory" id="txtCategory" onChange={handleInputChange}>
+                                            {
+                                                props.categories.map((category: any) => {
+                                                    return <option key={category.id} value={category.name}>{category.name}</option>
+                                                })
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="txtTags">Tags</label>
+                                        <input type="text" className="form-control" name="txtTags" id="txtTags" placeholder="Tags" onChange={handleInputChange} value={formState.txtTags} />
+                                    </div>
+
+                                </div>
+                                {/* END Column */}
+
+                                {/* START Column */}
+                                <div className="col">
+
+                                    <div className="form-group">
+                                        <label className="form-label" htmlFor="txtareaDescription">Description</label>
+                                        <textarea className="form-control" rows={10} name="txtareaDescription" id="txtareaDescription" onChange={handleInputChange} value={formState.txtareaDescription}></textarea>
+                                    </div>
+
+                                </div>
+                                {/* END Column */}
+
                             </div>
-
-                            <div className="uk-margin">
-                                <label className="form-label" htmlFor="txtWebsiteUrl">Website URL</label>
-                                <input type="text" className="uk-input" name="txtWebsiteUrl" id="txtWebsiteUrl" placeholder="Website URL" onChange={handleInputChange} value={formState.txtWebsiteUrl} required />
-                            </div>
-
-                            <div className="uk-margin">
-                                <label className="form-label" htmlFor="txtCategory">Category</label>
-                                <select value={formState.txtCategory} className="uk-select select" name="txtCategory" id="txtCategory" onChange={handleInputChange}>
-                                    {
-                                        props.categories.map((category: any) => {
-                                            return <option key={category.id} value={category.name}>{category.name}</option>
-                                        })
-                                    }
-                                </select>
-                            </div>
-
-                            <div className="uk-margin">
-                                <label className="form-label" htmlFor="txtTags">Tags</label>
-                                <input type="text" className="uk-input" name="txtTags" id="txtTags" placeholder="Tags" onChange={handleInputChange} value={formState.txtTags} />
-                            </div>
-
-                        </div>
-                        {/* END Column */}
-
-                        {/* START Column */}
-                        <div className="uk-width-1-2@m">
-
-                            <div className="uk-margin">
-                                <label className="form-label" htmlFor="txtareaDescription">Description</label>
-                                <textarea className="uk-textarea" rows={10} name="txtareaDescription" id="txtareaDescription" onChange={handleInputChange} value={formState.txtareaDescription}></textarea>
-                            </div>
-
-                        </div>
-                        {/* END Column */}
-
+                        </form>
                     </div>
 
-                    <p className="uk-text-right">
-                        <button id="convertToMarkdown" className="uk-button uk-button-primary">
+                    <div className="modal-footer">
+                        <button id="convertToMarkdown" className="btn btn-primary">
                             {
                                 props.isEditMode ? 'Update Bookmark' : 'Save Bookmark'
                             }
-                        </button>&nbsp;&nbsp;
-                            <button id="btnResetConvertForm" className="uk-button uk-button-default" onClick={handleReset}>Reset Form</button>
-                    </p>
-                </form>
-
+                        </button>
+                        <button id="btnResetConvertForm" className="btn btn-secondary" onClick={handleReset}>Reset Form</button>
+                    </div>
+                </div>
             </div>
         </div>
-
 
     )
 

@@ -1,0 +1,39 @@
+/* = Search form
+=============================================*/
+
+.search-form {
+    display: flex;
+
+    .search-form-input {
+        width: 350px;
+        border: 1px solid #EEE;
+        padding: 1rem 40px 12px;
+        height: auto;
+        // transition: width 0.3s ease;
+        font-size: 1rem;
+
+        &:hover,
+        &:focus {
+            // width: 450px;
+            border: 1px solid #ccc;
+            box-shadow: 0px 1px 5px inset rgba(0,0,0,0.2);
+        }
+    }
+
+    .clear-search {
+        font-weight: bold;
+        position: absolute;
+        right: 0;
+        visibility: hidden;
+        padding: 10px 1rem;
+        height: 100%;
+        background-color: #EEE;
+    }
+
+    &.isSearching {
+        .clear-search {
+            visibility: visible;
+            opacity: 0.7;
+        }
+    }
+}

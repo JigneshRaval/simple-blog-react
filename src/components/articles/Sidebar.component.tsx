@@ -9,9 +9,11 @@ import Tags from '../shared/Tags.component';
 const Sidebar = (props: any) => {
 
     return (
-        <div id="offcanvas-usage" uk-offcanvas="flip: true; overlay: true">
-            <div className="uk-offcanvas-bar">
-                <button className="uk-offcanvas-close" type="button" uk-close=""></button>
+        <div id="offcanvas-usage" className="offcanvas-panel">
+            <div className="offcanvas-bar">
+                <button type="button" className="offcanvas-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
 
                 <Tags {...props} />
 

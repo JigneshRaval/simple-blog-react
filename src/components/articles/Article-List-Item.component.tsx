@@ -32,41 +32,33 @@ const ArticleListItem = (props: any) => {
     const { article, onDeleteArticle, onEditArticle, onFilterRecords, markAsFavorite, activeTab, index, onAddToastMessage } = props;
 
     return (
-        <div className={"uk-card uk-card-default" + (activeTab === index ? ' active' : '')} key={article._id}>
+        <div className={"card" + (activeTab === index ? ' active' : '')} key={article._id} data-article-id={article._id} data-category={article.category}>
 
-            <div className="card" data-category={article.category}>
-                <div className="card-controls uk-inline">
-                    <button className="uk-button uk-button-link" type="button"><i uk-icon="more-vertical"></i></button>
-                    <div uk-dropdown="mode: click; pos: bottom-right" className="uk-dropdown-bottom-right">
-                        <ul className="uk-nav uk-dropdown-nav">
-                            <li className="uk-nav-header">Actions</li>
-                            <li className="uk-active"><a href="javascript:void(0);" onClick={() => onEditArticle(article._id, true)}><span uk-icon="pencil"></span> Edit Article</a></li>
-                            <li><a href="javascript:void(0);" onClick={() => onAddToastMessage('warning', `Are you sure you want to delete this article?.`, true, article._id)}><span uk-icon="trash"></span> Delete Article</a></li>
-                            <li><a href="javascript:void(0);" onClick={() => markAsFavorite(article._id, article.favorite)} data-favorite={article.favorite}><span uk-icon="star"></span> Mark as Favorite</a></li>
-                            <li className="uk-nav-header">Tags</li>
-                            <TagsInline data={article} onFilterRecords={props.onFilterRecords} />
-                            <li><a href="javascript:void(0);" onClick={(event) => onFilterRecords(event, 'all')}>Clear filter</a></li>
-                        </ul>
-                    </div>
+            <div className="card-controls dropdown">
+                <button className="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="icon ion-md-more"></i></button>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <ul className="">
+                        <li className="dropdown-header">Actions</li>
+                        <li className="dropdown-item"><a href="javascript:void(0);" data-toggle="modal" data-target="#modal-articles" onClick={() => onEditArticle(article._id, true)}><i class="icon ion-md-create"></i> Edit Article</a></li>
+                        <li className="dropdown-item"><a href="javascript:void(0);" onClick={() => onAddToastMessage('warning', `Are you sure you want to delete this article?.`, true, article._id)}><i className="icon ion-ios-trash"></i> Delete Article</a></li>
+                        <li className="dropdown-item"><a href="javascript:void(0);" onClick={() => markAsFavorite(article._id, article.favorite)} data-favorite={article.favorite}><i className="icon ion-ios-star"></i> Mark as Favorite</a></li>
+                        <li className="dropdown-header">Tags</li>
+                        <TagsInline data={article} onFilterRecords={props.onFilterRecords} className={'dropdown-item'} />
+                        <li className="dropdown-item"><a href="javascript:void(0);" onClick={(event) => onFilterRecords(event, 'all')}><i className="icon ion-ios-close-circle"></i> Clear filter</a></li>
+                    </ul>
                 </div>
+            </div>
 
-                <div className="card-header">
-                    {
-                        article.favorite ? <span className="isFavorite" aria-label="favorite"><i className="corner"></i><i className="icon ion-ios-star"></i></span> : ''
-                    }
-                    <div className="article-category"><span className="small-dot" data-category={article.category.toLowerCase()}></span>{article.category}</div>
-                    <h2 className="uk-card-title">
-                        {/* <Link to={'/articles/' + article._id} onClick={() => props.onActivateTab(index)}>{article.title}</Link> */}
-                        <a href="javascript: void(0);" article-id={article._id} onClick={() => getArticleContent(article._id, index)}>{article.title}</a>
-                        {/* <a href="javascript: void(0);" article-id={article._id} onClick={(event) => props.click(event, article._id, index, props.onActivateTab)}>{article.title}</a> */}
-                    </h2>
-                </div>
-
-                <div className="card-footer">
-                    <div>
-
-                    </div>
-                </div>
+            <div className="card-body">
+                {
+                    article.favorite ? <span className="isFavorite" aria-label="favorite"><i className="corner"></i><i className="icon ion-ios-star"></i></span> : ''
+                }
+                <div className="article-category"><span className="small-dot" data-category={article.category.toLowerCase()}></span>{article.category}</div>
+                <h2 className="card-title">
+                    {/* <Link to={'/articles/' + article._id} onClick={() => props.onActivateTab(index)}>{article.title}</Link> */}
+                    <a href="javascript: void(0);" article-id={article._id} onClick={() => getArticleContent(article._id, index)}>{article.title}</a>
+                    {/* <a href="javascript: void(0);" article-id={article._id} onClick={(event) => props.click(event, article._id, index, props.onActivateTab)}>{article.title}</a> */}
+                </h2>
             </div>
 
         </div>

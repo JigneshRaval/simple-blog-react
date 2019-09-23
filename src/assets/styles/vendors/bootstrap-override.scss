@@ -1,0 +1,13 @@
+/* = Override default style of Bootstrap framework
+=============================================*/
+
+.modal {
+    padding-right: 0 !important;
+}
+.modal-full {
+    max-width: 95%;
+}
+.navbar-brand {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}

@@ -22,7 +22,7 @@ const ArticlesList = (props: any) => {
                 filteredRecords.map((article: any, index: number) => {
                     return (
                         <ArticleListItem
-                            key={index}
+                            key={article._id}
                             article={article}
                             index={index}
                             activeTab={activeTab}
