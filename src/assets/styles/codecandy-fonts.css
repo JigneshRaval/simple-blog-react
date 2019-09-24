@@ -1,0 +1,305 @@
+@font-face {
+  font-family: 'codecandy';
+  src:
+    url('/assets/fonts/codecandy.ttf?t3p429') format('truetype'),
+    url('/assets/fonts/codecandy.woff?t3p429') format('woff'),
+    url('/assets/fonts/codecandy.svg?t3p429#codecandy') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+i {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'codecandy' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.cc-bxs-folder:before {
+  content: "\e99b";
+}
+.cc-bxs-folder-open:before {
+  content: "\e99d";
+}
+.cc-bxs-message-detail:before {
+  content: "\e9c0";
+}
+.cc-bxs-star:before {
+  content: "\ea08";
+}
+.cc-bx-asterisk:before {
+  content: "\ea57";
+}
+.cc-bx-at:before {
+  content: "\ea58";
+}
+.cc-bx-bell:before {
+  content: "\ea66";
+}
+.cc-bx-bell-ring:before {
+  content: "\ea6a";
+}
+.cc-bx-bookmark:before {
+  content: "\ea73";
+}
+.cc-bx-bookmark-star:before {
+  content: "\ea77";
+}
+.cc-bx-bug:before {
+  content: "\ea7e";
+}
+.cc-bx-calendar:before {
+  content: "\ea85";
+}
+.cc-bx-check:before {
+  content: "\ea99";
+}
+.cc-bx-check-circle:before {
+  content: "\ea9d";
+}
+.cc-bx-chevron-left:before {
+  content: "\eaa0";
+}
+.cc-bx-chevron-right:before {
+  content: "\eaa1";
+}
+.cc-bx-code:before {
+  content: "\eab3";
+}
+.cc-bx-code-block:before {
+  content: "\eab4";
+}
+.cc-bx-code-curly:before {
+  content: "\eab5";
+}
+.cc-bx-cog:before {
+  content: "\eab7";
+}
+.cc-bx-conversation:before {
+  content: "\eabe";
+}
+.cc-bx-dashboard:before {
+  content: "\eac8";
+}
+.cc-bx-desktop:before {
+  content: "\eaca";
+}
+.cc-bx-dots-horizontal:before {
+  content: "\ead8";
+}
+.cc-bx-dots-horizontal-rounded:before {
+  content: "\ead9";
+}
+.cc-bx-dots-vertical:before {
+  content: "\eada";
+}
+.cc-bx-dots-vertical-rounded:before {
+  content: "\eadb";
+}
+.cc-bx-eyedropper:before {
+  content: "\eaef";
+}
+.cc-bx-file:before {
+  content: "\eaf3";
+}
+.cc-bx-file-plus:before {
+  content: "\eaf6";
+}
+.cc-bx-flag-alt:before {
+  content: "\eaff";
+}
+.cc-bx-folder:before {
+  content: "\eb01";
+}
+.cc-bx-grid:before {
+  content: "\eb13";
+}
+.cc-bx-highlight:before {
+  content: "\eb1d";
+}
+.cc-bx-home:before {
+  content: "\eb1f";
+}
+.cc-bx-home-alt:before {
+  content: "\eb20";
+}
+.cc-bx-info-circle:before {
+  content: "\eb2d";
+}
+.cc-bx-link-alt:before {
+  content: "\eb3d";
+}
+.cc-bx-menu:before {
+  content: "\eb52";
+}
+.cc-bx-message:before {
+  content: "\eb55";
+}
+.cc-bx-message-detail:before {
+  content: "\eb57";
+}
+.cc-bx-package:before {
+  content: "\eb6b";
+}
+.cc-bx-paperclip:before {
+  content: "\eb6c";
+}
+.cc-bx-pencil:before {
+  content: "\eb73";
+}
+.cc-bx-play-circle:before {
+  content: "\eb7e";
+}
+.cc-bx-purchase-tag:before {
+  content: "\eb88";
+}
+.cc-bx-repost:before {
+  content: "\eb96";
+}
+.cc-bx-right-arrow:before {
+  content: "\eb9c";
+}
+.cc-bx-search:before {
+  content: "\eba7";
+}
+.cc-bx-share:before {
+  content: "\ebad";
+}
+.cc-bx-show:before {
+  content: "\ebb3";
+}
+.cc-bx-slider-alt:before {
+  content: "\ebbe";
+}
+.cc-bx-star:before {
+  content: "\ebc7";
+}
+.cc-bx-tag:before {
+  content: "\ebd6";
+}
+.cc-bx-tag-x:before {
+  content: "\ebd7";
+}
+.cc-bx-terminal:before {
+  content: "\ebdc";
+}
+.cc-bx-time:before {
+  content: "\ebdf";
+}
+.cc-bx-trash:before {
+  content: "\ebe8";
+}
+.cc-bx-upload:before {
+  content: "\ebf7";
+}
+.cc-bx-user:before {
+  content: "\ebfa";
+}
+.cc-bx-x:before {
+  content: "\ec19";
+}
+.cc-bx-x-circle:before {
+  content: "\ec1a";
+}
+.cc-alert-circle:before {
+  content: "\e937";
+}
+.cc-alert-triangle:before {
+  content: "\e938";
+}
+.cc-bell:before {
+  content: "\e939";
+}
+.cc-code:before {
+  content: "\e93a";
+}
+.cc-edit-2:before {
+  content: "\e93b";
+}
+.cc-edit-3:before {
+  content: "\e900";
+}
+.cc-eye:before {
+  content: "\e93c";
+}
+.cc-file-text:before {
+  content: "\e901";
+}
+.cc-filter:before {
+  content: "\e902";
+}
+.cc-folder:before {
+  content: "\e93d";
+}
+.cc-home:before {
+  content: "\e903";
+}
+.cc-layers:before {
+  content: "\e93e";
+}
+.cc-link:before {
+  content: "\e93f";
+}
+.cc-link-2:before {
+  content: "\e904";
+}
+.cc-map-pin:before {
+  content: "\e905";
+}
+.cc-maximize-2:before {
+  content: "\e906";
+}
+.cc-menu:before {
+  content: "\e907";
+}
+.cc-moon:before {
+  content: "\e908";
+}
+.cc-more-horizontal:before {
+  content: "\e909";
+}
+.cc-more-vertical:before {
+  content: "\e90a";
+}
+.cc-paperclip:before {
+  content: "\e940";
+}
+.cc-refresh-cw:before {
+  content: "\e941";
+}
+.cc-search:before {
+  content: "\e90b";
+}
+.cc-settings:before {
+  content: "\e90c";
+}
+.cc-star:before {
+  content: "\e90d";
+}
+.cc-sun:before {
+  content: "\e90e";
+}
+.cc-tag:before {
+  content: "\e90f";
+}
+.cc-terminal:before {
+  content: "\e910";
+}
+.cc-trash-2:before {
+  content: "\e911";
+}
+.cc-x:before {
+  content: "\e912";
+}
+.cc-x-circle:before {
+  content: "\e913";
+}

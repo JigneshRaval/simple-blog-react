@@ -36,7 +36,8 @@ const ArticlesList = React.lazy(() => import('../components/articles/Articles-Li
 // });
 
 declare var require: any;
-declare var UIkit: any;
+// declare var UIkit: any;
+declare var $: any;
 
 let categories = require('../assets/data/categories.json');
 const utils = new Utils();
@@ -191,7 +192,13 @@ const ArticleHome = (props: any) => {
     const handleEditArticle = (articleId: string, isFormVisible: boolean) => {
         // UIkit.modal('#modal-articles').show();
 
+        $('#modal-articles').modal('show');
+
         dispatch({ type: 'SET_EDIT_MODE', articleId: articleId });
+    }
+
+    const resetEditMode = () => {
+        dispatch({ type: 'RESET_EDIT_MODE' });
     }
 
 
@@ -285,7 +292,12 @@ const ArticleHome = (props: any) => {
                 <section className="content-wrapper">
                     {/* <div style={{ 'position': 'fixed', zIndex: 1050 }}>{isEditMode.toString()}</div> */}
 
-                    <Header articles={articles} onFilterRecords={handleFilterRecords} {...props} />
+                    <Header
+                        articles={articles}
+                        onFilterRecords={handleFilterRecords}
+                        onResetEditMode={resetEditMode}
+                        {...props}
+                    />
 
                     <section className="content-section">
 

@@ -107,12 +107,14 @@ export const CreateBookmarkFormComponent = (props: any) => {
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div className="modal-body">
-                        <form name="formCreateEditBookmark" id="formCreateEditBookmark" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
+
+                    <form name="formCreateEditBookmark" id="formCreateEditBookmark" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
+                        <div className="modal-body">
+
                             <div className="form-row">
 
                                 {/* START Column */}
-                                <div className="col">
+                                <div className="col-6 col-sm-12 col-md-12 col-lg-6">
 
                                     <div className="form-group">
                                         <label className="form-label" htmlFor="txtPostTitle">Title</label>
@@ -144,7 +146,7 @@ export const CreateBookmarkFormComponent = (props: any) => {
                                 {/* END Column */}
 
                                 {/* START Column */}
-                                <div className="col">
+                                <div className="col-6 col-sm-12 col-md-12 col-lg-6">
 
                                     <div className="form-group">
                                         <label className="form-label" htmlFor="txtareaDescription">Description</label>
@@ -155,17 +157,19 @@ export const CreateBookmarkFormComponent = (props: any) => {
                                 {/* END Column */}
 
                             </div>
-                        </form>
-                    </div>
 
-                    <div className="modal-footer">
-                        <button id="convertToMarkdown" className="btn btn-primary">
-                            {
-                                props.isEditMode ? 'Update Bookmark' : 'Save Bookmark'
-                            }
-                        </button>
-                        <button id="btnResetConvertForm" className="btn btn-secondary" onClick={handleReset}>Reset Form</button>
-                    </div>
+                        </div>
+
+                        <div className="modal-footer">
+                            <button id="convertToMarkdown" className="btn btn-primary">
+                                {
+                                    props.isEditMode ? 'Update Bookmark' : 'Save Bookmark'
+                                }
+                            </button>
+                            <button id="btnResetConvertForm" className="btn btn-secondary" onClick={handleReset}>Reset Form</button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>

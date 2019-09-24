@@ -79,6 +79,15 @@
 			}
 
 			.dropdown-menu {
+				padding: 0;
+    			overflow: hidden;
+
+				.dropdown-header {
+					color: #000;
+					background-color: #EEE;
+					font-size: 1rem;
+				}
+
 				ul {
 					padding: 0;
 				}
@@ -86,11 +95,13 @@
 				a {
 					color: #111111;
 					display: block;
+					text-decoration: none;
 				}
 
-				i.icon {
+				i {
 					font-size: 24px;
-					margin-right: 1rem;
+					padding-right: 16px;
+					vertical-align: text-top;
 				}
 			}
 

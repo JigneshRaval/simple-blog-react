@@ -35,23 +35,23 @@ const ArticleListItem = (props: any) => {
         <div className={"card" + (activeTab === index ? ' active' : '')} key={article._id} data-article-id={article._id} data-category={article.category}>
 
             <div className="card-controls dropdown">
-                <button className="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="icon ion-md-more"></i></button>
+                <button className="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="cc-bx-dots-vertical-rounded"></i></button>
                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <ul className="">
                         <li className="dropdown-header">Actions</li>
-                        <li className="dropdown-item"><a href="javascript:void(0);" data-toggle="modal" data-target="#modal-articles" onClick={() => onEditArticle(article._id, true)}><i class="icon ion-md-create"></i> Edit Article</a></li>
-                        <li className="dropdown-item"><a href="javascript:void(0);" onClick={() => onAddToastMessage('warning', `Are you sure you want to delete this article?.`, true, article._id)}><i className="icon ion-ios-trash"></i> Delete Article</a></li>
-                        <li className="dropdown-item"><a href="javascript:void(0);" onClick={() => markAsFavorite(article._id, article.favorite)} data-favorite={article.favorite}><i className="icon ion-ios-star"></i> Mark as Favorite</a></li>
+                        <li className="dropdown-item"><a href="javascript:void(0);" data-toggle="modal" data-target="#modal-articles" onClick={() => onEditArticle(article._id, true)}><i className="cc-bx-pencil"></i> Edit Article</a></li>
+                        <li className="dropdown-item"><a href="javascript:void(0);" onClick={() => onAddToastMessage('warning', `Are you sure you want to delete this article?.`, true, article._id)}><i className="cc-bx-trash"></i> Delete Article</a></li>
+                        <li className="dropdown-item"><a href="javascript:void(0);" onClick={() => markAsFavorite(article._id, article.favorite)} data-favorite={article.favorite}><i className="cc-bx-star"></i> Mark as Favorite</a></li>
                         <li className="dropdown-header">Tags</li>
                         <TagsInline data={article} onFilterRecords={props.onFilterRecords} className={'dropdown-item'} />
-                        <li className="dropdown-item"><a href="javascript:void(0);" onClick={(event) => onFilterRecords(event, 'all')}><i className="icon ion-ios-close-circle"></i> Clear filter</a></li>
+                        <li className="dropdown-item"><button className="btn btn-primary" onClick={(event) => onFilterRecords(event, 'all')}><i className="cc-bx-x-circle"></i> Clear filter</button></li>
                     </ul>
                 </div>
             </div>
 
             <div className="card-body">
                 {
-                    article.favorite ? <span className="isFavorite" aria-label="favorite"><i className="corner"></i><i className="icon ion-ios-star"></i></span> : ''
+                    article.favorite ? <span className="isFavorite" aria-label="favorite"><i className="corner"></i><i className="cc-bx-star"></i></span> : ''
                 }
                 <div className="article-category"><span className="small-dot" data-category={article.category.toLowerCase()}></span>{article.category}</div>
                 <h2 className="card-title">

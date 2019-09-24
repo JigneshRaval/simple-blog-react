@@ -22,6 +22,12 @@ function articleReducer(state: any, action: any) {
                 isEditMode: true,
                 editData: articleToEdit
             }
+        case "RESET_EDIT_MODE":
+            return {
+                ...state,
+                isEditMode: false,
+                editData: {}
+            }
         case "ADD_ARTICLE":
             return {
                 ...state,

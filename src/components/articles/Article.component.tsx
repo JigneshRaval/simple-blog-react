@@ -56,16 +56,19 @@ export const Article = (props: any) => {
                 <header className="article__header">
                     <div className="header__content">
                         <a href="#" className="article-category"><span className="category-color"></span> {article.category}</a>
-                        <h1 className="uk-article-title">
+                        <h1>
                             <a className="uk-link-reset" href={article.sourceUrl} title={article.sourceUrl} target="_blank">{article.title}</a>
                         </h1>
 
-                        <p className="uk-article-meta">Written by <a href="javascript:;"><strong>{article.author}</strong></a> on <strong>{date.toString()}</strong>.</p>
+                        <p className="article-meta">Written by <a href="javascript:;"><strong>{article.author}</strong></a> on <strong>{date.toString()}</strong>.</p>
                         <div className="article__tags-list">
-                            Tagged as <TagsInline
-                                data={article}
-                                onFilterRecords={props.onFilterRecords}
-                                className={'uk-button'} />
+                            Tagged as
+                            <ul>
+                                <TagsInline
+                                    data={article}
+                                    onFilterRecords={props.onFilterRecords}
+                                    className={''} />
+                            </ul>
                         </div>
                     </div>
                 </header>

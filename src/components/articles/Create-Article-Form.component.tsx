@@ -243,42 +243,56 @@ type: '${frontmatterObj.type}'
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <div className="modal-body">
-                        <form name="formCreateEditArticle" id="formCreateEditArticle" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
+
+                    <form name="formCreateEditArticle" id="formCreateEditArticle" method="POST" onSubmit={handleSubmit} encType="multipart/form-data">
+                        <div className="modal-body">
+
                             <div className="form-row">
 
                                 {/* START Column */}
-                                <div className="col">
+                                <div className="col-6 col-sm-12 col-md-12 col-lg-6">
 
                                     <div className="form-group">
-                                        <label className="form-label" htmlFor="txtPostTitle">Title</label>
+                                        <label className="form-label" htmlFor="txtPostTitle">Title * ( required )</label>
                                         <input type="text" className="form-control" name="txtPostTitle" id="txtPostTitle" placeholder="Post Title" onChange={handleInputChange} value={formState.txtPostTitle} required />
                                     </div>
 
                                     <div className="form-group">
-                                        <label className="form-label" htmlFor="txtWebsiteUrl">Website URL</label>
+                                        <label className="form-label" htmlFor="txtWebsiteUrl">Website URL * ( required )</label>
                                         <input type="text" className="form-control" name="txtWebsiteUrl" id="txtWebsiteUrl" placeholder="Website URL" onChange={handleInputChange} value={formState.txtWebsiteUrl} required />
                                     </div>
 
                                     <div className="form-group">
-                                        <label className="form-label" htmlFor="txtCategory">Category</label>
-                                        <select value={formState.txtCategory} className="form-control" name="txtCategory" id="txtCategory" onChange={handleInputChange}>
-                                            {
-                                                props.categories.map((category: any) => {
-                                                    return <option key={category.id} value={category.name}>{category.name}</option>
-                                                })
-                                            }
-                                        </select>
+                                        <div className="input-group mb-3">
+                                            <div className="input-group-prepend">
+                                                <label className="input-group-text" htmlFor="txtCategory">Category</label>
+                                            </div>
+                                            <select value={formState.txtCategory} className="custom-select" name="txtCategory" id="txtCategory" onChange={handleInputChange}>
+                                                {
+                                                    props.categories.map((category: any) => {
+                                                        return <option key={category.id} value={category.name}>{category.name}</option>
+                                                    })
+                                                }
+                                            </select>
+                                        </div>
                                     </div>
 
                                     <div className="form-group">
-                                        <label className="form-label" htmlFor="txtTags">Tags</label>
-                                        <input type="text" className="form-control" name="txtTags" id="txtTags" placeholder="Tags" onChange={handleInputChange} value={formState.txtTags} />
+                                        <div className="input-group mb-3">
+                                            <div className="input-group-prepend">
+                                                <label className="input-group-text" htmlFor="txtTags">Tags</label>
+                                            </div>
+                                            <input type="text" className="form-control" name="txtTags" id="txtTags" placeholder="Tags" onChange={handleInputChange} value={formState.txtTags} />
+                                        </div>
                                     </div>
 
                                     <div className="form-group">
-                                        <label className="form-label" htmlFor="txtAuthor">Author</label>
-                                        <input type="text" className="form-control" name="txtAuthor" id="txtAuthor" placeholder="Author" onChange={handleInputChange} value={formState.txtAuthor} />
+                                        <div className="input-group mb-3">
+                                            <div className="input-group-prepend">
+                                                <label className="input-group-text" htmlFor="txtAuthor">Author</label>
+                                            </div>
+                                            <input type="text" className="form-control" name="txtAuthor" id="txtAuthor" placeholder="Author" onChange={handleInputChange} value={formState.txtAuthor} />
+                                        </div>
                                     </div>
 
                                     <div className="form-group">
@@ -314,7 +328,7 @@ type: '${frontmatterObj.type}'
                                 {/* END Column */}
 
                                 {/* START Column */}
-                                <div className="col">
+                                <div className="col-6 col-sm-12 col-md-12 col-lg-6">
                                     <div contentEditable
                                         id="test"
                                         style={{ 'height': '50px', 'whiteSpace': 'pre-wrap', 'overflow': 'auto', 'opacity': 0.5, 'resize': 'auto' }}>
@@ -328,16 +342,18 @@ type: '${frontmatterObj.type}'
                                 {/* END Column */}
                             </div>
 
-                        </form>
-                    </div>
 
-                    <div className="modal-footer">
-                        <button id="convertToMarkdown" type="button" className="btn btn-primary"> {
-                            props.isEditMode ? 'Update Article' : 'Save Article'
-                        }</button>
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="btnResetConvertForm" className="btn btn-secondary" onClick={handleReset}>Reset Form</button>
-                    </div>
+                        </div>
+
+                        <div className="modal-footer">
+                            <button id="convertToMarkdown" className="btn btn-primary"> {
+                                props.isEditMode ? 'Update Article' : 'Save Article'
+                            }</button>
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button id="btnResetConvertForm" className="btn btn-secondary" onClick={handleReset}>Reset Form</button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
         </div>

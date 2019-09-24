@@ -11,18 +11,19 @@ import SearchComponent from './Search.component';
 import ThemeSwitcherDropdownComponent from './ThemeDropdown.component';
 const utils = new Utils;
 
-declare var UIkit: any;
+// declare var UIkit: any;
 
 const Header = (props: any) => {
+    console.log('HEader :', props);
 
     // Open Create Article form in modal overlay
-    const openForm = () => {
+    /* const openForm = () => {
         UIkit.modal('#modal-articles').show();
     }
 
     const openBookmarkForm = () => {
         UIkit.modal('#modal-bookmarks').show();
-    }
+    } */
 
     return (
 
@@ -89,7 +90,7 @@ const Header = (props: any) => {
                     {/* END : Dropdown Navigation */}
 
                     {
-                        props.type && props.type === 'articles' ? <button className="btn btn-primary" data-toggle="modal" data-target="#modal-articles">Create Article</button> : <button className="btn btn-primary" data-toggle="modal" data-target="#modal-bookmarks">Create Bookmark</button>
+                        props.type && props.type === 'articles' ? <button className="btn btn-primary" data-toggle="modal" data-target="#modal-articles" onClick={props.onResetEditMode}>Create Article</button> : <button className="btn btn-primary" data-toggle="modal" data-target="#modal-bookmarks">Create Bookmark</button>
                     }
 
                     <a id="toggleSidebar" href="#offcanvas-usage" title="Click this button to view list of Categories and Tags."><i className="ion ion-md-menu"></i></a>
