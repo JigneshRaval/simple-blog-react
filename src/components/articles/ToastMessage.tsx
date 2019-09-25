@@ -35,12 +35,12 @@ const ToastMessage = (props: any) => {
     return (
         <React.Fragment>
             {
-                isToastVisible ? <div uk-alert="{'duration': 150}" className={'uk-alert-' + props.toastMessageType}>
+                isToastVisible ? <div className={'alert alert-' + props.toastMessageType}>
                     {/* <a className="uk-alert-close" uk-close="true">&times;</a> */}
                     <h3>{props.toastMessageType}</h3>
                     <p>{props.children}</p>
                     {
-                        props.isConfirm ? <React.Fragment><button className="uk-button uk-button-default" onClick={e => cancelDelete(e)}>Yes</button> <button className="uk-button uk-button-primary" onClick={hideToastMessage}>No</button></React.Fragment> : null}
+                        props.isConfirm ? <React.Fragment><button className="btn btn-default" onClick={e => cancelDelete(e)}>Yes</button> <button className="btn btn-primary" onClick={hideToastMessage}>No</button></React.Fragment> : null}
                 </div> : null
             }
         </React.Fragment>

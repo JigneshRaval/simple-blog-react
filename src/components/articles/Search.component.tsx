@@ -28,7 +28,7 @@ const SearchComponent = (props: any) => {
 
         <React.Fragment>
 
-            <form className="form-inline search-form" onSubmit={handleSubmit}>
+            <form className="search-form" onSubmit={handleSubmit}>
                 <label className="visually-hidden" htmlFor="searchBar">Search articles by Title, Tag or Category</label>
                 <input className="form-control search-form-input" name="searchBar" id="searchBar" type="text" placeholder="Search articles by Title, Tag or Category" onChange={(event) => filterArticles(event, 'search')} ref={inputRef} aria-label="Search" />
 

@@ -1,9 +1,9 @@
 @font-face {
   font-family: 'codecandy';
   src:
-    url('/assets/fonts/codecandy.ttf?t3p429') format('truetype'),
-    url('/assets/fonts/codecandy.woff?t3p429') format('woff'),
-    url('/assets/fonts/codecandy.svg?t3p429#codecandy') format('svg');
+    url('/assets/fonts/codecandy.ttf?fqmher') format('truetype'),
+    url('/assets/fonts/codecandy.woff?fqmher') format('woff'),
+    url('/assets/fonts/codecandy.svg?fqmher#codecandy') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -72,6 +72,12 @@ i {
 .cc-bx-chevron-right:before {
   content: "\eaa1";
 }
+.cc-bx-chevrons-left:before {
+  content: "\eaa3";
+}
+.cc-bx-chevrons-right:before {
+  content: "\eaa4";
+}
 .cc-bx-code:before {
   content: "\eab3";
 }
@@ -137,6 +143,12 @@ i {
 }
 .cc-bx-link-alt:before {
   content: "\eb3d";
+}
+.cc-bx-link-external:before {
+  content: "\eb3e";
+}
+.cc-bx-list:before {
+  content: "\eb3f";
 }
 .cc-bx-menu:before {
   content: "\eb52";
@@ -216,8 +228,38 @@ i {
 .cc-alert-triangle:before {
   content: "\e938";
 }
+.cc-align-justify:before {
+  content: "\e914";
+}
 .cc-bell:before {
   content: "\e939";
+}
+.cc-check:before {
+  content: "\e915";
+}
+.cc-chevron-down:before {
+  content: "\e916";
+}
+.cc-chevron-left:before {
+  content: "\e917";
+}
+.cc-chevron-right:before {
+  content: "\e918";
+}
+.cc-chevron-up:before {
+  content: "\e919";
+}
+.cc-chevrons-down:before {
+  content: "\e91a";
+}
+.cc-chevrons-left:before {
+  content: "\e91b";
+}
+.cc-chevrons-right:before {
+  content: "\e91c";
+}
+.cc-chevrons-up:before {
+  content: "\e91d";
 }
 .cc-code:before {
   content: "\e93a";

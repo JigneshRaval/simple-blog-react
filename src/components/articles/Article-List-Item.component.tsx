@@ -51,7 +51,7 @@ const ArticleListItem = (props: any) => {
 
             <div className="card-body">
                 {
-                    article.favorite ? <span className="isFavorite" aria-label="favorite"><i className="corner"></i><i className="cc-bx-star"></i></span> : ''
+                    article.favorite ? <span className="isFavorite" aria-label="favorite"><i className="corner"></i><i className="cc-bxs-star"></i></span> : ''
                 }
                 <div className="article-category"><span className="small-dot" data-category={article.category.toLowerCase()}></span>{article.category}</div>
                 <h2 className="card-title">

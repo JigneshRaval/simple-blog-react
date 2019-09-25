@@ -83,7 +83,7 @@ const ArticleHome = (props: any) => {
 
         utils.isServerOnline();
 
-        document.getElementsByTagName('body')[0].classList.add('isArticleListPanelOpened');
+        // document.getElementsByTagName('body')[0].classList.add('isArticleListPanelOpened');
 
         setTimeout(() => {
             fetchAllRecords();

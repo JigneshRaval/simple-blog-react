@@ -3,11 +3,11 @@
 
 .search-form {
     display: flex;
+    width: 50%;
 
     .search-form-input {
-        width: 350px;
         border: 1px solid #EEE;
-        padding: 1rem 40px 12px;
+        padding: 1rem 1rem 12px;
         height: auto;
         // transition: width 0.3s ease;
         font-size: 1rem;

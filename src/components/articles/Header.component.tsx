@@ -25,12 +25,20 @@ const Header = (props: any) => {
         UIkit.modal('#modal-bookmarks').show();
     } */
 
+    const showOffCanvas = () => {
+        if (document.body.classList.contains('offCanvasVisible')) {
+            document.body.classList.remove('offCanvasVisible');
+        } else {
+            document.body.classList.add('offCanvasVisible');
+        }
+    }
+
     return (
 
         <header className="header-main">
             <nav className="[ navbar navbar-expand-lg navbar-light bg-light ] [ d-flex align-items-stretch ]">
                 <button className="post-list__drawer" onClick={utils.handleToggleArticleListPanel} title="Click this button to view list of Articles." uk-tooltip="Click this button to view list of Articles.">
-                    <i className="ion ion-ios-arrow-forward"></i><i className="ion ion-ios-arrow-forward"></i>
+                    <i className="cc-bx-chevrons-right"></i>
                 </button>
 
                 {/* START : Logo */}
@@ -50,10 +58,10 @@ const Header = (props: any) => {
                 </button>
                 {/* END : Toggle/Collapse navigation in Mobile device view */}
 
-                <div className="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
-                    <div className="navbar-nav">
-                        <SearchComponent onFilterRecords={props.onFilterRecords} />
-                    </div>
+                <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+
+                    <SearchComponent onFilterRecords={props.onFilterRecords} />
+
                     {/* START : Dropdown Navigation */}
                     <ul className="navbar-nav">
                         <li className="nav-item dropdown">
@@ -84,7 +92,7 @@ const Header = (props: any) => {
                         }
 
                         <li className="nav-item">
-                            <a href="#offcanvas-usage" className="nav-item nav-link" title="Click this button to view list of Categories and Tags.">Tags</a>
+                            <a href="#offcanvas-usage" className="nav-item nav-link" title="Click this button to view list of Categories and Tags." onClick={showOffCanvas}>Tags</a>
                         </li>
                     </ul>
                     {/* END : Dropdown Navigation */}
@@ -93,7 +101,7 @@ const Header = (props: any) => {
                         props.type && props.type === 'articles' ? <button className="btn btn-primary" data-toggle="modal" data-target="#modal-articles" onClick={props.onResetEditMode}>Create Article</button> : <button className="btn btn-primary" data-toggle="modal" data-target="#modal-bookmarks">Create Bookmark</button>
                     }
 
-                    <a id="toggleSidebar" href="#offcanvas-usage" title="Click this button to view list of Categories and Tags."><i className="ion ion-md-menu"></i></a>
+                    <a id="toggleSidebar" href="#offcanvas-usage" title="Click this button to view list of Categories and Tags." onClick={showOffCanvas}><i className="cc-bx-menu"></i></a>
                 </div>
 
             </nav>

@@ -93,6 +93,9 @@ module.exports = {
         ]
     },
     plugins: [
+        new CopyWebpackPlugin([
+            // { from: 'src/assets', to: 'dist/assets' }
+        ]),
         // Extract CSS from javascript file and put it into another CSS file in dist folder
         new ExtractTextPlugin({
             // define where to save the file

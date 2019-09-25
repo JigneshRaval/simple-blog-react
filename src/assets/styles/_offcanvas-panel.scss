@@ -3,6 +3,7 @@
 
 .offcanvas-panel {
     position: fixed;
+    z-index: 10;
     top: 0;
     right: -100%;
     width: 300px;
@@ -11,6 +12,12 @@
 	transition: transform 0.3s ease-out, right 0.3s ease;
 
     &.isVisible {
+        right:0;
+    }
+}
+
+.offCanvasVisible {
+    .offcanvas-panel {
         right:0;
     }
 }
