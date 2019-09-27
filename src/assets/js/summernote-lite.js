@@ -7698,9 +7698,9 @@
           var $container = this.options.dialogsInBody ? this.$body : this.$editor;
           var body = [
               '<p class="text-center">',
-              '<a href="http://summernote.org/" target="_blank">Summernote 0.8.12</a> · ',
-              '<a href="https://github.com/summernote/summernote" target="_blank">Project</a> · ',
-              '<a href="https://github.com/summernote/summernote/issues" target="_blank">Issues</a>',
+              '<a href="http://summernote.org/" target="_blank" rel="noopener noreferrer">Summernote 0.8.12</a> · ',
+              '<a href="https://github.com/summernote/summernote" target="_blank" rel="noopener noreferrer">Project</a> · ',
+              '<a href="https://github.com/summernote/summernote/issues" target="_blank" rel="noopener noreferrer">Issues</a>',
               '</p>',
           ].join('');
           this.$dialog = this.ui.dialog({

@@ -57,7 +57,7 @@ export const Article = (props: any) => {
                     <div className="header__content">
                         <a href="#" className="article-category"><span className="category-color"></span> {article.category}</a>
                         <h1>
-                            <a className="uk-link-reset" href={article.sourceUrl} title={article.sourceUrl} target="_blank">{article.title}</a>
+                            <a className="uk-link-reset" href={article.sourceUrl} title={article.sourceUrl} target="_blank" rel="noopener noreferrer">{article.title}</a>
                         </h1>
 
                         <p className="article-meta">Written by <a href="javascript:;"><strong>{article.author}</strong></a> on <strong>{date.toString()}</strong>.</p>
@@ -80,7 +80,7 @@ export const Article = (props: any) => {
 
                 <footer className="article__footer">
                     <a href="javascript:void(0);" id="scrollToTop" className="scroll-top" onClick={scrollToTop}>
-                        <i className="ion ion-md-arrow-round-up"></i>
+                        <i className="cc-chevrons-up"></i>
                         <span className="sr-only">Scroll To Top</span>
                     </a>
                 </footer>

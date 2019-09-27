@@ -283,7 +283,7 @@ const BookmarkHome = () => {
                             loading={state.loading}
                             onAddToastMessage={addToastMessage.bind(this)}
                             onDeleteBookmark={handleDeleteBookmark}
-                            onEditBookmark={handleEditBookmark}
+                            onEditRecord={handleEditBookmark}
                             onFilterRecords={handleFilterRecords}
                             markAsFavorite={handleMarkAsFavorite}
                         />

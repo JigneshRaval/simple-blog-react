@@ -10,6 +10,7 @@ import React, { useEffect } from 'react';
 // COMPONENTS
 // ==========================
 import TagsInline from '../shared/Tags-Inline.component';
+import ActionMenu from '../shared/ActionMenu';
 
 
 const BookmarkListItem = (props: any) => {
@@ -22,18 +23,26 @@ const BookmarkListItem = (props: any) => {
         // console.log('activeTab : ', props);
     }, []);
 
-    const { bookmark, onDeleteBookmark, onEditBookmark, onFilterBookmarks, markAsFavorite, activeTab, index, onAddToastMessage } = props;
+    const { bookmark, onDeleteBookmark, onEditRecord, onFilterBookmarks, markAsFavorite, activeTab, index, onAddToastMessage } = props;
 
     return (
         <div className={"uk-card uk-card-default" + (activeTab === index ? ' active' : '')} key={bookmark._id}>
 
             <div className="card" data-category={bookmark.category}>
-                <div className="card-controls uk-inline">
+
+                <ActionMenu
+                    type={'bookmarks'}
+                    title={'Bookmark'}
+                    data={bookmark}
+                    {...props}
+                />
+
+                {/* <div className="card-controls uk-inline">
                     <button className="uk-button uk-button-link" type="button"><i uk-icon="more-vertical"></i></button>
                     <div uk-dropdown="mode: click; pos: bottom-right" className="uk-dropdown-bottom-right">
                         <ul className="uk-nav uk-dropdown-nav">
                             <li className="uk-nav-header">Actions</li>
-                            <li className="uk-active"><a href="javascript:void(0);" onClick={() => onEditBookmark(bookmark._id, true)}><span uk-icon="pencil"></span> Edit Bookmark</a></li>
+                            <li className="uk-active"><a href="javascript:void(0);" onClick={() => onEditRecord(bookmark._id, true)}><span uk-icon="pencil"></span> Edit Bookmark</a></li>
                             <li><a href="javascript:void(0);" onClick={() => onAddToastMessage('warning', `Are you sure you want to delete this bookmark?.`, true, bookmark._id)}><span uk-icon="trash"></span> Delete Bookmark</a></li>
                             <li><a href="javascript:void(0);" onClick={() => markAsFavorite(bookmark._id, bookmark.favorite)} data-favorite={bookmark.favorite}><span uk-icon="star"></span> Mark as Favorite</a></li>
                             <li className="uk-nav-header">Tags</li>
@@ -41,7 +50,7 @@ const BookmarkListItem = (props: any) => {
                             <li><a href="javascript:void(0);" onClick={(event) => onFilterBookmarks(event, 'all')}>Clear filter</a></li>
                         </ul>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="card-header">
                     {

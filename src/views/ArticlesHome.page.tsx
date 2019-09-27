@@ -19,6 +19,7 @@ import Sidebar from '../components/articles/Sidebar.component';
 import ToastMessage from "../components/articles/ToastMessage";
 import { Article } from "../components/articles/Article.component";
 import { CreateArticleFormComponent } from '../components/articles/Create-Article-Form.component';
+import LoadingSpinner from '../components/shared/LoadingSpinner';
 
 
 // A dynamic import call in ES5/ES3 requires the 'Promise' constructor.
@@ -85,9 +86,9 @@ const ArticleHome = (props: any) => {
 
         // document.getElementsByTagName('body')[0].classList.add('isArticleListPanelOpened');
 
-        setTimeout(() => {
-            fetchAllRecords();
-        }, 2500)
+        // setTimeout(() => {
+        fetchAllRecords();
+        // }, 2500)
 
 
         // }
@@ -299,43 +300,42 @@ const ArticleHome = (props: any) => {
                         {...props}
                     />
 
-                    <section className="content-section">
-
-                        <CreateArticleFormComponent
-                            {...newState}
-                            onCreateArticle={handleCreateArticle}
-                            onEditSaveArticle={handleEditSaveArticle}
-                        // firebase={firebase}
-                        />
-
-                        <Suspense fallback={<div>Loading 123...</div>}>
-                            <div className="post-list__wrapper" >
-                                <div className="uk-flex uk-flex-column">
-                                    <ArticlesList
-                                        filteredRecords={filteredRecords}
-                                        loading={isLoading}
-                                        onAddToastMessage={addToastMessage.bind(this)}
-                                        onDeleteArticle={handleDeleteArticle}
-                                        onEditArticle={handleEditArticle}
-                                        onDisplaySingleArticleContent={handleDisplaySingleArticleContent}
-                                        onFilterRecords={handleFilterRecords}
-                                        markAsFavorite={handleMarkAsFavorite}
-                                    />
-                                </div>
+                    <Suspense fallback={<div>Loading 123...</div>}>
+                        <div className="post-list__wrapper" >
+                            <div className="uk-flex uk-flex-column">
+                                <ArticlesList
+                                    filteredRecords={filteredRecords}
+                                    loading={isLoading}
+                                    onAddToastMessage={addToastMessage.bind(this)}
+                                    onDeleteArticle={handleDeleteArticle}
+                                    onEditRecord={handleEditArticle}
+                                    onDisplaySingleArticleContent={handleDisplaySingleArticleContent}
+                                    onFilterRecords={handleFilterRecords}
+                                    markAsFavorite={handleMarkAsFavorite}
+                                />
                             </div>
-                        </Suspense>
+                        </div>
+                    </Suspense>
+
+                    <section className="content-section">
 
                         {
                             currentRecord ? (
                                 <Article currentRecord={currentRecord} onFilterRecords={handleFilterRecords} />
-                            ) : <p>No Article selected. Please select any article from the list.</p>
+                            ) : <LoadingSpinner text={'Loading article data...'} />
                         }
-
 
                     </section>
 
                 </section>
             </div>
+
+            <CreateArticleFormComponent
+                {...newState}
+                onCreateArticle={handleCreateArticle}
+                onEditSaveArticle={handleEditSaveArticle}
+            // firebase={firebase}
+            />
 
             <Sidebar
                 onFilterRecords={handleFilterRecords}

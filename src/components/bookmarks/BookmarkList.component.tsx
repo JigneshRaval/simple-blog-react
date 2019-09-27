@@ -8,20 +8,20 @@ const BookmarksList = (props: any) => {
 
     return (
         <div className="bookmark-list__wrapper" >
-            <div className="uk-flex uk-flex-column">
-                {
-                    loading ? <LoadingSpinner text={'Loading bookmarks...'} /> : filteredRecords && filteredRecords.length > 0 ?
-                        filteredRecords.map((record: any, index: number) => {
-                            return (
-                                <BookmarkListItem
-                                    key={index}
-                                    bookmark={record}
-                                    index={index}
-                                    {...props} />
-                            )
-                        }) : <div className="message-no-article">Sorry, No article found</div>
-                }
-            </div>
+
+            {
+                loading ? <LoadingSpinner text={'Loading bookmarks...'} /> : filteredRecords && filteredRecords.length > 0 ?
+                    filteredRecords.map((record: any, index: number) => {
+                        return (
+                            <BookmarkListItem
+                                key={index}
+                                bookmark={record}
+                                index={index}
+                                {...props} />
+                        )
+                    }) : <div className="message-no-article">Sorry, No bookmarks found</div>
+            }
+
         </div>
     );
 }
