@@ -1,10 +1,10 @@
-import React, { useReducer, useEffect, useState, lazy, Suspense } from "react";
+import React, { useReducer, useEffect, useState, lazy, Suspense } from 'react';
 // import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 
 
 // SERVICES
 // ==========================
-import { DataService } from "../services/data.service";
+import { DataService } from '../services/data.service';
 // import ArticleContext from '../services/context';
 import articleReducer from '../services/Reducer';
 import { IndexedDBService } from '../services/indexedDb.service';
@@ -13,11 +13,11 @@ import Utils from '../services/utils';
 
 // COMPONENTS
 // ==========================
-import Header from "../components/articles/Header.component";
+import Header from '../components/articles/Header.component';
 import Sidebar from '../components/articles/Sidebar.component';
-// import ArticlesList from "../components/articles/Articles-List.component";
-import ToastMessage from "../components/articles/ToastMessage";
-import { Article } from "../components/articles/Article.component";
+// import ArticlesList from '../components/articles/Articles-List.component';
+import ToastMessage from '../components/articles/ToastMessage';
+import { Article } from '../components/articles/Article.component';
 import { CreateArticleFormComponent } from '../components/articles/Create-Article-Form.component';
 import LoadingSpinner from '../components/shared/LoadingSpinner';
 
@@ -25,7 +25,7 @@ import LoadingSpinner from '../components/shared/LoadingSpinner';
 // A dynamic import call in ES5/ES3 requires the 'Promise' constructor.
 // Make sure you have a declaration for the 'Promise' constructor or include 'ES2015' in your`--lib` option.ts(2712)
 // update tsconfig.json with "compilerOptions": { "lib": [ "dom", "es2015", "es6"] }
-const ArticlesList = React.lazy(() => import('../components/articles/Articles-List.component'))
+const ArticlesList = React.lazy(() => import('../components/articles/Articles-List.component'));
 
 
 // FIREBASE

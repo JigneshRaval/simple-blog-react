@@ -26,6 +26,8 @@
 		"@types/react-dom": "^16.0.8",
 		"copy-webpack-plugin": "^4.5.2",
 		"css-loader": "^1.0.0",
+		"enzyme": "^3.10.0",
+		"enzyme-adapter-react-16": "^1.14.0",
 		"extract-text-webpack-plugin": "^4.0.0-beta.0",
 		"file-loader": "^2.0.0",
 		"firebase": "^5.7.0",
