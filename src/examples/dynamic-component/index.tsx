@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 
-const GraphView = lazy(() => import(`./GraphView.component`));
-const NullView = lazy(() => import(`./NullView.component`));
-const TableView = lazy(() => import(`./TableView.component`));
+const GraphView = lazy(() => import(`./GraphView`));
+const NullView = lazy(() => import(`./NullView`));
+const TableView = lazy(() => import(`./TableView`));
 
 export { GraphView, NullView, TableView };
