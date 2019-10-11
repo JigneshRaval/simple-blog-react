@@ -20,7 +20,7 @@ import ToastMessage from '../components/articles/ToastMessage';
 import { Article } from '../components/articles/Article.component';
 import { CreateArticleFormComponent } from '../components/articles/Create-Article-Form.component';
 import LoadingSpinner from '../components/shared/LoadingSpinner';
-
+import SimpleUncontrolledForm from '../components/articles/SimpleUncontrolledForm';
 
 // A dynamic import call in ES5/ES3 requires the 'Promise' constructor.
 // Make sure you have a declaration for the 'Promise' constructor or include 'ES2015' in your`--lib` option.ts(2712)
@@ -283,7 +283,7 @@ const ArticleHome = (props: any) => {
         dispatch({ type: 'FILTER_ALL_ARTICLES', filteredRecords: utils.filterArticles(event, filterBy, newState.articles) });
     }
 
-    const { articles, isEditMode, currentRecord, filteredRecords, loading, totalRecords } = newState;
+    const { articles, isEditMode, currentRecord, filteredRecords, loading, totalRecords, editData } = newState;
 
 
     return (
@@ -330,12 +330,20 @@ const ArticleHome = (props: any) => {
                 </section>
             </div>
 
-            <CreateArticleFormComponent
+            <SimpleUncontrolledForm
+                categories={newState.categories}
+                editData={editData}
+                isEditMode={isEditMode}
+                onCreateArticle={handleCreateArticle}
+                onEditSaveArticle={handleEditSaveArticle}
+            />
+
+            {/* <CreateArticleFormComponent
                 {...newState}
                 onCreateArticle={handleCreateArticle}
                 onEditSaveArticle={handleEditSaveArticle}
             // firebase={firebase}
-            />
+            /> */}
 
             <Sidebar
                 onFilterRecords={handleFilterRecords}
@@ -348,6 +356,6 @@ const ArticleHome = (props: any) => {
         </main>
 
     );
-}
+};
 
 export default ArticleHome;
