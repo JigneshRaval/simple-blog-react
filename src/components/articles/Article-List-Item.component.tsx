@@ -18,7 +18,7 @@ const ArticleListItem = (props: any) => {
     // console.log('Article list item props :', props);
 
     // IMP : Added this to not render whole list every time when user clicks on any article from left navigation
-    // or any new article added or deleted, or filtering or serching articles
+    // or any new article added or deleted, or filtering or searching articles
     useEffect(() => {
         // console.log('activeTab : ', props);
     }, []);
@@ -30,7 +30,7 @@ const ArticleListItem = (props: any) => {
         props.onActivateTab(index);
     }
 
-    const { article, onDeleteArticle, onEditRecord, onFilterRecords, markAsFavorite, activeTab, index, onAddToastMessage } = props;
+    const { article, activeTab, index } = props;
 
     return (
         <div className={"card" + (activeTab === index ? ' active' : '')} key={article._id} data-article-id={article._id} data-category={article.category}>
@@ -41,21 +41,6 @@ const ArticleListItem = (props: any) => {
                 data={article}
                 {...props}
             />
-
-            {/* <div className="card-controls dropdown">
-                <button className="btn btn-link" type="button" id={'dropdownMenuButton_' + article._id} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i className="cc-bx-dots-vertical-rounded"></i><span className="sr-only">Action Menu</span></button>
-                <div className="dropdown-menu" aria-labelledby={'dropdownMenuButton_' + article._id}>
-                    <ul className="">
-                        <li className="dropdown-header">Actions</li>
-                        <li className="dropdown-item"><a href="javascript:void(0);" data-toggle="modal" data-target="#modal-articles" onClick={() => onEditRecord(article._id, true)}><i className="cc-bx-pencil"></i> Edit Article</a></li>
-                        <li className="dropdown-item"><a href="javascript:void(0);" onClick={() => onAddToastMessage('warning', `Are you sure you want to delete this article?.`, true, article._id)}><i className="cc-bx-trash"></i> Delete Article</a></li>
-                        <li className="dropdown-item"><a href="javascript:void(0);" onClick={() => markAsFavorite(article._id, article.favorite)} data-favorite={article.favorite}><i className="cc-bx-star"></i> Mark as Favorite</a></li>
-                        <li className="dropdown-header">Tags</li>
-                        <TagsInline data={article} onFilterRecords={props.onFilterRecords} className={'dropdown-item'} />
-                        <li className="dropdown-item"><button className="btn btn-primary" onClick={(event) => onFilterRecords(event, 'all')}><i className="cc-bx-x-circle"></i> Clear filter</button></li>
-                    </ul>
-                </div>
-            </div> */}
 
             <div className="card-body">
                 {

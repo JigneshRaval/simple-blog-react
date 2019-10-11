@@ -15,7 +15,6 @@ const utils = new Utils();
 declare var $: any;
 declare var hljs: any;
 
-
 export const Article = (props: any) => {
 
     const { currentRecord: article } = props;
@@ -28,7 +27,6 @@ export const Article = (props: any) => {
             });
         });
     }, [article._id]);
-
 
     const date = utils.formatDate('dd/mm/yyyy', '-', article.dateCreated);
 
