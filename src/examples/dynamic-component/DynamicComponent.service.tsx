@@ -50,7 +50,7 @@ class DynamicComponentServiceExm1 extends Component<any, any> {
 
     // Old way using import ( https://www.slightedgecoder.com/2017/12/03/loading-react-components-dynamically-demand/ )
     // ====================================
-    addViewOld = async (viewName: any, data = {}) => {
+    addViewOld = async (viewName: string, data = {}) => {
         // Don't load more than once.
         if (this.state.loadedComponentsOld.includes(viewName)) return;
 
@@ -96,7 +96,7 @@ class DynamicComponentServiceExm1 extends Component<any, any> {
 
     // NEW WAY using React.Lazy and Suspense (https://www.slightedgecoder.com/2018/10/28/loading-react-components-dynamically-on-demand-using-react-lazy/)
     // ====================================
-    addView = async (viewName: any, componentData = {}) => {
+    addView = async (viewName: string, componentData = {}) => {
         const { loadedComponentsNew } = this.state;
 
         // Don't load more than once.

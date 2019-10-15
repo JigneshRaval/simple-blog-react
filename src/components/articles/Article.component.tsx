@@ -15,7 +15,30 @@ const utils = new Utils();
 declare var $: any;
 declare var hljs: any;
 
-export const Article = (props: any) => {
+interface IArticle {
+    author: string;
+    category: string;
+    coverImage: string;
+    date: string;
+    dateCreated: number;
+    excerpt: string;
+    filePath: string;
+    htmlCode: string;
+    path: string;
+    sourceUrl: string;
+    tags: Array<string>;
+    title: string;
+    type: string;
+    readonly _id: string;
+}
+
+interface IArticleProps {
+    currentRecord: IArticle;
+    // onFilterRecords(event: any, filterBy: string): void;
+    onFilterRecords: (event: any, filterBy: string) => void;
+}
+
+export const Article = (props: IArticleProps) => {
 
     const { currentRecord: article } = props;
 

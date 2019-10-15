@@ -25,7 +25,7 @@ const dataService = new DataService('bookmarks');
 
 // declare var UIkit: any;
 
-const BookmarkHome = () => {
+const BookmarkHome = (props: any) => {
 
     const [state, setState] = useState({
         dataService: new DataService('bookmarks'),

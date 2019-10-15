@@ -18,7 +18,13 @@
         ],
         /* Type declaration files to be included in compilation. */
         "types": [
-            "./src/@types/**"
+            "node",
+            "react",
+            "./src/@types/*.d.ts"
+        ],
+        "typeRoots": [
+            "./src/@types/*.d.ts",
+            "./types.d.ts"
         ]
     },
     "include": [

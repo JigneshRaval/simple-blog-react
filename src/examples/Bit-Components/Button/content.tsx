@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Spinner from './Spinner';
 // import './styles.css';
 
-const variantMap = {
+const variantMap: any = {
     base: 'base',
     neutral: 'base',
     brand: 'inverse',
@@ -12,8 +12,15 @@ const variantMap = {
     success: 'inverse',
     inverse: 'inverse',
     'outline-brand': 'brand',
-    'border-inverse': 'inverse',
+    'border-inverse': 'inverse'
 };
+
+interface IContent {
+    label: string;
+    children: any;
+    variant: string;
+    isLoading: boolean;
+}
 
 function ButtonContent({ label, children }: any) {
     if (children) {
@@ -23,7 +30,7 @@ function ButtonContent({ label, children }: any) {
 }
 
 
-export default function Content({ label, children, variant, isLoading }) {
+export default function Content({ label, children, variant, isLoading }: IContent) {
     if (isLoading) {
         return (
             <span className="rainbow-button_content--hidden">
@@ -51,14 +58,14 @@ Content.propTypes = {
         'destructive',
         'success',
         'inverse',
-        'border-inverse',
+        'border-inverse'
     ]),
-    isLoading: PropTypes.bool,
+    isLoading: PropTypes.bool
 };
 
 Content.defaultProps = {
     label: undefined,
     children: null,
     variant: 'neutral',
-    isLoading: false,
+    isLoading: false
 };

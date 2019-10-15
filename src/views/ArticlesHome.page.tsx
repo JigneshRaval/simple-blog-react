@@ -10,7 +10,6 @@ import articleReducer from '../services/Reducer';
 import { IndexedDBService } from '../services/indexedDb.service';
 import Utils from '../services/utils';
 
-
 // COMPONENTS
 // ==========================
 import Header from '../components/articles/Header.component';
@@ -18,7 +17,7 @@ import Sidebar from '../components/articles/Sidebar.component';
 // import ArticlesList from '../components/articles/Articles-List.component';
 import ToastMessage from '../components/articles/ToastMessage';
 import { Article } from '../components/articles/Article.component';
-import { CreateArticleFormComponent } from '../components/articles/Create-Article-Form.component';
+// import { CreateArticleFormComponent } from '../components/articles/Create-Article-Form.component';
 import LoadingSpinner from '../components/shared/LoadingSpinner';
 import SimpleUncontrolledForm from '../components/articles/SimpleUncontrolledForm';
 
@@ -26,7 +25,6 @@ import SimpleUncontrolledForm from '../components/articles/SimpleUncontrolledFor
 // Make sure you have a declaration for the 'Promise' constructor or include 'ES2015' in your`--lib` option.ts(2712)
 // update tsconfig.json with "compilerOptions": { "lib": [ "dom", "es2015", "es6"] }
 const ArticlesList = React.lazy(() => import('../components/articles/Articles-List.component'));
-
 
 // FIREBASE
 // ==========================
@@ -37,7 +35,6 @@ const ArticlesList = React.lazy(() => import('../components/articles/Articles-Li
 // });
 
 declare var require: any;
-// declare var UIkit: any;
 declare var $: any;
 
 let categories = require('../assets/data/categories.json');
@@ -72,41 +69,25 @@ const ArticleHome = (props: any) => {
 
     useEffect(() => {
         // componentDidMount, componentDidUpdate, and componentWillUnmount
-        console.log('Rendering ArticleHome page.');
 
-        // idbService.openDatabase({});
-
-        // setReRender(true);
-
-        // if (reRender) {
         // Show loading indicator
         setIsLoading(true);
 
         utils.isServerOnline();
 
-        // document.getElementsByTagName('body')[0].classList.add('isArticleListPanelOpened');
-
-        // setTimeout(() => {
         fetchAllRecords();
-        // }, 2500)
 
-
-        // }
-
-        // const pollForData = setInterval(() => fetchAllRecords(), 5000);
         // componentWillUnmount
         return () => {
             console.log('Unmounting ArticleHome component...');
-            // setReRender(false);
+
             setState({
                 ...state,
                 toastChildren: []
             });
-            // clearTimeout(pollForData);
-        }
+        };
 
     }, []);
-
 
     const fetchAllRecords = () => {
         // Get all Articles on component mount
@@ -120,16 +101,11 @@ const ArticleHome = (props: any) => {
             .then((data: any) => {
                 // Update variable value in data.service.ts
                 updateArticleDataService(data);
-                /* setState({
-                    ...state,
-                    tags: utils.getUniqueTags(data)
-                }); */
             })
             .catch((error: any) => {
                 console.log('Error in fetching all the records : ', error);
             });
-    }
-
+    };
 
     // Dynamically add multiple ToastMessage components.
     const addToastMessage = (messageType: string, message: string, isConfirm: boolean = false, articleId: string = '') => {
@@ -139,7 +115,12 @@ const ArticleHome = (props: any) => {
             isConfirm: isConfirm
         });
 
-        const toastChild = <ToastMessage displayToastMessage={true} toastMessageType={messageType} isConfirm={isConfirm} onConfirm={handleConfirmEvent.bind(this, articleId)} key={articleId + Math.floor((Math.random() * 100) + 1)}>{message}</ToastMessage>;
+        const toastChild = <ToastMessage
+            displayToastMessage={true}
+            toastMessageType={messageType}
+            isConfirm={isConfirm}
+            onConfirm={handleConfirmEvent.bind(this, articleId)} key={articleId + Math.floor((Math.random() * 100) + 1)}>
+            {message}</ToastMessage>;
 
         const newChildren = [...state.toastChildren, toastChild];
 
@@ -147,15 +128,19 @@ const ArticleHome = (props: any) => {
             ...state,
             toastChildren: newChildren
         }));
-    }
+    };
 
+    // Update variable value in articles.service.ts
+    // =========================================
+    const updateArticleDataService = (data: any) => {
+        dataService.setData(data);
+    };
 
     const handleConfirmEvent = (articleId: string) => {
         if (articleId) {
             handleDeleteArticle(articleId);
         }
-    }
-
+    };
 
     // Create new article
     // =========================================
@@ -172,36 +157,28 @@ const ArticleHome = (props: any) => {
             // Update variable value in articles.service.ts
             updateArticleDataService(newState.articles);
 
-            // setReRender(true);
         }).catch((err) => {
             console.log('Error in creating new article', err);
         });
-
-        // setReRender(false);
     }
-
 
     // Display Single Article Content
     // =========================================
     const handleDisplaySingleArticleContent = (articleId: string) => {
         dispatch({ type: 'GET_SINGLE_ARTICLE', articleId: articleId });
-    }
-
+    };
 
     // Get Article data on click of Edit button
     // =========================================
     const handleEditArticle = (articleId: string, isFormVisible: boolean) => {
-        // UIkit.modal('#modal-articles').show();
-
         $('#modal-articles').modal('show');
 
         dispatch({ type: 'SET_EDIT_MODE', articleId: articleId });
-    }
+    };
 
     const resetEditMode = () => {
         dispatch({ type: 'RESET_EDIT_MODE' });
-    }
-
+    };
 
     // Update data on the server
     // =========================================
@@ -226,14 +203,10 @@ const ArticleHome = (props: any) => {
             // Update variable value in articles.service.ts
             updateArticleDataService(newState.articles);
 
-            // setReRender(true);
         }).catch((err: any) => {
             console.log('Error in edit or save article : ', err);
         });
-
-        // setReRender(false);
-    }
-
+    };
 
     // Delete single article by articleId
     // =========================================
@@ -247,20 +220,11 @@ const ArticleHome = (props: any) => {
 
             // Update variable value in articles.service.ts
             updateArticleDataService(newState.articles);
-            // setReRender(true);
+
         }).catch((err: any) => {
             console.log('Error in deleting article : ', err);
         });
-
-        // setReRender(false);
-    }
-
-
-    // Update variable value in articles.service.ts
-    // =========================================
-    const updateArticleDataService = (data: any) => {
-        dataService.setData(data);
-    }
+    };
 
     const handleMarkAsFavorite = (articleId: string, isFavorite: boolean) => {
         dataService.markAsFavorite(articleId, isFavorite).then((data: any) => {
@@ -274,17 +238,15 @@ const ArticleHome = (props: any) => {
 
             dispatch({ type: 'MARK_FAVORITE', data: articles });
         });
-    }
-
+    };
 
     // Filter all the articles by Tag, Category or the search value provided by the user
     // =========================================
     const handleFilterRecords = (event: any, filterBy: string) => {
         dispatch({ type: 'FILTER_ALL_ARTICLES', filteredRecords: utils.filterArticles(event, filterBy, newState.articles) });
-    }
+    };
 
     const { articles, isEditMode, currentRecord, filteredRecords, loading, totalRecords, editData } = newState;
-
 
     return (
         <main className="wrapper uk-offcanvas-content">
@@ -348,8 +310,6 @@ const ArticleHome = (props: any) => {
             <Sidebar
                 onFilterRecords={handleFilterRecords}
                 articleCount={totalRecords}
-            // {...newState}
-            // tags={state.tags}
             />
 
             <div className="toast-message__wrapper">{state.toastChildren}</div>

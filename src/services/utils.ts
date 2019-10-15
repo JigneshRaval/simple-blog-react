@@ -206,19 +206,62 @@ class Utils {
      * @param articles : Array - List of all Articles to be filtered.
      */
     public filterArticlesBy(searchTerm: string, filterBy: string, articles: any) {
+        let pattern = '(' + searchTerm.split(' ').join('|') + ')'; // (ES6/IIFE)
+        let test = new RegExp(pattern, 'gi');
+        let keywords = searchTerm.split(' ');
+        let articleBySearch: Array<any> = [];
+
         switch (filterBy) {
             // Method 1: filter articles either by tags, category or by title which is matching with search term
             case 'search':
-                let articleBySearch = articles.filter(({ tags, category, title }: any) => {
-                    return category.toLowerCase().includes(searchTerm.toLowerCase()) || title.toLowerCase().includes(searchTerm.toLowerCase()) || tags.some((tag: any) => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-                }).map((article: any) => article);
+                let t0 = performance.now();
 
+                /* let articleBySearch1 = articles.filter(({ tags, category, title }: any) => {
+                    console.log(title.toLowerCase().match(test));
+                    return title.toLowerCase().match(test) || category.toLowerCase().match(test) || tags.some((tag: any) => tag.toLowerCase().match(test));
+                    // return title.toLowerCase().includes(searchTerm.toLowerCase()) || category.toLowerCase().includes(searchTerm.toLowerCase()) || tags.some((tag: any) => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+                }).map((article: any) => article); */
+
+                console.log('keywords : ', keywords);
+                // article.title.toLowerCase().indexOf(keyword.toLowerCase()) === -1 || article.category.toLowerCase().indexOf(keyword.toLowerCase()) === -1 || article.tags.some((tag: any) => tag.toLowerCase().indexOf(keyword.toLowerCase())) === -1
+
+                articles.map((article: any) => {
+                    let allKeywordsMatch = true;
+
+                    keywords.map((keyword: any) => {
+                        if (article.title.toLowerCase().indexOf(keyword.toLowerCase()) === -1) {
+                            allKeywordsMatch = false;
+                        }
+                    });
+
+                    if (allKeywordsMatch) articleBySearch.push(article);
+                });
+
+                /* for (let i = 0; i < articles.length; i++) {
+                    let allKeywordsMatch = true;
+                    for (let j = 0; j < keywords.length; j++) {
+
+                        if (articles[i].title.toLowerCase().indexOf(keywords[j].toLowerCase()) === -1) {
+                            console.log('Article Title : ', articles[i].title);
+                            allKeywordsMatch = false;
+                            // break;
+                        }
+
+                    }
+
+                    if (allKeywordsMatch) hits.push(articles[i]);
+
+                } */
+
+                let t1 = performance.now();
+                console.log('Took', (t1 - t0).toFixed(4), 'milliseconds to filter records :', articleBySearch);
+                // console.log('Hits =', hits);
                 return [...articleBySearch];
 
             // Method 2: filter articles by tags matching with search term
             case 'tag':
                 let articleByTags = articles.filter(({ tags }: any) => {
-                    return tags.some((tag: any) => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+                    return tags.some((tag: any) => tag.toLowerCase().includes(searchTerm.toLowerCase()));
                 });
 
                 return [...articleByTags];
@@ -226,7 +269,7 @@ class Utils {
             // Method 3: filter articles by tags matching with search term
             case 'category':
                 let articlesByCategory = articles.filter(({ category }: any) => {
-                    return category.toLowerCase().includes(searchTerm.toLowerCase())
+                    return category.toLowerCase().includes(searchTerm.toLowerCase());
                 });
 
                 return [...articlesByCategory];
@@ -330,20 +373,20 @@ class Utils {
     public extractCleanCode(parent: any, content: any, type: string) {
         switch (type) {
             case "github":
-                var iFrames = parent.querySelectorAll('iframe'); // Select all iFrame elements
-                var figures = parent.querySelectorAll('figure.graf--iframe'); // Select all iFrame parent Elements
+                let iFrames = parent.querySelectorAll('iframe'); // Select all iFrame elements
+                let figures = parent.querySelectorAll('figure.graf--iframe'); // Select all iFrame parent Elements
 
                 if (parent) {
                     if (iFrames && iFrames.length > 0) {
                         // Loop through all the iFrames
-                        for (var i = 0, len = iFrames.length; i < len; i++) {
-                            var preNode = document.createElement('pre');
-                            var codeNode = document.createElement('code');
+                        for (let i = 0, len = iFrames.length; i < len; i++) {
+                            let preNode = document.createElement('pre');
+                            let codeNode = document.createElement('code');
 
-                            var contDoc = iFrames[i].contentDocument || iFrames[i].contentWindow ? iFrames[i].contentWindow.document : null;
+                            let contDoc = iFrames[i].contentDocument || iFrames[i].contentWindow ? iFrames[i].contentWindow.document : null;
 
                             if (contDoc) {
-                                var iframeContent = contDoc.querySelector('table').innerText || contDoc.querySelector('table').textContent;
+                                let iframeContent = contDoc.querySelector('table').innerText || contDoc.querySelector('table').textContent;
 
                                 codeNode.innerText = iframeContent.replace(/</ig, '&lt;');
                                 preNode.appendChild(codeNode);
@@ -358,18 +401,18 @@ class Utils {
                     console.log("Please assign id to content wrapper.")
                 }
             case "gist":
-                // var parent = content.parentElement;
-                var gists = parent.querySelectorAll('.oembed-gist') || parent.querySelectorAll('.gist');
+                // let parent = content.parentElement;
+                let gists = parent.querySelectorAll('.oembed-gist') || parent.querySelectorAll('.gist');
 
                 if (parent) {
                     if (gists && gists.length > 0) {
                         // Loop through all the iFrames
-                        for (var i = 0, len = gists.length; i < len; i++) {
+                        for (let i = 0, len = gists.length; i < len; i++) {
                             if (gists[i].querySelector('table')) {
-                                var preNode = document.createElement('pre');
-                                var codeNode = document.createElement('code');
+                                let preNode = document.createElement('pre');
+                                let codeNode = document.createElement('code');
 
-                                var gistContent = gists[i].querySelector('table').innerText || gists[i].querySelector('table').textContent;
+                                let gistContent = gists[i].querySelector('table').innerText || gists[i].querySelector('table').textContent;
                                 codeNode.innerText = gistContent.replace(/</ig, '&lt;');
                                 preNode.appendChild(codeNode);
                                 // replace all iFrame parent nodes with the new <pre> tags
@@ -386,12 +429,12 @@ class Utils {
             case "crayon-table":
                 // Method 2 for Crayons highlighter
                 //============================================
-                var crayonDivs = parent.querySelectorAll('.crayon-syntax');
+                let crayonDivs = parent.querySelectorAll('.crayon-syntax');
 
                 if (crayonDivs && crayonDivs.length > 0) {
-                    for (var i = 0; i < crayonDivs.length; i++) {
-                        var preNode = document.createElement('pre');
-                        var codeNode = document.createElement('code');
+                    for (let i = 0; i < crayonDivs.length; i++) {
+                        let preNode = document.createElement('pre');
+                        let codeNode = document.createElement('code');
 
                         codeNode.innerHTML = crayonDivs[i].querySelector('.crayon-code').innerText.replace(/</ig, '&lt;');
                         preNode.appendChild(codeNode);

@@ -107,7 +107,7 @@
         ],
         "jsdoc-format": true,
         "no-consecutive-blank-lines": [
-            true
+            false
         ],
         "no-parameter-properties": false,
         "one-line": [

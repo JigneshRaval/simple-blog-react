@@ -331,7 +331,7 @@ type: '${frontmatterObj.type}'
                                 <div className="col-6 col-sm-12 col-md-12 col-lg-6">
                                     <div contentEditable
                                         id="test"
-                                        style={{ 'height': '50px', 'whiteSpace': 'pre-wrap', 'overflow': 'auto', 'opacity': 0.5, 'resize': 'auto' }}>
+                                        style={{ 'height': '50px', 'whiteSpace': 'pre-wrap', 'overflow': 'auto', 'opacity': 0.5, 'resize': 'vertical' }}>
                                     </div>
                                     <div className="form-group">
                                         <label className="form-label" htmlFor="txtareaHtmlCode">HTML code</label>

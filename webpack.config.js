@@ -48,6 +48,12 @@ module.exports = {
                 use: ExtractTextPlugin.extract({
                     // fallback: 'style-loader',
                     use: [
+                        /* {
+                            loader: 'style-loader',
+                            options: {
+                                minimize: true
+                            }
+                        }, */
                         {
                             loader: 'css-loader',
                             options: {

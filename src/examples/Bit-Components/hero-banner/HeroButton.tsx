@@ -3,9 +3,10 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import PropTypes from 'prop-types';
-import * as style from './style.scss';
+// import * as style from './style.scss';
+declare var require: any;
+const style = require('./style.scss');
 // import '../../global.css';
-
 
 /**
  * @render react
@@ -30,11 +31,11 @@ HeroButton.propTypes = {
      * @property {string} text label to be displayed within the button
      */
     text: PropTypes.string
-}
+};
 
 HeroButton.defaultProps = {
     text: 'Hero Button!',
     primary: true,
-}
+};
 
 export default HeroButton;

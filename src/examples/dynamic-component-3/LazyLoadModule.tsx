@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export class LazyLoadModule extends React.Component {
+export class LazyLoadModule extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
 
@@ -18,7 +18,7 @@ export class LazyLoadModule extends React.Component {
 
     async componentDidMount() {
         try {
-            const { resolve }: any = this.props;
+            const { resolve } = this.props;
             const { default: module } = await resolve();
             this.setState({ module });
         } catch (error) {
@@ -37,7 +37,8 @@ export class LazyLoadModule extends React.Component {
         return <div>Module loaded</div>;
     }
 }
-
+/*
 LazyLoadModule.propTypes = {
     resolve: PropTypes.func
 };
+ */

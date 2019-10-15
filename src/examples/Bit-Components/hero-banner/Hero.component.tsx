@@ -2,7 +2,10 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import HeroButton from './HeroButton';
-import style from './style.scss';
+// import style from './style.scss';
+// https://medium.com/@sapegin/css-modules-with-typescript-and-webpack-6b221ebe5f10
+declare var require: any;
+const style = require('./style.scss');
 // import '../../global.css';
 
 /**
@@ -15,7 +18,7 @@ import style from './style.scss';
  *   description="Lorem ipsum dolor sit amet hey! id quam sapiente unde voluptatum alias vero debitis, magnam quis quod."
  * />
  */
-const Hero = ({ title, description } :any) => (
+const Hero = ({ title, description }: any) => (
     <div
         className={style.Hero}
         style={{ backgroundImage: 'url(https://images.alphacoders.com/633/633643.jpg)' }}
@@ -39,7 +42,7 @@ const Hero = ({ title, description } :any) => (
 
 Hero.defaultProps = {
     title: 'Season 2 now available!',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque id quam sapiente unde voluptatum alias vero debitis, magnam quis quod.',
-}
+    description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloremque id quam sapiente unde voluptatum alias vero debitis, magnam quis quod.'
+};
 
 export default Hero;
