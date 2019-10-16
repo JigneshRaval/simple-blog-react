@@ -42,7 +42,6 @@
 	},
 	"scripts": {
 		"serve": "nodemon server-express.js $PORT",
-		"serve2": "supervisor server-express.js",
 		"serve:debug": "nodemon --inspect-brk=8526 server-express.js",
 		"dev": "webpack --mode development",
 		"dev:w": "webpack --mode development -w",

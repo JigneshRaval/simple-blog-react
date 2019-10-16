@@ -228,10 +228,23 @@ class Utils {
                 articles.map((article: any) => {
                     let allKeywordsMatch = true;
 
-                    keywords.map((keyword: any) => {
-                        if (article.title.toLowerCase().indexOf(keyword.toLowerCase()) === -1) {
+                    /* keywords.map((keyword: any) => {
+                        if (article.title.toLowerCase().indexOf(keyword.toLowerCase()) === -1 && article.category.toLowerCase().indexOf(keyword.toLowerCase()) === -1) {
                             allKeywordsMatch = false;
                         }
+                    }); */
+
+                    keywords.map((keyword) => {
+                        console.log('1 === ', article.tags.some((tag: string) => tag.toLowerCase().indexOf(keyword.toLowerCase()) !== -1));
+                        if (article.tags.some((tag: string) => tag.toLowerCase().indexOf(keyword.toLowerCase()) !== -1)) {
+                            allKeywordsMatch = true;
+                        } else {
+                            // allKeywordsMatch = false;
+                            if (article.title.toLowerCase().indexOf(keyword.toLowerCase()) === -1 && article.category.toLowerCase().indexOf(keyword.toLowerCase()) === -1) {
+                                allKeywordsMatch = false;
+                            }
+                        }
+                        console.log('Tags === ', keyword, allKeywordsMatch, article.title, article.tags.some((tag: string) => tag.toLowerCase().indexOf(keyword.toLowerCase()) === -1));
                     });
 
                     if (allKeywordsMatch) articleBySearch.push(article);

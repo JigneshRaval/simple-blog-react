@@ -49,6 +49,8 @@
         { "id": 47, "name": "Firebase", "color": "#ff3e00"},
         { "id": 48, "name": "Softwares", "color": "#ff3e00"},
         { "id": 49, "name": "Desktop App Development", "color": "#ff3e00"},
-        { "id": 50, "name": "Progressive Web Apps", "color": "#ff3e00"}
+        { "id": 50, "name": "Progressive Web Apps", "color": "#ff3e00"},
+        { "id": 51, "name": "Ionic", "color": "#ff3e00"},
+        { "id": 52, "name": "NativeScript", "color": "#ff3e00"}
     ]
 }
