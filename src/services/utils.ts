@@ -18,7 +18,7 @@ class Utils {
 
     public init() {
         // show header if mouse reaches near to top browser border
-        document.addEventListener("mousemove", function (e) {
+        document.addEventListener('mousemove', function (e) {
             if (e.clientY < 10) {
                 document.body.classList.remove('shrinkHeader');
             }
@@ -72,7 +72,7 @@ class Utils {
         }
 
         // If they scrolled down and are past the navbar, add class .nav-up.
-        // This is necessary so you never see what is "behind" the navbar.
+        // This is necessary so you never see what is 'behind' the navbar.
         // header height = 96px
         if (scrollTop > this.lastScrollTop && scrollTop > 96) {
             // Scroll Down
@@ -109,8 +109,8 @@ class Utils {
 
 
     public generatePagination() {
-        $(".pagination-holder").jPages({
-            containerID: "postList",
+        $('.pagination-holder').jPages({
+            containerID: 'postList',
             perPage: 8,
             startPage: 1,
             startRange: 1,
@@ -161,10 +161,6 @@ class Utils {
      * @param articles : Array - List of all Articles to be filtered.
      */
     public filterArticles(event: any, filterBy: string, articles: any) {
-        // if (this.timer) {
-        //     clearTimeout(this.timer);
-        // }
-        // this.timer = setTimeout(() => {
         let searchTerm = event.target.value || event.target.getAttribute('data-tag-name');
         let searchBarElem = document.querySelector('.uk-search-default');
         let searchBox = document.querySelector('.uk-search-input');
@@ -179,7 +175,7 @@ class Utils {
                 searchBarElem.classList.add('isSearching');
             }
 
-            // If "searchTerm" provided then, Set filtered articles in the state
+            // If 'searchTerm' provided then, Set filtered articles in the state
             // this.setState({ filteredArticles: filteredList });
 
             return this.filterArticlesBy(searchTerm, filterBy, articles);
@@ -190,13 +186,12 @@ class Utils {
                 searchBarElem.classList.remove('isSearching');
             }
 
-            // If "searchTerm" NOT provided then, Set default articles list into the filtered articles in the state
+            // If 'searchTerm' NOT provided then, Set default articles list into the filtered articles in the state
             // this.setState({ filteredArticles: this.state.articles });
 
             return articles;
 
         }
-        // }, 1000);
     }
 
     /**
@@ -206,8 +201,6 @@ class Utils {
      * @param articles : Array - List of all Articles to be filtered.
      */
     public filterArticlesBy(searchTerm: string, filterBy: string, articles: any) {
-        let pattern = '(' + searchTerm.split(' ').join('|') + ')'; // (ES6/IIFE)
-        let test = new RegExp(pattern, 'gi');
         let keywords = searchTerm.split(' ');
         let articleBySearch: Array<any> = [];
 
@@ -216,59 +209,25 @@ class Utils {
             case 'search':
                 let t0 = performance.now();
 
-                /* let articleBySearch1 = articles.filter(({ tags, category, title }: any) => {
-                    console.log(title.toLowerCase().match(test));
-                    return title.toLowerCase().match(test) || category.toLowerCase().match(test) || tags.some((tag: any) => tag.toLowerCase().match(test));
-                    // return title.toLowerCase().includes(searchTerm.toLowerCase()) || category.toLowerCase().includes(searchTerm.toLowerCase()) || tags.some((tag: any) => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-                }).map((article: any) => article); */
-
-                console.log('keywords : ', keywords);
-                // article.title.toLowerCase().indexOf(keyword.toLowerCase()) === -1 || article.category.toLowerCase().indexOf(keyword.toLowerCase()) === -1 || article.tags.some((tag: any) => tag.toLowerCase().indexOf(keyword.toLowerCase())) === -1
-
                 articles.map((article: any) => {
                     let allKeywordsMatch = true;
 
-                    /* keywords.map((keyword: any) => {
-                        if (article.title.toLowerCase().indexOf(keyword.toLowerCase()) === -1 && article.category.toLowerCase().indexOf(keyword.toLowerCase()) === -1) {
-                            allKeywordsMatch = false;
-                        }
-                    }); */
-
                     keywords.map((keyword) => {
-                        console.log('1 === ', article.tags.some((tag: string) => tag.toLowerCase().indexOf(keyword.toLowerCase()) !== -1));
                         if (article.tags.some((tag: string) => tag.toLowerCase().indexOf(keyword.toLowerCase()) !== -1)) {
                             allKeywordsMatch = true;
                         } else {
-                            // allKeywordsMatch = false;
                             if (article.title.toLowerCase().indexOf(keyword.toLowerCase()) === -1 && article.category.toLowerCase().indexOf(keyword.toLowerCase()) === -1) {
                                 allKeywordsMatch = false;
                             }
                         }
-                        console.log('Tags === ', keyword, allKeywordsMatch, article.title, article.tags.some((tag: string) => tag.toLowerCase().indexOf(keyword.toLowerCase()) === -1));
                     });
 
                     if (allKeywordsMatch) articleBySearch.push(article);
                 });
 
-                /* for (let i = 0; i < articles.length; i++) {
-                    let allKeywordsMatch = true;
-                    for (let j = 0; j < keywords.length; j++) {
-
-                        if (articles[i].title.toLowerCase().indexOf(keywords[j].toLowerCase()) === -1) {
-                            console.log('Article Title : ', articles[i].title);
-                            allKeywordsMatch = false;
-                            // break;
-                        }
-
-                    }
-
-                    if (allKeywordsMatch) hits.push(articles[i]);
-
-                } */
-
                 let t1 = performance.now();
                 console.log('Took', (t1 - t0).toFixed(4), 'milliseconds to filter records :', articleBySearch);
-                // console.log('Hits =', hits);
+
                 return [...articleBySearch];
 
             // Method 2: filter articles by tags matching with search term
@@ -303,15 +262,14 @@ class Utils {
 
     public formatDate(dateFormat: any, separator: string, date: any) {
         let formattedDate,
-            locale = "en-us";
+            locale = 'en-us';
         let dt = new Date(date);
-        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         let day = dt.getDate();
-        let month = dt.toLocaleString(locale, { month: "long" });
+        let month = dt.toLocaleString(locale, { month: 'long' });
         let year = dt.getFullYear();
 
         switch (dateFormat) {
-            case "dd/mm/yyyy":
+            case 'dd/mm/yyyy':
                 formattedDate = `${day}${separator}${month}${separator}${year}`;
             default:
                 formattedDate = `${month} ${day}, ${year}`;
@@ -320,39 +278,19 @@ class Utils {
     }
 
     public getUniqueCategories = (articles: any) => {
-        let uniqueCategories = articles.reduce((uniqcats: any, article: any) => {
-            if (uniqcats.indexOf(article.category) === -1) {
-                uniqcats.push(article.category);
+        let uniqueCategories = articles.reduce((uniqCats: any, article: any) => {
+            if (uniqCats.indexOf(article.category) === -1) {
+                uniqCats.push(article.category);
             }
-            return uniqcats;
+            return uniqCats;
         }, []);
 
-        // OUTPUT : ["JavaScript", "React", ...]
+        // OUTPUT : ['JavaScript', 'React', ...]
         return uniqueCategories;
     }
 
     // Clean HTML tags by removing Class, ID and Style attributes
     sanitizeHtml(html: any) {
-        // let wrapperDiv = document.createElement('div');
-        // wrapperDiv.id = "wrapper-container";
-        // wrapperDiv.innerHTML = html;
-
-        /* html.querySelectorAll('pre').forEach((node: any) => {
-            let codeContent = node.innerText || node.textContent;
-            codeContent = codeContent.replace(/</ig, '&lt;');
-
-            if (codeContent) {
-                node.innerHTML = `<code>${codeContent}</code>`;
-            }
-        }); */
-
-        // wrapperDiv = this.extractCleanCode(wrapperDiv, wrapperDiv.innerHTML, 'gist');
-
-        // wrapperDiv = this.extractCleanCode(wrapperDiv, wrapperDiv.innerHTML, 'crayon-table');
-
-        // wrapperDiv = utils.extractCleanCode(wrapperDiv, wrapperDiv.innerHTML, 'github');
-
-        // console.log('wrapperDiv :', wrapperDiv);
 
         html.querySelectorAll('*').forEach((node: any) => {
 
@@ -385,7 +323,7 @@ class Utils {
 
     public extractCleanCode(parent: any, content: any, type: string) {
         switch (type) {
-            case "github":
+            case 'github':
                 let iFrames = parent.querySelectorAll('iframe'); // Select all iFrame elements
                 let figures = parent.querySelectorAll('figure.graf--iframe'); // Select all iFrame parent Elements
 
@@ -411,9 +349,9 @@ class Utils {
                     // console.log('content - github :', parent);
                     return parent;
                 } else {
-                    console.log("Please assign id to content wrapper.")
+                    console.log('Please assign id to content wrapper.')
                 }
-            case "gist":
+            case 'gist':
                 // let parent = content.parentElement;
                 let gists = parent.querySelectorAll('.oembed-gist') || parent.querySelectorAll('.gist');
 
@@ -437,11 +375,11 @@ class Utils {
                     // console.log('content - gists :', parent);
                     return parent;
                 } else {
-                    console.log("Please assign id to content wrapper.")
+                    console.log('Please assign id to content wrapper.')
                 }
-            case "crayon-table":
+            case 'crayon-table':
                 // Method 2 for Crayons highlighter
-                //============================================
+                // ============================================
                 let crayonDivs = parent.querySelectorAll('.crayon-syntax');
 
                 if (crayonDivs && crayonDivs.length > 0) {
@@ -490,9 +428,9 @@ class Utils {
     public getUniqueTags(articles: any) {
         const uniqueTags = articles.map((article: any) => article.tags)
             .reduce((allTags: any, tags: any) => allTags.concat(tags), [])
-            .reduce((uniqtags: any, tag: any) => {
-                uniqtags[tag.trim()] = (uniqtags[tag.trim()] || 0) + 1
-                return uniqtags;
+            .reduce((uniqTags: any, tag: any) => {
+                uniqTags[tag.trim()] = (uniqTags[tag.trim()] || 0) + 1;
+                return uniqTags;
             }, {});
 
         // OUTPUT : {JavaScript: 3, ES6: 3, React: 1, Form: 1}
@@ -502,21 +440,21 @@ class Utils {
 
     public isServerOnline() {
         let isServerUp = true;
-        let url = "http://localhost:3001/assets/images/favicon.ico";
+        let url = 'http://localhost:3001/assets/images/favicon.ico';
         let img = new Image();
         img.src = url;
 
         img.onload = function () {
             // If the server is up, do this.
-            console.log("Server is up!");
+            console.log('Server is up!');
             isServerUp = true;
-        }
+        };
 
         img.onerror = function () {
             // If the server is down, do that.
-            console.log("Server is down!");
+            console.log('Server is down!');
             isServerUp = false;
-        }
+        };
     }
 
 }
