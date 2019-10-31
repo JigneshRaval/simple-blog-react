@@ -28,7 +28,7 @@ export class DataService {
             // navigator.serviceWorker.controller.postMessage(this.articles)  // <--- This line right here sends our data to sw.js
             return this.articles;
         } catch (error) {
-            console.log('Looks like there was a problem. Status Code: ', error)
+            console.log('Looks like there was a problem. Status Code: ', error);
         }
     }
 

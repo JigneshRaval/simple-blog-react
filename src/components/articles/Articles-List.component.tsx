@@ -13,7 +13,7 @@ const ArticlesList = (props: any) => {
 
     const { filteredRecords, loading } = props;
     if (!filteredRecords) return null;
-    if (loading) return (<LoadingSpinner text={'Loading articles...'} />);
+    if (loading) return (<LoadingSpinner text={'Loading list of articles...'} />);
     if (!filteredRecords.length && !loading) return (<div className="message-no-article">Sorry, No article found</div>);
 
     return (
