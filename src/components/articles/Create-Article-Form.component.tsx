@@ -47,7 +47,7 @@ export const CreateArticleFormComponent = (props: any) => {
             placeholder: 'Write your article content here...',
             height: 600,
             minHeight: 200,
-            toolbar: [
+            /* toolbar: [
                 ['font', ['strikethrough', 'superscript', 'subscript']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],
@@ -57,12 +57,12 @@ export const CreateArticleFormComponent = (props: any) => {
                 ['height', ['height']],
                 ['insert', ['link', 'picture', 'table', 'hr']],
                 ['view', ['fullscreen', 'codeview']],
-                // ['mybutton', ['hello']],
+                ['mybutton', ['hello']],
                 ['help', ['help']]
             ],
             buttons: {
                 hello: HelloButton
-            },
+            }, */
             callbacks: {
                 onPaste: function (event: any) {
 
