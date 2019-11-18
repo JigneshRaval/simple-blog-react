@@ -20,6 +20,7 @@ import { Article } from '../components/articles/Article.component';
 // import { CreateArticleFormComponent } from '../components/articles/Create-Article-Form.component';
 import LoadingSpinner from '../components/shared/LoadingSpinner';
 import SimpleUncontrolledForm from '../components/articles/SimpleUncontrolledForm';
+import CreateDemoForm from '../components/articles/DemoForm.component';
 
 // A dynamic import call in ES5/ES3 requires the 'Promise' constructor.
 // Make sure you have a declaration for the 'Promise' constructor or include 'ES2015' in your`--lib` option.ts(2712)
@@ -310,6 +311,11 @@ const ArticleHome = (props: any) => {
             <Sidebar
                 onFilterRecords={handleFilterRecords}
                 articleCount={totalRecords}
+            />
+
+            <CreateDemoForm
+                editData={editData}
+                isEditMode={isEditMode}
             />
 
             <div className="toast-message__wrapper">{state.toastChildren}</div>

@@ -51,10 +51,14 @@
 @import './spectre-icons.min.css';
 @import './spectre-override'; */
 
+// CodeMirror CSS
+@import './editor/codemirror.css';
+@import './editor/tomorrow-night-bright.css';
 
 /*= COMPONENT CSS
 ==================================================*/
 @import './utils';
+@import './demo-editor';
 @import './_article';
 @import './_bookmark-list';
 @import './_categories-color';

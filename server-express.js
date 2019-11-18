@@ -37,7 +37,14 @@ app.use('/api', articleRoutes);
 app.use('/api', bookmarkRoutes);
 
 app.get('**', (req, res) => {
+    console.log(req.url);
+    /* if (req.url.includes('/examples.html')) {
+        res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+    } else {
+        res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+    } */
     res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+
 });
 /* app.get('/articles', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));

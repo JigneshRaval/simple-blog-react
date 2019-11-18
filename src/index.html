@@ -27,7 +27,25 @@
         <%= htmlWebpackPlugin.options.title %>
     </title>
 
+    <!-- ===========================================
+            CodeMirror Editor
+    ============================================ -->
+    <!-- Create a simple CodeMirror instance -->
+    <script src="./assets/js/editor/codemirror/codemirror.js"></script>
+
+    <!-- CodeMirror Addons -->
+    <script src="./assets/js/editor/codemirror/addon/edit/closetag.js"></script>
+    <script src="./assets/js/editor/codemirror/addon/edit/closebrackets.js"></script>
+
+    <!-- Code Highlighters -->
+    <script src="./assets/js/editor/codemirror/mode/javascript/javascript.js"></script>
+    <script src="./assets/js/editor/codemirror/mode/xml/xml.js"></script>
+    <script src="./assets/js/editor/codemirror/mode/jsx/jsx.js"></script>
+    <script src="./assets/js/editor/codemirror/mode/vue/vue.js"></script>
+    <script src="./assets/js/editor/codemirror/mode/css/css.js"></script>
+    <script src="./assets/js/editor/codemirror/mode/htmlmixed/htmlmixed.js"></script>
     <!-- <link href="assets/css/tomorrow-night-bright.css" rel="stylesheet" /> -->
+    <link rel="import" href="./assets/examples.html" />
 </head>
 
 <body class="isArticleListPanelOpened light">

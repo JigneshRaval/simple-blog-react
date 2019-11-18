@@ -1,0 +1,1893 @@
+<section id="example-content">
+
+    <!-- START : Code Example -->
+    <details class="details-example" id="JavaScript">
+        <summary>JavaScript + HTML + CSS</summary>
+        <pre><code>
+&lt;h1>JavaScript + HTML + CSS&lt;/h1>
+&lt;p>
+	Select a radio button and click on Submit.
+&lt;/p>
+
+Gender:
+&lt;input type="radio" name="gender" value="Male">Male
+&lt;input type="radio" name="gender" value="Female">Female
+&lt;input type="radio" name="gender" value="Others">Others
+
+&lt;br>
+
+&lt;button type="button" class="btn btn-primary" onclick="displayRadioValue()">
+	Submit
+&lt;/button>
+
+&lt;br>
+
+&lt;div id="result">&lt;/div>
+
+&lt;script>
+	function displayRadioValue() {
+		var ele = document.getElementsByName('gender');
+
+		for(i = 0; i &lt; ele.length; i++) {
+			if(ele[i].checked)
+			document.getElementById("result").innerHTML
+					= "Gender: "+ele[i].value;
+		}
+	}
+&lt;/script>
+</code></pre>
+    </details>
+    <!-- END : Code Example -->
+
+    <!-- START : Code Example -->
+    <details class="details-example">
+        <summary>JavaScript + HTML + CSS using ES6 Modules import/export</summary>
+        <pre><code>
+// Using EX6 Modules
+// 1. First create your module file like "MyExport.js" in your directory
+// 2. import it like "import { tag } from './MyExport.js'"
+
+&lt;script type="module">
+// MyExport.js
+export function tag(tag, text) {
+	const el = document.createElement(tag)
+	el.textContent = text
+
+	return el
+}
+&lt;/script>
+
+&lt;script type="module">
+	import { tag } from './MyExport.js'
+
+	const h1 = tag('h1', '👋 Hello Modules!')
+	document.body.appendChild(h1)
+&lt;/script>
+</code></pre>
+    </details>
+    <!-- END : Code Example -->
+
+    <!-- START : Code Example -->
+    <details class="details-example">
+        <summary>ES6 Dynamic import using <code>import()</code></summary>
+        <pre><code>
+// ./utils.mjs
+// https://v8.dev/features/dynamic-import
+// Default export
+export default () => {
+    console.log('Hi from the default export!');
+};
+
+// Named export `doStuff`
+export const doStuff = () => {
+    console.log('Doing stuff…');
+};
+
+// Named export `doStuff`
+export const loadPageInto = (node) => {
+    console.log('Doing stuff...', node);
+    node.innerHTML ="Hi From Module Method"
+};
+
+
+
+&lt;nav>
+    &lt;a href="books.html" data-entry-module="books">Books&lt;/a>
+    &lt;a href="movies.html" data-entry-module="movies">Movies&lt;/a>
+    &lt;a href="video-games.html" data-entry-module="video-games">Video Games&lt;/a>
+&lt;/nav>
+
+&lt;main>This is a placeholder for the content that will be loaded on-demand.&lt;/main>
+
+&lt;script type="module">
+    const main = document.querySelector('main');
+
+    const links = document.querySelectorAll('nav > a');
+    for (const link of links) {
+        link.addEventListener('click', async (event) => {
+            event.preventDefault();
+            try {
+                const module = await import(`/utils.mjs`);
+                // The module exports a function named `loadPageInto`.
+                module.default();
+                module.loadPageInto(main);
+            } catch (error) {
+                main.textContent = error.message;
+            }
+        });
+    }
+&lt;/script>
+
+&lt;script type="module">
+    // Here’s how to statically import and use the ./utils.mjs module:
+    import * as module from './utils.mjs';
+
+    module.default();
+    // → logs 'Hi from the default export!'
+
+    module.doStuff();
+  // → logs 'Doing stuff…'
+&lt;/script>
+</code></pre>
+    </details>
+    <!-- END : Code Example -->
+
+    <!-- START : Code Example -->
+    <details class="details-example">
+        <summary>jQuery + ES6</summary>
+        <pre><code>
+&lt;h1>jQuery + ES6 example&lt;/h1>
+&lt;div id="msg">
+
+&lt;/div>
+
+&lt;script type="text/babel">
+// Try edit message
+const data = {
+    message: 'jQuery Example',
+}
+
+$('#msg').html(data.message)
+
+console.log(data)
+&lt;/script>
+</code></pre>
+    </details>
+    <!-- END : Code Example -->
+
+    <!-- START : Code Example -->
+    <details class="details-example" id="React">
+        <summary>React</summary>
+        <pre><code>&lt;script type="text/babel">
+import React, { useState } from 'react';
+
+class Greeting extends React.Component {
+    state = {
+        name: 'Jignesh'
+    }
+    render() {
+        return (
+		&lt;div className="container">
+			&lt;p>Hello world {this.state.name} &lt;Button/>&lt;/p>
+		&lt;/div>
+		);
+    }
+}
+
+const Button =() => {
+    const [count, setCount] = useState(0);
+    const increment = () => {
+        setCount(count+1);
+    }
+    return &lt;button className="btn btn-primary" onClick={increment}>My Button {count}&lt;/button>
+}
+
+ReactDOM.render(&lt;Greeting />, document.getElementById('root'));
+&lt;/script></code></pre>
+    </details>
+    <!-- END : Code Example -->
+
+    <!-- START : Code Example -->
+    <details class="details-example">
+        <summary>React with Router example</summary>
+        <pre><code>
+&lt;!-- CSS Code -->
+&lt;style>
+    /* Your CSS code */
+&lt;/style>
+
+&lt;!-- JavaScript Code -->
+&lt;script type="text/babel">
+// SRC : https://tylermcginnis.com/react-router-protected-routes-authentication/
+
+import React from 'react';
+import * as ReactDOM from "react-dom";
+import { BrowserRouter as Router,  Route,  Link,   Redirect,   withRouter } from 'react-router-dom'
+
+const fakeAuth = {
+  isAuthenticated: false,
+  authenticate(cb) {
+    this.isAuthenticated = true
+    setTimeout(cb, 100)
+  },
+  signout(cb) {
+    this.isAuthenticated = false
+    setTimeout(cb, 100)
+  }
+}
+
+const Public = () => &lt;h3>Public&lt;/h3>
+const Protected = () => &lt;h3>Protected&lt;/h3>
+
+class Login extends React.Component {
+  state = {
+    redirectToReferrer: false
+  }
+  login = () => {
+    fakeAuth.authenticate(() => {
+      this.setState(() => ({
+        redirectToReferrer: true
+      }))
+    })
+  }
+  render() {
+    const { from } = this.props.location.state || { from: { pathname: '/' } }
+    const { redirectToReferrer } = this.state
+
+    if (redirectToReferrer === true) {
+      return &lt;Redirect to={from} />
+    }
+
+    return (
+      &lt;div>
+        &lt;p>You must log in to view the page&lt;/p>
+        &lt;button className="btn btn-primary" onClick={this.login}>Log in&lt;/button>
+      &lt;/div>
+    )
+  }
+}
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  &lt;Route {...rest} render={(props) => (
+    fakeAuth.isAuthenticated === true
+      ? &lt;Component {...props} />
+      : &lt;Redirect to={{
+          pathname: '/login',
+          state: { from: props.location }
+        }} />
+  )} />
+)
+
+const AuthButton = withRouter(({ history }) => (
+  fakeAuth.isAuthenticated ? (
+    &lt;p>
+      Welcome! &lt;button onClick={() => {
+        fakeAuth.signout(() => history.push('/'))
+      }}>Sign out&lt;/button>
+    &lt;/p>
+  ) : (
+    &lt;p>You are not logged in.&lt;/p>
+  )
+))
+
+function AuthExample () {
+  return (
+    &lt;Router>
+      &lt;div>
+        &lt;h1>React with Router Example&lt;/h1>
+        &lt;AuthButton/>
+        &lt;ul>
+          &lt;li>&lt;Link to="/public">Public Page&lt;/Link>&lt;/li>
+          &lt;li>&lt;Link to="/protected">Protected Page&lt;/Link>&lt;/li>
+        &lt;/ul>
+        &lt;Route path="/public" component={Public}/>
+        &lt;Route path="/login" component={Login}/>
+        &lt;PrivateRoute path='/protected' component={Protected} />
+      &lt;/div>
+    &lt;/Router>
+  )
+}
+
+// RENDER APP
+// ==========================
+ReactDOM.render(
+    &lt;AuthExample />,
+    document.getElementById("root")
+);
+&lt;/script></code></pre>
+    </details>
+    <!-- END : Code Example -->
+
+    <!-- START : Code Example -->
+    <details class="details-example" id="RxJs5">
+        <summary>RxJs 5</summary>
+        <pre><code>&lt;script type="text/babel">
+// Simulate HTTP requests
+const getPostOne$ = Rx.Observable.timer(3000).mapTo({ id: 1 });
+const getPostTwo$ = Rx.Observable.timer(1000).mapTo({ id: 2 });
+
+Rx.Observable.concat(getPostOne$, getPostTwo$).subscribe(res => console.log(res));
+
+const albumsApiUrl = `https://jsonplaceholder.typicode.com/albums`;
+
+Rx.Observable
+  .ajax(albumsApiUrl)
+  .subscribe(
+    res => console.log(res),
+    err => console.error(err)
+  );
+&lt;/script></code></pre>
+    </details>
+    <!-- END : Code Example -->
+
+    <!-- START : Code Example -->
+    <details class="details-example" id="RxJs6">
+        <summary>RxJs 6</summary>
+        <pre><code>
+&lt;h3>RxJS 6 Examples&lt;/h3>
+&lt;ul class="observable-output observable-output-1">
+
+&lt;/ul>
+&lt;script type="module">
+// import { Observable, range, of } from 'https://dev.jspm.io/rxjs@6/_esm2015/index.js';
+// import { map, filter } from 'https://dev.jspm.io/rxjs@6/_esm2015/operators/index.js';
+
+const { range, of } = rxjs;
+const { tap, map, filter, debounceTime, distinctUntilChanged, switchMap } = rxjs.operators;
+
+// Use of range operator
+// =============================
+range(1, 200).pipe(
+	filter(x => x % 2 === 1),
+	map(x => x + x)
+).subscribe(x => console.log('Range :', x));
+
+
+// Use of map operator
+// =============================
+map(x => x * x)(of(1, 2, 3, 4))
+.subscribe((v) => addItem(`onNext value: ${v}`, '.observable-output-1'));
+
+
+// Subscribing observable
+// =============================
+of(1, 2, 3)
+  .subscribe(x => {
+    const element = document.createElement('div');
+    element.innerText = 'Data: ' + x;
+
+    document.body.appendChild(element)
+  },
+  err => { },
+  () => {
+    const element = document.createElement('div');
+    element.innerText = 'All done 111';
+    document.body.appendChild(element)
+  });
+&lt;/script>
+</code></pre>
+    </details>
+    <!-- END : Code Example -->
+
+    <!-- START : Code Example -->
+    <details class="details-example" id="Vue">
+        <summary>Vue.js</summary>
+        <pre><code>
+&lt;div id="app-2">
+  &lt;span v-bind:title="message">
+    Hello Vue.js
+    Hover your mouse over me for a few seconds
+    to see my dynamically bound title!
+  &lt;/span>
+  &lt;ol>
+    &lt;li v-for="todo in todos">
+      {{ todo.text }}
+    &lt;/li>
+  &lt;/ol>
+&lt;/div>
+
+&lt;script>
+var app2 = new Vue({
+  el: '#app-2',
+  data: {
+    message: 'You loaded this page on ' + new Date().toLocaleString(),
+	todos: [
+      { text: 'Learn JavaScript' },
+      { text: 'Learn Vue' },
+      { text: 'Build something awesome' }
+    ]
+  }
+})
+&lt;/script>
+</code></pre>
+        <pre><code>
+// Example 2
+// =============================
+// REF : https://medium.com/js-dojo/7-ways-to-define-a-component-template-in-vuejs-c04e0c72900d
+
+&lt;style>
+    .vue-example {
+        padding: 1em;
+        border: 1px solid #cccccc;
+        margin: 1em;
+        border-radius: 5px;
+    }
+&lt;/style>
+
+&lt;div id="app">
+
+    &lt;div class="vue-example">
+        &lt;h2>Component Example 1: List of users&lt;/h2>
+        &lt;user-list>&lt;/user-list>
+    &lt;/div>
+
+    &lt;div class="vue-example">
+        &lt;h2>Component Example 2: Simple stateless component&lt;/h2>
+        &lt;simple-component>&lt;/simple-component>
+        &lt;Sidebar>&lt;/Sidebar>
+    &lt;/div>
+
+    &lt;div class="vue-example">
+        &lt;h2>Component Example 3&lt;/h2>
+        &lt;button-counter>&lt;/button-counter>
+    &lt;/div>
+
+    &lt;!-- &lt;h2>JSX Example&lt;/h2>
+    &lt;my-checkbox-jsx>&lt;/my-checkbox-jsx> -->
+
+    &lt;div class="vue-example">
+        &lt;h2>Component Example 5&lt;/h2>
+        &lt;my-checkbox2>&lt;/my-checkbox2>
+    &lt;/div>
+
+    &lt;div class="vue-example">
+        &lt;h2>Component Example 6&lt;/h2>
+        &lt;my-checkbox>&lt;/my-checkbox>
+    &lt;/div>
+
+    &lt;div class="vue-example">
+        &lt;h2>Component Example 6: Inline Template Example&lt;/h2>
+        &lt;my-checkbox-inline>&lt;/my-checkbox-inline>
+    &lt;/div>
+
+    &lt;div class="vue-example">
+        &lt;h2>Component Example 7&lt;/h2>
+        &lt;user-name name="Flavio">&lt;/user-name>
+    &lt;/div>
+&lt;/div>
+
+&lt;script type="text/x-template" id="checkbox-template">
+    &lt;div class="checkbox-wrapper" @click="check">
+        &lt;div class="title">
+            &lt;strong>Template Example&lt;/strong>
+            {{ title }} : &lt;strong :class="{ checkbox: true, checked: checked }">{{checked}}&lt;/strong>
+        &lt;/div>
+    &lt;/div>
+&lt;/script>
+
+&lt;my-checkbox-inline inline-template>
+    &lt;div class="checkbox-wrapper" @click="check">
+        &lt;div :class="{ checkbox: true, checked: checked }">{{checked}}&lt;/div>
+        &lt;div class="title">&lt;/div>
+    &lt;/div>
+&lt;/my-checkbox-inline>
+
+&lt;script type="text/babel">
+// Component : User List
+// ========================================
+Vue.component('user-list', {
+    template: `
+    &lt;div id="app-4">
+        &lt;ol>
+            &lt;li v-for="todo in todos">
+            {{ todo.text }}
+            &lt;/li>
+        &lt;/ol>
+    &lt;/div>
+    `,
+    data() {
+        return {
+            todos: [
+                { text: 'Learn JavaScript' },
+                { text: 'Learn Vue' },
+                { text: 'Build something awesome' }
+            ]
+        }
+    }
+});
+
+// Component : Sidebar
+// ========================================
+var Child = {
+    template: "&lt;div>&lt;p>Simple Child stateless component&lt;/p>&lt;/div>"
+};
+
+const Sidebar = {
+    template: '&lt;aside>Sidebar&lt;/aside>'
+}
+
+// Define a new component called button-counter
+Vue.component('button-counter', {
+    data: function () {
+        return {
+            count: 0
+        }
+    },
+    template: '&lt;button class="btn btn-primary" v-on:click="count++">You clicked me {{ count }} times.&lt;/button>'
+})
+
+// Component : Checkbox with JSX
+// ========================================
+/* Vue.component('my-checkbox-jsx', {
+  data() {
+    return {
+      checked: false,
+      title: 'Check me'
+    }
+  },
+  methods: {
+    check() {
+      this.checked = !this.checked;
+    }
+  },
+  render() {
+    return (&lt;div class="checkbox-wrapper" onClick={ this.check }>
+		         &lt;div class={{ checkbox: true, checked: this.checked }}>&lt;/div>
+		         &lt;div class="title">{ this.title }&lt;/div>
+		       &lt;/div>)
+  }
+}); */
+
+// Component : Example with template tag
+// ========================================
+Vue.component('my-checkbox2', {
+    template: '#checkbox-template',
+    data() {
+        return {
+            checked: false,
+            title: 'Check me'
+        }
+    },
+    methods: {
+        check() {
+            this.checked = !this.checked;
+        }
+    }
+});
+
+// Component : Checkbox with JSX
+// ========================================
+Vue.component('my-checkbox', {
+    template: `&lt;div class="checkbox-wrapper" @click="check">
+        &lt;div class="title">
+            {{ title }} : &lt;strong :class="{ checkbox: true, checked: checked }">{{checked}}&lt;/strong>
+        &lt;/div>
+    &lt;/div>`,
+    data() {
+        return {
+            checked: false,
+            title: 'Check me'
+        }
+    },
+    methods: {
+        check() {
+            this.checked = !this.checked;
+        }
+    }
+});
+
+// 4. Inline Templates
+Vue.component('my-checkbox-inline', {
+    data() {
+        return {
+            checked: false,
+            title: 'Check me'
+        }
+    },
+    methods: {
+        check() {
+            this.checked = !this.checked;
+        }
+    }
+});
+
+Vue.component('user-name', {
+    props: ['name'],
+    template: '&lt;p>Hi {{ name }}&lt;/p>'
+});
+
+// Mount App
+// ========================================
+new Vue({
+    el: '#app',
+    components: {
+        Sidebar,
+        "simple-component": Child
+    },
+    data() {
+        return {
+            message: 'Hello World'
+        }
+    },
+    created() {
+        console.log("Hello World")
+    }
+});
+
+// Now the app has started!
+&lt;/script>
+</code></pre>
+        <pre><code>
+// Example 3
+// =========================
+// REF : https://tutorialzine.com/2016/03/5-practical-examples-for-learning-vue-js
+
+&lt;style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font: 15px/1.3 'Open Sans', sans-serif;
+        color: #5e5b64;
+        text-align: center;
+    }
+
+    a,
+    a:visited {
+        outline: none;
+        color: #389dc1;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    section,
+    footer,
+    header,
+    aside,
+    nav {
+        display: block;
+    }
+
+    /*-------------------------
+    The menu
+--------------------------*/
+
+    nav {
+        display: inline-block;
+        margin: 60px auto 45px;
+        background-color: #5597b4;
+        box-shadow: 0 1px 1px #ccc;
+        border-radius: 2px;
+    }
+
+    nav a {
+        display: inline-block;
+        padding: 18px 30px;
+        color: #fff !important;
+        font-weight: bold;
+        font-size: 16px;
+        text-decoration: none !important;
+        line-height: 1;
+        text-transform: uppercase;
+        background-color: transparent;
+
+        -webkit-transition: background-color 0.25s;
+        -moz-transition: background-color 0.25s;
+        transition: background-color 0.25s;
+    }
+
+    nav a:first-child {
+        border-radius: 2px 0 0 2px;
+    }
+
+    nav a:last-child {
+        border-radius: 0 2px 2px 0;
+    }
+
+    nav.home .home,
+    nav.projects .projects,
+    nav.services .services,
+    nav.contact .contact {
+        background-color: #e35885;
+    }
+
+    p {
+        font-size: 22px;
+        font-weight: bold;
+        color: #7d9098;
+    }
+
+    p b {
+        color: #ffffff;
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: #c4d7e0;
+        border-radius: 2px;
+        text-transform: uppercase;
+        font-size: 18px;
+    }
+&lt;/style>
+
+&lt;div id="main">
+
+    &lt;!-- The navigation menu will get the value of the "active" variable as a class. -->
+
+    &lt;!-- To stops the page from jumping when a link is clicked
+            we use the "prevent" modifier (short for preventDefault). -->
+
+    &lt;nav v-bind:class="active" v-on:click.prevent>
+
+        &lt;!-- When a link in the menu is clicked, we call the makeActive method,
+            defined in the JavaScript Vue instance. It will change the value of "active". -->
+
+        &lt;a href="#" class="home" v-on:click="makeActive('home')">Home&lt;/a>
+        &lt;a href="#" class="projects" v-on:click="makeActive('projects')">Projects&lt;/a>
+        &lt;a href="#" class="services" v-on:click="makeActive('services')">Services&lt;/a>
+        &lt;a href="#" class="contact" v-on:click="makeActive('contact')">Contact&lt;/a>
+    &lt;/nav>
+
+    &lt;!-- The mustache expression will be replaced with the value of "active".
+             It will automatically update to reflect any changes. -->
+
+    &lt;p>You chose &lt;b>{{active}}&lt;/b>&lt;/p>
+&lt;/div>
+
+&lt;script type="text/babel">
+// Creating a new Vue instance and pass in an options object.
+var demo = new Vue({
+
+    // A DOM element to mount our view model.
+    el: '#main',
+
+    // This is the model.
+    // Define properties and give them initial values.
+    data: {
+        active: 'home'
+    },
+
+    // Functions we will be using.
+    methods: {
+        makeActive: function(item){
+            // When a model is changed, the view will be automatically updated.
+            this.active = item;
+        }
+    }
+});
+
+// Now the app has started!
+&lt;/script>
+</code></pre>
+    </details>
+    <!-- END : Code Example -->
+
+    <!-- START : Code Example -->
+    <details class="details-example">
+        <summary>Vue.js with Router</summary>
+        <pre><code>
+&lt;div id="app">
+  &lt;h1>Hello App!&lt;/h1>
+  &lt;p>
+    &lt;!-- use router-link component for navigation. -->
+    &lt;!-- specify the link by passing the `to` prop. -->
+    &lt;!-- `&lt;router-link>` will be rendered as an `&lt;a>` tag by default -->
+    &lt;router-link to="/foo">Go to Foo&lt;/router-link>
+    &lt;router-link to="/bar">Go to Bar&lt;/router-link>
+  &lt;/p>
+  &lt;!-- route outlet -->
+  &lt;!-- component matched by the route will render here -->
+  &lt;router-view>&lt;/router-view>
+&lt;/div>
+
+&lt;script type="text/babel">
+// 0. If using a module system (e.g. via vue-cli), import Vue and VueRouter
+// and then call `Vue.use(VueRouter)`.
+
+// 1. Define route components.
+// These can be imported from other files
+const Foo = { template: '&lt;div>foo&lt;/div>' }
+const Bar = { template: '&lt;div>bar&lt;/div>' }
+
+// 2. Define some routes
+// Each route should map to a component. The "component" can
+// either be an actual component constructor created via
+// `Vue.extend()`, or just a component options object.
+// We'll talk about nested routes later.
+const routes = [
+  { path: '/foo', component: Foo },
+  { path: '/bar', component: Bar }
+]
+
+// 3. Create the router instance and pass the `routes` option
+// You can pass in additional options here, but let's
+// keep it simple for now.
+const router = new VueRouter({
+  routes // short for `routes: routes`
+})
+
+// 4. Create and mount the root instance.
+// Make sure to inject the router with the router option to make the
+// whole app router-aware.
+const app = new Vue({
+  router
+}).$mount('#app')
+
+// Now the app has started!
+&lt;/script>
+</code></pre>
+    </details>
+    <!-- END : Code Example -->
+
+    <!-- START : Code Example -->
+    <details class="details-example">
+        <summary>Vue.js Inline Editor</summary>
+        <pre><code>
+&lt;!-- v-cloak hides any un-compiled data bindings until the Vue instance is ready. -->
+&lt;!-- When the element is clicked the hideTooltp() method is called. -->
+
+&lt;div id="main" v-cloak v-on:click="hideTooltip">
+
+    &lt;!-- This is the tooltip.
+             v-on:clock.stop is an event handler for clicks, with a modifier that stops event propagation.
+             v-if makes sure the tooltip is shown only when the "showtooltip" variable is truthful -->
+
+    &lt;div class="tooltip" v-on:click.stop v-if="show_tooltip">
+
+        &lt;!-- v-model binds the contents of the text field with the "text_content" model.
+             Any changes to the text field will automatically update the value, and
+             all other bindings on the page that depend on it.  -->
+
+        &lt;input type="text" v-model="text_content" />
+    &lt;/div>
+
+    &lt;!-- When the paragraph is clicked, call the "toggleTooltip" method and stop event propagation. -->
+
+    &lt;!-- The mustache expression will be replaced with the value of "text_content".
+             It will automatically update to reflect any changes to that variable. -->
+
+    &lt;p v-on:click.stop="toggleTooltip">{{text_content}}&lt;/p>
+
+&lt;/div>
+&lt;script>
+    // Creating a new Vue instance and pass in an options object.
+    var demo = new Vue({
+
+        // A DOM element to mount our view model.
+        el: '#main',
+
+        // Define properties and give them initial values.
+        data: {
+            show_tooltip: false,
+            text_content: 'Edit me.'
+        },
+
+        // Functions we will be using.
+        methods: {
+            hideTooltip: function () {
+                // When a model is changed, the view will be automatically updated.
+                this.show_tooltip = false;
+            },
+            toggleTooltip: function () {
+                this.show_tooltip = !this.show_tooltip;
+            }
+        }
+    })
+&lt;/script>
+&lt;style>
+    /* Hide un-compiled mustache bindings
+until the Vue instance is ready */
+
+    [v-cloak] {
+        display: none;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font: 15px/1.3 'Open Sans', sans-serif;
+        color: #5e5b64;
+        text-align: center;
+    }
+
+    a,
+    a:visited {
+        outline: none;
+        color: #389dc1;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    section,
+    footer,
+    header,
+    aside,
+    nav {
+        display: block;
+    }
+
+    /*-------------------------
+        The edit tooltip
+    --------------------------*/
+
+    .tooltip {
+        background-color: #5c9bb7;
+
+        background-image: -webkit-linear-gradient(top, #5c9bb7, #5392ad);
+        background-image: -moz-linear-gradient(top, #5c9bb7, #5392ad);
+        background-image: linear-gradient(top, #5c9bb7, #5392ad);
+
+        box-shadow: 0 1px 1px #ccc;
+        border-radius: 3px;
+        width: 290px;
+        padding: 10px;
+
+        position: absolute;
+        left: 50%;
+        margin-left: -150px;
+        top: 80px;
+    }
+
+    .tooltip:after {
+        /* The tip of the tooltip */
+        content: '';
+        position: absolute;
+        border: 6px solid #5190ac;
+        border-color: #5190ac transparent transparent;
+        width: 0;
+        height: 0;
+        bottom: -12px;
+        left: 50%;
+        margin-left: -6px;
+    }
+
+    .tooltip input {
+        border: none;
+        width: 100%;
+        line-height: 34px;
+        border-radius: 3px;
+        box-shadow: 0 2px 6px #bbb inset;
+        text-align: center;
+        font-size: 16px;
+        font-family: inherit;
+        color: #8d9395;
+        font-weight: bold;
+        outline: none;
+    }
+
+    p {
+        font-size: 22px;
+        font-weight: bold;
+        color: #6d8088;
+        height: 30px;
+        cursor: default;
+    }
+
+    p b {
+        color: #ffffff;
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: #c4d7e0;
+        border-radius: 2px;
+        text-transform: uppercase;
+        font-size: 18px;
+    }
+
+    p:before {
+        content: '✎';
+        display: inline-block;
+        margin-right: 5px;
+        font-weight: normal;
+        vertical-align: text-bottom;
+    }
+
+    #main {
+        height: 300px;
+        position: relative;
+        padding-top: 150px;
+    }
+&lt;/style>
+</code></pre>
+    </details>
+    <!-- END : Code Example -->
+
+    <!-- START : Code Example -->
+    <details class="details-example">
+        <summary>Vue.js : Order Form</summary>
+        <pre><code>
+&lt;!-- v-cloak hides any un-compiled data bindings until the Vue instance is ready. -->
+
+&lt;form id="main" v-cloak>
+
+    &lt;h1>Services&lt;/h1>
+
+    &lt;ul>
+        &lt;!-- Loop through the services array, assign a click handler, and set or
+                 remove the "active" css class if needed -->
+        &lt;li v-for="service in services" v-on:click="toggleActive(service)" v-bind:class="{ 'active': service.active}">
+            &lt;!-- Display the name and price for every entry in the array .
+                    Vue.js has a built in currency filter for formatting the price -->
+            {{service.name}} &lt;span>{{service.price | currency}}&lt;/span>
+        &lt;/li>
+    &lt;/ul>
+
+    &lt;div class="total">
+        &lt;!-- Calculate the total price of all chosen services. Format it as currency. -->
+        Total: &lt;span>{{total() | currency}}&lt;/span>
+    &lt;/div>
+
+&lt;/form>
+
+&lt;script>
+    // Define a custom filter called "currency".
+    Vue.filter('currency', function (value) {
+        return '$' + value.toFixed(2);
+    });
+
+    var demo = new Vue({
+        el: '#main',
+        data: {
+            // Define the model properties. The view will loop
+            // through the services array and genreate a li
+            // element for every one of its items.
+            services: [
+                {
+                    name: 'Web Development',
+                    price: 300,
+                    active: true
+                }, {
+                    name: 'Design',
+                    price: 400,
+                    active: false
+                }, {
+                    name: 'Integration',
+                    price: 250,
+                    active: false
+                }, {
+                    name: 'Training',
+                    price: 220,
+                    active: false
+                }
+            ]
+        },
+        methods: {
+            toggleActive: function (s) {
+                s.active = !s.active;
+            },
+            total: function () {
+
+                var total = 0;
+
+                this.services.forEach(function (s) {
+                    if (s.active) {
+                        total += s.price;
+                    }
+                });
+
+                return total;
+            }
+        }
+    });
+&lt;/script>
+
+&lt;style>
+    @import url(https://fonts.googleapis.com/css?family=Cookie);
+
+    /* Hide un-compiled mustache bindings
+until the Vue instance is ready */
+
+    [v-cloak] {
+        display: none;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font: 15px/1.3 'Open Sans', sans-serif;
+        color: #5e5b64;
+        text-align: center;
+    }
+
+    a,
+    a:visited {
+        outline: none;
+        color: #389dc1;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    section,
+    footer,
+    header,
+    aside,
+    nav {
+        display: block;
+    }
+
+    /*-------------------------
+        The order form
+    --------------------------*/
+
+    form {
+        background-color: #61a1bc;
+        border-radius: 2px;
+        box-shadow: 0 1px 1px #ccc;
+        width: 400px;
+        padding: 35px 60px;
+        margin: 50px auto;
+    }
+
+    form h1 {
+        color: #fff;
+        font-size: 64px;
+        font-family: 'Cookie', cursive;
+        font-weight: normal;
+        line-height: 1;
+        text-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    form ul {
+        list-style: none;
+        color: #fff;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: left;
+        margin: 20px 0 15px;
+    }
+
+    form ul li {
+        padding: 20px 30px;
+        background-color: #e35885;
+        margin-bottom: 8px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+    }
+
+    form ul li span {
+        float: right;
+    }
+
+    form ul li.active {
+        background-color: #8ec16d;
+    }
+
+    div.total {
+        border-top: 1px solid rgba(255, 255, 255, 0.5);
+        padding: 15px 30px;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: left;
+        color: #fff;
+    }
+
+    div.total span {
+        float: right;
+    }
+&lt;/style>
+</code></pre>
+    </details>
+    <!-- END : Code Example -->
+
+    <!-- START : Code Example -->
+    <details class="details-example">
+        <summary>Vue.js : Instant Search</summary>
+        <pre><code>
+&lt;form id="main" v-cloak>
+
+    &lt;div class="bar">
+        &lt;!-- Create a binding between the searchString model and the text field -->
+
+        &lt;input type="text" v-model="searchString" placeholder="Enter your search terms" />
+    &lt;/div>
+
+    &lt;ul>
+        &lt;!-- Render a li element for every entry in the computed filteredArticles array. -->
+
+        &lt;li v-for="article in filteredArticles">
+            &lt;a v-bind:href="article.url">&lt;img v-bind:src="article.image" />&lt;/a>
+            &lt;p>{{article.title}}&lt;/p>
+        &lt;/li>
+    &lt;/ul>
+
+&lt;/form>
+&lt;script>
+    var demo = new Vue({
+        el: '#main',
+        data: {
+            searchString: "",
+
+            // The data model. These items would normally be requested via AJAX,
+            // but are hardcoded here for simplicity.
+
+            articles: [
+                {
+                    "title": "What You Need To Know About CSS Variables",
+                    "url": "https://tutorialzine.com/2016/03/what-you-need-to-know-about-css-variables/",
+                    "image": "https://tutorialzine.com/media/2016/03/css-variables.jpg"
+                },
+                {
+                    "title": "Freebie: 4 Great Looking Pricing Tables",
+                    "url": "https://tutorialzine.com/2016/02/freebie-4-great-looking-pricing-tables/",
+                    "image": "https://tutorialzine.com/media/2016/02/great-looking-pricing-tables.jpg"
+                },
+                {
+                    "title": "20 Interesting JavaScript and CSS Libraries for February 2016",
+                    "url": "https://tutorialzine.com/2016/02/20-interesting-javascript-and-css-libraries-for-february-2016/",
+                    "image": "https://tutorialzine.com/media/2016/02/interesting-resources-february.jpg"
+                },
+                {
+                    "title": "Quick Tip: The Easiest Way To Make Responsive Headers",
+                    "url": "https://tutorialzine.com/2016/02/quick-tip-easiest-way-to-make-responsive-headers/",
+                    "image": "https://tutorialzine.com/media/2016/02/quick-tip-responsive-headers.png"
+                },
+                {
+                    "title": "Learn SQL In 20 Minutes",
+                    "url": "https://tutorialzine.com/2016/01/learn-sql-in-20-minutes/",
+                    "image": "https://tutorialzine.com/media/2016/01/learn-sql-20-minutes.png"
+                },
+                {
+                    "title": "Creating Your First Desktop App With HTML, JS and Electron",
+                    "url": "https://tutorialzine.com/2015/12/creating-your-first-desktop-app-with-html-js-and-electron/",
+                    "image": "https://tutorialzine.com/media/2015/12/creating-your-first-desktop-app-with-electron.png"
+                }
+            ]
+        },
+        computed: {
+            // A computed property that holds only those articles that match the searchString.
+            filteredArticles: function () {
+                var articles_array = this.articles,
+                    searchString = this.searchString;
+
+                if (!searchString) {
+                    return articles_array;
+                }
+
+                searchString = searchString.trim().toLowerCase();
+
+                articles_array = articles_array.filter(function (item) {
+                    if (item.title.toLowerCase().indexOf(searchString) !== -1) {
+                        return item;
+                    }
+                })
+
+                // Return an array with the filtered data.
+                return articles_array;;
+            }
+        }
+    });
+&lt;/script>
+&lt;style>
+    /* Hide un-compiled mustache bindings
+until the Vue instance is ready */
+
+    [v-cloak] {
+        display: none;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font: 15px/1.3 'Open Sans', sans-serif;
+        color: #5e5b64;
+        text-align: center;
+    }
+
+    a,
+    a:visited {
+        outline: none;
+        color: #389dc1;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    section,
+    footer,
+    header,
+    aside,
+    nav {
+        display: block;
+    }
+
+    /*-------------------------
+    The search input
+    --------------------------*/
+
+    .bar {
+        background-color: #5c9bb7;
+
+        background-image: -webkit-linear-gradient(top, #5c9bb7, #5392ad);
+        background-image: -moz-linear-gradient(top, #5c9bb7, #5392ad);
+        background-image: linear-gradient(top, #5c9bb7, #5392ad);
+
+        box-shadow: 0 1px 1px #ccc;
+        border-radius: 2px;
+        width: 400px;
+        padding: 14px;
+        margin: 45px auto 20px;
+        position: relative;
+    }
+
+    .bar input {
+        background: #fff no-repeat 13px 13px;
+
+        border: none;
+        width: 100%;
+        line-height: 19px;
+        padding: 11px 0;
+
+        border-radius: 2px;
+        box-shadow: 0 2px 8px #c4c4c4 inset;
+        text-align: left;
+        font-size: 14px;
+        font-family: inherit;
+        color: #738289;
+        font-weight: bold;
+        outline: none;
+        text-indent: 40px;
+    }
+
+    ul {
+        list-style: none;
+        width: 428px;
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    ul li {
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+        overflow: hidden;
+    }
+
+    ul li img {
+        width: 60px;
+        height: 60px;
+        float: left;
+        border: none;
+    }
+
+    ul li p {
+        margin-left: 75px;
+        font-weight: bold;
+        padding-top: 12px;
+        color: #6e7a7f;
+    }
+&lt;/style>
+</code></pre>
+    </details>
+    <!-- END : Code Example -->
+
+    <!-- START : Code Example -->
+    <details class="details-example">
+        <summary>Vue.js : Switchable Grid & List view</summary>
+        <pre><code>
+&lt;form id="main" v-cloak>
+
+    &lt;div class="bar">
+
+        &lt;!-- These two buttons switch the layout variable,
+                 which causes the correct UL to be shown. -->
+
+        &lt;a class="list-icon" v-bind:class="{ 'active': layout == 'list'}" v-on:click="layout = 'list'">&lt;/a>
+        &lt;a class="grid-icon" v-bind:class="{ 'active': layout == 'grid'}" v-on:click="layout = 'grid'">&lt;/a>
+    &lt;/div>
+
+    &lt;!-- We have two layouts. We choose which one to show depending on the "layout" binding -->
+
+    &lt;ul v-if="layout == 'grid'" class="grid">
+        &lt;!-- A view with big photos and no text -->
+        &lt;li v-for="a in articles">
+            &lt;a v-bind:href="a.url" target="_blank">&lt;img v-bind:src="a.image.large" />&lt;/a>
+        &lt;/li>
+    &lt;/ul>
+
+    &lt;ul v-if="layout == 'list'" class="list">
+        &lt;!-- A compact view smaller photos and titles -->
+        &lt;li v-for="a in articles">
+            &lt;a v-bind:href="a.url" target="_blank">&lt;img v-bind:src="a.image.small" />&lt;/a>
+            &lt;p>{{a.title}}&lt;/p>
+        &lt;/li>
+    &lt;/ul>
+
+&lt;/form>
+
+&lt;script>
+    var demo = new Vue({
+        el: '#main',
+        data: {
+            // The layout mode, possible values are "grid" or "list".
+            layout: 'grid',
+
+            articles: [{
+                "title": "What You Need To Know About CSS Variables",
+                "url": "https://tutorialzine.com/2016/03/what-you-need-to-know-about-css-variables/",
+                "image": {
+                    "large": "https://tutorialzine.com/media/2016/03/css-variables.jpg",
+                    "small": "https://tutorialzine.com/media/2016/03/css-variables.jpg"
+                }
+            },
+            {
+                "title": "Freebie: 4 Great Looking Pricing Tables",
+                "url": "https://tutorialzine.com/2016/02/freebie-4-great-looking-pricing-tables/",
+                "image": {
+                    "large": "https://tutorialzine.com/media/2016/02/great-looking-pricing-tables.jpg",
+                    "small": "https://tutorialzine.com/media/2016/02/great-looking-pricing-tables.jpg"
+                }
+            },
+            {
+                "title": "20 Interesting JavaScript and CSS Libraries for February 2016",
+                "url": "https://tutorialzine.com/2016/02/20-interesting-javascript-and-css-libraries-for-february-2016/",
+                "image": {
+                    "large": "https://tutorialzine.com/media/2016/02/interesting-resources-february.jpg",
+                    "small": "https://tutorialzine.com/media/2016/02/interesting-resources-february.jpg"
+                }
+            },
+            {
+                "title": "Quick Tip: The Easiest Way To Make Responsive Headers",
+                "url": "https://tutorialzine.com/2016/02/quick-tip-easiest-way-to-make-responsive-headers/",
+                "image": {
+                    "large": "https://tutorialzine.com/media/2016/02/quick-tip-responsive-headers.png",
+                    "small": "https://tutorialzine.com/media/2016/02/quick-tip-responsive-headers.png"
+                }
+            },
+            {
+                "title": "Learn SQL In 20 Minutes",
+                "url": "https://tutorialzine.com/2016/01/learn-sql-in-20-minutes/",
+                "image": {
+                    "large": "https://tutorialzine.com/media/2016/01/learn-sql-20-minutes.png",
+                    "small": "https://tutorialzine.com/media/2016/01/learn-sql-20-minutes.png"
+                }
+            },
+            {
+                "title": "Creating Your First Desktop App With HTML, JS and Electron",
+                "url": "https://tutorialzine.com/2015/12/creating-your-first-desktop-app-with-html-js-and-electron/",
+                "image": {
+                    "large": "https://tutorialzine.com/media/2015/12/creating-your-first-desktop-app-with-electron.png",
+                    "small": "https://tutorialzine.com/media/2015/12/creating-your-first-desktop-app-with-electron.png"
+                }
+            }]
+
+        }
+    });
+&lt;/script>
+
+&lt;style>
+    /* Hide un-compiled mustache bindings
+until the Vue instance is ready */
+
+    [v-cloak] {
+        display: none;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font: 15px/1.3 'Open Sans', sans-serif;
+        color: #5e5b64;
+        text-align: center;
+    }
+
+    a,
+    a:visited {
+        outline: none;
+        color: #389dc1;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    section,
+    footer,
+    header,
+    aside,
+    nav {
+        display: block;
+    }
+
+    /*-------------------------
+    The search input
+    --------------------------*/
+
+    .bar {
+        background-color: #5c9bb7;
+
+        background-image: -webkit-linear-gradient(top, #5c9bb7, #5392ad);
+        background-image: -moz-linear-gradient(top, #5c9bb7, #5392ad);
+        background-image: linear-gradient(top, #5c9bb7, #5392ad);
+
+        box-shadow: 0 1px 1px #ccc;
+        border-radius: 2px;
+        width: 580px;
+        padding: 10px;
+        margin: 45px auto 25px;
+        position: relative;
+        text-align: right;
+        line-height: 1;
+    }
+
+    .bar a {
+        background: #4987a1 center center no-repeat;
+        width: 32px;
+        height: 32px;
+        display: inline-block;
+        text-decoration: none !important;
+        margin-right: 5px;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .bar a.active {
+        background-color: #c14694;
+    }
+
+    .bar a.list-icon {
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkYzNkFCQ0ZBMTBCRTExRTM5NDk4RDFEM0E5RkQ1NEZCIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkYzNkFCQ0ZCMTBCRTExRTM5NDk4RDFEM0E5RkQ1NEZCIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RjM2QUJDRjgxMEJFMTFFMzk0OThEMUQzQTlGRDU0RkIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RjM2QUJDRjkxMEJFMTFFMzk0OThEMUQzQTlGRDU0RkIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7h1bLqAAAAWUlEQVR42mL8////BwYGBn4GCACxBRlIAIxAA/4jaXoPEkMyjJ+A/g9MDJQBRhYg8RFqMwg8RJIUINYLFDmBUi+ADQAF1n8ofk9yIAy6WPg4GgtDMRYAAgwAdLYwLAoIwPgAAAAASUVORK5CYII=);
+    }
+
+    .bar a.grid-icon {
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjBEQkMyQzE0MTBCRjExRTNBMDlGRTYyOTlBNDdCN0I4IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjBEQkMyQzE1MTBCRjExRTNBMDlGRTYyOTlBNDdCN0I4Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MERCQzJDMTIxMEJGMTFFM0EwOUZFNjI5OUE0N0I3QjgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MERCQzJDMTMxMEJGMTFFM0EwOUZFNjI5OUE0N0I3QjgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4MjPshAAAAXklEQVR42mL4////h/8I8B6IGaCYKHFGEMnAwCDIAAHvgZgRyiZKnImBQsACxB+hNoDAQyQ5osQZIT4gH1DsBZABH6AB8x/JaQzEig++WPiII7Rxio/GwmCIBYAAAwAwVIzMp1R0aQAAAABJRU5ErkJggg==);
+    }
+
+    .bar input {
+        background: #fff no-repeat 13px 13px;
+
+        border: none;
+        width: 100%;
+        line-height: 19px;
+        padding: 11px 0;
+
+        border-radius: 2px;
+        box-shadow: 0 2px 8px #c4c4c4 inset;
+        text-align: left;
+        font-size: 14px;
+        font-family: inherit;
+        color: #738289;
+        font-weight: bold;
+        outline: none;
+        text-indent: 40px;
+    }
+
+    /*-------------------------
+    List layout
+    --------------------------*/
+
+    ul.list {
+        list-style: none;
+        width: 500px;
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    ul.list li {
+        border-bottom: 1px solid #ddd;
+        padding: 10px;
+        overflow: hidden;
+    }
+
+    ul.list li img {
+        width: 120px;
+        height: 120px;
+        float: left;
+        border: none;
+    }
+
+    ul.list li p {
+        margin-left: 135px;
+        font-weight: bold;
+        color: #6e7a7f;
+    }
+
+    /*-------------------------
+    Grid layout
+    --------------------------*/
+
+    ul.grid {
+        list-style: none;
+        width: 570px;
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    ul.grid li {
+        padding: 2px;
+        float: left;
+    }
+
+    ul.grid li img {
+        width: 280px;
+        height: 280px;
+        object-fit: cover;
+        display: block;
+        border: none;
+    }
+&lt;/style>
+</code></pre>
+    </details>
+    <!-- END : Code Example -->
+
+    <!-- START : Code Example -->
+    <details class="details-example">
+        <summary>Handlebars Example</summary>
+        <pre><code>
+// EXAMPLE 1
+// =============================
+
+&lt;!-- CSS Code -->
+&lt;style>
+/* Your CSS code */
+&lt;/style>
+
+&lt;!-- HTML Code -->
+&lt;h1>Handlebars Example&lt;/h1>
+
+&lt;!--This is our template. -->
+&lt;!--Data will be inserted in its according place, replacing the brackets.-->
+&lt;script id="address-template" type="text/x-handlebars-template">
+  &lt;p>You can find me in {{city}}. My address is {{number}} {{street}}.&lt;/p>
+&lt;/script>
+
+&lt;!--Your new content will be displayed in here-->
+&lt;div class="content-placeholder">&lt;/div>
+
+&lt;!-- JavaScript Code -->
+&lt;script type="text/babel">
+// your JavaScript logic
+$(function () {
+	// Grab the template script
+	var theTemplateScript = $("#address-template").html();
+
+	// Compile the template
+	var theTemplate = Handlebars.compile(theTemplateScript);
+
+	// Define our data object
+	var context={
+		"city": "London",
+		"street": "Baker Street",
+		"number": "221B"
+	};
+
+	// Pass our data to the template
+	var theCompiledHtml = theTemplate(context);
+
+	// Add the compiled html to the page
+	$('.content-placeholder').html(theCompiledHtml);
+});
+&lt;/script>
+
+
+// EXAMPLE 2
+// =============================
+
+&lt;!-- CSS Code -->
+&lt;style>
+/* Your CSS code */
+&lt;/style>
+
+&lt;!-- HTML Code -->
+&lt;h1>Handlebars Example 2&lt;/h1>
+
+&lt;!--This is our template. -->
+&lt;!--Data will be inserted in its according place, replacing the brackets.-->
+&lt;!-- The #each helper iterates over an array of items. -->
+&lt;script id="example-template" type="text/x-handlebars-template">
+	&lt;!-- people is looked up on the global context, the one we pass to the compiled template -->
+
+	{{#each people}}
+
+	&lt;!-- Here the context is each individual person. So we can access its properties directly: -->
+	&lt;p>{{firstName}} {{lastName}}&lt;/p>
+
+	{{/each}}
+&lt;/script>
+
+&lt;!--Your new content will be displayed in here-->
+&lt;div class="content-placeholder">&lt;/div>
+
+&lt;!-- JavaScript Code -->
+&lt;script type="text/babel">
+$(function () {
+	// Grab the template script
+	var theTemplateScript = $("#example-template").html();
+
+	// Compile the template
+	var theTemplate = Handlebars.compile(theTemplateScript);
+
+	// This is the default context, which is passed to the template
+	var context = {
+		people: [
+			{ firstName: 'Homer', lastName: 'Simpson' },
+			{ firstName: 'Peter', lastName: 'Griffin' },
+			{ firstName: 'Eric', lastName: 'Cartman' },
+			{ firstName: 'Kenny', lastName: 'McCormick' },
+			{ firstName: 'Bart', lastName: 'Simpson' }
+		]
+	};
+
+	// Pass our data to the template
+	var theCompiledHtml = theTemplate(context);
+
+	// Add the compiled html to the page
+	$(document.body).append(theCompiledHtml);
+});
+&lt;/script>
+</code></pre>
+    </details>
+    <!-- END : Code Example -->
+
+    <!-- START : Code Example -->
+    <details class="details-example">
+        <summary>Handlebars Example : Helpers</summary>
+        <div>
+            <a href="https://tutorialzine.com/2015/01/learn-handlebars-in-10-minutes" target="_blank">Learn
+                Handlebars in 10
+                Minutes or Less</a>
+            <p>Handlebars doesn't allow you to write JavaScript directly within templates. Instead, it gives you
+                helpers.
+                These are JavaScript functions that you can call from your templates, and help you reuse code
+                and create
+                complex templates. To call a helper, just use it as an expression - <code>{{helpername}}</code>.
+                You can
+                pass parameters as well - <code>{{helpername 12345}}</code>, which are passed as parameters to
+                your helper
+                function.</p>
+            <p>To create a helper, use the <a href="http://handlebarsjs.com/reference.html#base-registerHelper"
+                    target="_blank" rel="noreferrer noopener">registerHelper function</a>. See the example
+                below, which
+                demonstrates a creating a helper, and a number of Handlebars' <a
+                    href="http://handlebarsjs.com/builtin_helpers.html" target="_blank"
+                    rel="noreferrer noopener">built-in
+                    ones</a>:</p>
+        </div>
+        <pre><code>
+// Example : Handlebars Helper
+// =============================
+&lt;script id="built-in-helpers-template" type="text/x-handlebars-template">
+    {{#each animals}}
+      &lt;p>
+        The {{capitalize this.name}} says
+        {{#if this.noise}}
+          "{{this.noise}}".
+        {{else}}
+          nothing since its a {{this.name}}.
+        {{/if}}
+      &lt;/p>
+    {{/each}}
+  &lt;/script>
+
+&lt;div class="content-placeholder">&lt;/div>
+
+&lt;script>
+    $(function () {
+
+        // Register a helper
+        Handlebars.registerHelper('capitalize', function (str) {
+            // str is the argument passed to the helper when called
+            str = str || '';
+            return str.slice(0, 1).toUpperCase() + str.slice(1);
+        });
+
+        // Grab the template script
+        var theTemplateScript = $("#built-in-helpers-template").html();
+
+        // Compile the template
+        var theTemplate = Handlebars.compile(theTemplateScript);
+
+        // We will call this template on an array of objects
+        var context = {
+            animals: [
+                {
+                    name: "cow",
+                    noise: "moooo"
+                },
+                {
+                    name: "cat",
+                    noise: "meow"
+                },
+                {
+                    name: "fish",
+                    noise: ""
+                },
+                {
+                    name: "farmer",
+                    noise: "Get off my property!"
+                }
+            ]
+        };
+
+        // Pass our data to the template
+        var theCompiledHtml = theTemplate(context);
+
+        // Add the compiled html to the page
+        $('.content-placeholder').html(theCompiledHtml);
+
+    });
+
+&lt;/script>
+</code></pre>
+    </details>
+    <!-- END : Code Example -->
+
+    <!-- START : Code Example -->
+    <details class="details-example">
+        <summary>Handlebars Example : Block helpers</summary>
+        <a href="https://tutorialzine.com/2015/01/learn-handlebars-in-10-minutes" target="_blank">Learn
+            Handlebars in 10
+            Minutes or Less</a>
+        <pre><code>
+// Example : Handlebars Block Helpers
+// =============================
+&lt;script id="block-expressions-template" type="text/x-handlebars-template">
+
+    &lt;p> The &lt;b> {{#uppercase}} konami {{/uppercase}} &lt;/b> Code is a cheat code that appears in many video games.&lt;/p>
+
+    &lt;p>During the title screen before the game demo begins, the player could press the following sequence of buttons on the game controller to enable the cheat:&lt;/p>
+
+    &lt;p>{{#uppercase}}{{code}}{{/uppercase}}&lt;/p>
+
+    &lt;p>The code is also present as an Easter egg on a number of websites.&lt;/p>
+
+  &lt;/script>
+
+&lt;div class="content-placeholder">&lt;/div>
+&lt;script>
+    $(function () {
+        // Grab the template script
+        var theTemplateScript = $("#block-expressions-template").html();
+
+        // This is our block helper
+        // The name of our helper is provided as the first parameter - in this case 'uppercase'
+        Handlebars.registerHelper('uppercase', function (options) {
+
+            // "this" is the context that existed when calling the helper.
+
+            // The options object has a special function - fn. This is a
+            // compiled version of the template that is contained between the opening and closing
+            // blocks of this helper. To get a string, call fn with the context:
+
+            return options.fn(this).toUpperCase();
+
+        });
+
+        // Compile the template
+        var theTemplate = Handlebars.compile(theTemplateScript);
+
+        // Define our data object
+        var context = {
+            "code": "up up down down left right left right b a select start"
+        };
+
+        // Pass our data to the template
+        var theCompiledHtml = theTemplate(context);
+
+        // Add the compiled html to the page
+        $('.content-placeholder').html(theCompiledHtml);
+
+    });
+
+&lt;/script>
+</code></pre>
+    </details>
+    <!-- END : Code Example -->
+
+</section>

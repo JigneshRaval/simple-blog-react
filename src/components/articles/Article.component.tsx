@@ -92,6 +92,7 @@ export const Article = (props: IArticleProps) => {
                             </ul>
                         </div>
                     </div>
+                    <button className="btn btn-primary" data-toggle="modal" data-target="#modal-create-demo">Create Demo</button>
                 </header>
 
                 <div className="article__content">
@@ -108,5 +109,5 @@ export const Article = (props: IArticleProps) => {
             </div>
 
         </article>
-    )
-}
+    );
+};
