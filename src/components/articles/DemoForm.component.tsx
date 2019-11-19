@@ -95,9 +95,15 @@ const CODEMIRROR_CONTENT = `
 
 let codeMirror: any;
 let preview: any;
+let _template = 'JavaScript';
 
 const CreateDemoForm = (props: any) => {
-    const [_template, setTemplate] = useState('JavaScript');
+    // const [_template, setTemplate] = useState('JavaScript');
+
+    /* useEffect(() => {
+console.log('template changed..')
+    }, [_template]); */
+
     let timer: any;
     let editorData = '';
     // let _template = 'JavaScript';
@@ -179,7 +185,6 @@ const CreateDemoForm = (props: any) => {
      */
     const initCodeMirror = () => {
         let editorArea = document.getElementById('code');
-        console.log("codeMirror === ", codeMirror);
         codeMirror = window.CodeMirror.fromTextArea(editorArea, {
             lineNumbers: true,
             lineWrapping: true,
@@ -224,10 +229,10 @@ const CreateDemoForm = (props: any) => {
      */
     const _setTemplate = (event: any) => {
         resetEditor();
-        let framework = event.target.parentNode.children[1].value || event.target.children[1].value;
-        localStorage.setItem('editorTemplateName', framework);
-        setTemplate(framework);
-        let codeMirrorContent = document.querySelector(`.code-example-wrapper #${framework} pre code`).innerText;
+        _template = event.target.parentNode.children[1].value || event.target.children[1].value;
+        localStorage.setItem('editorTemplateName', _template);
+        // setTemplate(framework);
+        let codeMirrorContent = document.querySelector(`.code-example-wrapper #${_template} pre code`).innerText;
         // Set default content in CodeMirror editor
         codeMirror.getDoc().setValue(codeMirrorContent || CODEMIRROR_CONTENT);
         // textArea.value = (codeMirrorContent || CODEMIRROR_CONTENT);
@@ -258,7 +263,7 @@ const CreateDemoForm = (props: any) => {
 
     const createApp = (editorData: any) => {
         let scriptBlocks = JQUERY + BOOTSTRAP_CSS + BOOTSTRAP_JS + REQUIRE_METHOD + BABEL + BABEL_PRESET_ENV;
-
+        console.log('CreateApp Template ===', _template);
         if (_template === 'SCSS') {
             /* sass.compile(editorData, (result) => {
                 editorData = '<pre>' + result.text + '</pre>';
@@ -303,7 +308,6 @@ const CreateDemoForm = (props: any) => {
     const saveEditor = () => {
         // get the value of the data
         var value = codeMirror.getValue()
-        console.log('Value :', value);
     };
 
     // Reset/Clear Editor value and output from iFrame
@@ -358,7 +362,14 @@ const CreateDemoForm = (props: any) => {
             form.current.txtTags.value = 'JavaScript, ES6'; */
         }
 
-    }, [editData._id, _template]);
+        // componentWillUnmount
+        return () => {
+            /* if (codeMirror) {
+                codeMirror.toTextArea();
+            } */
+        }
+
+    }, [editData._id]);
 
     return (
         <React.Fragment>
