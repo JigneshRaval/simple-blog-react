@@ -42,12 +42,17 @@ export const Article = (props: IArticleProps) => {
 
     const { currentRecord: article } = props;
 
+    const DEMO_ID = article._id + '_' + Math.random().toString(36).substring(2);
+
     useEffect(() => {
         // highlight syntax : https://highlightjs.org/
         $(document).ready(function () {
             $('.article__content').find('pre code').each(function (i: any, block: any) {
                 hljs.highlightBlock(block);
             });
+
+            let demos = document.querySelectorAll('.demo_' + article._id);
+
         });
     }, [article._id]);
 
@@ -98,6 +103,16 @@ export const Article = (props: IArticleProps) => {
                 <div className="article__content">
                     {article.excerpt ? <p className="uk-text-lead">{article.excerpt}</p> : ''}
                     <article dangerouslySetInnerHTML={createMarkup()}></article>
+
+                    <div className="demo-wrapper">
+                        <pre className={'demo_' + article._id}
+                            data-template={'React'}
+                            data-demo-id={'demo_' + DEMO_ID}><code>Test Demo code</code></pre>
+                        <iframe
+                            className={'demo_output_' + article._id}
+                            data-template={'React'}
+                            data-demo-id={'demo_output_' + DEMO_ID}></iframe>
+                    </div>
                 </div>
 
                 <footer className="article__footer">

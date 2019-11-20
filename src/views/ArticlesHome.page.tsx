@@ -316,6 +316,7 @@ const ArticleHome = (props: any) => {
             <CreateDemoForm
                 editData={editData}
                 isEditMode={isEditMode}
+                currentRecord={currentRecord}
             />
 
             <div className="toast-message__wrapper">{state.toastChildren}</div>

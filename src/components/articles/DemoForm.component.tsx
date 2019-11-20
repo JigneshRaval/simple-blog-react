@@ -98,28 +98,19 @@ let preview: any;
 let _template = 'JavaScript';
 
 const CreateDemoForm = (props: any) => {
-    // const [_template, setTemplate] = useState('JavaScript');
+    console.log('CreateDemoForm : ', props);
 
-    /* useEffect(() => {
-console.log('template changed..')
-    }, [_template]); */
+    const { editData, isEditMode } = props;
+    const codeRef = useRef<HTMLFormElement>();
 
     let timer: any;
     let editorData = '';
-    // let _template = 'JavaScript';
     let previewFrame: any = useRef<HTMLIFrameElement>();
-    // let preview = previewFrame.current.contentDocument || previewFrame.current.contentWindow.document;
-    // let preview: any;
     let textArea = document.getElementById('code');
 
 
-    const { editData, isEditMode } = props;
-
-    const codeRef = useRef<HTMLFormElement>();
-
     let dateCreated = new Date().getTime();
     let id = editData._id || '';
-
 
     const sendValues = () => {
         console.log(codeRef.current);

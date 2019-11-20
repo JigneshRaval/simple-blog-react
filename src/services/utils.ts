@@ -2,8 +2,30 @@
 // ==============================
 
 // Utility functions
+import {
+    APP_ROOT,
+    JQUERY,
+    BOOTSTRAP_CSS,
+    BOOTSTRAP_JS,
+    HANDLEBARS,
+    REQUIRE_METHOD,
+    BABEL,
+    BABEL_PRESET_ENV,
+    REACT,
+    VUEJS,
+    SCSS,
+    RXJS_5,
+    RXJS_6,
+    rxjsOutputStyle,
+    rxjsOutputScript,
+    CODEMIRROR_CONTENT
+} from './demo-contants';
 
 declare var $: any;
+
+let codeMirror: any;
+let preview: any;
+let _template = 'JavaScript';
 
 class Utils {
     scrollDuration: number = 250;
@@ -455,6 +477,68 @@ class Utils {
             console.log('Server is down!');
             isServerUp = false;
         };
+    }
+
+    public createDemoApp(editorData: any, template: string) {
+        let scriptBlocks = JQUERY + BOOTSTRAP_CSS + BOOTSTRAP_JS + REQUIRE_METHOD + BABEL + BABEL_PRESET_ENV;
+        console.log('CreateApp Template ===', template);
+        if (template === 'SCSS') {
+            /* sass.compile(editorData, (result) => {
+                editorData = '<pre>' + result.text + '</pre>';
+                console.log(result.text, editorData);
+                this.preview.open();
+                this.preview.write(editorData);
+                // insertJs();
+                // preview.body.innerHTML = editorData;
+                this.preview.close();
+                clearInterval(this.timer);
+            }); */
+        }
+
+        const documentContents = `
+        <!DOCTYPE html>
+        <html lang="en">
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <title>Document</title>
+            ${scriptBlocks}
+            ${template === 'Handlebars' ? HANDLEBARS : ''}
+            ${template === 'React' ? REACT : ''}
+            ${template === 'Vue' ? VUEJS : ''}
+            ${template === 'RxJs5' ? (rxjsOutputStyle + rxjsOutputScript + RXJS_5) : ''}
+            ${template === 'RxJs6' ? (rxjsOutputStyle + rxjsOutputScript + RXJS_6) : ''}
+            <!-- <script type="text/babel" src="./MyExport.js"></script> -->
+        </head>
+
+        <body>
+            ${template === 'React' ? APP_ROOT : ''}
+            ${editorData}
+        </body>
+
+        </html>`;
+
+        this.renderOutput(documentContents);
+    }
+
+    // Compile and Render code into iFrame
+    public renderOutput(editorData: any) {
+
+        // var output = Babel.transform(editorData, { presets: ['es2015'] }).code;
+
+        // 1. jQuery Way
+        // let myFrame = $("#preview").contents().find('body');
+        // myFrame.html(editorData);
+
+        // 2. Vanilla JavaScript way
+        preview.open();
+        preview.write(editorData);
+        // insertJs();
+        // preview.body.innerHTML = editorData;
+        preview.close();
+        // clearInterval(timer);
     }
 
 }
