@@ -51,8 +51,8 @@ export const Article = (props: IArticleProps) => {
                 hljs.highlightBlock(block);
             });
 
-            let demos = document.querySelectorAll('.demo_' + article._id);
-
+            let demos = document.querySelectorAll('.demo_code');
+console.log('Demos : ', demos);
         });
     }, [article._id]);
 
@@ -105,11 +105,11 @@ export const Article = (props: IArticleProps) => {
                     <article dangerouslySetInnerHTML={createMarkup()}></article>
 
                     <div className="demo-wrapper">
-                        <pre className={'demo_' + article._id}
+                        <pre className={'demo_code'}
                             data-template={'React'}
                             data-demo-id={'demo_' + DEMO_ID}><code>Test Demo code</code></pre>
                         <iframe
-                            className={'demo_output_' + article._id}
+                            className={'demo_output'}
                             data-template={'React'}
                             data-demo-id={'demo_output_' + DEMO_ID}></iframe>
                     </div>
