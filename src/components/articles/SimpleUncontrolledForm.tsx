@@ -67,7 +67,11 @@ const SimpleUncontrolledForm = (props: any) => {
 
         (testDiv as Element).innerHTML = wrapperDiv.innerHTML; // $('#txtareaHtmlCode').summernote('code');
 
-        cleanCode = utils.extractCleanCode(testDiv, testDiv.innerHTML, 'crayon-table');
+        cleanCode = utils.extractCleanCode(testDiv, testDiv.innerHTML, 'crayon-table', '.crayon-syntax');
+
+        (testDiv as Element).innerHTML = cleanCode.innerHTML;
+
+        cleanCode = utils.extractCleanCode(testDiv, testDiv.innerHTML, 'github', '.codecolorer-container .codecolorer');
 
         (testDiv as Element).innerHTML = cleanCode.innerHTML;
 

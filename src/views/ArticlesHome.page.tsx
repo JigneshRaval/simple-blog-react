@@ -17,7 +17,6 @@ import Sidebar from '../components/articles/Sidebar.component';
 // import ArticlesList from '../components/articles/Articles-List.component';
 import ToastMessage from '../components/articles/ToastMessage';
 import { Article } from '../components/articles/Article.component';
-// import { CreateArticleFormComponent } from '../components/articles/Create-Article-Form.component';
 import LoadingSpinner from '../components/shared/LoadingSpinner';
 import SimpleUncontrolledForm from '../components/articles/SimpleUncontrolledForm';
 import CreateDemoForm from '../components/articles/DemoForm.component';
@@ -300,13 +299,6 @@ const ArticleHome = (props: any) => {
                 onCreateArticle={handleCreateArticle}
                 onEditSaveArticle={handleEditSaveArticle}
             />
-
-            {/* <CreateArticleFormComponent
-                {...newState}
-                onCreateArticle={handleCreateArticle}
-                onEditSaveArticle={handleEditSaveArticle}
-            // firebase={firebase}
-            /> */}
 
             <Sidebar
                 onFilterRecords={handleFilterRecords}

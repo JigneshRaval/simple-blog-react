@@ -7,10 +7,10 @@ declare var $: any;
 
 
 let HelloButton = function () {
-    var ui = $.summernote.ui;
+    let ui = $.summernote.ui;
 
     // create button
-    var button = ui.button({
+    let button = ui.button({
         contents: 'Code block',
         tooltip: 'hello',
         click: function () {
@@ -19,7 +19,7 @@ let HelloButton = function () {
     });
 
     return button.render();   // return button as jquery object
-}
+};
 
 
 export const CreateArticleFormComponent = (props: any) => {
@@ -39,7 +39,7 @@ export const CreateArticleFormComponent = (props: any) => {
         txtCoverImage: props.editData.coverImage || '',
         txtExcerpt: props.editData.excerpt || '',
         txtareaHtmlCode: props.editData.htmlCode ? $('#txtareaHtmlCode').summernote('code', props.editData.htmlCode) : '',
-    })
+    });
 
     useEffect(() => {
         originalState = formState;

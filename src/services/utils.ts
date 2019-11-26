@@ -343,10 +343,10 @@ class Utils {
         return html.innerHTML;
     }
 
-    public extractCleanCode(parent: any, content: any, type: string) {
+    public extractCleanCode(parent: any, content: any, type: string, selector: string = 'iframe') {
         switch (type) {
             case 'github':
-                let iFrames = parent.querySelectorAll('iframe'); // Select all iFrame elements
+                let iFrames = parent.querySelectorAll(selector); // Select all iFrame elements
                 let figures = parent.querySelectorAll('figure.graf--iframe'); // Select all iFrame parent Elements
 
                 if (parent) {
@@ -356,15 +356,21 @@ class Utils {
                             let preNode = document.createElement('pre');
                             let codeNode = document.createElement('code');
 
-                            let contDoc = iFrames[i].contentDocument || iFrames[i].contentWindow ? iFrames[i].contentWindow.document : null;
+                            let contDoc = iFrames[i].contentDocument || iFrames[i].contentWindow && iFrames[i].contentWindow.document || iFrames[i];
 
                             if (contDoc) {
-                                let iframeContent = contDoc.querySelector('table').innerText || contDoc.querySelector('table').textContent;
+                                let iframeContent = contDoc.querySelector('table') && contDoc.querySelector('table').innerText || contDoc.querySelector('table') && contDoc.querySelector('table').textContent || contDoc.innerText;
 
                                 codeNode.innerText = iframeContent.replace(/</ig, '&lt;');
                                 preNode.appendChild(codeNode);
                                 // replace all iFrame parent nodes with the new <pre> tags
-                                iFrames[i].closest('figure').parentElement.replaceChild(preNode, figures[i]);
+                                // iFrames[i].closest('figure').parentElement.replaceChild(preNode, figures[i]);
+                                // replace all iFrame parent nodes with the new <pre> tags
+                                if (iFrames[i].closest('figure')) {
+                                    iFrames[i].closest('figure').parentElement.replaceChild(preNode, iFrames[i].closest('figure'));
+                                } else {
+                                    iFrames[i].parentElement.parentElement.replaceChild(preNode, iFrames[i].closest('.codecolorer-container'));
+                                }
                             }
                         }
                     }
@@ -373,24 +379,44 @@ class Utils {
                 } else {
                     console.log('Please assign id to content wrapper.')
                 }
+                break;
             case 'gist':
                 // let parent = content.parentElement;
-                let gists = parent.querySelectorAll('.oembed-gist') || parent.querySelectorAll('.gist');
+                // let gists = parent.querySelectorAll('.oembed-gist') || parent.querySelectorAll('.gist');
+                let gists = parent.querySelectorAll('.gist') && parent.querySelectorAll('.gist').length > 0 ? parent.querySelectorAll('.gist') : null ||
+                    parent.querySelectorAll('figure iframe') && parent.querySelectorAll('figure iframe').length > 0 ? parent.querySelectorAll('figure iframe') : null;
+
+                let scripts = parent.querySelectorAll('script');
+                let styles = parent.querySelectorAll('link');
 
                 if (parent) {
                     if (gists && gists.length > 0) {
                         // Loop through all the iFrames
                         for (let i = 0, len = gists.length; i < len; i++) {
-                            if (gists[i].querySelector('table')) {
-                                let preNode = document.createElement('pre');
-                                let codeNode = document.createElement('code');
+                            let preNode = document.createElement('pre');
+                            let codeNode = document.createElement('code');
 
-                                let gistContent = gists[i].querySelector('table').innerText || gists[i].querySelector('table').textContent;
-                                codeNode.innerText = gistContent.replace(/</ig, '&lt;');
-                                preNode.appendChild(codeNode);
-                                // replace all iFrame parent nodes with the new <pre> tags
-                                gists[i].parentElement.replaceChild(preNode, gists[i]);
+                            // let gistContent = gists[i].querySelector('table').innerText || gists[i].querySelector('table').textContent;
+                            let iframeDocs = gists[i].contentDocument || gists[i].contentWindow && gists[i].contentWindow.document;
+                            let gistContent = iframeDocs.querySelector('table') && iframeDocs.querySelector('table').innerText || iframeDocs.querySelector('div.gist-data') && iframeDocs.querySelector('div.gist-data').innerText;
+
+                            codeNode.innerText = gistContent.replace(/</ig, '&lt;');
+                            preNode.appendChild(codeNode);
+
+                            // replace all iFrame parent nodes with the new <pre> tags
+                            // gists[i].parentElement.replaceChild(preNode, gists[i]);
+                            if (gists[i].closest('figure')) {
+                                gists[i].closest('figure').parentElement.replaceChild(preNode, gists[i].closest('figure'));
+                            } else {
+                                // gists[i].parentElement.parentElement.replaceChild(preNode, gists[i].closest('.codecolorer-container'));
                             }
+
+                            /* if (scripts[i].src.indexOf('github.com') > -1) {
+                                parent.removeChild(scripts[i]);
+                            }
+                            if (styles[i].href.indexOf('github.com') > -1) {
+                                parent.removeChild(styles[i]);
+                            } */
                         }
 
                     }
@@ -399,24 +425,25 @@ class Utils {
                 } else {
                     console.log('Please assign id to content wrapper.')
                 }
+                break;
             case 'crayon-table':
                 // Method 2 for Crayons highlighter
                 // ============================================
-                let crayonDivs = parent.querySelectorAll('.crayon-syntax');
+                let crayonDivs = parent.querySelectorAll(selector);
 
                 if (crayonDivs && crayonDivs.length > 0) {
                     for (let i = 0; i < crayonDivs.length; i++) {
                         let preNode = document.createElement('pre');
                         let codeNode = document.createElement('code');
 
-                        codeNode.innerHTML = crayonDivs[i].querySelector('.crayon-code').innerText.replace(/</ig, '&lt;');
+                        codeNode.innerHTML = crayonDivs[i].querySelector('.crayon-code') && crayonDivs[i].querySelector('.crayon-code').innerText.replace(/</ig, '&lt;');
                         preNode.appendChild(codeNode);
 
                         crayonDivs[i].parentNode.insertBefore(preNode, crayonDivs[i]);
 
                         crayonDivs[i].parentNode.removeChild(crayonDivs[i]);
 
-                        console.log('crayonDivs[i].querySelector innerText', crayonDivs[i].querySelector('.crayon-code').innerText);
+                        console.log('crayonDivs[i].querySelector innerText', crayonDivs[i].querySelector('.crayon-code') && crayonDivs[i].querySelector('.crayon-code').innerText);
                     }
                 }
 
