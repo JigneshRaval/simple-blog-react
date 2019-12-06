@@ -5,7 +5,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 
-import ArticleContext from '../../services/context';
+// import ArticleContext from '../../services/context';
 import Utils from '../../services/utils';
 import SearchComponent from './Search.component';
 import ThemeSwitcherDropdownComponent from './ThemeDropdown.component';
@@ -14,8 +14,6 @@ const utils = new Utils;
 // declare var UIkit: any;
 
 const Header = (props: any) => {
-    console.log('HEader :', props);
-
     // Open Create Article form in modal overlay
     /* const openForm = () => {
         UIkit.modal('#modal-articles').show();

@@ -98,7 +98,7 @@ let preview: any;
 let _template = 'JavaScript';
 
 const CreateDemoForm = (props: any) => {
-    console.log('CreateDemoForm : ', props);
+    // console.log('CreateDemoForm : ', props);
 
     const { editData, isEditMode } = props;
     const codeRef = useRef<HTMLFormElement>();
@@ -341,7 +341,7 @@ const CreateDemoForm = (props: any) => {
     };
 
     useEffect(() => {
-        console.log('SimpleUncontrolledForm :', props);
+        // console.log('SimpleUncontrolledForm :', props);
         // previewFrame = useRef<HTMLIFrameElement>();
 
         initDemoEditor();

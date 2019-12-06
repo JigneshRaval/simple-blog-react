@@ -33,6 +33,7 @@ class Utils {
     delta = 5;
     scrollTimer: any;
     timer: any;
+    highlightColors = ['#ff6', '#a0ffff', '#9f9', '#f99', '#f6f'];
 
     constructor() {
         this.init();
@@ -223,7 +224,13 @@ class Utils {
      * @param articles : Array - List of all Articles to be filtered.
      */
     public filterArticlesBy(searchTerm: string, filterBy: string, articles: any) {
-        let keywords = searchTerm.split(' ');
+        let searchBy: string = '';
+        let keywords = searchTerm.replace(/(to |the )/gi, '');
+        if (searchTerm.indexOf(':') !== -1) {
+            searchBy = searchTerm.split(':')[0];
+            keywords = keywords.split(':')[1];
+        }
+        let pattern2 = `((?=.*\\b${keywords}\\b)|(${keywords.split(' ').join('|')}))`;
         let articleBySearch: Array<any> = [];
 
         switch (filterBy) {
@@ -231,21 +238,36 @@ class Utils {
             case 'search':
                 let t0 = performance.now();
 
-                articles.map((article: any) => {
-                    let allKeywordsMatch = true;
+                // articleBySearch = this.filterList(searchTerm, articles);
+                if (searchBy.toLowerCase() === 'title') {
+                    articleBySearch = this.filterList(keywords, articles);
+                } else {
+                    articles.map((article: any) => {
+                        let allKeywordsMatch = true;
 
-                    keywords.map((keyword) => {
-                        if (article.tags.some((tag: string) => tag.toLowerCase().indexOf(keyword.toLowerCase()) !== -1)) {
+                        if (article.title.toLowerCase().search(new RegExp(pattern2, 'gi')) === -1 || article.htmlCode.toLowerCase().search(new RegExp(pattern2, 'gi')) === -1) {
+                            allKeywordsMatch = false;
+                        } else {
+                            allKeywordsMatch = true;
+                        }
+
+                        // keywords.map((keyword) => {
+                        /* if (article.title.toLowerCase().indexOf(keyword.toLowerCase()) === -1 && article.htmlCode.toLowerCase().indexOf(keyword.toLowerCase()) === -1) {
+                            allKeywordsMatch = false;
+                        } */
+
+                        /* if (article.tags.some((tag: string) => tag.toLowerCase().indexOf(keyword.toLowerCase()) !== -1)) {
                             allKeywordsMatch = true;
                         } else {
                             if (article.title.toLowerCase().indexOf(keyword.toLowerCase()) === -1 && article.category.toLowerCase().indexOf(keyword.toLowerCase()) === -1) {
                                 allKeywordsMatch = false;
                             }
-                        }
-                    });
+                        } */
+                        // });
 
-                    if (allKeywordsMatch) articleBySearch.push(article);
-                });
+                        if (allKeywordsMatch) articleBySearch.push(article);
+                    });
+                }
 
                 let t1 = performance.now();
                 console.log('Took', (t1 - t0).toFixed(4), 'milliseconds to filter records :', articleBySearch);
@@ -279,6 +301,57 @@ class Utils {
                         // filteredList.push(article);
                     }
                 });
+        }
+    }
+
+    // USAGE : filterList(this.state.q, this.state.list);
+    public filterList(searchTerm: string, articles: any) {
+        function escapeRegExp(s: any) {
+            return s.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+        }
+        const words = searchTerm
+            // .toLowerCase()
+            .split(/\s+/g)
+            .map(s => s.trim())
+            .filter(s => !!s);
+
+        const hasTrailingSpace = searchTerm.endsWith(' ');
+
+        const searchRegex = new RegExp(
+            words
+                .map((word, i) => {
+                    if (i + 1 === words.length && !hasTrailingSpace) {
+                        // The last word - ok with the word being "startswith"-like
+                        return `(?=.*\\b${escapeRegExp(word)})`;
+                    } else {
+                        // Not the last word - expect the whole word exactly
+                        return `(?=.*\\b${escapeRegExp(word)}\\b)`;
+                    }
+                })
+                .join('') + '.+',
+            'gi'
+        );
+
+        console.log('searchRegex :', searchRegex);
+
+        return articles.filter((item: any) => {
+            // console.log('Matched :', searchRegex.test(item.title) ? item.title : null);
+            return searchRegex.test(item.title);
+        });
+    }
+
+    public highlightSearchTerms() {
+        let searchPara = document.querySelector('.article__content > article').innerHTML;
+        searchPara = searchPara.toString();
+        let searchTerm = document.querySelector('.search-form-input');
+        const rand = this.highlightColors[Math.floor(Math.random() * this.highlightColors.length)];
+
+        let terms = searchTerm && searchTerm.value;
+        if (terms) {
+            terms = terms.replace(/(to |the |with )/gi, '');
+            let pattern2 = `((${terms})|(${terms.split(' ').join('|')}))`;
+            let highlighted = searchPara.replace(new RegExp(pattern2, 'gi'), (match: any) => `<mark class="highlight-search" style="background-color:${rand}">${match}</mark>`);
+            document.querySelector('.article__content > article').innerHTML = highlighted;
         }
     }
 

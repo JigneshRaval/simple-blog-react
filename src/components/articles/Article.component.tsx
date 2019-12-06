@@ -38,6 +38,7 @@ interface IArticleProps {
     onFilterRecords: (event: any, filterBy: string) => void;
 }
 
+
 export const Article = (props: IArticleProps) => {
 
     const { currentRecord: article } = props;
@@ -51,8 +52,22 @@ export const Article = (props: IArticleProps) => {
                 hljs.highlightBlock(block);
             });
 
+            // Highlight search words in content
+            setTimeout(() => {
+                utils.highlightSearchTerms();
+            }, 1000);
+
+            /* let myHilitor = new Hilitor(); // id of the element to parse
+            if (myHilitor) {
+                let searchTerms = document.querySelector('.search-form-input');
+                if (searchTerms) {
+                    myHilitor.apply(searchTerms.value);
+                }
+            }
+            */
+
             let demos = document.querySelectorAll('.demo_code');
-console.log('Demos : ', demos);
+            console.log('Demos : ', demos);
         });
     }, [article._id]);
 
@@ -68,6 +83,8 @@ console.log('Demos : ', demos);
 
         return { __html: article.htmlCode };
     }
+
+
 
     // Go to top on click of up arrow
     const scrollToTop = (event: any) => {

@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
-import ArticleContext from '../../services/context';
+import Utils from '../../services/utils';
+
+const utils = new Utils();
 
 const SearchComponent = (props: any) => {
     let timer: any;
@@ -19,10 +21,9 @@ const SearchComponent = (props: any) => {
         }
         timer = setTimeout(() => {
             onFilterRecords(event, type);
+            utils.highlightSearchTerms();
         }, 1000);
     }
-
-
 
     return (
 
@@ -30,9 +31,18 @@ const SearchComponent = (props: any) => {
 
             <form className="search-form" onSubmit={handleSubmit}>
                 <label className="visually-hidden" htmlFor="searchBar">Search articles by Title, Tag or Category</label>
-                <input className="form-control search-form-input" name="searchBar" id="searchBar" type="text" placeholder="Search articles by Title, Tag or Category" onChange={(event) => filterArticles(event, 'search')} ref={inputRef} aria-label="Search" />
+                <input
+                    className="form-control search-form-input"
+                    name="searchBar" id="searchBar" type="text"
+                    placeholder="Search articles by Title, Tag or Category"
+                    onChange={(event) => filterArticles(event, 'search')} ref={inputRef} aria-label="Search" />
 
-                <button type="button" className="close clear-search" data-dismiss="modal" aria-label="Close" onClick={(event) => { (inputRef.current as HTMLInputElement).value = ''; filterArticles(event, 'all') }} title="Click this button to clear search results.">
+                <button
+                    type="button"
+                    className="close clear-search"
+                    data-dismiss="modal" aria-label="Close"
+                    onClick={(event) => { (inputRef.current as HTMLInputElement).value = ''; filterArticles(event, 'all') }}
+                    title="Click this button to clear search results.">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </form>

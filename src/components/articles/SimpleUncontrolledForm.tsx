@@ -197,7 +197,7 @@ const SimpleUncontrolledForm = (props: any) => {
     };
 
     useEffect(() => {
-        console.log('SimpleUncontrolledForm :', props, form.current);
+        // console.log('SimpleUncontrolledForm :', props, form.current);
 
         $('#txtareaHtmlCode').summernote({
             placeholder: 'Write your article content here...',
