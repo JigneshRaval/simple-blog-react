@@ -51,6 +51,10 @@
         { "id": 49, "name": "Desktop App Development", "color": "#ff3e00"},
         { "id": 50, "name": "Progressive Web Apps", "color": "#ff3e00"},
         { "id": 51, "name": "Ionic", "color": "#ff3e00"},
-        { "id": 52, "name": "NativeScript", "color": "#ff3e00"}
+        { "id": 52, "name": "NativeScript", "color": "#ff3e00"},
+        { "id": 53, "name": "Yarn", "color": "#ff3e00"},
+        { "id": 54, "name": "JWT", "color": "#ff3e00"},
+        { "id": 55, "name": "IndexedDB", "color": "#ff3e00"},
+        { "id": 56, "name": "React Native", "color": "#ff3e00"}
     ]
 }
