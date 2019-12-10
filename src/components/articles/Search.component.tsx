@@ -21,7 +21,7 @@ const SearchComponent = (props: any) => {
         }
         timer = setTimeout(() => {
             onFilterRecords(event, type);
-            utils.highlightSearchTerms();
+            // utils.highlightSearchTerms();
         }, 1000);
     }
 

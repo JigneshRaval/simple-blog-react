@@ -45,6 +45,35 @@ export const Article = (props: IArticleProps) => {
 
     const DEMO_ID = article._id + '_' + Math.random().toString(36).substring(2);
 
+    const insertAfter = (el: any, referenceNode: any) => {
+        referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
+    };
+
+    const renderDemo = () => {
+        let demos = document.querySelectorAll('[data-demo="code"]');
+        if (demos && demos.length > 0) {
+            [].forEach.call(demos, (demo: any, index: number) => {
+                // 1. Create iFrame and insert it after .demo_code
+                let iFrame = document.createElement('iframe');
+                iFrame.className = 'demo_output';
+                insertAfter(iFrame, demos[0]);
+
+                // 2. Get code from .demo_code container and pass it to createDemoApp function to render the output
+                let demoContent = demos[0].innerText;
+                let templateName = demos[0].getAttribute('data-demo-template') || 'JavaScript';
+                if (demoContent) {
+                    utils.createDemoApp(demoContent, templateName, iFrame);
+                }
+
+                // 3. Adjusting the iframe height onload event
+                // iFrame.onload = 'this.height=this.contentWindow.document.body.scrollHeight;';
+                iFrame.onload = function () {
+                    iFrame.style.height = (iFrame.contentWindow.document.body.scrollHeight + 50) + 'px';
+                };
+            });
+        }
+    };
+
     useEffect(() => {
         // highlight syntax : https://highlightjs.org/
         $(document).ready(function () {
@@ -54,7 +83,7 @@ export const Article = (props: IArticleProps) => {
 
             // Highlight search words in content
             setTimeout(() => {
-                utils.highlightSearchTerms();
+                // utils.highlightSearchTerms();
             }, 1000);
 
             /* let myHilitor = new Hilitor(); // id of the element to parse
@@ -66,10 +95,12 @@ export const Article = (props: IArticleProps) => {
             }
             */
 
-            let demos = document.querySelectorAll('.demo_code');
-            console.log('Demos : ', demos);
+            renderDemo();
+
         });
     }, [article._id]);
+
+
 
     const date = utils.formatDate('dd/mm/yyyy', '-', article.dateCreated);
 
@@ -114,22 +145,21 @@ export const Article = (props: IArticleProps) => {
                             </ul>
                         </div>
                     </div>
-                    <button className="btn btn-primary" data-toggle="modal" data-target="#modal-create-demo">Create Demo</button>
                 </header>
 
                 <div className="article__content">
                     {article.excerpt ? <p className="uk-text-lead">{article.excerpt}</p> : ''}
-                    <article dangerouslySetInnerHTML={createMarkup()}></article>
+                    <article
+                        dangerouslySetInnerHTML={
+                            createMarkup()
+                        }>
+                    </article>
 
-                    <div className="demo-wrapper">
-                        <pre className={'demo_code'}
-                            data-template={'React'}
-                            data-demo-id={'demo_' + DEMO_ID}><code>Test Demo code</code></pre>
-                        <iframe
-                            className={'demo_output'}
-                            data-template={'React'}
-                            data-demo-id={'demo_output_' + DEMO_ID}></iframe>
-                    </div>
+                    {/* <article
+                        dangerouslySetInnerHTML={{
+                            __html: article.htmlCode
+                        }}>
+                    </article> */}
                 </div>
 
                 <footer className="article__footer">

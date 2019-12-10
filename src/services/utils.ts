@@ -25,6 +25,7 @@ declare var $: any;
 
 let codeMirror: any;
 let preview: any;
+let previewFrame: any;
 let _template = 'JavaScript';
 
 class Utils {
@@ -305,6 +306,7 @@ class Utils {
     }
 
     // USAGE : filterList(this.state.q, this.state.list);
+    // https://www.peterbe.com/plog/a-darn-good-search-filter-function-in-javascript
     public filterList(searchTerm: string, articles: any) {
         function escapeRegExp(s: any) {
             return s.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -340,13 +342,14 @@ class Utils {
         });
     }
 
+    // TODO: Need further improvements, this is not efficient
     public highlightSearchTerms() {
         let searchPara = document.querySelector('.article__content > article').innerHTML;
         searchPara = searchPara.toString();
         let searchTerm = document.querySelector('.search-form-input');
         const rand = this.highlightColors[Math.floor(Math.random() * this.highlightColors.length)];
 
-        let terms = searchTerm && searchTerm.value;
+        let terms = searchTerm && searchTerm.value.trim();
         if (terms) {
             terms = terms.replace(/(to |the |with )/gi, '');
             let pattern2 = `((${terms})|(${terms.split(' ').join('|')}))`;
@@ -398,6 +401,15 @@ class Utils {
 
             if (node.nodeName === 'PRE') {
                 node.classList.add('code-candy');
+            }
+
+            if (node.nodeName === 'A') {
+                // When you use target="_blank" for external site link in your web page content,
+                // then always include rel = "noopener" or rel = "noreferrer" attribute.
+                // rel="noopener" : prevents the new page from being able to access the window.opener property and ensures it runs in a separate process.
+                // rel="noreferrer" : attribute has the same effect, but also prevents the Referer header from being sent to the new page. See Link type "noreferrer".
+                node.setAttribute('rel', 'noopener noreferrer nofollow');
+                node.setAttribute('target', '_blank');
             }
 
             // Remove empty nodes
@@ -473,15 +485,17 @@ class Utils {
                             let iframeDocs = gists[i].contentDocument || gists[i].contentWindow && gists[i].contentWindow.document;
                             let gistContent = iframeDocs.querySelector('table') && iframeDocs.querySelector('table').innerText || iframeDocs.querySelector('div.gist-data') && iframeDocs.querySelector('div.gist-data').innerText;
 
-                            codeNode.innerText = gistContent.replace(/</ig, '&lt;');
-                            preNode.appendChild(codeNode);
+                            if (gistContent) {
+                                codeNode.innerText = gistContent && gistContent.replace(/</ig, '&lt;');
+                                preNode.appendChild(codeNode);
 
-                            // replace all iFrame parent nodes with the new <pre> tags
-                            // gists[i].parentElement.replaceChild(preNode, gists[i]);
-                            if (gists[i].closest('figure')) {
-                                gists[i].closest('figure').parentElement.replaceChild(preNode, gists[i].closest('figure'));
-                            } else {
-                                // gists[i].parentElement.parentElement.replaceChild(preNode, gists[i].closest('.codecolorer-container'));
+                                // replace all iFrame parent nodes with the new <pre> tags
+                                // gists[i].parentElement.replaceChild(preNode, gists[i]);
+                                if (gists[i].closest('figure')) {
+                                    gists[i].closest('figure').parentElement.replaceChild(preNode, gists[i].closest('figure'));
+                                } else {
+                                    // gists[i].parentElement.parentElement.replaceChild(preNode, gists[i].closest('.codecolorer-container'));
+                                }
                             }
 
                             /* if (scripts[i].src.indexOf('github.com') > -1) {
@@ -579,7 +593,9 @@ class Utils {
         };
     }
 
-    public createDemoApp(editorData: any, template: string) {
+    public createDemoApp(editorData: any, template: string, previewFrameElem: any) {
+        previewFrame = previewFrameElem;
+        preview = previewFrame.contentDocument || previewFrame.contentWindow.document;
         let scriptBlocks = JQUERY + BOOTSTRAP_CSS + BOOTSTRAP_JS + REQUIRE_METHOD + BABEL + BABEL_PRESET_ENV;
         console.log('CreateApp Template ===', template);
         if (template === 'SCSS') {
