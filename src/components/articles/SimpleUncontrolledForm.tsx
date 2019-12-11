@@ -23,25 +23,29 @@ let HelloButton = function () {
 
 const SimpleUncontrolledForm = (props: any) => {
 
-    const { editData, isEditMode, categories } = props;
+    const { editData, isEditMode, categories, filteredRecords: articles } = props;
+
+    const [errorState, setErrorState] = useState(null);
 
     const form = useRef<HTMLFormElement>();
 
     let dateCreated = new Date().getTime();
     let id = editData._id || '';
 
+    // TODO : Remove later if not required
     const onSubmit = useCallback(
         e => {
             e.preventDefault();
             const { txtPostTitle, txtWebsiteUrl } = e.target;
-            console.log({ email: txtPostTitle.value, name: txtWebsiteUrl.value });
+            console.log('onSubmit :', { email: txtPostTitle.value, name: txtWebsiteUrl.value });
             e.target.reset();
         }, []
     );
 
+    // TODO : Remove later if not required
     const sendValues = () => {
         const { txtPostTitle, txtWebsiteUrl }: any = form.current;
-        console.log({ title: txtPostTitle.value, url: txtWebsiteUrl.value });
+        console.log('sendValues :', { title: txtPostTitle.value, url: txtWebsiteUrl.value });
     };
 
     const cleanHTMLContent = () => {
@@ -87,20 +91,21 @@ const SimpleUncontrolledForm = (props: any) => {
         return testDiv;
     };
 
-    const setFormValues = () => {
+    // Fill the form with value passed from Props or user search
+    const setFormValues = (userData: any) => {
         id = editData._id || '';
         dateCreated = editData.dateCreated || new Date().getTime();
 
-        form.current.txtPostTitle.value = editData.title || '';
-        form.current.txtCategory.value = editData.category || 'JavaScript';
-        form.current.txtTags.value = (editData.tags) ? editData.tags.join() : 'JavaScript, ES6';
-        form.current.txtAuthor.value = editData.author || '';
-        form.current.txtWebsiteUrl.value = editData.sourceUrl || '';
+        form.current.txtPostTitle.value = editData.title || (userData && userData.title) || '';
+        form.current.txtWebsiteUrl.value = editData.sourceUrl || (userData && userData.sourceUrl) || '';
+        form.current.txtCategory.value = editData.category || (userData && userData.category) || 'JavaScript';
+        form.current.txtTags.value = (editData.tags) ? editData.tags.join(',') : userData.tags ? userData.tags.join(',') : 'JavaScript, ES6';
+        form.current.txtAuthor.value = editData.author || (userData && userData.author) || '';
         form.current.txtSavePostToPath.value = editData.path || '';
-        form.current.txtPostType.value = editData.type || 'Post';
-        form.current.txtCoverImage.value = editData.coverImage || '';
-        form.current.txtExcerpt.value = editData.excerpt || '';
-        form.current.txtareaHtmlCode.value = editData.htmlCode ? $('#txtareaHtmlCode').summernote('code', editData.htmlCode) : '';
+        form.current.txtPostType.value = editData.type || (userData && userData.type) || 'Post';
+        form.current.txtCoverImage.value = editData.coverImage || (userData && userData.coverImage) || '';
+        form.current.txtExcerpt.value = editData.excerpt || (userData && userData.excerpt) || '';
+        form.current.txtareaHtmlCode.value = editData.htmlCode || userData.htmlCode ? $('#txtareaHtmlCode').summernote('code', (editData.htmlCode || userData.htmlCode)) : '';
     };
 
     // Handle Html to Markdown form submit
@@ -196,8 +201,25 @@ const SimpleUncontrolledForm = (props: any) => {
         $('#txtareaHtmlCode').summernote('reset');
     };
 
+    // Function to check if article is already available in database
+    const handleBlur = (event: any) => {
+        let titleValue = event.target.value;
+        if (titleValue) {
+            let articleBySearch = utils.filterListByTitle(event.target.value, articles);
+            console.log('articleBySearch :', articleBySearch);
+            if (articleBySearch && articleBySearch.length > 0) {
+                setErrorState('Article is already available');
+                // setFormValues(articleBySearch[0]);
+            } else {
+                setErrorState(null);
+            }
+        } else {
+            setErrorState(null);
+        }
+    };
+
     useEffect(() => {
-        // console.log('SimpleUncontrolledForm :', props, form.current);
+        setErrorState(null);
 
         $('#txtareaHtmlCode').summernote({
             placeholder: 'Write your article content here...',
@@ -250,7 +272,7 @@ const SimpleUncontrolledForm = (props: any) => {
                                 isEditMode ? `Edit Article` : 'Create New Article'
                             }
                         </h2>
-                        <p><code>{isEditMode.toString()} : {id ? id : ''}</code></p>
+                        <p><code>{'Edit Mode:' + isEditMode.toString()} for {id ? id : ''}</code></p>
                         <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -266,7 +288,11 @@ const SimpleUncontrolledForm = (props: any) => {
 
                                     <div className="form-group">
                                         <label className="form-label" htmlFor="txtPostTitle">Title * ( required )</label>
-                                        <input type="text" className="form-control" name="txtPostTitle" id="txtPostTitle" placeholder="Post Title" required />
+                                        <input type="text" className="form-control" name="txtPostTitle" id="txtPostTitle" placeholder="Post Title" onBlur={handleBlur} required />
+                                        {
+                                            errorState ? <div className="alert alert-danger" role="alert">                                                {errorState}
+                                            </div> : null
+                                        }
                                     </div>
 
                                     <div className="form-group">

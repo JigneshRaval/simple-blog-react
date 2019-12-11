@@ -239,7 +239,6 @@ class Utils {
             case 'search':
                 let t0 = performance.now();
 
-                // articleBySearch = this.filterList(searchTerm, articles);
                 if (searchBy.toLowerCase() === 'title') {
                     articleBySearch = this.filterList(keywords, articles);
                 } else {
@@ -339,6 +338,12 @@ class Utils {
         return articles.filter((item: any) => {
             // console.log('Matched :', searchRegex.test(item.title) ? item.title : null);
             return searchRegex.test(item.title);
+        });
+    }
+
+    public filterListByTitle(searchTerm: string, articles: any) {
+        return articles.filter((article: any) => {
+            return article.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1;
         });
     }
 

@@ -50,7 +50,7 @@ export const Article = (props: IArticleProps) => {
     };
 
     const renderDemo = () => {
-        let demos = document.querySelectorAll('[data-demo="code"]');
+        let demos = document.querySelectorAll('.article__content [data-demo="code"]');
         if (demos && demos.length > 0) {
             [].forEach.call(demos, (demo: any, index: number) => {
                 // 1. Create iFrame and insert it after .demo_code

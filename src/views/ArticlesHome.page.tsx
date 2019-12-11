@@ -293,6 +293,7 @@ const ArticleHome = (props: any) => {
 
             <SimpleUncontrolledForm
                 categories={newState.categories}
+                filteredRecords={filteredRecords}
                 editData={editData}
                 isEditMode={isEditMode}
                 onCreateArticle={handleCreateArticle}
