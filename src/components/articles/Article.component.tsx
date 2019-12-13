@@ -56,11 +56,18 @@ export const Article = (props: IArticleProps) => {
                 // 1. Create iFrame and insert it after .demo_code
                 let iFrame = document.createElement('iframe');
                 iFrame.className = 'demo_output';
-                insertAfter(iFrame, demos[0]);
+                iFrame.style.resize = 'both';
+                iFrame.id = DEMO_ID;
+                insertAfter(iFrame, demo);
+
+                /* let resizeHandle = document.createElement('div');
+                resizeHandle.className = 'separator';
+                resizeHandle.id = DEMO_ID;
+                insertAfter(resizeHandle, iFrame); */
 
                 // 2. Get code from .demo_code container and pass it to createDemoApp function to render the output
-                let demoContent = demos[0].innerText;
-                let templateName = demos[0].getAttribute('data-demo-template') || 'JavaScript';
+                let demoContent = demo.innerText;
+                let templateName = demo.getAttribute('data-demo-template') || 'JavaScript';
                 if (demoContent) {
                     utils.createDemoApp(demoContent, templateName, iFrame);
                 }
@@ -115,12 +122,27 @@ export const Article = (props: IArticleProps) => {
         return { __html: article.htmlCode };
     }
 
-
-
     // Go to top on click of up arrow
     const scrollToTop = (event: any) => {
         let scrollParentElement = document.querySelector('.article-view');
         utils.scrollToTop(scrollParentElement);
+    };
+
+    const getSourceUrl = (url: string) => {
+        let parser = document.createElement('a');
+        parser.href = url;
+
+        return {
+            origin: parser.origin,          // => "http://example.com:3000"
+            protocol: parser.protocol,      // => "http:"
+            host: parser.host,              // => "example.com:3000"
+            hostname: parser.hostname,      // => "example.com"
+            port: parser.port,              // => "3000"
+            // parser.pathname;             // => "/pathname/"
+            // parser.hash;                 // => "#hash"
+            // parser.search;               // => "?search=test"
+        }
+
     }
 
     return (
@@ -131,7 +153,7 @@ export const Article = (props: IArticleProps) => {
                     <div className="header__content">
                         <a href="#" className="article-category"><span className="category-color"></span> {article.category}</a>
                         <h1>
-                            <a className="uk-link-reset" href={article.sourceUrl} title={article.sourceUrl} target="_blank" rel="noopener noreferrer">{article.title}</a>
+                            <a className="uk-link-reset" href={article.sourceUrl} title={article.sourceUrl} target="_blank" rel="noopener noreferrer nofollow">{article.title}</a>
                         </h1>
 
                         <p className="article-meta">Written by <a href="javascript:;"><strong>{article.author}</strong></a> on <strong>{date.toString()}</strong>.</p>
@@ -144,6 +166,12 @@ export const Article = (props: IArticleProps) => {
                                     className={''} />
                             </ul>
                         </div>
+                        <p><strong>Website : <a className="uk-link-reset"
+                            href={getSourceUrl(article.sourceUrl).origin}
+                            title={article.sourceUrl}
+                            target="_blank"
+                            rel="noopener noreferrer nofollow">{getSourceUrl(article.sourceUrl).origin}</a>
+                        </strong></p>
                     </div>
                 </header>
 

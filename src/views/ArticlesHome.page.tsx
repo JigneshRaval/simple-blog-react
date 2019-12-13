@@ -62,8 +62,6 @@ const ArticleHome = (props: any) => {
     // Show loading spinner icon, when ajax request is running,
     const [isLoading, setIsLoading] = React.useState(false);
 
-    const [reRender, setReRender] = useState(false);
-
     const [newState, dispatch] = useReducer(articleReducer, initialState);
 
     useEffect(() => {
