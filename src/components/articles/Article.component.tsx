@@ -67,7 +67,7 @@ export const Article = (props: IArticleProps) => {
 
                 // 2. Get code from .demo_code container and pass it to createDemoApp function to render the output
                 let demoContent = demo.innerText;
-                let templateName = demo.getAttribute('data-demo-template') || 'JavaScript';
+                let templateName = (demo.getAttribute('data-demo-template') || demo.getAttribute('data-template')) || 'JavaScript';
                 if (demoContent) {
                     utils.createDemoApp(demoContent, templateName, iFrame);
                 }
