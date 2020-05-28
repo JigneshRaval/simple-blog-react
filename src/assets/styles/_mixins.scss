@@ -320,7 +320,7 @@
 
 // pulls carrot arrow options small/large : black/grey/white : up/down/left/right
 @mixin imageArrow($size:small, $arrowColor:white, $arrowDirection:down) {
-	background-image:url(/images/al-images/al-#{$size}-arrow/#{$arrowColor}-#{$arrowDirection}.png);
+	background-image:url(/images/#{$size}-arrow/#{$arrowColor}-#{$arrowDirection}.png);
 	background-repeat: no-repeat;
 }
 

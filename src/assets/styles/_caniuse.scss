@@ -1,0 +1,142 @@
+
+.caniuse {
+    font-size: .8rem;
+    background: #fffaf2;
+    padding: 1.5rem;
+    margin: 0 0 1rem;
+    border-radius: 8px
+}
+
+.caniuse .caniuse-section:last-child {
+    margin-top: 1rem
+}
+
+.caniuse h4 {
+    font-size: 1.1rem;
+    padding-top: 0!important;
+    margin: 2rem 0 0
+}
+
+.browser-support-table {
+    font-family: Ringside Regular A,Ringside Regular B,Rubik,Lato,Lucida Grande,Lucida Sans Unicode,Tahoma,Sans-Serif;
+    font-style: normal;
+    font-weight: 700;
+    border-collapse: separate!important;
+    border-spacing: .25rem!important
+}
+
+.browser-support-table tr {
+    background: 0 0!important
+}
+
+.browser-support-table th {
+    background: 0 0!important;
+    color: #201c29!important;
+    border: 0!important;
+    position: relative;
+    line-height: 1.1;
+    vertical-align: top
+}
+
+.browser-support-table th:before {
+    content: "";
+    display: block;
+    margin: 0 auto .5rem;
+    width: 32px;
+    height: 32px;
+    background-size: contain
+}
+
+.browser-support-table th.chrome:before {
+    background-image: url(/assets/images/browser-logos/chrome_64x64.png)
+}
+
+.browser-support-table th.opera:before {
+    background-image: url(/assets/images/browser-logos/opera_15-32_64x64.png)
+}
+
+.browser-support-table th.firefox:before {
+    background-image: url(/assets/images/browser-logos/firefox_64x64.png)
+}
+
+.browser-support-table th.ie:before {
+    background-image: url(/assets/images/browser-logos/internet-explorer_9-11_64x64.png)
+}
+
+.browser-support-table th.edge:before {
+    background-image: url(/assets/images/browser-logos/edge_64x64.png)
+}
+
+.browser-support-table th.safari:before {
+    background-image: url(/assets/images/browser-logos/safari_64x64.png)
+}
+
+.browser-support-table th.ios:before,.browser-support-table th.iOS:before,.browser-support-table th.ios_saf:before {
+    background-image: url(/assets/images/browser-logos/safari-ios_64x64.png)
+}
+
+.browser-support-table th.op_mini:before,.browser-support-table th.op_mob:before {
+    background-image: url(/assets/images/browser-logos/opera_15-32_64x64.png)
+}
+
+.browser-support-table th.android:before {
+    background-image: url(/assets/images/browser-logos/android-webview-beta_64x64.png)
+}
+
+.browser-support-table th.and_chr:before {
+    background-image: url(/assets/images/browser-logos/chrome_64x64.png)
+}
+
+.browser-support-table th.and_ff:before {
+    background-image: url(/assets/images/browser-logos/firefox_64x64.png)
+}
+
+.browser-support-table td,.browser-support-table th {
+    text-align: center!important;
+    padding: .5rem!important;
+    border-top: 0!important;
+    font-weight: 700;
+    border-radius: 4px
+}
+
+.browser-support-table .yep {
+    background: #47ca4c;
+    color: #fff
+}
+
+.browser-support-table .nope {
+    background: #ff0024;
+    color: #fff
+}
+
+.browser-support-table .yep-nope {
+    background: #ffa100;
+    color: #fff
+}
+
+@media(max-width: 1200px) {
+    .browser-support-table,.browser-support-table tbody,.browser-support-table th,.browser-support-table tr {
+        display:block
+    }
+
+    .browser-support-table thead {
+        display: none
+    }
+
+    .browser-support-table tr {
+        display: -webkit-box;
+        display: flex;
+        flex-wrap: wrap
+    }
+
+    .browser-support-table td {
+        border-radius: 4px;
+        border: 0!important;
+        margin: 0 5px 5px 0
+    }
+
+    .browser-support-table td:before {
+        color: #222;
+        content: attr(data-browser-name) ": "
+    }
+}
