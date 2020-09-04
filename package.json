@@ -12,7 +12,7 @@
 		"react-dom": "^16.5.2",
 		"react-router": "^4.3.1",
 		"react-router-dom": "^4.3.1",
-		"showdown": "^1.8.6",
+		"showdown": "^1.9.1",
 		"turndown": "^5.0.1"
 	},
 	"devDependencies": {
