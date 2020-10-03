@@ -1,0 +1,174 @@
+<pre data-demo="code" data-demo-template="RxJs5"><code>&lt;script type="text/babel">
+// Simulate HTTP requests
+const getPostOne$ = Rx.Observable.timer(3000).mapTo({ id: 1 });
+const getPostTwo$ = Rx.Observable.timer(1000).mapTo({ id: 2 });
+
+Rx.Observable.concat(getPostOne$, getPostTwo$).subscribe(res => console.log(res));
+
+const albumsApiUrl = `https://jsonplaceholder.typicode.com/albums`;
+
+Rx.Observable
+  .ajax(albumsApiUrl)
+  .subscribe(
+    res => console.log(res),
+    err => console.error(err)
+  );
+&lt;/script></code></pre>
+
+
+<pre data-demo="code" data-demo-template="RxJs6"><code>
+&lt;script type="text/babel">
+    const { Observable } = rxjs;
+
+    var randomNumberGenerator = Observable.create(function(observer) {
+    setTimeout(function() {
+
+        var randomNumber = Math.floor(Math.random() * 100);
+
+        if(randomNumber == 13) {
+        observer.error("Incorrect Random Number Generated");
+        } else if(randomNumber == 99) {
+        observer.complete();
+        } else {
+        observer.next(randomNumber);
+        }
+
+    }, 1000);
+    });
+
+    randomNumberGenerator.subscribe({
+    next: function(data) {
+        console.log("Input Data is: " + data)
+    }, error: function(errorMessage) {
+        console.log("Recieved the error with following message: " + errorMessage);
+    }, complete: function() {
+        console.log("Observable has completed Execution");
+    }
+    });
+&lt;/script></code></pre>
+
+
+<pre data-demo="code">
+<code>
+&lt;div class="one">
+  &lt;ul>
+    &lt;li>One&lt;/li>
+    &lt;li>Two&lt;/li>
+    &lt;li>Three&lt;/li>
+    &lt;li>Four&lt;/li>
+  &lt;/ul>
+  &lt;ol>
+    &lt;li>Five&lt;/li>
+    &lt;li>Six&lt;/li>
+    &lt;li>Seven&lt;/li>
+    &lt;li>Eight&lt;/li>
+  &lt;/ol>
+&lt;/div>
+
+&lt;div class="two">
+  &lt;ul>
+    &lt;li>One&lt;/li>
+    &lt;li>Two&lt;/li>
+    &lt;li>Three&lt;/li>
+    &lt;li>Four&lt;/li>
+  &lt;/ul>
+  &lt;ol>
+    &lt;li>Five&lt;/li>
+    &lt;li>Six&lt;/li>
+    &lt;li>Seven&lt;/li>
+    &lt;li>Eight&lt;/li>
+  &lt;/ol>
+&lt;/div>
+
+&lt;div class="three">
+  &lt;ul>
+    &lt;li>One&lt;/li>
+    &lt;li>Two&lt;/li>
+    &lt;li>Three&lt;/li>
+    &lt;li>Four&lt;/li>
+  &lt;/ul>
+  &lt;ol>
+    &lt;li>Five&lt;/li>
+    &lt;li>Six&lt;/li>
+    &lt;li>Seven&lt;/li>
+    &lt;li>Eight&lt;/li>
+  &lt;/ol>
+  &lt;ul>
+    &lt;li>Nine&lt;/li>
+    &lt;li>Ten&lt;/li>
+    &lt;li>Eleven&lt;/li>
+    &lt;li>Twelve&lt;/li>
+  &lt;/ul>
+&lt;/div>
+
+&lt;style>
+body {
+  padding: 1em 2em;
+}
+
+ul, ol {
+  list-style: none;
+  padding: 0;
+}
+li {
+  text-align: center;
+  line-height: 2;
+  background: slategrey;
+}
+div {
+  width: 12em;
+  float: left;
+  margin-right: 2em;
+}
+hr {
+  clear: both;
+  padding-top: 1em;
+  border: 0;
+  border-bottom: 1px solid grey;
+}
+
+.one li:nth-last-child(1) {
+  background: lightsteelblue;
+}
+
+.two ol :nth-last-child(3) {
+  background: lightsteelblue;
+}
+
+.three :nth-last-child(-n+2) :nth-last-child(1) {
+  background: lightsteelblue;
+}
+
+
+
+div:before {
+  font-family: monospace;
+  white-space: nowrap;
+  font-size: 12px;
+}
+div:after {
+  font-style: italic;
+}
+
+.one:before {
+  content: "li:nth-last-child(1)";
+}
+.one:after {
+  content: "select <li> elements that are the last child of their parent";
+}
+
+.two:before {
+  content: "ol :nth-last-child(3)";
+}
+.two:after {
+  content: "select the third-from-last child element of an <ol>";
+}
+
+.three:before {
+  content: ":nth-last-child(-n+2) :nth-last-child(-n+3)";
+}
+.three:after {
+  content: "select the last <li> element inside the last two elements";
+}
+&lt;/style>
+</code></pre>

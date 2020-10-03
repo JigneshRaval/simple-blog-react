@@ -77,6 +77,12 @@ export const Article = (props: IArticleProps) => {
                 iFrame.onload = function () {
                     iFrame.style.height = (iFrame.contentWindow.document.body.scrollHeight + 50) + 'px';
                 };
+
+                // 4. Add Demo title
+                let demoTitle = document.createElement('H2');
+                demoTitle.innerText = 'Demo : ' + templateName;
+
+                demo.parentNode.insertBefore(demoTitle, demo);
             });
         }
     };
