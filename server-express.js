@@ -3,6 +3,9 @@ const path = require('path'),
     app = express(),
     router = express.Router(),
     port = process.env.PORT || 3001;
+var cp = require('child_process');
+var url_to_open = `http://localhost:${port}/`;
+var browserPath = "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe";
 
 // console.log('process.argv :', process.argv);
 // console.log('process.env :', process.env, process.env.npm_package_config_myPort);
@@ -63,7 +66,10 @@ app.use(function (error, req, res, next) {
     res.status(500).send({ error: '500: Internal Server Error', message: error });
 });
 
-app.listen(port, () => { console.log(`App is listening on port http://localhost:${port}`) });
+app.listen(port, () => {
+    console.log(`App is listening on port http://localhost:${port}`);
+    cp.spawn(browserPath, ['-new-tab', url_to_open]);
+});
 
 
 // 1. Car brands page ( cars.js )
